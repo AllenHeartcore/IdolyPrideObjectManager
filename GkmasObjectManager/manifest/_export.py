@@ -3,7 +3,7 @@ _export.py
 [CLASS SPLIT] GkmasManifest exporting.
 """
 
-from ..utils import Logger
+from ..log import Logger
 from ..const import PATH_ARGTYPE, CSV_COLUMNS
 
 from .octodb_pb2 import Database as ProtoDB

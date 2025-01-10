@@ -3,7 +3,7 @@ _download.py
 [CLASS SPLIT] GkmasManifest-managed object downloading.
 """
 
-from ..utils import ConcurrentDownloader
+from .utils import ConcurrentDownloader
 from ..const import (
     ALL_ASSETBUNDLES,
     ALL_RESOURCES,

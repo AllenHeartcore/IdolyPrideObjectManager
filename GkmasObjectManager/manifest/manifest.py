@@ -3,7 +3,7 @@ manifest.py
 Manifest decryption, exporting, and object downloading.
 """
 
-from ..utils import Logger
+from ..log import Logger
 from ..const import PATH_ARGTYPE, DICLIST_IGNORED_FIELDS
 
 

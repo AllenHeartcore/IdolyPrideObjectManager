@@ -3,7 +3,7 @@ from sys import argv
 
 from GkmasObjectManager import GkmasManifest
 from GkmasObjectManager.const import CHARACTER_ABBREVS
-from GkmasObjectManager.utils import Logger
+from GkmasObjectManager.log import Logger
 
 
 instructions_dl = [

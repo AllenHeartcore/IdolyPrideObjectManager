@@ -3,7 +3,8 @@ _initdb.py
 [CLASS SPLIT] GkmasManifest protobuf initialization.
 """
 
-from ..utils import Diclist, Logger
+from .utils import Diclist
+from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
     GKMAS_API_URL,

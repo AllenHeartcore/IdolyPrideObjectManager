@@ -3,7 +3,7 @@ _export_img.py
 [CLASS SPLIT] GkmasAssetBundle image extraction plugin.
 """
 
-from ..utils import Logger
+from ..log import Logger
 from ..const import IMG_RESIZE_ARGTYPE
 
 import UnityPy

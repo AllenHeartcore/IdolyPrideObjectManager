@@ -3,7 +3,7 @@ _download.py
 [CLASS SPLIT] GkmasAssetBundle and GkmasResource downloading.
 """
 
-from ..utils import Logger
+from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
     GKMAS_OBJECT_SERVER,

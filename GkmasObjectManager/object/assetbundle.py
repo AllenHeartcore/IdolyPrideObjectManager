@@ -3,7 +3,7 @@ assetbundle.py
 Unity asset bundle downloading, deobfuscation, and media extraction.
 """
 
-from ..utils import Logger
+from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
     IMG_RESIZE_ARGTYPE,
