@@ -15,7 +15,7 @@ class AESCBCDecryptor:
         cipher (Crypto.Cipher.AES): AES cipher object.
 
     Methods:
-        decrypt(enc: bytes) -> bytes:
+        process(enc: bytes, block_size: int = 16) -> bytes:
             Decrypts the given ciphertext into plaintext.
     """
 
@@ -30,7 +30,7 @@ class AESCBCDecryptor:
 
         self.cipher = AES.new(key, AES.MODE_CBC, iv)
 
-    def decrypt(self, enc: bytes) -> bytes:
+    def process(self, enc: bytes, block_size: int = 16) -> bytes:
         """
         Decrypts the given ciphertext into plaintext.
 
@@ -41,10 +41,10 @@ class AESCBCDecryptor:
                 ciphertext is 16-byte aligned by trimming these leading bytes.
         """
 
-        clen = len(enc) // 16 * 16
+        clen = len(enc) // block_size * block_size
         enc = enc[-clen:]
 
         dec = self.cipher.decrypt(enc)
-        dec = unpad(dec, block_size=16, style="pkcs7")
+        dec = unpad(dec, block_size=block_size, style="pkcs7")
 
         return dec

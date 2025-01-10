@@ -34,7 +34,7 @@ def _online_init(self, revision: int = 0):
     url = urljoin(GKMAS_API_URL, str(revision))
     enc = requests.get(url, headers=GKMAS_API_HEADER).content
     cipher = AESCBCDecryptor(GKMAS_ONLINEPDB_KEY, enc[:16])
-    dec = cipher.decrypt(enc[16:])
+    dec = cipher.process(enc[16:])
     self._parse_raw(dec)
     logger.info("Manifest created from online ProtoDB")
 
@@ -50,7 +50,7 @@ def _offline_init(self, src: PATH_ARGTYPE):
         logger.info("Manifest created from unencrypted ProtoDB")
     except:
         cipher = AESCBCDecryptor(GKMAS_OCTOCACHE_KEY, GKMAS_OCTOCACHE_IV)
-        dec = cipher.decrypt(enc)
+        dec = cipher.process(enc)
         self._parse_raw(dec[16:])  # trim md5 hash
         logger.info("Manifest created from encrypted ProtoDB")
 

@@ -4,7 +4,7 @@ obfuscate.py
 """
 
 
-class GkmasDeobfuscator:
+class GkmasAssetBundleDeobfuscator:
     """
     Assetbundle deobfuscator for GKMAS.
     Algorithm courtesy of github.com/MalitsPlus.
@@ -17,7 +17,7 @@ class GkmasDeobfuscator:
         header_len (int): Length of the obfuscated header.
 
     Methods:
-        deobfuscate(enc: bytes) -> bytes:
+        process(enc: bytes) -> bytes:
             Deobfuscates the given obfuscated bytes into plaintext.
     """
 
@@ -63,7 +63,7 @@ class GkmasDeobfuscator:
 
         return bytes([b ^ x for b in mask])
 
-    def deobfuscate(self, enc: bytes) -> bytes:
+    def process(self, enc: bytes) -> bytes:
         """
         Deobfuscates the given obfuscated bytes into plaintext.
 
