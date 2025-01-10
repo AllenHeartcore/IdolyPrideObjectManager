@@ -18,7 +18,6 @@ from ..const import (
 )
 
 from .crypt import AESCBCDecryptor
-from .octodb_pb2 import Database as ProtoDB
 from ..object import GkmasAssetBundle, GkmasResource
 
 import requests
@@ -37,7 +36,6 @@ class GkmasManifest:
     A GKMAS manifest, containing info about assetbundles and resources.
 
     Attributes:
-        raw (bytes): Raw decrypted protobuf bytes.
         revision (str): Manifest revision, a number or a string (for manifest from diff).
         jdict (dict): JSON-serialized dictionary of the protobuf.
         abs (list): List of GkmasAssetBundle objects.
@@ -64,34 +62,13 @@ class GkmasManifest:
     from ._download import download
     from ._export import export, _export_pdb, _export_json, _export_csv
 
-    def __init__(self, src: PATH_ARGTYPE = None):
+    def __init__(self, jdict: dict):
         """
-        Initializes a manifest from the given source.
-        Only performs decryption when necessary, and
-        leaves protobuf parsing to internal backend.
+        [INTERNAL] Initializes a manifest from the given JSON dictionary.
 
         Args:
-            src (Union[str, Path]): Path to the manifest file.
-                Can be the path to an encrypted octocache
-                (usually named 'octocacheevai') or a decrypted protobuf.
-                If None, an empty manifest is created (used for manifest from diff;
-                note that _parse_jdict() must be manually called afterwards).
-        """
-
-        if not src:  # empty constructor
-            self.revision = None
-            return
-
-        if isinstance(src, str) and src.startswith("<") and src.endswith(">"):
-            self._online_init(int(src[1:-1]))
-        else:
-            self._offline_init(src)
-
-    def _parse_jdict(self, jdict: dict):
-        """
-        [INTERNAL] Parses the JSON dictionary into internal structures.
-        Also *directly* called from _make_diff_manifest(),
-        without handling raw protobuf in advance.
+            jdict (dict): JSON-serialized dictionary extracted from protobuf.
+                Must contain 'revision', 'assetBundleList', and 'resourceList' keys.
 
         Internal attributes:
             _abl (Diclist): List of assetbundle *info dictionaries*.
@@ -105,6 +82,7 @@ class GkmasManifest:
         )
         jdict["resourceList"] = sorted(jdict["resourceList"], key=lambda x: x["id"])
         self.jdict = jdict
+        self.revision = jdict["revision"]
         self._abl = Diclist(self.jdict["assetBundleList"])
         self._resl = Diclist(self.jdict["resourceList"])
         self.abs = [GkmasAssetBundle(ab) for ab in self._abl]

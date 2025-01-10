@@ -1,12 +1,3 @@
-from .manifest import GkmasManifest
-
-"""
-_initdb.py
-[CLASS SPLIT] GkmasManifest protobuf initialization.
-"""
-
-from .utils import Diclist
-from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
     GKMAS_API_URL,
@@ -16,43 +7,48 @@ from ..const import (
     GKMAS_OCTOCACHE_IV,
 )
 
+from .manifest import GkmasManifest
 from .crypt import AESCBCDecryptor
-from .octodb_pb2 import Database as ProtoDB
-from ..object import GkmasAssetBundle, GkmasResource
+from .octodb_pb2 import pdb_to_json
 
+import json
 import requests
 from pathlib import Path
 from urllib.parse import urljoin
-from google.protobuf.json_format import MessageToDict
 
 
-logger = Logger()
-
-
-def _online_init(self, revision: int = 0):
+def fetch(revision: int = 0) -> GkmasManifest:
     """
-    [INTERNAL] Requests a manifest by the specified revision.
+    Requests an online manifest by the specified revision.
     Algorithm courtesy of github.com/DreamGallery/HatsuboshiToolkit
     """
     url = urljoin(GKMAS_API_URL, str(revision))
     enc = requests.get(url, headers=GKMAS_API_HEADER).content
     cipher = AESCBCDecryptor(GKMAS_ONLINEPDB_KEY, enc[:16])
     dec = cipher.process(enc[16:])
-    self._parse_raw(dec)
-    logger.info("Manifest created from online ProtoDB")
+    return GkmasManifest(pdb_to_json(dec))
 
 
-def _offline_init(self, src: PATH_ARGTYPE):
+def load(src: PATH_ARGTYPE):
     """
-    [INTERNAL] Initializes a manifest from the given offline source.
+    Initializes a manifest from the given offline source.
     The protobuf referred to can be either encrypted or not.
+    Also supports importing from JSON.
+
+    Args:
+        src (Union[str, Path]): Path to the manifest file.
+            Can be the path to
+            - an encrypted octocache (usually named 'octocacheevai'),
+            - a decrypted protobuf, or
+            - a JSON file exported from another manifest.
     """
-    enc = Path(src).read_bytes()
     try:
-        self._parse_raw(enc)
-        logger.info("Manifest created from unencrypted ProtoDB")
+        return GkmasManifest(json.loads(Path(src).read_text()))
     except:
-        cipher = AESCBCDecryptor(GKMAS_OCTOCACHE_KEY, GKMAS_OCTOCACHE_IV)
-        dec = cipher.process(enc)
-        self._parse_raw(dec[16:])  # trim md5 hash
-        logger.info("Manifest created from encrypted ProtoDB")
+        enc = Path(src).read_bytes()
+        try:
+            return GkmasManifest(pdb_to_json(enc))
+        except:
+            cipher = AESCBCDecryptor(GKMAS_OCTOCACHE_KEY, GKMAS_OCTOCACHE_IV)
+            dec = cipher.process(enc)
+            return GkmasManifest(pdb_to_json(dec[16:]))  # trim md5 hash
