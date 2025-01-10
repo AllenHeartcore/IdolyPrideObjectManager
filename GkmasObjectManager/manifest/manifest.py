@@ -7,6 +7,26 @@ from ..log import Logger
 from ..const import PATH_ARGTYPE, DICLIST_IGNORED_FIELDS
 
 
+from .utils import Diclist
+from ..const import (
+    PATH_ARGTYPE,
+    GKMAS_API_URL,
+    GKMAS_API_HEADER,
+    GKMAS_ONLINEPDB_KEY,
+    GKMAS_OCTOCACHE_KEY,
+    GKMAS_OCTOCACHE_IV,
+)
+
+from .crypt import AESCBCDecryptor
+from .octodb_pb2 import Database as ProtoDB
+from ..object import GkmasAssetBundle, GkmasResource
+
+import requests
+from pathlib import Path
+from urllib.parse import urljoin
+from google.protobuf.json_format import MessageToDict
+
+
 # The logger would better be a global variable in the
 # modular __init__.py, but Python won't allow me to
 logger = Logger()
@@ -41,7 +61,6 @@ class GkmasManifest:
     # It's necessary to import all methods instead of merely interface/dispatcher functions;
     # otherwise, self._helper_method() in these interface functions would encounter name
     # resolution errors. Also, import * is prohibited unless importing from a module.
-    from ._initdb import _online_init, _offline_init, _parse_raw, _parse_jdict
     from ._download import download
     from ._export import export, _export_pdb, _export_json, _export_csv
 
@@ -67,6 +86,34 @@ class GkmasManifest:
             self._online_init(int(src[1:-1]))
         else:
             self._offline_init(src)
+
+    def _parse_jdict(self, jdict: dict):
+        """
+        [INTERNAL] Parses the JSON dictionary into internal structures.
+        Also *directly* called from _make_diff_manifest(),
+        without handling raw protobuf in advance.
+
+        Internal attributes:
+            _abl (Diclist): List of assetbundle *info dictionaries*.
+            _resl (Diclist): List of resource *info dictionaries*.
+            _name2object (dict): Mapping from object name to GkmasAssetBundle/GkmasResource.
+
+        Documentation for Diclist can be found in utils.py.
+        """
+        jdict["assetBundleList"] = sorted(
+            jdict["assetBundleList"], key=lambda x: x["id"]
+        )
+        jdict["resourceList"] = sorted(jdict["resourceList"], key=lambda x: x["id"])
+        self.jdict = jdict
+        self._abl = Diclist(self.jdict["assetBundleList"])
+        self._resl = Diclist(self.jdict["resourceList"])
+        self.abs = [GkmasAssetBundle(ab) for ab in self._abl]
+        self.reses = [GkmasResource(res) for res in self._resl]
+        self._name2object = {ab.name: ab for ab in self.abs}  # quick lookup
+        self._name2object.update({res.name: res for res in self.reses})
+        logger.info(f"Found {len(self.abs)} assetbundles")
+        logger.info(f"Found {len(self.reses)} resources")
+        logger.info(f"Detected revision: {self.revision}")
 
     def __repr__(self):
         return f"<GkmasManifest revision {self.revision}>"
