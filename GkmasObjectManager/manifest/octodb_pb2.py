@@ -11,6 +11,7 @@ from google.protobuf.internal import builder as _builder
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
+from google.protobuf.json_format import MessageToDict, ParseDict
 
 # @@protoc_insertion_point(imports)
 
@@ -71,3 +72,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
     _DATA_STATE._serialized_end = 446
 
 # @@protoc_insertion_point(module_scope)
+
+
+# Interface between ProtoDB bytestring and JSON
+pdb_to_json = lambda pdb: MessageToDict(Database().FromString(pdb))
+json_to_pdb = lambda jdict: ParseDict(jdict, Database()).SerializeToString()

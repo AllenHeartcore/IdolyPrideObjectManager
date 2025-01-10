@@ -56,16 +56,3 @@ def _offline_init(self, src: PATH_ARGTYPE):
         dec = cipher.process(enc)
         self._parse_raw(dec[16:])  # trim md5 hash
         logger.info("Manifest created from encrypted ProtoDB")
-
-
-def _parse_raw(self, raw: bytes):
-    """
-    [INTERNAL] Records raw protobuf bytes, converts to JSON,
-    and calls "secondary backend" JSON parser.
-    """
-    pdb = ProtoDB()
-    pdb.ParseFromString(raw)
-    self.revision = pdb.revision
-    # Not moved to _parse_jdict(), since manifest from diff
-    # (__sub__ magic method) manually records revision before calling it.
-    self._parse_jdict(MessageToDict(pdb))
