@@ -37,6 +37,8 @@ class GkmasManifest:
         revision (str): Manifest revision, a number or a string (for manifest from diff).
         assetbundles (Diclist): List of assetbundle *info dictionaries*.
         resources (Diclist): List of resource *info dictionaries*.
+        urlformat (str): URL format for downloading assetbundles/resources.
+            Solely for faithful reconstruction of the manifest.
     *Documentation for Diclist can be found in utils.py.*
 
     Methods:
@@ -60,11 +62,13 @@ class GkmasManifest:
 
         Args:
             jdict (dict): JSON-serialized dictionary extracted from protobuf.
-                Must contain 'revision', 'assetBundleList', and 'resourceList' keys.
+                Must contain 'revision', 'assetBundleList', 'resourceList',
+                and 'urlFormat' keys.
         """
         self.revision = jdict["revision"]
         self.assetbundles = Diclist(jdict["assetBundleList"])
         self.resources = Diclist(jdict["resourceList"])
+        self.urlformat = jdict["urlFormat"]  # not jdict.get() to enforce presence
         # 'jdict' is then discarded and losslessly reconstructed at export
 
     def __repr__(self):
@@ -103,6 +107,8 @@ class GkmasManifest:
                 "revision": f"{self.revision}-{other.revision}",
                 "assetBundleList": self.assetbundles.diff(other.assetbundles),
                 "resourceList": self.resources.diff(other.resources),
+                "urlFormat": self.urlformat,
+                # always override with the higher revision, in case this ever differs
             }
         )
 
@@ -114,6 +120,7 @@ class GkmasManifest:
             "revision": self.revision,
             "assetBundleList": self.assetbundles,
             "resourceList": self.resources,
+            "urlFormat": self.urlformat,
         }
 
     # ------------ EXPORT ------------ #
