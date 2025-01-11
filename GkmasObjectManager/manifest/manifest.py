@@ -253,7 +253,7 @@ class GkmasManifest:
         Downloads all assetbundles to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [self[ab["name"]] for ab in self.assetbundles]  # manual instantiation
+        objects = [GkmasAssetBundle(ab) for ab in self.assetbundles]
         self._do_download(objects, nworker, **kwargs)
 
     def download_all_resources(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
@@ -261,7 +261,7 @@ class GkmasManifest:
         Downloads all resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [self[res["name"]] for res in self.resources]
+        objects = [GkmasResource(res) for res in self.resources]
         self._do_download(objects, nworker, **kwargs)
 
     def download_all(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
@@ -269,7 +269,10 @@ class GkmasManifest:
         Downloads all assetbundles and resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [self[obj] for obj in self]
+        # Instead of calling two separate methods,
+        # this approach ensures all workers are busy at transition.
+        objects = [GkmasAssetBundle(ab) for ab in self.assetbundles]
+        objects.extend([GkmasResource(res) for res in self.resources])
         self._do_download(objects, nworker, **kwargs)
 
     def _do_download(self, objects: list, nworker: int, **kwargs):
