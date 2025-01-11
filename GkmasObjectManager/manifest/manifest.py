@@ -22,7 +22,6 @@ import re
 import json
 import pandas as pd
 from pathlib import Path
-from typing import Union
 
 
 # The logger would better be a global variable in the
@@ -119,11 +118,7 @@ class GkmasManifest:
 
     # ------------ EXPORT ------------ #
 
-    def export(
-        self,
-        path: PATH_ARGTYPE,
-        format: Union["infer", "pdb", "json", "csv"] = "infer",
-    ):
+    def export(self, path: PATH_ARGTYPE, format: str = "infer"):
         """
         Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
         This is a dispatcher method.
@@ -157,7 +152,11 @@ class GkmasManifest:
             self._export_json(path)
         elif format == "csv":
             self._export_csv(path)
-        # no catch-all, already handled above and by type hint
+        else:
+            logger.warning(f"Unrecognized format '{format}', aborted")
+            # Could also be logger.error, but let's fail gracefully.
+            # This check used to appear in the type hint, but then
+            # this method would *silently* fail if the format was invalid.
 
     def _export_pdb(self, path: Path):
         """
