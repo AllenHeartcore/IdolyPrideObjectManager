@@ -1,6 +1,6 @@
 """
-utils.py
-List operation and concurrent downloading utilities.
+diclist.py
+A list of dictionaries, optimized for comparison.
 """
 
 from ..const import (
@@ -9,7 +9,6 @@ from ..const import (
     DICLIST_DIFF_IGNORED_FIELDS,
 )
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Union
 
 
@@ -68,29 +67,3 @@ class Diclist(list):
 
         # retain complete fields for output
         return Diclist([self[self_rip.index(entry)] for entry in self_rip - other_rip])
-
-
-class ConcurrentDownloader:
-    """
-    A multithreaded downloader for objects on server.
-
-    Methods:
-        dispatch(objects: list, **kwargs):
-            Downloads a list of objects to a specified path.
-            Executor implicitly calls object.GkmasResource.download() with **kwargs.
-    """
-
-    def __init__(self, nworker: int):
-        self.nworker = nworker
-
-    def dispatch(self, objects: list, **kwargs):
-        # don't use *args here to avoid fixed order
-
-        # not initialized in __init__ to avoid memory leak
-        self.executor = ThreadPoolExecutor(max_workers=self.nworker)
-
-        futures = [self.executor.submit(obj.download, **kwargs) for obj in objects]
-        for future in as_completed(futures):
-            future.result()
-
-        self.executor.shutdown()

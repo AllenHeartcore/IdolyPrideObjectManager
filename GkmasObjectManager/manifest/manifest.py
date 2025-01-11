@@ -14,12 +14,13 @@ from ..const import (
 )
 
 from .octodb_pb2 import dict2pdbytes
-from .utils import Diclist, ConcurrentDownloader
+from .diclist import Diclist
 
 import re
 import json
 import pandas as pd
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # The logger would better be a global variable in the
@@ -277,6 +278,10 @@ class GkmasManifest:
 
     def _do_download(self, objects: list, nworker: int, **kwargs):
         """
-        [INTERNAL] Dispatches a list of objects to a ConcurrentDownloader.
+        [INTERNAL] Dispatches a list of objects to concurrent download tasks.
         """
-        ConcurrentDownloader(nworker).dispatch(objects, **kwargs)
+        self.executor = ThreadPoolExecutor(max_workers=nworker)
+        futures = [self.executor.submit(obj.download, **kwargs) for obj in objects]
+        for future in as_completed(futures):
+            future.result()
+        self.executor.shutdown()
