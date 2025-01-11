@@ -22,6 +22,7 @@ import re
 import json
 import pandas as pd
 from pathlib import Path
+from typing import Union
 
 
 # The logger would better be a global variable in the
@@ -65,6 +66,7 @@ class GkmasManifest:
         self.revision = jdict["revision"]
         self.assetbundles = Diclist(jdict["assetBundleList"])
         self.resources = Diclist(jdict["resourceList"])
+        # 'jdict' is then discarded and losslessly reconstructed at export
 
     def __repr__(self):
         return f"<GkmasManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
@@ -105,47 +107,64 @@ class GkmasManifest:
             }
         )
 
+    def _get_jdict(self):
+        """
+        [INTERNAL] Returns the JSON dictionary of the manifest.
+        """
+        return {
+            "revision": self.revision,
+            "assetBundleList": self.assetbundles,
+            "resourceList": self.resources,
+        }
+
     # ------------ EXPORT ------------ #
 
-    def export(self, path: PATH_ARGTYPE):
+    def export(
+        self,
+        path: PATH_ARGTYPE,
+        format: Union["infer", "pdb", "json", "csv"] = "infer",
+    ):
         """
         Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
         This is a dispatcher method.
 
         Args:
-            path (Union[str, Path]): A directory or a file path.
-                If a directory, all three formats are exported.
-                If a file path, the format is determined by the extension
-                (all extensions other than .json and .csv are treated as raw binary
-                and therefore exported as ProtoDB).
+            path (Union[str, Path]): A file path.
+                The format is determined by the extension if 'format' is 'infer'.
+                (All extensions other than .json and .csv are inferred
+                as raw binary and therefore exported as ProtoDB, but
+                a warning is issued if the extension is not .pdb.)
+            format (str) = 'infer': The format to export.
+                Should be one of 'pdb', 'json', 'csv', or 'infer'.
         """
 
         path = Path(path)
 
-        if path.suffix == "":
-            # used to be path.is_dir(), but it also returns False for non-existent dirs
-            path.mkdir(parents=True, exist_ok=True)
-            self._export_pdb(path / f"manifest_v{self.revision}.pdb")
-            self._export_json(path / f"manifest_v{self.revision}.json")
-            self._export_csv(path / f"manifest_v{self.revision}.csv")
-
-        else:
-            path.parent.mkdir(parents=True, exist_ok=True)
+        if format == "infer":
             if path.suffix == ".pdb":
-                self._export_pdb(path)
+                format = "pdb"
             elif path.suffix == ".json":
-                self._export_json(path)
+                format = "json"
             elif path.suffix == ".csv":
-                self._export_csv(path)
+                format = "csv"
             else:
-                logger.warning("Unrecognized file extension, abort")
+                logger.warning("Unrecognized file extension, defaulting to ProtoDB")
+                format = "pdb"
+
+        if format == "pdb":
+            self._export_pdb(path)
+        elif format == "json":
+            self._export_json(path)
+        elif format == "csv":
+            self._export_csv(path)
+        # no catch-all, already handled above and by type hint
 
     def _export_pdb(self, path: Path):
         """
         [INTERNAL] Writes raw protobuf bytes into the specified path.
         """
         try:
-            path.write_bytes(dict2pdbytes(self.jdict))
+            path.write_bytes(dict2pdbytes(self._get_jdict()))
             logger.success(f"ProtoDB has been written into {path}")
         except:
             logger.warning(f"Failed to write ProtoDB into {path}")
@@ -155,7 +174,7 @@ class GkmasManifest:
         [INTERNAL] Writes JSON-serialized dictionary into the specified path.
         """
         try:
-            path.write_text(json.dumps(self.jdict, indent=4))
+            path.write_text(json.dumps(self._get_jdict(), indent=4))
             logger.success(f"JSON has been written into {path}")
         except:
             logger.warning(f"Failed to write JSON into {path}")
@@ -166,11 +185,16 @@ class GkmasManifest:
         Assetbundles and resources are concatenated into a single table and sorted by name.
         Assetbundles can be distinguished by their '.unity3d' suffix.
         """
-        dfa = pd.DataFrame(self.assetbundles, columns=CSV_COLUMNS)
+
+        # Forced list conversion is necessary since Diclist overrides __iter__,
+        # which handles integer keys (index by ID) and messes up with standard modules
+        # like pandas that rely on self[0] as a "sample" object from the list.
+        dfa = pd.DataFrame(list(self.assetbundles), columns=CSV_COLUMNS)
         dfa["name"] = dfa["name"].apply(lambda x: x + ".unity3d")
-        dfr = pd.DataFrame(self.resources, columns=CSV_COLUMNS)
+        dfr = pd.DataFrame(list(self.resources), columns=CSV_COLUMNS)
         df = pd.concat([dfa, dfr], ignore_index=True)
         df.sort_values("name", inplace=True)
+
         try:
             df.to_csv(path, index=False)
             logger.success(f"CSV has been written into {path}")
