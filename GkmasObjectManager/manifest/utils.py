@@ -9,7 +9,6 @@ from ..const import (
     DICLIST_DIFF_IGNORED_FIELDS,
 )
 
-import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Union
 

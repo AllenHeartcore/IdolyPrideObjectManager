@@ -31,5 +31,5 @@ class Logger(Console):
         self.print(f"[bold yellow][Warning][/bold yellow] {message}")
 
     def error(self, message: str):
-        self.print(f"[bold red][Error][/bold red] {message}\n{sys.exc_info()}")
+        self.print(f"[bold red][Error][/bold red] {message}")
         raise
