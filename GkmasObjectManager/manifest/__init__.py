@@ -21,6 +21,11 @@ def fetch(revision: int = 0) -> GkmasManifest:
     """
     Requests an online manifest by the specified revision.
     Algorithm courtesy of github.com/DreamGallery/HatsuboshiToolkit
+
+    Args:
+        revision (int): The "base" revision number of the manifest.
+            This API return the *difference* between the requested revision
+            and the latest. Defaults to 0 (latest).
     """
     url = urljoin(GKMAS_API_URL, str(revision))
     enc = requests.get(url, headers=GKMAS_API_HEADER).content
@@ -28,7 +33,7 @@ def fetch(revision: int = 0) -> GkmasManifest:
     return GkmasManifest(pdbytes2dict(dec))
 
 
-def load(src: PATH_ARGTYPE):
+def load(src: PATH_ARGTYPE) -> GkmasManifest:
     """
     Initializes a manifest from the given offline source.
     The protobuf referred to can be either encrypted or not.
