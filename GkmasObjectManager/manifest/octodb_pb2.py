@@ -75,5 +75,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
 
 # Interface between ProtoDB bytestring and JSON
-pdb_to_json = lambda pdb: MessageToDict(Database().FromString(pdb))
-json_to_pdb = lambda jdict: ParseDict(jdict, Database()).SerializeToString()
+# (Avoid lambda functions for rigorous type checking)
+
+
+def pdbytes2dict(pdb: bytes) -> dict:
+    return MessageToDict(Database().FromString(pdb))
+
+
+def dict2pdbytes(jdict: dict) -> bytes:
+    return ParseDict(jdict, Database()).SerializeToString()

@@ -9,7 +9,7 @@ from ..const import (
 
 from .manifest import GkmasManifest
 from .decrypt import AESCBCDecryptor
-from .octodb_pb2 import pdb_to_json
+from .octodb_pb2 import pdbytes2dict
 
 import json
 import requests
@@ -25,7 +25,7 @@ def fetch(revision: int = 0) -> GkmasManifest:
     url = urljoin(GKMAS_API_URL, str(revision))
     enc = requests.get(url, headers=GKMAS_API_HEADER).content
     dec = AESCBCDecryptor(GKMAS_ONLINEPDB_KEY, enc[:16]).process(enc[16:])
-    return GkmasManifest(pdb_to_json(dec))
+    return GkmasManifest(pdbytes2dict(dec))
 
 
 def load(src: PATH_ARGTYPE):
@@ -46,7 +46,7 @@ def load(src: PATH_ARGTYPE):
     except:
         enc = Path(src).read_bytes()
         try:
-            return GkmasManifest(pdb_to_json(enc))
+            return GkmasManifest(pdbytes2dict(enc))
         except:
             dec = AESCBCDecryptor(GKMAS_OCTOCACHE_KEY, GKMAS_OCTOCACHE_IV).process(enc)
-            return GkmasManifest(pdb_to_json(dec[16:]))  # trim md5 hash
+            return GkmasManifest(pdbytes2dict(dec[16:]))  # trim md5 hash
