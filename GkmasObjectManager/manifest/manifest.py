@@ -78,11 +78,11 @@ class GkmasManifest:
         except KeyError:
             return GkmasResource(self.resources[key])
 
-    def __iter__(self):
+    def __iter__(self):  # primarily for regex match in download()
         for ab in self.assetbundles:
-            yield GkmasAssetBundle(ab)
+            yield ab["name"]
         for res in self.resources:
-            yield GkmasResource(res)
+            yield res["name"]
 
     def __len__(self):
         return len(self.assetbundles) + len(self.resources)
@@ -244,7 +244,7 @@ class GkmasManifest:
             logger.warning("No objects matched the criteria, aborted")
             return
 
-        _do_download(objects, nworker, **kwargs)
+        self._do_download(objects, nworker, **kwargs)
 
     def download_all_assetbundles(
         self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs
@@ -253,22 +253,24 @@ class GkmasManifest:
         Downloads all assetbundles to the specified path.
         See download() for a list of keyword arguments.
         """
-        _do_download(self.abs, nworker, **kwargs)
+        objects = [self[ab["name"]] for ab in self.assetbundles]  # manual instantiation
+        self._do_download(objects, nworker, **kwargs)
 
     def download_all_resources(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
         """
         Downloads all resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        _do_download(self.reses, nworker, **kwargs)
+        objects = [self[res["name"]] for res in self.resources]
+        self._do_download(objects, nworker, **kwargs)
 
     def download_all(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
         """
         Downloads all assetbundles and resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        download_all_assetbundles(nworker, **kwargs)
-        download_all_resources(nworker, **kwargs)
+        objects = [self[obj] for obj in self]
+        self._do_download(objects, nworker, **kwargs)
 
     def _do_download(self, objects: list, nworker: int, **kwargs):
         """
