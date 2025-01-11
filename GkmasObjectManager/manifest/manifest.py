@@ -10,8 +10,6 @@ from ..const import (
     IMG_RESIZE_ARGTYPE,
     ALL_ASSETBUNDLES,
     ALL_RESOURCES,
-    DICLIST_INIT_SORT_BY,
-    DICLIST_DIFF_IGNORED_FIELDS,
     CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
     DEFAULT_DOWNLOAD_NWORKER,
@@ -65,22 +63,17 @@ class GkmasManifest:
                 Must contain 'revision', 'assetBundleList', and 'resourceList' keys.
         """
         self.revision = jdict["revision"]
-        self.assetbundles = Diclist(
-            jdict["assetBundleList"], sort_by=DICLIST_INIT_SORT_BY
-        )
-        self.resources = Diclist(jdict["resourceList"], sort_by=DICLIST_INIT_SORT_BY)
+        self.assetbundles = Diclist(jdict["assetBundleList"])
+        self.resources = Diclist(jdict["resourceList"])
 
     def __repr__(self):
         return f"<GkmasManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
 
     def __getitem__(self, key: str):
-        for ab in self.assetbundles:
-            if re.match(key, ab["name"]):
-                return GkmasAssetBundle(ab)
-        for res in self.resources:
-            if re.match(key, res["name"]):
-                return GkmasResource(res)
-        return None
+        try:
+            return GkmasAssetBundle(self.assetbundles[key])
+        except KeyError:
+            return GkmasResource(self.resources[key])
 
     def __iter__(self):
         for ab in self.assetbundles:
@@ -92,9 +85,11 @@ class GkmasManifest:
         return len(self.assetbundles) + len(self.resources)
 
     def __contains__(self, key: str):
-        return any(re.match(key, ab["name"]) for ab in self.assetbundles) or any(
-            re.match(key, res["name"]) for res in self.resources
-        )
+        try:
+            self[key]
+            return True
+        except KeyError:
+            return False
 
     def __sub__(self, other):
         """
@@ -105,12 +100,8 @@ class GkmasManifest:
         return GkmasManifest(
             {
                 "revision": f"{self.revision}-{other.revision}",
-                "assetBundleList": self.assetbundles.diff(
-                    other.assetbundles, DICLIST_DIFF_IGNORED_FIELDS
-                ),
-                "resourceList": self.resources.diff(
-                    other.resources, DICLIST_DIFF_IGNORED_FIELDS
-                ),
+                "assetBundleList": self.assetbundles.diff(other.assetbundles),
+                "resourceList": self.resources.diff(other.resources),
             }
         )
 

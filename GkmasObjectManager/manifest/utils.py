@@ -3,8 +3,15 @@ utils.py
 List operation and concurrent downloading utilities.
 """
 
+from ..const import (
+    DICLIST_INDEX_FIELD,
+    DICLIST_NAME_FIELD,
+    DICLIST_DIFF_IGNORED_FIELDS,
+)
+
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Union
 
 
 class Diclist(list):
@@ -22,7 +29,7 @@ class Diclist(list):
             but **retains all fields** in the reconstructed output.
     """
 
-    def __init__(self, diclist: list, sort_by: str = None):
+    def __init__(self, diclist: list, sort_by: str = DICLIST_INDEX_FIELD):
 
         diclist = diclist.copy()
         # such that all subsequent operations (especially rip_field)
@@ -33,6 +40,14 @@ class Diclist(list):
 
         super().__init__(diclist)
 
+    def __getitem__(self, key: Union[int, str]) -> dict:
+        for item in self:
+            if (isinstance(key, int) and item[DICLIST_INDEX_FIELD] == key) or (
+                isinstance(key, str) and item[DICLIST_NAME_FIELD] == key
+            ):
+                return item
+        raise KeyError
+
     def __sub__(self, other: "Diclist") -> "Diclist":
         return Diclist([item for item in self if item not in other])
 
@@ -41,7 +56,9 @@ class Diclist(list):
             [{k: v for k, v in entry.items() if k not in targets} for entry in self]
         )
 
-    def diff(self, other: "Diclist", ignored_fields: list = []) -> "Diclist":
+    def diff(
+        self, other: "Diclist", ignored_fields: list = DICLIST_DIFF_IGNORED_FIELDS
+    ) -> "Diclist":
 
         if not ignored_fields:
             return self - other
