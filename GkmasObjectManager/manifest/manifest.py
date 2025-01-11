@@ -7,13 +7,14 @@ from ..object import GkmasAssetBundle, GkmasResource
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
+    IMG_RESIZE_ARGTYPE,
     ALL_ASSETBUNDLES,
     ALL_RESOURCES,
-    IMG_RESIZE_ARGTYPE,
+    DICLIST_INIT_SORT_BY,
+    DICLIST_DIFF_IGNORED_FIELDS,
+    CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
     DEFAULT_DOWNLOAD_NWORKER,
-    DICLIST_IGNORED_FIELDS,
-    CSV_COLUMNS,
 )
 
 from .octodb_pb2 import dict2pdbytes
@@ -36,9 +37,9 @@ class GkmasManifest:
 
     Attributes:
         revision (str): Manifest revision, a number or a string (for manifest from diff).
-        jdict (dict): JSON-serialized dictionary of the protobuf.
-        abs (list): List of GkmasAssetBundle objects.
-        reses (list): List of GkmasResource objects.
+        assetbundles (Diclist): List of assetbundle *info dictionaries*.
+        resources (Diclist): List of resource *info dictionaries*.
+    *Documentation for Diclist can be found in utils.py.*
 
     Methods:
         download(
@@ -62,44 +63,38 @@ class GkmasManifest:
         Args:
             jdict (dict): JSON-serialized dictionary extracted from protobuf.
                 Must contain 'revision', 'assetBundleList', and 'resourceList' keys.
-
-        Internal attributes:
-            _abl (Diclist): List of assetbundle *info dictionaries*.
-            _resl (Diclist): List of resource *info dictionaries*.
-            _name2object (dict): Mapping from object name to GkmasAssetBundle/GkmasResource.
-
-        Documentation for Diclist can be found in utils.py.
         """
-        jdict["assetBundleList"] = sorted(
-            jdict["assetBundleList"], key=lambda x: x["id"]
-        )
-        jdict["resourceList"] = sorted(jdict["resourceList"], key=lambda x: x["id"])
-        self.jdict = jdict
         self.revision = jdict["revision"]
-        self._abl = Diclist(self.jdict["assetBundleList"])
-        self._resl = Diclist(self.jdict["resourceList"])
-        self.abs = [GkmasAssetBundle(ab) for ab in self._abl]
-        self.reses = [GkmasResource(res) for res in self._resl]
-        self._name2object = {ab.name: ab for ab in self.abs}  # quick lookup
-        self._name2object.update({res.name: res for res in self.reses})
-        logger.info(f"Found {len(self.abs)} assetbundles")
-        logger.info(f"Found {len(self.reses)} resources")
-        logger.info(f"Detected revision: {self.revision}")
+        self.assetbundles = Diclist(
+            jdict["assetBundleList"], sort_by=DICLIST_INIT_SORT_BY
+        )
+        self.resources = Diclist(jdict["resourceList"], sort_by=DICLIST_INIT_SORT_BY)
 
     def __repr__(self):
-        return f"<GkmasManifest revision {self.revision}>"
+        return f"<GkmasManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
 
     def __getitem__(self, key: str):
-        return self._name2object[key]
+        for ab in self.assetbundles:
+            if re.match(key, ab["name"]):
+                return GkmasAssetBundle(ab)
+        for res in self.resources:
+            if re.match(key, res["name"]):
+                return GkmasResource(res)
+        return None
 
     def __iter__(self):
-        return iter(self._name2object.values())
+        for ab in self.assetbundles:
+            yield GkmasAssetBundle(ab)
+        for res in self.resources:
+            yield GkmasResource(res)
 
     def __len__(self):
-        return len(self._name2object)
+        return len(self.assetbundles) + len(self.resources)
 
     def __contains__(self, key: str):
-        return key in self._name2object
+        return any(re.match(key, ab["name"]) for ab in self.assetbundles) or any(
+            re.match(key, res["name"]) for res in self.resources
+        )
 
     def __sub__(self, other):
         """
@@ -107,16 +102,17 @@ class GkmasManifest:
         The diffdict refers to a dictionary containing differentiated
         assetbundles and resources, created by utils.Diclist.diff().
         """
-        manifest = GkmasManifest()
-        manifest.revision = f"{self.revision}-{other.revision}"
-        manifest._parse_jdict(
+        return GkmasManifest(
             {
-                "assetBundleList": self._abl.diff(other._abl, DICLIST_IGNORED_FIELDS),
-                "resourceList": self._resl.diff(other._resl, DICLIST_IGNORED_FIELDS),
+                "revision": f"{self.revision}-{other.revision}",
+                "assetBundleList": self.assetbundles.diff(
+                    other.assetbundles, DICLIST_DIFF_IGNORED_FIELDS
+                ),
+                "resourceList": self.resources.diff(
+                    other.resources, DICLIST_DIFF_IGNORED_FIELDS
+                ),
             }
         )
-        logger.info("Manifest created from differentiation")
-        return manifest
 
     # ------------ EXPORT ------------ #
 
@@ -179,9 +175,9 @@ class GkmasManifest:
         Assetbundles and resources are concatenated into a single table and sorted by name.
         Assetbundles can be distinguished by their '.unity3d' suffix.
         """
-        dfa = pd.DataFrame(self._abl, columns=CSV_COLUMNS)
+        dfa = pd.DataFrame(self.assetbundles, columns=CSV_COLUMNS)
         dfa["name"] = dfa["name"].apply(lambda x: x + ".unity3d")
-        dfr = pd.DataFrame(self._resl, columns=CSV_COLUMNS)
+        dfr = pd.DataFrame(self.resources, columns=CSV_COLUMNS)
         df = pd.concat([dfa, dfr], ignore_index=True)
         df.sort_values("name", inplace=True)
         try:
@@ -233,13 +229,7 @@ class GkmasManifest:
             elif criterion == ALL_RESOURCES:
                 objects.extend(self.reses)
             else:
-                objects.extend(
-                    [
-                        self._name2object[file]
-                        for file in self._name2object
-                        if re.match(criterion, file)
-                    ]
-                )
+                objects.extend([])
 
         ConcurrentDownloader(nworker).dispatch(
             objects,

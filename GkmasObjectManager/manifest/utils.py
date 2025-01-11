@@ -22,10 +22,16 @@ class Diclist(list):
             but **retains all fields** in the reconstructed output.
     """
 
-    def __init__(self, diclist: list):
-        super().__init__(diclist.copy())
+    def __init__(self, diclist: list, sort_by: str = None):
+
+        diclist = diclist.copy()
         # such that all subsequent operations (especially rip_field)
         # are non-destructive to the original list
+
+        if sort_by:
+            diclist.sort(key=lambda x: x[sort_by])
+
+        super().__init__(diclist)
 
     def __sub__(self, other: "Diclist") -> "Diclist":
         return Diclist([item for item in self if item not in other])
