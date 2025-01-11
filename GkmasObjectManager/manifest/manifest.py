@@ -17,7 +17,7 @@ from ..const import (
     GKMAS_OCTOCACHE_IV,
 )
 
-from .crypt import AESCBCDecryptor
+from .decrypt import AESCBCDecryptor
 from ..object import GkmasAssetBundle, GkmasResource
 
 import requests

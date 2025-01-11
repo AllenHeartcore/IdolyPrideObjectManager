@@ -98,8 +98,9 @@ class GkmasAssetBundle(GkmasResource):
             self._export_img(path, enc, extract_img, img_format, img_resize)
             logger.success(f"{self._idname} downloaded")
         else:
-            cipher = GkmasAssetBundleDeobfuscator(self.name.replace(".unity3d", ""))
-            dec = cipher.process(enc)
+            dec = GkmasAssetBundleDeobfuscator(
+                self.name.replace(".unity3d", "")
+            ).process(enc)
             if dec.startswith(UNITY_SIGNATURE):
                 self._export_img(path, dec, extract_img, img_format, img_resize)
                 logger.success(f"{self._idname} downloaded and deobfuscated")
