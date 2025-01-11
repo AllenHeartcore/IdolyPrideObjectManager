@@ -23,9 +23,6 @@ manifest = GkmasManifest("EncryptedCache/octocacheevai")
 manifest.export('DecryptedCache/')
 manifest.download('adv.*ttmr.*', 'sud_vo.*fktn.*', 'mdl.*hski.*', nworker=8)
 
-from GkmasObjectManager import ALL_ASSETBUNDLES, ALL_RESOURCES
-manifest.download(ALL_ASSETBUNDLES, ALL_RESOURCES)
-
 manifest_old = GkmasManifest("EncryptedCache/octocacheevai_old")
 mdiff = manifest - manifest_old
 mdiff.export('DecryptedCache/diff/')
@@ -34,4 +31,4 @@ mdiff.export('DecryptedCache/diff/')
 
 from .manifest import GkmasManifest, fetch, load
 from .object import GkmasAssetBundle, GkmasResource
-from .const import ALL_ASSETBUNDLES, ALL_RESOURCES, VERSION, LATEST
+from .const import VERSION, LATEST

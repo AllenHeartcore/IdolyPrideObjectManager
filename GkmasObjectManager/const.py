@@ -11,8 +11,6 @@ from typing import Union, Tuple
 
 # client-side visible control tokens
 # that start with '<' and end with '>' (prohibited in Windows paths)
-ALL_ASSETBUNDLES = "<ALL_ASSETBUNDLES>"
-ALL_RESOURCES = "<ALL_RESOURCES>"
 VERSION = lambda x: f"<{x:d}>"
 LATEST = VERSION(0)
 

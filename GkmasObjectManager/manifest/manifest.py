@@ -8,8 +8,6 @@ from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
     IMG_RESIZE_ARGTYPE,
-    ALL_ASSETBUNDLES,
-    ALL_RESOURCES,
     CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
     DEFAULT_DOWNLOAD_NWORKER,
@@ -213,18 +211,13 @@ class GkmasManifest:
         self,
         *criteria: str,
         nworker: int = DEFAULT_DOWNLOAD_NWORKER,
-        path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
-        categorize: bool = True,
-        extract_img: bool = True,
-        img_format: str = "png",
-        img_resize: IMG_RESIZE_ARGTYPE = None,
+        **kwargs,
     ):
         """
         Downloads the regex-specified assetbundles/resources to the specified path.
 
         Args:
             *criteria (str): Regex patterns of assetbundle/resource names.
-                Allowed special tokens are const.ALL_ASSETBUNDLES and const.ALL_RESOURCES.
             nworker (int) = DEFAULT_DOWNLOAD_NWORKER: Number of concurrent download workers.
                 Defaults to multiprocessing.cpu_count().
             path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
@@ -245,18 +238,40 @@ class GkmasManifest:
         objects = []
 
         for criterion in criteria:
-            if criterion == ALL_ASSETBUNDLES:  # special tokens, enclosed in <>
-                objects.extend(self.abs)
-            elif criterion == ALL_RESOURCES:
-                objects.extend(self.reses)
-            else:
-                objects.extend([])
+            objects.extend([self[file] for file in self if re.match(criterion, file)])
 
-        ConcurrentDownloader(nworker).dispatch(
-            objects,
-            path=path,
-            categorize=categorize,
-            extract_img=extract_img,
-            img_format=img_format,
-            img_resize=img_resize,
-        )
+        if not objects:
+            logger.warning("No objects matched the criteria, aborted")
+            return
+
+        _do_download(objects, nworker, **kwargs)
+
+    def download_all_assetbundles(
+        self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs
+    ):
+        """
+        Downloads all assetbundles to the specified path.
+        See download() for a list of keyword arguments.
+        """
+        _do_download(self.abs, nworker, **kwargs)
+
+    def download_all_resources(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
+        """
+        Downloads all resources to the specified path.
+        See download() for a list of keyword arguments.
+        """
+        _do_download(self.reses, nworker, **kwargs)
+
+    def download_all(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
+        """
+        Downloads all assetbundles and resources to the specified path.
+        See download() for a list of keyword arguments.
+        """
+        download_all_assetbundles(nworker, **kwargs)
+        download_all_resources(nworker, **kwargs)
+
+    def _do_download(self, objects: list, nworker: int, **kwargs):
+        """
+        [INTERNAL] Dispatches a list of objects to a ConcurrentDownloader.
+        """
+        ConcurrentDownloader(nworker).dispatch(objects, **kwargs)
