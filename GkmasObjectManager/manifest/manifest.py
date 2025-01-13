@@ -56,7 +56,7 @@ class GkmasManifest:
             Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
     """
 
-    def __init__(self, jdict: dict):
+    def __init__(self, jdict: dict, base_revision: int = 0):
         """
         [INTERNAL] Initializes a manifest from the given JSON dictionary.
 
@@ -64,11 +64,25 @@ class GkmasManifest:
             jdict (dict): JSON-serialized dictionary extracted from protobuf.
                 Must contain 'revision', 'assetBundleList', 'resourceList',
                 and 'urlFormat' keys.
+            base_revision (int) = 0: The revision number of the base manifest.
+                Manually specified when loading a diff, at which case
+                a warning of conflict is raised if jdict['revision'] is already a tuple.
         """
-        self.revision = jdict["revision"]
+
+        revision = jdict["revision"]  # not jdict.get() to enforce presence; same below
+        if isinstance(revision, int):
+            revision = (revision, 0)
+        if base_revision != 0:  # leave negative base handling to the Revision class
+            if base_revision != revision[1] != 0:  # equivalent to a 2-AND
+                logger.warning(
+                    f"Overriding detected base revision v{revision[1]} with specified revision v{base_revision}."
+                )
+            revision = (revision[0], base_revision)  # proceed anyway
+
+        self.revision = GkmasManifestRevision(*revision)
         self.assetbundles = Diclist(jdict["assetBundleList"])
         self.resources = Diclist(jdict["resourceList"])
-        self.urlformat = jdict["urlFormat"]  # not jdict.get() to enforce presence
+        self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
 
     def __repr__(self):
@@ -103,8 +117,8 @@ class GkmasManifest:
         assetbundles and resources, created by utils.Diclist.diff().
         """
         return GkmasManifest(
-            {
-                "revision": f"{self.revision}-{other.revision}",
+            {  # this is not a standard JSON dict, more like named arguments
+                "revision": self.revision - other.revision,
                 "assetBundleList": self.assetbundles.diff(other.assetbundles),
                 "resourceList": self.resources.diff(other.resources),
                 "urlFormat": self.urlformat,
@@ -117,7 +131,7 @@ class GkmasManifest:
         [INTERNAL] Returns the JSON dictionary of the manifest.
         """
         return {
-            "revision": self.revision,
+            "revision": self.revision.get_json_repr(),
             "assetBundleList": self.assetbundles,
             "resourceList": self.resources,
             "urlFormat": self.urlformat,

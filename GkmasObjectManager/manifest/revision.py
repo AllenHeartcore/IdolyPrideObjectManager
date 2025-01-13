@@ -26,10 +26,22 @@ class GkmasManifestRevision:
         self.base = base
 
     def __repr__(self):
+        return f"<GkmasManifestRevision {self}>"
+
+    def __str__(self):
         if self.base == 0:
             return f"v{self.this}"
         else:
             return f"v{self.this}-diff-v{self.base}"
+
+    def get_json_repr(self):
+        """
+        [INTERNAL] Returns either an integer or a tuple. Used in manifest export.
+        """
+        if self.base == 0:
+            return self.this
+        else:
+            return (self.this, self.base)
 
     def __eq__(self, other):
         return self.this == other.this and self.base == other.base
