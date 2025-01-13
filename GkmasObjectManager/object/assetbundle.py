@@ -40,7 +40,6 @@ class GkmasAssetBundle(GkmasResource):
             Also extracts a single image from each bundle with type 'img'.
     """
 
-    from ._download import _download_path, _download_bytes, _determine_subdir
     from ._export_img import _export_img, _determine_new_size
 
     def __init__(self, info: dict):
