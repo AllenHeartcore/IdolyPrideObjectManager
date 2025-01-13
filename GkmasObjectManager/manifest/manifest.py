@@ -183,21 +183,29 @@ class GkmasManifest:
         """
         [INTERNAL] Writes raw protobuf bytes into the specified path.
         """
+
+        if path.suffix != ".pdb":
+            logger.warning("Attempting to write ProtoDB into a non-.pdb file")
+
         try:
             path.write_bytes(dict2pdbytes(self._get_jdict()))
             logger.success(f"ProtoDB has been written into {path}")
         except:
-            logger.warning(f"Failed to write ProtoDB into {path}")
+            logger.error(f"Failed to write ProtoDB into {path}")
 
     def _export_json(self, path: Path):
         """
         [INTERNAL] Writes JSON-serialized dictionary into the specified path.
         """
+
+        if path.suffix != ".json":
+            logger.warning("Attempting to write JSON into a non-.json file")
+
         try:
             path.write_text(json.dumps(self._get_jdict(), indent=4))
             logger.success(f"JSON has been written into {path}")
         except:
-            logger.warning(f"Failed to write JSON into {path}")
+            logger.error(f"Failed to write JSON into {path}")
 
     def _export_csv(self, path: Path):
         """
@@ -205,6 +213,9 @@ class GkmasManifest:
         Assetbundles and resources are concatenated into a single table and sorted by name.
         Assetbundles can be distinguished by their '.unity3d' suffix.
         """
+
+        if path.suffix != ".csv":
+            logger.warning("Attempting to write CSV into a non-.csv file")
 
         # Forced list conversion is necessary since Diclist overrides __iter__,
         # which handles integer keys (index by ID) and messes up with standard modules
@@ -219,7 +230,7 @@ class GkmasManifest:
             df.to_csv(path, index=False)
             logger.success(f"CSV has been written into {path}")
         except:
-            logger.warning(f"Failed to write CSV into {path}")
+            logger.error(f"Failed to write CSV into {path}")
 
     # ----------- DOWNLOAD ----------- #
 
