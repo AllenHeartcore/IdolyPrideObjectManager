@@ -1,7 +1,7 @@
 import os
 from sys import argv
 
-from GkmasObjectManager import GkmasManifest
+import GkmasObjectManager as gom
 from GkmasObjectManager.const import CHARACTER_ABBREVS
 from GkmasObjectManager.log import Logger
 
@@ -51,8 +51,8 @@ if __name__ == "__main__":
     assert len(argv) == 2, "Usage: python make_namecard_kit.py <manifest>"
     logger = Logger()
 
-    manifest = GkmasManifest(argv[1])
-    target = f"gkmas_namecard_kit_v{manifest.revision}/"  # output directory
+    manifest = gom.load(argv[1])
+    target = f"gkmas_namecard_kit_{manifest.revision}/"  # output directory
 
     for pattern, subdir, *config in instructions_dl:
         logger.info(f"Populating '{subdir}'")

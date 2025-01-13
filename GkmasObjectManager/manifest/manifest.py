@@ -13,6 +13,7 @@ from ..const import (
     DEFAULT_DOWNLOAD_NWORKER,
 )
 
+from .revision import GkmasManifestRevision
 from .octodb_pb2 import dict2pdbytes
 from .diclist import Diclist
 
@@ -33,7 +34,7 @@ class GkmasManifest:
     A GKMAS manifest, containing info about assetbundles and resources.
 
     Attributes:
-        revision (str): Manifest revision, a number or a string (for manifest from diff).
+        revision (GkmasManifestRevision): Manifest revision this-diff-base (see revision.py).
         assetbundles (Diclist): List of assetbundle *info dictionaries*.
         resources (Diclist): List of resource *info dictionaries*.
         urlformat (str): URL format for downloading assetbundles/resources.

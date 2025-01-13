@@ -12,7 +12,7 @@ in the mobile game Gakuen Idolm@ster (https://gakuen.idolmaster-official.jp/).
 Features
 --------
 - Decrypt and export octocache as raw ProtoDB, JSON, or CSV
-- Differentiate between octocache versions
+- Differentiate between octocache revisions
 - Download and deobfuscate objects in parallel
 
 Example Usage
