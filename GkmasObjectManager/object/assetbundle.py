@@ -13,6 +13,7 @@ from ..const import (
 
 from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
+from .plugins.image import UnityImage
 
 
 logger = Logger()
@@ -40,8 +41,6 @@ class GkmasAssetBundle(GkmasResource):
             Also extracts a single image from each bundle with type 'img'.
     """
 
-    from ._export_img import _export_img, _determine_new_size
-
     def __init__(self, info: dict):
         """
         Initializes an assetbundle with the given information.
@@ -63,6 +62,7 @@ class GkmasAssetBundle(GkmasResource):
         self,
         path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
         categorize: bool = True,
+        extract_img: bool = True,
         **kwargs,
     ):
         """
@@ -92,12 +92,12 @@ class GkmasAssetBundle(GkmasResource):
         enc = self._download_bytes()
 
         if enc.startswith(UNITY_SIGNATURE):
-            self._export_img(path, enc, **kwargs)
+            self._extract_dispatcher(path, enc, extract_img, **kwargs)
             logger.success(f"{self._idname} downloaded")
         else:
             dec = GkmasAssetBundleDeobfuscator(self.name).process(enc)
             if dec.startswith(UNITY_SIGNATURE):
-                self._export_img(path, dec, **kwargs)
+                self._extract_dispatcher(path, dec, extract_img, **kwargs)
                 logger.success(f"{self._idname} downloaded and deobfuscated")
             else:
                 path.write_bytes(enc)
@@ -105,3 +105,21 @@ class GkmasAssetBundle(GkmasResource):
                 # Unexpected things may happen...
                 # So unlike _download_bytes() in the parent class,
                 # here we don't raise an error and abort.
+
+    def _extract_dispatcher(
+        self,
+        path: PATH_ARGTYPE,  # no default value to enforce presence
+        data: bytes,
+        extract_img: bool,  # kwargs referenced in THIS method must be explicitly listed
+        **kwargs,
+    ):
+        """
+        [INTERNAL] Dispatches the extraction of various formats
+        based on the assetbundle's name and the extract_* flags.
+        Designed to be modular and easily extensible.
+        """
+
+        if self.name.startswith("img_") and extract_img:
+            UnityImage(self._idname, data).export(path, **kwargs)
+        else:
+            path.write_bytes(data)

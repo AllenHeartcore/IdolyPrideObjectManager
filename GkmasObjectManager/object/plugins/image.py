@@ -19,48 +19,35 @@ class UnityImage:  # no 'Gkmas' prefix since this is general-purpose
 
     def __init__(
         self,
-        path: Path,
+        name: str,
         data: bytes,
-        extract_img: bool,
-        img_format: str,
-        img_resize: IMG_RESIZE_ARGTYPE,
     ):
         """
-        Initializes an image extractor with the given parameters.
+        Initializes a Unity image from raw bytes.
         """
 
-        self.path = path
-        self.data = data
-        self.extract_img = extract_img
-        self.img_format = img_format
-        self.img_resize = img_resize
+        env = UnityPy.load(data)
+        values = list(env.container.values())
 
-    def _export_img(
+        if len(values) != 1:
+            logger.warning(f"{name} contains {len(values)} images, fallback to rawdump")
+            return None
+
+        self.name = name
+        self.img = values[0].read().image
+
+    def export(
         self,
         path: Path,
-        data: bytes,
-        extract_img: bool,
         img_format: str,
         img_resize: IMG_RESIZE_ARGTYPE,
     ):
         """
         [INTERNAL] Attempts to extract a single image from the assetbundle's container.
-        Triggered only when the assetbundle name starts with 'img_' AND extract_img is True.
+        Should be called only when the assetbundle name starts with 'img_' AND extract_img is True.
         Raises a warning and falls back to raw dump if the bundle contains multiple objects.
         """
 
-        if self.name.split("_")[0] != "img" or not extract_img:
-            path.write_bytes(data)
-            return
-
-        env = UnityPy.load(data)
-        values = list(env.container.values())
-        if len(values) != 1:
-            logger.warning(f"{self._idname} contains {len(values)} objects")
-            path.write_bytes(data)
-            return
-
-        img = values[0].read().image
         if img_resize:
             if type(img_resize) == str:
                 img_resize = self._determine_new_size(img.size, ratio=img_resize)
@@ -71,7 +58,8 @@ class UnityImage:  # no 'Gkmas' prefix since this is general-purpose
         except OSError:  # cannot write mode RGBA as {img_format}
             img = img.convert("RGB")
             img.save(path.with_suffix(f".{img_format.lower()}"), quality=100)
-        logger.success(f"{self._idname} extracted as {img_format.upper()}")
+
+        logger.success(f"{self.name} extracted as {img_format.upper()}")
 
     def _determine_new_size(
         self,
