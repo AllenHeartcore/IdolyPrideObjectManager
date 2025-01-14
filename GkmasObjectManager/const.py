@@ -54,19 +54,27 @@ CHARACTER_ABBREVS = [
     "hski",  # Hanami SaKI
     "ttmr",  # Tsukimura TeMaRi
     "fktn",  # Fujita KoToNe
-    "hrnm",  # Himesaki RiNaMi
-    "ssmk",  # Shiun SuMiKa
-    "shro",  # Shinosawa HiRO
+    "amao",  # Arimura MAO
     "kllj",  # Katsuragi LiLJa
     "kcna",  # Kuramoto ChiNA
-    "amao",  # Arimura MAO
+    "ssmk",  # Shiun SuMiKa
+    "shro",  # Shinosawa HiRO
+    "hrnm",  # Himesaki RiNaMi
     "hume",  # Hanami UME
     "hmsz",  # Hataya MiSuZu
     "jsna",  # Juo SeNA
+    "atbm",  # Amaya TsuBaMe
+    "jkno",  # Juo KuNiO
     "nasr",  # Neo ASaRi
     "trvo",  # VOcal TRainer
     "trda",  # DAnce TRainer
     "trvi",  # VIsual TRainer
+    "krnh",  # Kayo RiNHa
+    "andk",  # Aoi NaDeshiKo
+    "sson",  # Shirakusa ShiON
+    "sgka",  # Shirakusa GekKA
+    "ktko",  # Kuroi TaKaO
+    "cmmn",  # (CoMMoN)
 ]
 
 # object deobfuscate
