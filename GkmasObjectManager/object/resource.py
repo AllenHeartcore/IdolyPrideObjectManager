@@ -121,7 +121,7 @@ class GkmasResource:
         stopping at the first 'character identifier'.
         """
 
-        filename = ".".join(filename.split(".")[:-1])  # remove extension
+        filename = Path(filename).stem  # remove extension
 
         # Ignore everything after the first number after '-' or '_'
         filename = re.split(r"[-_]\d", filename)[0]
@@ -129,7 +129,7 @@ class GkmasResource:
         for char in CHARACTER_ABBREVS:
             if char in filename:
                 # Ignore everything after 'char', and trim trailing '-' or '_'
-                filename = filename.split(char)[0][:-1]
+                filename = filename.split(char)[0] + char
                 break
 
         return Path(*filename.split("_"))

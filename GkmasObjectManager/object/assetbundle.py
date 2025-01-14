@@ -26,7 +26,7 @@ class GkmasAssetBundle(GkmasResource):
     Attributes:
         All attributes from GkmasResource, plus
         name (str): Human-readable name.
-            Appended with '.unity3d' only at CSV export.
+            Appended with '.unity3d' only at download and CSV export.
         crc (int): CRC checksum, unused for now (since scheme is unknown).
 
     Methods:
@@ -83,7 +83,7 @@ class GkmasAssetBundle(GkmasResource):
                 If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        path = self._download_path(path, categorize)
+        path = self._download_path(path, categorize).with_suffix(".unity3d")
         if path.exists():
             logger.warning(f"{self._idname} already exists")
             return
