@@ -23,30 +23,39 @@ class UnityImage:  # no 'Gkmas' prefix since this is general-purpose
         data: bytes,
     ):
         """
-        Initializes a Unity image from raw bytes.
+        Initializes **one** Unity image from raw assetbundle bytes.
+        Raises a warning and falls back to raw dump if the bundle contains multiple objects.
         """
+
+        self.valid = True
+        self.name = name
 
         env = UnityPy.load(data)
         values = list(env.container.values())
 
         if len(values) != 1:
             logger.warning(f"{name} contains {len(values)} images, fallback to rawdump")
-            return None
+            self.valid = False
+            return  # fallback case is handled within this class
 
-        self.name = name
         self.img = values[0].read().image
 
-    def export(
+    def extract(
         self,
         path: Path,
         img_format: str,
         img_resize: IMG_RESIZE_ARGTYPE,
     ):
         """
-        [INTERNAL] Attempts to extract a single image from the assetbundle's container.
-        Should be called only when the assetbundle name starts with 'img_' AND extract_img is True.
-        Raises a warning and falls back to raw dump if the bundle contains multiple objects.
+        Attempts to extract a single image from the assetbundle's container.
         """
+
+        if not self.valid:
+            path.write_bytes(self.img)
+            logger.success(f"{self.name} downloaded")
+            return
+
+        img = self.img
 
         if img_resize:
             if type(img_resize) == str:
@@ -59,7 +68,7 @@ class UnityImage:  # no 'Gkmas' prefix since this is general-purpose
             img = img.convert("RGB")
             img.save(path.with_suffix(f".{img_format.lower()}"), quality=100)
 
-        logger.success(f"{self.name} extracted as {img_format.upper()}")
+        logger.success(f"{self.name} downloaded and extracted as {img_format.upper()}")
 
     def _determine_new_size(
         self,

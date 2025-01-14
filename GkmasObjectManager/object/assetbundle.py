@@ -62,7 +62,6 @@ class GkmasAssetBundle(GkmasResource):
         self,
         path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
         categorize: bool = True,
-        extract_img: bool = True,
         **kwargs,
     ):
         """
@@ -92,13 +91,11 @@ class GkmasAssetBundle(GkmasResource):
         enc = self._download_bytes()
 
         if enc.startswith(UNITY_SIGNATURE):
-            self._extract_dispatcher(path, enc, extract_img, **kwargs)
-            logger.success(f"{self._idname} downloaded")
+            self._extract_dispatcher(path, enc, **kwargs)
         else:
             dec = GkmasAssetBundleDeobfuscator(self.name).process(enc)
             if dec.startswith(UNITY_SIGNATURE):
-                self._extract_dispatcher(path, dec, extract_img, **kwargs)
-                logger.success(f"{self._idname} downloaded and deobfuscated")
+                self._extract_dispatcher(path, dec, **kwargs)
             else:
                 path.write_bytes(enc)
                 logger.warning(f"{self._idname} downloaded but LEFT OBFUSCATED")
@@ -110,16 +107,22 @@ class GkmasAssetBundle(GkmasResource):
         self,
         path: PATH_ARGTYPE,  # no default value to enforce presence
         data: bytes,
-        extract_img: bool,  # kwargs referenced in THIS method must be explicitly listed
         **kwargs,
     ):
         """
         [INTERNAL] Dispatches the extraction of various formats
         based on the assetbundle's name and the extract_* flags.
         Designed to be modular and easily extensible.
+        **Also this is where kwargs are actually parsed.**
         """
 
-        if self.name.startswith("img_") and extract_img:
-            UnityImage(self._idname, data).export(path, **kwargs)
+        if self.name.startswith("img_") and kwargs.get("extract_img", True):
+            UnityImage(self._idname, data).extract(
+                path,
+                img_format=kwargs.get("img_format", "png"),
+                img_resize=kwargs.get("img_resize", None),
+                # caller-side kwargs parsing enforces callee-side type checking
+            )
         else:
             path.write_bytes(data)
+            logger.success(f"{self._idname} downloaded")
