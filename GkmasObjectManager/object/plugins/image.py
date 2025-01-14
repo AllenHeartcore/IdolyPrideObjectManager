@@ -1,10 +1,10 @@
 """
-_export_img.py
-[CLASS SPLIT] GkmasAssetBundle image extraction plugin.
+plugins/image.py
+GkmasAssetBundle image extraction plugin.
 """
 
-from ..log import Logger
-from ..const import IMG_RESIZE_ARGTYPE
+from ...log import Logger
+from ...const import IMG_RESIZE_ARGTYPE
 
 import UnityPy
 from pathlib import Path
