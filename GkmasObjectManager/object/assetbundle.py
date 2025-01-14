@@ -63,9 +63,7 @@ class GkmasAssetBundle(GkmasResource):
         self,
         path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
         categorize: bool = True,
-        extract_img: bool = True,
-        img_format: str = "png",
-        img_resize: IMG_RESIZE_ARGTYPE = None,
+        **kwargs,
     ):
         """
         Downloads and deobfuscates the assetbundle to the specified path.
@@ -94,12 +92,12 @@ class GkmasAssetBundle(GkmasResource):
         enc = self._download_bytes()
 
         if enc.startswith(UNITY_SIGNATURE):
-            self._export_img(path, enc, extract_img, img_format, img_resize)
+            self._export_img(path, enc, **kwargs)
             logger.success(f"{self._idname} downloaded")
         else:
             dec = GkmasAssetBundleDeobfuscator(self.name).process(enc)
             if dec.startswith(UNITY_SIGNATURE):
-                self._export_img(path, dec, extract_img, img_format, img_resize)
+                self._export_img(path, dec, **kwargs)
                 logger.success(f"{self._idname} downloaded and deobfuscated")
             else:
                 path.write_bytes(enc)

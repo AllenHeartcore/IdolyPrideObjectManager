@@ -68,9 +68,7 @@ class GkmasResource:
         self,
         path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
         categorize: bool = True,
-        extract_img: bool = True,
-        img_format: str = "png",
-        img_resize: IMG_RESIZE_ARGTYPE = None,
+        **kwargs,
     ):
         """
         Downloads the resource to the specified path.
@@ -80,12 +78,6 @@ class GkmasResource:
                 If a directory, subdirectories are auto-determined based on the resource name.
             categorize (bool) = True: Whether to put the downloaded object into subdirectories.
                 If False, the object is directly downloaded to the specified 'path'.
-            extract_img (bool) = True:
-                IGNORED. PRESERVED FOR COMPATIBILITY WITH CONCURRENT DOWNLOADER.
-            img_format (str) = 'png':
-                IGNORED. PRESERVED FOR COMPATIBILITY WITH CONCURRENT DOWNLOADER.
-            img_resize (Union[None, str, Tuple[int, int]]) = None:
-                IGNORED. PRESERVED FOR COMPATIBILITY WITH CONCURRENT DOWNLOADER.
         """
 
         path = self._download_path(path, categorize)
