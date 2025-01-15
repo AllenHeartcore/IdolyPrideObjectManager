@@ -126,12 +126,12 @@ class GkmasManifest:
             }
         )
 
-    def _get_jdict(self):
+    def _get_canon_repr(self):
         """
-        [INTERNAL] Returns the JSON dictionary of the manifest.
+        [INTERNAL] Returns the JSON-compatible "canonical" representation of the manifest.
         """
         return {
-            "revision": self.revision.get_json_repr(),
+            "revision": self.revision._get_canon_repr(),
             "assetBundleList": self.assetbundles,
             "resourceList": self.resources,
             "urlFormat": self.urlformat,
@@ -187,7 +187,7 @@ class GkmasManifest:
         if path.suffix != ".pdb":
             logger.warning("Attempting to write ProtoDB into a non-.pdb file")
 
-        jdict = self._get_jdict()
+        jdict = self._get_canon_repr()
         if isinstance(jdict["revision"], tuple):
             logger.warning("Exporting a diff manifest as ProtoDB, base revision lost")
             jdict["revision"] = jdict["revision"][0]
@@ -207,7 +207,7 @@ class GkmasManifest:
             logger.warning("Attempting to write JSON into a non-.json file")
 
         try:
-            path.write_text(json.dumps(self._get_jdict(), indent=4))
+            path.write_text(json.dumps(self._get_canon_repr(), indent=4))
             logger.success(f"JSON has been written into {path}")
         except:
             logger.error(f"Failed to write JSON into {path}")

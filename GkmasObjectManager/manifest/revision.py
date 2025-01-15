@@ -34,9 +34,10 @@ class GkmasManifestRevision:
         else:
             return f"v{self.this}-diff-v{self.base}"
 
-    def get_json_repr(self):
+    def _get_canon_repr(self):
         """
-        [INTERNAL] Returns either an integer or a tuple. Used in manifest export.
+        [INTERNAL] Returns the "canonical" representation of the revision,
+        either as an integer or a tuple. Used in manifest export.
         """
         if self.base == 0:
             return self.this
