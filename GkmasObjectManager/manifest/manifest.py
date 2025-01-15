@@ -187,8 +187,13 @@ class GkmasManifest:
         if path.suffix != ".pdb":
             logger.warning("Attempting to write ProtoDB into a non-.pdb file")
 
+        jdict = self._get_jdict()
+        if isinstance(jdict["revision"], tuple):
+            logger.warning("Exporting a diff manifest as ProtoDB, base revision lost")
+            jdict["revision"] = jdict["revision"][0]
+
         try:
-            path.write_bytes(dict2pdbytes(self._get_jdict()))
+            path.write_bytes(dict2pdbytes(jdict))
             logger.success(f"ProtoDB has been written into {path}")
         except:
             logger.error(f"Failed to write ProtoDB into {path}")
