@@ -15,7 +15,7 @@ from ..const import (
 
 from .revision import GkmasManifestRevision
 from .octodb_pb2 import dict2pdbytes
-from .diclist import Diclist
+from .listing import GkmasObjectList
 
 import re
 import json
@@ -35,11 +35,11 @@ class GkmasManifest:
 
     Attributes:
         revision (GkmasManifestRevision): Manifest revision this-diff-base (see revision.py).
-        assetbundles (Diclist): List of assetbundle *info dictionaries*.
-        resources (Diclist): List of resource *info dictionaries*.
+        assetbundles (GkmasObjectList): List of assetbundle *info dictionaries*.
+        resources (GkmasObjectList): List of resource *info dictionaries*.
         urlformat (str): URL format for downloading assetbundles/resources.
             Solely for faithful reconstruction of the manifest.
-    *Documentation for Diclist can be found in utils.py.*
+    *Documentation for GkmasObjectList can be found in listing.py.*
 
     Methods:
         download(
@@ -80,8 +80,8 @@ class GkmasManifest:
             revision = (revision[0], base_revision)  # proceed anyway
 
         self.revision = GkmasManifestRevision(*revision)
-        self.assetbundles = Diclist(jdict["assetBundleList"])
-        self.resources = Diclist(jdict["resourceList"])
+        self.assetbundles = GkmasObjectList(jdict["assetBundleList"])
+        self.resources = GkmasObjectList(jdict["resourceList"])
         self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
 
@@ -114,7 +114,7 @@ class GkmasManifest:
         """
         [INTERNAL] Creates a manifest from a differentiation dictionary.
         The diffdict refers to a dictionary containing differentiated
-        assetbundles and resources, created by utils.Diclist.diff().
+        assetbundles and resources, created by listing.GkmasObjectList.diff().
         """
         return GkmasManifest(
             {  # this is not a standard JSON dict, more like named arguments

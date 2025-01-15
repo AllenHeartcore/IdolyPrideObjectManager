@@ -1,6 +1,7 @@
 """
-diclist.py
-A list of dictionaries, optimized for comparison.
+listing.py
+"Object list" class holding a list of dictionaries,
+optimized for indexing and comparison.
 """
 
 from ..const import (
@@ -12,17 +13,17 @@ from ..const import (
 from typing import Union
 
 
-class Diclist(list):
+class GkmasObjectList:
     """
     A list of dictionaries, optimized for comparison.
 
     Methods:
-        __sub__(other: Diclist) -> Diclist:
-            Subtracts another Diclist from this Diclist.
+        __sub__(other: GkmasObjectList) -> GkmasObjectList:
+            Subtracts another GkmasObjectList from this one.
             Returns the list of elements unique to 'self'.
-        rip_field(targets: list) -> Diclist:
+        rip_field(targets: list) -> GkmasObjectList:
             Removes selected fields from all dictionaries.
-        diff(other: Diclist, ignored_fields: list) -> Diclist:
+        diff(other: GkmasObjectList, ignored_fields: list) -> GkmasObjectList:
             Compares two Diclists while ignoring selected fields,
             but **retains all fields** in the reconstructed output.
     """
@@ -36,8 +37,6 @@ class Diclist(list):
         if sort_by:
             diclist.sort(key=lambda x: x[sort_by])
 
-        super().__init__(diclist)
-
     def __getitem__(self, key: Union[int, str]) -> dict:
         for item in self:
             if (isinstance(key, int) and item[DICLIST_INDEX_FIELD] == key) or (
@@ -46,17 +45,19 @@ class Diclist(list):
                 return item
         raise KeyError
 
-    def __sub__(self, other: "Diclist") -> "Diclist":
-        return Diclist([item for item in self if item not in other])
+    def __sub__(self, other: "GkmasObjectList") -> "GkmasObjectList":
+        return GkmasObjectList([item for item in self if item not in other])
 
-    def rip_field(self, targets: list) -> "Diclist":
-        return Diclist(
+    def rip_field(self, targets: list) -> "GkmasObjectList":
+        return GkmasObjectList(
             [{k: v for k, v in entry.items() if k not in targets} for entry in self]
         )
 
     def diff(
-        self, other: "Diclist", ignored_fields: list = DICLIST_DIFF_IGNORED_FIELDS
-    ) -> "Diclist":
+        self,
+        other: "GkmasObjectList",
+        ignored_fields: list = DICLIST_DIFF_IGNORED_FIELDS,
+    ) -> "GkmasObjectList":
 
         if not ignored_fields:
             return self - other
@@ -66,4 +67,6 @@ class Diclist(list):
         other_rip = other.rip_field(ignored_fields)
 
         # retain complete fields for output
-        return Diclist([self[self_rip.index(entry)] for entry in self_rip - other_rip])
+        return GkmasObjectList(
+            [self[self_rip.index(entry)] for entry in self_rip - other_rip]
+        )
