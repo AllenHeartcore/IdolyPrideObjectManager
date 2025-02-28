@@ -6,6 +6,7 @@ General-purpose resource downloading.
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
+    RESOURCE_INFO_FIELDS,
     GKMAS_VERSION,
     DEFAULT_DOWNLOAD_PATH,
     GKMAS_OBJECT_SERVER,
@@ -53,14 +54,14 @@ class GkmasResource:
                 Must contain the following keys: id, name, objectName, size, md5, state.
         """
 
-        self.id = info["id"]
-        self.name = info["name"]
-        self.size = info["size"]
-        self.state = info["state"]  # unused
-        self.md5 = info["md5"]
-        self.objectName = info["objectName"]
-        self.uploadVersionId = info.get("uploadVersionId", GKMAS_VERSION)
-        # unused; for compatibility (may be missing in older manifests)
+        for field in RESOURCE_INFO_FIELDS:
+            if field != "uploadVersionId":
+                setattr(self, field, info[field])
+            else:
+                setattr(self, field, info.get(field, GKMAS_VERSION))
+                # this might be missing in older manifests
+
+        # 'self.state' unused, but retained for compatibility
         self._idname = f"RS[{self.id:05}] '{self.name}'"
 
     def __repr__(self):
@@ -68,18 +69,7 @@ class GkmasResource:
 
     def _get_canon_repr(self):
         # this format retains the order of fields
-        ret = {}
-        for field in [
-            "id",
-            "name",
-            "size",
-            "state",
-            "md5",
-            "objectName",
-            "uploadVersionId",
-        ]:
-            ret[field] = getattr(self, field)
-        return ret
+        return {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS}
 
     def download(
         self,

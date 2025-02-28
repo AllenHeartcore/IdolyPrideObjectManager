@@ -42,6 +42,11 @@ CSV_COLUMNS = ["objectName", "md5", "name", "size", "state"]
 DEFAULT_DOWNLOAD_PATH = "objects/"
 DEFAULT_DOWNLOAD_NWORKER = multiprocessing.cpu_count()
 
+# object instantiation
+RESOURCE_INFO_FIELDS_HEAD = ["id", "name", "size"]
+RESOURCE_INFO_FIELDS_TAIL = ["state", "md5", "objectName", "uploadVersionId"]
+RESOURCE_INFO_FIELDS = RESOURCE_INFO_FIELDS_HEAD + RESOURCE_INFO_FIELDS_TAIL
+
 # object download
 GKMAS_OBJECT_SERVER = "https://object.asset.game-gakuen-idolmaster.jp/"
 CHARACTER_ABBREVS = [

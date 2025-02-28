@@ -6,6 +6,8 @@ Unity asset bundle downloading, deobfuscation, and media extraction.
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
+    RESOURCE_INFO_FIELDS_HEAD,
+    RESOURCE_INFO_FIELDS_TAIL,
     DEFAULT_DOWNLOAD_PATH,
     UNITY_SIGNATURE,
 )
@@ -59,23 +61,11 @@ class GkmasAssetBundle(GkmasResource):
         return f"<GkmasAssetBundle {self._idname}>"
 
     def _get_canon_repr(self):
-        ret = {}
-        for field in [
-            "id",
-            "name",
-            "size",
-            "crc",
-        ]:
-            ret[field] = getattr(self, field)
+        ret = {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_HEAD}
+        ret["crc"] = self.crc
         if self.dependencies:
             ret["dependencies"] = self.dependencies  # for ordering
-        for field in [
-            "state",
-            "md5",
-            "objectName",
-            "uploadVersionId",
-        ]:
-            ret[field] = getattr(self, field)
+        ret.update({field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_TAIL})
         return ret
 
     def download(
