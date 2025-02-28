@@ -95,11 +95,11 @@ class GkmasManifest:
             return self.resources[key]
             # any more KeyError's are raised as is
 
-    def __iter__(self):  # primarily for regex match in download()
+    def __iter__(self):
         for ab in self.assetbundles:
-            yield ab.name
+            yield ab
         for res in self.resources:
-            yield res.name
+            yield res
 
     def __len__(self):
         return len(self.assetbundles) + len(self.resources)
@@ -237,6 +237,21 @@ class GkmasManifest:
 
     # ----------- DOWNLOAD ----------- #
 
+    def search(self, criterion: str):
+        """
+        Searches the manifest for objects matching the specified criterion.
+        Returns a list of object names.
+
+        Args:
+            criterion (str): Regex pattern of object names.
+        """
+
+        names = []
+        for obj in self:
+            if re.match(criterion, obj.name):
+                names.append(obj.name)
+        return sorted(names)
+
     def download(
         self,
         *criteria: str,
@@ -268,7 +283,7 @@ class GkmasManifest:
         objects = []
 
         for criterion in criteria:
-            objects.extend([self[file] for file in self if re.match(criterion, file)])
+            objects.extend([self[name] for name in self.search(criterion)])
 
         if not objects:
             logger.warning("No objects matched the criteria, aborted")
