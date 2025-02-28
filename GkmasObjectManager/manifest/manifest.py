@@ -250,7 +250,9 @@ class GkmasManifest:
         for obj in self:
             if re.match(criterion, obj.name):
                 names.append(obj.name)
-        return sorted(names)
+        return [self[name] for name in sorted(names)]
+        # This will be called by frontend.
+        # We instantiate here to make ID's readily available.
 
     def download(
         self,
@@ -283,7 +285,7 @@ class GkmasManifest:
         objects = []
 
         for criterion in criteria:
-            objects.extend([self[name] for name in self.search(criterion)])
+            objects.extend(self.search(criterion))
 
         if not objects:
             logger.warning("No objects matched the criteria, aborted")
