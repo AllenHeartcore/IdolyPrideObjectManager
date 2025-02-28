@@ -9,11 +9,6 @@ from pathlib import Path
 from typing import Union, Tuple
 
 
-# client-side visible control tokens
-# that start with '<' and end with '>' (prohibited in Windows paths)
-VERSION = lambda x: f"<{x:d}>"
-LATEST = VERSION(0)
-
 # argument type hints
 PATH_ARGTYPE = Union[str, Path]
 IMG_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
