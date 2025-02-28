@@ -7,7 +7,6 @@ optimized for indexing and comparison.
 from ..const import (
     OBJLIST_ID_FIELD,
     OBJLIST_NAME_FIELD,
-    OBJLIST_DIFF_IGNORED_FIELDS,
 )
 
 from typing import Union
@@ -66,26 +65,14 @@ class GkmasObjectList:
         """
         [INTERNAL] Returns the JSON-compatible "canonical" representation of the object list.
         """
-        return self.infos
+        return [entry._get_canon_repr() for entry in self]
 
     def rip_field(self, targets: list) -> "GkmasObjectList":
         return GkmasObjectList(
             [{k: v for k, v in entry.items() if k not in targets} for entry in self]
         )
 
-    def diff(
-        self,
-        other: "GkmasObjectList",
-        ignored_fields: list = OBJLIST_DIFF_IGNORED_FIELDS,
-    ) -> "GkmasObjectList":
-
-        if not ignored_fields:
-            return self - other
-
-        # rip unused fields for comparison
-        self_rip = self.rip_field(ignored_fields)
-        other_rip = other.rip_field(ignored_fields)
-
+    def diff(self, other: "GkmasObjectList") -> "GkmasObjectList":
         # retain complete fields for output
         return GkmasObjectList(
             [self[self_rip.index(entry)] for entry in self_rip - other_rip]

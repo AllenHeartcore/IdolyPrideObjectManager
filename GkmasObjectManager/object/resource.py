@@ -6,7 +6,7 @@ General-purpose resource downloading.
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
-    IMG_RESIZE_ARGTYPE,
+    GKMAS_VERSION,
     DEFAULT_DOWNLOAD_PATH,
     GKMAS_OBJECT_SERVER,
     CHARACTER_ABBREVS,
@@ -59,10 +59,27 @@ class GkmasResource:
         self.state = info["state"]  # unused
         self.md5 = info["md5"]
         self.objectName = info["objectName"]
+        self.uploadVersionId = info.get("uploadVersionId", GKMAS_VERSION)
+        # unused; for compatibility (may be missing in older manifests)
         self._idname = f"RS[{self.id:05}] '{self.name}'"
 
     def __repr__(self):
         return f"<GkmasResource {self._idname}>"
+
+    def _get_canon_repr(self):
+        # this format retains the order of fields
+        ret = {}
+        for field in [
+            "id",
+            "name",
+            "size",
+            "state",
+            "md5",
+            "objectName",
+            "uploadVersionId",
+        ]:
+            ret[field] = getattr(self, field)
+        return ret
 
     def download(
         self,
