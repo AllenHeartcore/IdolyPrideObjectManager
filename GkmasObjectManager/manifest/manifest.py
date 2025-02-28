@@ -80,8 +80,8 @@ class GkmasManifest:
             revision = (revision[0], base_revision)  # proceed anyway
 
         self.revision = GkmasManifestRevision(*revision)
-        self.assetbundles = GkmasObjectList(jdict["assetBundleList"])
-        self.resources = GkmasObjectList(jdict["resourceList"])
+        self.assetbundles = GkmasObjectList(jdict["assetBundleList"], GkmasAssetBundle)
+        self.resources = GkmasObjectList(jdict["resourceList"], GkmasResource)
         self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
 
@@ -90,25 +90,23 @@ class GkmasManifest:
 
     def __getitem__(self, key: str):
         try:
-            return GkmasAssetBundle(self.assetbundles[key])
+            return self.assetbundles[key]
         except KeyError:
-            return GkmasResource(self.resources[key])
+            return self.resources[key]
+            # any more KeyError's are raised as is
 
     def __iter__(self):  # primarily for regex match in download()
         for ab in self.assetbundles:
-            yield ab["name"]
+            yield ab.name
         for res in self.resources:
-            yield res["name"]
+            yield res.name
 
     def __len__(self):
         return len(self.assetbundles) + len(self.resources)
 
     def __contains__(self, key: str):
-        try:
-            self[key]
-            return True
-        except KeyError:
-            return False
+        return key in self.assetbundles or key in self.resources
+        # could also try self[key]
 
     def __sub__(self, other):
         """
@@ -285,7 +283,7 @@ class GkmasManifest:
         Downloads all assetbundles to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [GkmasAssetBundle(ab) for ab in self.assetbundles]
+        objects = [ab for ab in self.assetbundles]
         self._do_download(objects, nworker, **kwargs)
 
     def download_all_resources(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
@@ -293,7 +291,7 @@ class GkmasManifest:
         Downloads all resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [GkmasResource(res) for res in self.resources]
+        objects = [res for res in self.resources]
         self._do_download(objects, nworker, **kwargs)
 
     def download_all(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
@@ -303,8 +301,8 @@ class GkmasManifest:
         """
         # Instead of calling two separate methods,
         # this approach ensures all workers are busy at transition.
-        objects = [GkmasAssetBundle(ab) for ab in self.assetbundles]
-        objects.extend([GkmasResource(res) for res in self.resources])
+        objects = [ab for ab in self.assetbundles]
+        objects.extend([res for res in self.resources])
         self._do_download(objects, nworker, **kwargs)
 
     def _do_download(self, objects: list, nworker: int, **kwargs):

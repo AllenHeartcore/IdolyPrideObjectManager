@@ -15,38 +15,58 @@ from typing import Union
 
 class GkmasObjectList:
     """
-    A list of dictionaries, optimized for comparison.
+    A list of assetbundle/resource metadata, optimized for indexing and comparison.
+    Implemented as listing utility wrappers around a list of dictionaries.
 
     Methods:
         __sub__(other: GkmasObjectList) -> GkmasObjectList:
-            Subtracts another GkmasObjectList from this one.
+            Subtracts another object list from this one.
             Returns the list of elements unique to 'self'.
         rip_field(targets: list) -> GkmasObjectList:
             Removes selected fields from all dictionaries.
         diff(other: GkmasObjectList, ignored_fields: list) -> GkmasObjectList:
-            Compares two Diclists while ignoring selected fields,
+            Compares two object lists while ignoring selected fields,
             but **retains all fields** in the reconstructed output.
     """
 
-    def __init__(self, diclist: list, sort_by: str = OBJLIST_ID_FIELD):
+    def __init__(self, infos: list, base_class: object):
+        infos.sort(key=lambda x: x[OBJLIST_ID_FIELD])
+        self.infos = infos
+        self.base_class = base_class
+        self._id_idx = {info[OBJLIST_ID_FIELD]: i for i, info in enumerate(infos)}
+        self._name_idx = {info[OBJLIST_NAME_FIELD]: i for i, info in enumerate(infos)}
+        # 'self._*_idx' are int/str -> int lookup tables
 
-        diclist = diclist.copy()
-        # such that all subsequent operations (especially rip_field)
-        # are non-destructive to the original list
-
-        if sort_by:
-            diclist.sort(key=lambda x: x[sort_by])
+    def __repr__(self):
+        return f"<GkmasObjectList of {len(self.infos)} {self.base_class.__name__}'s>"
 
     def __getitem__(self, key: Union[int, str]) -> dict:
-        for item in self:
-            if (isinstance(key, int) and item[OBJLIST_ID_FIELD] == key) or (
-                isinstance(key, str) and item[OBJLIST_NAME_FIELD] == key
-            ):
-                return item
-        raise KeyError
+        if isinstance(key, int):
+            return self.base_class(self.infos[self._id_idx[key]])
+        elif isinstance(key, str):
+            return self.base_class(self.infos[self._name_idx[key]])
+        else:
+            raise TypeError  # just in case, should never reach here
+
+    def __iter__(self):
+        for info in self.infos:
+            yield self.base_class(info)
+
+    def __len__(self):
+        return len(self.infos)
+
+    def __contains__(self, key: str) -> bool:
+        return key in self._name_idx
+        # 'if <numerical ID> in self' is nonsensical
 
     def __sub__(self, other: "GkmasObjectList") -> "GkmasObjectList":
         return GkmasObjectList([item for item in self if item not in other])
+
+    def _get_canon_repr(self):
+        """
+        [INTERNAL] Returns the JSON-compatible "canonical" representation of the object list.
+        """
+        return self.infos
 
     def rip_field(self, targets: list) -> "GkmasObjectList":
         return GkmasObjectList(
