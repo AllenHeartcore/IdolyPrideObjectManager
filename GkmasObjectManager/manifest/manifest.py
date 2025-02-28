@@ -132,8 +132,8 @@ class GkmasManifest:
         """
         return {
             "revision": self.revision._get_canon_repr(),
-            "assetBundleList": self.assetbundles,
-            "resourceList": self.resources,
+            "assetBundleList": self.assetbundles._get_canon_repr(),
+            "resourceList": self.resources._get_canon_repr(),
             "urlFormat": self.urlformat,
         }
 
@@ -222,12 +222,12 @@ class GkmasManifest:
         if path.suffix != ".csv":
             logger.warning("Attempting to write CSV into a non-.csv file")
 
-        # Forced list conversion is necessary since Diclist overrides __iter__,
+        # [RESOLVED] Forced list conversion is necessary since GkmasObjectList overrides __iter__,
         # which handles integer keys (index by ID) and messes up with standard modules
         # like pandas that rely on self[0] as a "sample" object from the list.
-        dfa = pd.DataFrame(list(self.assetbundles), columns=CSV_COLUMNS)
+        dfa = pd.DataFrame(self.assetbundles._get_canon_repr(), columns=CSV_COLUMNS)
         dfa["name"] = dfa["name"].apply(lambda x: x + ".unity3d")
-        dfr = pd.DataFrame(list(self.resources), columns=CSV_COLUMNS)
+        dfr = pd.DataFrame(self.resources._get_canon_repr(), columns=CSV_COLUMNS)
         df = pd.concat([dfa, dfr], ignore_index=True)
         df.sort_values("name", inplace=True)
 

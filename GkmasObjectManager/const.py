@@ -37,9 +37,9 @@ GKMAS_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk")
 GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz")
 
 # manifest diff
-DICLIST_INDEX_FIELD = "id"
-DICLIST_NAME_FIELD = "name"
-DICLIST_DIFF_IGNORED_FIELDS = ["dependencies", "uploadVersionId"]
+OBJLIST_ID_FIELD = "id"
+OBJLIST_NAME_FIELD = "name"
+OBJLIST_DIFF_IGNORED_FIELDS = ["dependencies", "uploadVersionId"]
 
 # manifest export
 CSV_COLUMNS = ["objectName", "md5", "name", "size", "state"]

@@ -5,9 +5,9 @@ optimized for indexing and comparison.
 """
 
 from ..const import (
-    DICLIST_INDEX_FIELD,
-    DICLIST_NAME_FIELD,
-    DICLIST_DIFF_IGNORED_FIELDS,
+    OBJLIST_ID_FIELD,
+    OBJLIST_NAME_FIELD,
+    OBJLIST_DIFF_IGNORED_FIELDS,
 )
 
 from typing import Union
@@ -28,7 +28,7 @@ class GkmasObjectList:
             but **retains all fields** in the reconstructed output.
     """
 
-    def __init__(self, diclist: list, sort_by: str = DICLIST_INDEX_FIELD):
+    def __init__(self, diclist: list, sort_by: str = OBJLIST_ID_FIELD):
 
         diclist = diclist.copy()
         # such that all subsequent operations (especially rip_field)
@@ -39,8 +39,8 @@ class GkmasObjectList:
 
     def __getitem__(self, key: Union[int, str]) -> dict:
         for item in self:
-            if (isinstance(key, int) and item[DICLIST_INDEX_FIELD] == key) or (
-                isinstance(key, str) and item[DICLIST_NAME_FIELD] == key
+            if (isinstance(key, int) and item[OBJLIST_ID_FIELD] == key) or (
+                isinstance(key, str) and item[OBJLIST_NAME_FIELD] == key
             ):
                 return item
         raise KeyError
@@ -56,7 +56,7 @@ class GkmasObjectList:
     def diff(
         self,
         other: "GkmasObjectList",
-        ignored_fields: list = DICLIST_DIFF_IGNORED_FIELDS,
+        ignored_fields: list = OBJLIST_DIFF_IGNORED_FIELDS,
     ) -> "GkmasObjectList":
 
         if not ignored_fields:
