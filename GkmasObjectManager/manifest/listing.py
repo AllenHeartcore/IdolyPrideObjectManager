@@ -59,21 +59,22 @@ class GkmasObjectList:
         # 'if <numerical ID> in self' is nonsensical
 
     def __sub__(self, other: "GkmasObjectList") -> "GkmasObjectList":
-        return GkmasObjectList([item for item in self if item not in other])
+        assert self.base_class == other.base_class
+        canon_reprs = []
+        for entry in self:
+            try:
+                this_repr = entry._get_canon_repr()
+                other_repr = other[entry.name]._get_canon_repr()
+            except KeyError:
+                canon_reprs.append(this_repr)
+                continue
+            else:
+                if this_repr != other_repr:
+                    canon_reprs.append(this_repr)
+        return GkmasObjectList(canon_reprs, self.base_class)
 
     def _get_canon_repr(self):
         """
         [INTERNAL] Returns the JSON-compatible "canonical" representation of the object list.
         """
         return [entry._get_canon_repr() for entry in self]
-
-    def rip_field(self, targets: list) -> "GkmasObjectList":
-        return GkmasObjectList(
-            [{k: v for k, v in entry.items() if k not in targets} for entry in self]
-        )
-
-    def diff(self, other: "GkmasObjectList") -> "GkmasObjectList":
-        # retain complete fields for output
-        return GkmasObjectList(
-            [self[self_rip.index(entry)] for entry in self_rip - other_rip]
-        )

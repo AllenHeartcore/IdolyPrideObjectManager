@@ -7,7 +7,6 @@ from ..object import GkmasAssetBundle, GkmasResource
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
-    IMG_RESIZE_ARGTYPE,
     CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
     DEFAULT_DOWNLOAD_NWORKER,
@@ -79,9 +78,21 @@ class GkmasManifest:
                 )
             revision = (revision[0], base_revision)  # proceed anyway
 
-        self.revision = GkmasManifestRevision(*revision)
-        self.assetbundles = GkmasObjectList(jdict["assetBundleList"], GkmasAssetBundle)
-        self.resources = GkmasObjectList(jdict["resourceList"], GkmasResource)
+        try:  # instantiate from JSON
+            self.revision = GkmasManifestRevision(*revision)
+            self.assetbundles = GkmasObjectList(
+                jdict["assetBundleList"],
+                GkmasAssetBundle,
+            )
+            self.resources = GkmasObjectList(
+                jdict["resourceList"],
+                GkmasResource,
+            )
+        except TypeError:  # instantiate from diff, skip type conversion
+            self.revision = jdict["revision"]
+            self.assetbundles = jdict["assetBundleList"]
+            self.resources = jdict["resourceList"]
+
         self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
 
@@ -116,9 +127,9 @@ class GkmasManifest:
         """
         return GkmasManifest(
             {  # this is not a standard JSON dict, more like named arguments
-                "revision": self.revision - other.revision,
-                "assetBundleList": self.assetbundles.diff(other.assetbundles),
-                "resourceList": self.resources.diff(other.resources),
+                "revision": self.revision - other.revision,  # handles sanity check
+                "assetBundleList": self.assetbundles - other.assetbundles,
+                "resourceList": self.resources - other.resources,
                 "urlFormat": self.urlformat,
                 # always override with the higher revision, in case this ever differs
             }
