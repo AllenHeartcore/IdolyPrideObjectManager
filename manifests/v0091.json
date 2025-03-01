@@ -1,0 +1,183 @@
+{
+    "revision": [
+        94,
+        91
+    ],
+    "assetBundleList": [
+        {
+            "id": 2071,
+            "name": "actor-shader",
+            "size": 8045819,
+            "crc": 380343158,
+            "state": "UPDATE",
+            "md5": "c78b8fa12fad9eda509507b8e252c7b3",
+            "objectName": "lrEAOu",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7129,
+            "name": "img_mov_general_gasha_bg_idol_cidol-amao-3-002",
+            "size": 868166,
+            "crc": 2483746787,
+            "state": "UPDATE",
+            "md5": "2949921ef7eb9c0682e18f9e1b8f023e",
+            "objectName": "uoBKdb",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7130,
+            "name": "mdl_chr_amao-cstm-0036_body",
+            "size": 7927261,
+            "crc": 3175999098,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "3e03c631c9b0cd8aba9460dfb23e1f6e",
+            "objectName": "WmGxNp",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7252,
+            "name": "tln_live_amao-002",
+            "size": 20612431,
+            "crc": 362538743,
+            "dependencies": [
+                2106,
+                4477,
+                7161,
+                7150,
+                2403,
+                5090,
+                7155,
+                4319,
+                7163,
+                2071,
+                3117,
+                2725,
+                1654,
+                2952,
+                1592,
+                3897,
+                4494,
+                6373,
+                2144,
+                1604,
+                821
+            ],
+            "state": "UPDATE",
+            "md5": "4f49e6f6f0113642b1c770ee8425cf19",
+            "objectName": "vYeaMz",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7273,
+            "name": "mdl_chr_amao-cstm-0035_body",
+            "size": 7837204,
+            "crc": 1502654673,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "447b3e2c999496379e0e1b56f6701028",
+            "objectName": "vH7wBE",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7280,
+            "name": "img_general_live_music-char-amao-002_true-end",
+            "size": 230303,
+            "crc": 1814345060,
+            "state": "UPDATE",
+            "md5": "2bb6bd29ba6746dede9487ab6e578996",
+            "objectName": "RKsz7r",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7395,
+            "name": "mdl_chr_hume-cstm-0065_body",
+            "size": 6946721,
+            "crc": 1766989555,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "4df65d04df26d296c8e7157e3846f2a5",
+            "objectName": "zAQmJV",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7396,
+            "name": "mdl_chr_hski-cstm-0065_body",
+            "size": 6908412,
+            "crc": 234433197,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "d17bbda4afd333c7e026be4b2c2169b5",
+            "objectName": "iILoEA",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7423,
+            "name": "mdl_chr_hrnm-cstm-0065_body",
+            "size": 6943359,
+            "crc": 190457779,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "df1aadae4be54406ade3428f8e351678",
+            "objectName": "jOeIvU",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7506,
+            "name": "mdl_chr_fktn-cstm-0065_body",
+            "size": 6875725,
+            "crc": 3467675459,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "d26e3ce87ef6f1a0390a28cccb41be57",
+            "objectName": "PxIvj4",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7513,
+            "name": "mdl_chr_kcna-cstm-0065_body",
+            "size": 6947010,
+            "crc": 3672450793,
+            "dependencies": [
+                2071
+            ],
+            "state": "UPDATE",
+            "md5": "c49989ba4f750e2ea0cb11c8ef6d0016",
+            "objectName": "hHI2TM",
+            "uploadVersionId": 205000
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 7354,
+            "name": "mov_general_gasha_bg_idol_cidol-amao-3-002.usm",
+            "size": 25455584,
+            "state": "UPDATE",
+            "md5": "ac10314ec8365b6009bf65f01ec5913a",
+            "objectName": "9YiQSd",
+            "uploadVersionId": 205000
+        },
+        {
+            "id": 7399,
+            "name": "mov_general_gasha_live_i_card-skin-amao-3-002-result.usm",
+            "size": 2050880,
+            "state": "UPDATE",
+            "md5": "ce8569263374de703fc409ecfff32aee",
+            "objectName": "PUdqGc",
+            "uploadVersionId": 205000
+        }
+    ],
+    "urlFormat": "https://object.asset.game-gakuen-idolmaster.jp/{o}"
+}
