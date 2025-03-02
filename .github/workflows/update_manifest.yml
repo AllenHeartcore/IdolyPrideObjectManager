@@ -1,0 +1,47 @@
+name: Update manifest
+
+on:
+    # Runs every hour, on the hour
+    schedule:
+        - cron: "0 * * * *"
+    # Allow manual triggering
+    workflow_dispatch:
+
+
+jobs:
+    update-manifest:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+                uses: actions/checkout@v2
+
+            - name: Set up Python
+                uses: actions/setup-python@v2
+                with:
+                    python-version: '3.x'
+
+            - name: Install dependencies
+                run: |
+                    python -m pip install --upgrade pip
+                    pip install -r requirements.txt
+
+            - name: Run update_manifest.py
+                id: update_manifest
+                run: |
+                    python update_manifest.py
+                    echo "::set-output name=return_value::$?"
+
+            - name: Check for changes
+                id: git_status
+                run: |
+                    git config --global user.name 'github-actions[bot]'
+                    git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+                    git add .
+                if: steps.git_status.outputs.changes != '' && steps.update_manifest.outputs.return_value != '-1'
+                run: |
+                    git commit -m "v$(steps.update_manifest.outputs.return_value)"
+                if: steps.git_status.outputs.changes != ''
+                run: |
+                    git commit -m "Update manifest"
+                    git push origin manifest-update
