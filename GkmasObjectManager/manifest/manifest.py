@@ -68,7 +68,7 @@ class GkmasManifest:
                 a warning of conflict is raised if jdict['revision'] is already a tuple.
         """
 
-        revision = jdict["revision"]  # not jdict.get() to enforce presence; same below
+        revision = jdict["revision"]  # not jdict.get() to enforce presence
         if isinstance(revision, int):
             revision = (revision, 0)
         if base_revision != 0:  # leave negative base handling to the Revision class
@@ -81,17 +81,17 @@ class GkmasManifest:
         try:  # instantiate from JSON
             self.revision = GkmasManifestRevision(*revision)
             self.assetbundles = GkmasObjectList(
-                jdict["assetBundleList"],
+                jdict.get("assetBundleList", []),  # might be empty in recent diffs
                 GkmasAssetBundle,
             )
             self.resources = GkmasObjectList(
-                jdict["resourceList"],
+                jdict.get("resourceList", []),  # same as above ^
                 GkmasResource,
             )
         except TypeError:  # instantiate from diff, skip type conversion
             self.revision = jdict["revision"]
-            self.assetbundles = jdict["assetBundleList"]
-            self.resources = jdict["resourceList"]
+            self.assetbundles = jdict["assetBundleList"]  # won't be missing since ...
+            self.resources = jdict["resourceList"]  # this is constructed internally
 
         self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
