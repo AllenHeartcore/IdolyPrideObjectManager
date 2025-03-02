@@ -6,23 +6,26 @@ compatible with 'Update Manifest' workflow.
 
 import GkmasObjectManager as gom
 
+import sys
+
 
 def main():
 
     m_remote = gom.fetch()
-    m_local = gom.load("manifests/v0000.json")
+    latest_revision = m_remote.revision._get_canon_repr()
+    with open("manifests/LATEST_REVISION", "w") as f:
+        f.write(str(latest_revision))
 
+    m_local = gom.load("manifests/v0000.json")
     if m_remote.revision == m_local.revision:
         print("No update available.")
-        return -1
+        sys.exit(-1)
 
-    latest_revision = m_remote.revision._get_canon_repr()
     m_remote.export(f"manifests/v0000.json")
-
     for i in range(1, latest_revision):
         gom.fetch(i).export(f"manifests/v{i:04}.json")
 
-    return latest_revision
+    sys.exit(0)
 
 
 if __name__ == "__main__":
