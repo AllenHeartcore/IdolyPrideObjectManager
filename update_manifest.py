@@ -16,12 +16,7 @@ def main():
         return
 
     for i in range(m_remote.revision._get_canon_repr()):
-        try:
-            gom.fetch(i).export(f"manifests/v{i:04}.json")
-        except KeyError:
-            # would probably fail at (revision - 1),
-            # signaled by a "KeyError: 'resourceList'"
-            break
+        gom.fetch(i).export(f"manifests/v{i:04}.json")
 
 
 if __name__ == "__main__":
