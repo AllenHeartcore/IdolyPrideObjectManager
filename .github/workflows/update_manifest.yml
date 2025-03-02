@@ -7,50 +7,53 @@ on:
     # Allow manual triggering
     workflow_dispatch:
 
-
 jobs:
     update-manifest:
         runs-on: ubuntu-latest
 
         steps:
             - name: Checkout repository
-                uses: actions/checkout@v2
+              uses: actions/checkout@v2
 
             - name: Set up Python
-                uses: actions/setup-python@v2
-                with:
-                    python-version: '3.x'
+              uses: actions/setup-python@v2
+              with:
+                  python-version: "3.x"
 
             - name: Install dependencies
-                run: |
-                    python -m pip install --upgrade pip
-                    pip install -r requirements.txt
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
 
             - name: Run update_manifest.py
-                id: run_script
-                run: |
-                    python update_manifest.py
-                    echo "::set-output name=exit_code::$?"
+              id: run_script
+              run: |
+                  python update_manifest.py
+                  echo "::set-output name=exit_code::$?"
+
+            - name: Warn if up-to-date
+              if: steps.run_script.outputs.exit_code == 1
+              run: |
+                  echo "Warning: Local manifest is up-to-date."
+                  exit 1
 
             - name: Check for changes
-                id: git_status
-                if: steps.run_script.outputs.exit_code == 0
-                run: |
-                    git config user.name "GitHub Actions"
-                    git config user.email ""
-                    git add .
-                if: steps.run_script.outputs.exit_code == 1
-                run: |
-                    echo "Warning: Local manifest is up-to-date."
-                    exit 1
+              id: git_status
+              if: steps.run_script.outputs.exit_code == 0
+              run: |
+                  git config user.name "GitHub Actions"
+                  git config user.email ""
+                  git add .
+
+            - name: Warn if no changes
+              if: steps.git_status.outputs.stdout == ''
+              run: |
+                  echo "Warning: New manifest produced no changes."
+                  exit 1
 
             - name: Commit changes
-                if: steps.git_status.outputs.stdout != ''
-                run: |
-                    REV_NUMBER="$(cat manifests/LATEST_VERSION)"
-                    git commit -m "Update manifest to revision v$REV_NUMBER"
-                    git push origin manifest-update
-                if: steps.git_status.outputs.stdout == ''
-                run: |
-                    echo "Warning: New manifest produced no changes."
-                    exit 1
+              if: steps.git_status.outputs.stdout != ''
+              run: |
+                  REV_NUMBER="$(cat manifests/LATEST_VERSION)"
+                  git commit -m "Update manifest to revision v$REV_NUMBER"
+                  git push origin manifest-update
