@@ -18,7 +18,7 @@ def main():
 
     if rev_remote == rev_local:
         print("No update available.")
-        sys.exit(-1)
+        sys.exit(1)
 
     # Only write to file after sanity check;
     # this number is used to construct commit message in workflow.
