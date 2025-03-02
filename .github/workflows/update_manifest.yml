@@ -27,21 +27,17 @@ jobs:
                     pip install -r requirements.txt
 
             - name: Run update_manifest.py
-                id: update_manifest
+                id: run_script
                 run: |
                     python update_manifest.py
-                    echo "::set-output name=return_value::$?"
+                    echo "::set-output name=exit_code::$?"
 
-            - name: Check for changes
-                id: git_status
+            - name: Commit changes
+                if: steps.run_script.outputs.exit_code == 0
                 run: |
-                    git config --global user.name 'github-actions[bot]'
-                    git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+                    git config user.name "GitHub Actions"
+                    git config user.email ""
                     git add .
-                if: steps.git_status.outputs.changes != '' && steps.update_manifest.outputs.return_value != '-1'
-                run: |
-                    git commit -m "v$(steps.update_manifest.outputs.return_value)"
-                if: steps.git_status.outputs.changes != ''
-                run: |
-                    git commit -m "Update manifest"
+                    REV_NUMBER="$(cat manifests/LATEST_VERSION)"
+                    git commit -m "Update manifest to revision v$REV_NUMBER"
                     git push origin manifest-update
