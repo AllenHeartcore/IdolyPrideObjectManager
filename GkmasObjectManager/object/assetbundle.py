@@ -68,6 +68,23 @@ class GkmasAssetBundle(GkmasResource):
         ret.update({field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_TAIL})
         return ret
 
+    def _download_bytes(self) -> bytes:
+        """
+        [INTERNAL] Downloads, and optionally deobfuscates, the assetbundle as raw bytes.
+        Sanity checks are implemented in parent class GkmasResource.
+        """
+
+        data = super()._download_bytes()
+
+        if not data.startswith(UNITY_SIGNATURE):
+            data = GkmasAssetBundleDeobfuscator(self.name).process(data)
+            if not data.startswith(UNITY_SIGNATURE):
+                logger.warning(f"{self._idname} downloaded but LEFT OBFUSCATED")
+                # Unexpected things may happen...
+                # So unlike _download_bytes(), here we don't raise an error and abort.
+
+        return data
+
     def download(
         self,
         path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
@@ -98,20 +115,8 @@ class GkmasAssetBundle(GkmasResource):
             logger.warning(f"{self._idname} already exists")
             return
 
-        enc = self._download_bytes()
-
-        if enc.startswith(UNITY_SIGNATURE):
-            self._extract_dispatcher(path, enc, **kwargs)
-        else:
-            dec = GkmasAssetBundleDeobfuscator(self.name).process(enc)
-            if dec.startswith(UNITY_SIGNATURE):
-                self._extract_dispatcher(path, dec, **kwargs)
-            else:
-                path.write_bytes(enc)
-                logger.warning(f"{self._idname} downloaded but LEFT OBFUSCATED")
-                # Unexpected things may happen...
-                # So unlike _download_bytes() in the parent class,
-                # here we don't raise an error and abort.
+        data = self._download_bytes()
+        self._extract_dispatcher(path, data, **kwargs)
 
     def _extract_dispatcher(
         self,
