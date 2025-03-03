@@ -14,7 +14,7 @@ from ..const import (
 
 from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
-from ..media import UnityImage
+from ..media import GkmasUnityImage
 
 
 logger = Logger()
@@ -132,7 +132,7 @@ class GkmasAssetBundle(GkmasResource):
         """
 
         if self.name.startswith("img_") and kwargs.get("extract_img", True):
-            UnityImage(self._idname, data).extract(
+            UnityImage(self._idname, data).export(
                 path,
                 img_format=kwargs.get("img_format", "png"),
                 img_resize=kwargs.get("img_resize", None),

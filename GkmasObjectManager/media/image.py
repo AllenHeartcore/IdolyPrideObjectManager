@@ -15,7 +15,7 @@ from PIL import Image
 logger = Logger()
 
 
-class UnityImage:  # no 'Gkmas' prefix since this is general-purpose
+class GkmasUnityImage:
 
     def __init__(
         self,
@@ -40,7 +40,7 @@ class UnityImage:  # no 'Gkmas' prefix since this is general-purpose
 
         self.img = values[0].read().image
 
-    def extract(
+    def export(
         self,
         path: Path,
         img_format: str,

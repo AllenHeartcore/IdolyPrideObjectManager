@@ -14,7 +14,7 @@ from pydub import AudioSegment
 logger = Logger()
 
 
-class AWBAudio:
+class GkmasAWBAudio:
 
     def __init__(
         self,
@@ -31,7 +31,7 @@ class AWBAudio:
         self.io = BytesIO(data)
         self.io.seek(0)
 
-    def extract(
+    def export(
         self,
         path: Path,
         audio_format: str,

@@ -1,5 +1,5 @@
-from .image import UnityImage
-from .audio import AWBAudio
+from .image import GkmasUnityImage
+from .audio import GkmasAWBAudio
 
 from ..const import GKMAS_UNITY_VERSION
 
