@@ -5,6 +5,7 @@ Unity image extraction plugin for GkmasAssetBundle.
 
 from ..log import Logger
 from ..const import IMG_RESIZE_ARGTYPE
+from .dummy import GkmasDummyMedia
 
 import UnityPy
 from pathlib import Path
@@ -15,7 +16,7 @@ from PIL import Image
 logger = Logger()
 
 
-class GkmasUnityImage:
+class GkmasUnityImage(GkmasDummyMedia):
 
     def __init__(
         self,
@@ -27,8 +28,7 @@ class GkmasUnityImage:
         Raises a warning and falls back to raw dump if the bundle contains multiple objects.
         """
 
-        self.valid = True
-        self.name = name
+        super().__init__(name, data)
 
         env = UnityPy.load(data)
         values = list(env.container.values())
@@ -38,24 +38,34 @@ class GkmasUnityImage:
             self.valid = False
             return  # fallback case is handled within this class
 
-        self.img = values[0].read().image
+        self.obj = values[0].read().image
 
     def export(
         self,
         path: Path,
-        img_format: str,
-        img_resize: IMG_RESIZE_ARGTYPE,
+        extract_img: bool = True,
+        img_format: str = "png",
+        img_resize: IMG_RESIZE_ARGTYPE = None,
     ):
         """
         Attempts to extract a single image from the assetbundle's container.
+
+        Args:
+            extract_img (bool) = True: Whether to extract a single image from assetbundles of type 'img'.
+                If False, 'img_.*\\.unity3d' is downloaded as is.
+            img_format (str) = 'png': Image format for extraction. Case-insensitive.
+                Effective only when 'extract_img' is True.
+                Valid options are checked by PIL.Image.save() and are not enumerated.
+            img_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
+                If None, image is downloaded as is.
+                If str, string must contain exactly one ':' and image is resized to the specified ratio.
+                If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        if not self.valid:
-            path.write_bytes(self.img)
-            logger.success(f"{self.name} downloaded")
-            return
+        if not (self.valid and extract_img):
+            super().export(path)
 
-        img = self.img
+        img = self.obj
 
         if img_resize:
             if type(img_resize) == str:

@@ -14,7 +14,9 @@ from ..const import (
 
 from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
-from ..media import GkmasUnityImage
+from ..media import GkmasDummyMedia, GkmasUnityImage
+
+from pathlib import Path
 
 
 logger = Logger()
@@ -68,6 +70,28 @@ class GkmasAssetBundle(GkmasResource):
         ret.update({field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_TAIL})
         return ret
 
+    def _get_media(self):
+        """
+        [INTERNAL] Instantiates a high-level media class based on the assetbundle name.
+        Used to dispatch download and extraction.
+        """
+
+        if self._media is None:
+            data = self._download_bytes()
+            if self.name.startswith("img_"):
+                self._media = GkmasUnityImage(self._idname, data)
+            else:
+                self._media = GkmasDummyMedia(self._idname, data)
+
+        return self._media
+
+    def _download_path(self, path: PATH_ARGTYPE, categorize: bool) -> Path:
+        """
+        [INTERNAL] Refines the download path based on user input.
+        Inherited from GkmasResource, but imposes a '.unity3d' suffix.
+        """
+        return super()._download_path(path, categorize).with_suffix(".unity3d")
+
     def _download_bytes(self) -> bytes:
         """
         [INTERNAL] Downloads, and optionally deobfuscates, the assetbundle as raw bytes.
@@ -84,60 +108,3 @@ class GkmasAssetBundle(GkmasResource):
                 # So unlike _download_bytes(), here we don't raise an error and abort.
 
         return data
-
-    def download(
-        self,
-        path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
-        categorize: bool = True,
-        **kwargs,
-    ):
-        """
-        Downloads and deobfuscates the assetbundle to the specified path.
-
-        Args:
-            path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory or a file path.
-                If a directory, subdirectories are auto-determined based on the assetbundle name.
-            categorize (bool) = True: Whether to put the downloaded object into subdirectories.
-                If False, the object is directly downloaded to the specified 'path'.
-            extract_img (bool) = True: Whether to extract a single image from assetbundles of type 'img'.
-                If False, 'img_.*\\.unity3d' is downloaded as is.
-            img_format (str) = 'png': Image format for extraction. Case-insensitive.
-                Effective only when 'extract_img' is True.
-                Valid options are checked by PIL.Image.save() and are not enumerated.
-            img_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
-                If None, image is downloaded as is.
-                If str, string must contain exactly one ':' and image is resized to the specified ratio.
-                If Tuple[int, int], image is resized to the specified exact dimensions.
-        """
-
-        path = self._download_path(path, categorize).with_suffix(".unity3d")
-        if path.exists():
-            logger.warning(f"{self._idname} already exists")
-            return
-
-        data = self._download_bytes()
-        self._extract_dispatcher(path, data, **kwargs)
-
-    def _extract_dispatcher(
-        self,
-        path: PATH_ARGTYPE,  # no default value to enforce presence
-        data: bytes,
-        **kwargs,
-    ):
-        """
-        [INTERNAL] Dispatches the extraction of various formats
-        based on the assetbundle's name and the extract_* flags.
-        Designed to be modular and easily extensible.
-        **Also this is where kwargs are actually parsed.**
-        """
-
-        if self.name.startswith("img_") and kwargs.get("extract_img", True):
-            UnityImage(self._idname, data).export(
-                path,
-                img_format=kwargs.get("img_format", "png"),
-                img_resize=kwargs.get("img_resize", None),
-                # caller-side kwargs parsing enforces callee-side type checking
-            )
-        else:
-            path.write_bytes(data)
-            logger.success(f"{self._idname} downloaded")

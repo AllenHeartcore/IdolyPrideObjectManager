@@ -13,6 +13,8 @@ from ..const import (
     CHARACTER_ABBREVS,
 )
 
+from ..media import GkmasDummyMedia, GkmasAWBAudio
+
 import re
 import requests
 from hashlib import md5
@@ -64,12 +66,32 @@ class GkmasResource:
         # 'self.state' unused, but retained for compatibility
         self._idname = f"RS[{self.id:05}] '{self.name}'"
 
+        # 'self._media' holds a class from media/ that implements
+        # format-specific extraction, if applicable.
+        # Not set at initialization, since downloading bytes is a prerequisite.
+        self._media = None
+
     def __repr__(self):
         return f"<GkmasResource {self._idname}>"
 
     def _get_canon_repr(self):
         # this format retains the order of fields
         return {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS}
+
+    def _get_media(self):
+        """
+        [INTERNAL] Instantiates a high-level media class based on the resource name.
+        Used to dispatch download and extraction.
+        """
+
+        if self._media is None:
+            data = self._download_bytes()
+            if self.name.startswith("sud_"):
+                self._media = GkmasAWBAudio(self._idname, data)
+            else:
+                self._media = GkmasDummyMedia(self._idname, data)
+
+        return self._media
 
     def download(
         self,
@@ -92,9 +114,7 @@ class GkmasResource:
             logger.warning(f"{self._idname} already exists")
             return
 
-        dec = self._download_bytes()
-        path.write_bytes(dec)
-        logger.success(f"{self._idname} downloaded")
+        self._get_media().export(path, **kwargs)
 
     def _download_path(self, path: PATH_ARGTYPE, categorize: bool) -> Path:
         """
