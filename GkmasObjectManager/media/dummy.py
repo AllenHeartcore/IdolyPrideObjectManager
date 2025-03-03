@@ -24,6 +24,9 @@ class GkmasDummyMedia:
         self.name = name  # only for logging
         self.obj = data
 
+    def _get_embed_url(self) -> str:
+        return ""
+
     def export(
         self,
         path: Path,

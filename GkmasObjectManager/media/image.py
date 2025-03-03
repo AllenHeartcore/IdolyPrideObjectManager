@@ -7,7 +7,9 @@ from ..log import Logger
 from ..const import IMG_RESIZE_ARGTYPE
 from .dummy import GkmasDummyMedia
 
+import base64
 import UnityPy
+from io import BytesIO
 from pathlib import Path
 from typing import Union, Tuple
 from PIL import Image
@@ -39,6 +41,11 @@ class GkmasUnityImage(GkmasDummyMedia):
             return  # fallback case is handled within this class
 
         self.obj = values[0].read().image
+
+    def _get_embed_url(self) -> str:
+        io = BytesIO()
+        self.obj.convert("RGB").save(io, format="JPEG")
+        return f"data:image/jpeg;base64,{base64.b64encode(io.getvalue()).decode()}"
 
     def export(
         self,

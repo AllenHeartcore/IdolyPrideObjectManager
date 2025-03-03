@@ -4,6 +4,7 @@ AWB audio extraction plugin for GkmasResource.
 """
 
 from ..log import Logger
+from .dummy import GkmasDummyMedia
 
 import subprocess
 from io import BytesIO
@@ -14,7 +15,7 @@ from pydub import AudioSegment
 logger = Logger()
 
 
-class GkmasAWBAudio:
+class GkmasAWBAudio(GkmasDummyMedia):
 
     def __init__(
         self,
@@ -30,6 +31,9 @@ class GkmasAWBAudio:
         self.name = name
         self.io = BytesIO(data)
         self.io.seek(0)
+
+    def _get_embed_url(self) -> str:
+        return ""
 
     def export(
         self,
