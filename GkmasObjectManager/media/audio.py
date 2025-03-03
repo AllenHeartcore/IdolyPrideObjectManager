@@ -1,9 +1,9 @@
 """
-plugins/audio.py
+media/audio.py
 AWB audio extraction plugin for GkmasResource.
 """
 
-from ...log import Logger
+from ..log import Logger
 
 import subprocess
 from io import BytesIO

@@ -1,10 +1,10 @@
 """
-plugins/image.py
+media/image.py
 Unity image extraction plugin for GkmasAssetBundle.
 """
 
-from ...log import Logger
-from ...const import IMG_RESIZE_ARGTYPE
+from ..log import Logger
+from ..const import IMG_RESIZE_ARGTYPE
 
 import UnityPy
 from pathlib import Path

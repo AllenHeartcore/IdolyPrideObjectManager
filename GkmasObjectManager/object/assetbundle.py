@@ -14,7 +14,7 @@ from ..const import (
 
 from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
-from .plugins.image import UnityImage
+from ..media import UnityImage
 
 
 logger = Logger()
