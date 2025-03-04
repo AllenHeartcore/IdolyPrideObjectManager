@@ -1,9 +1,9 @@
 name: Update manifest
 
 on:
-    # Runs every hour, on the hour
+    # Runs every three hours, on the hour
     schedule:
-        - cron: "0 * * * *"
+        - cron: "0 */3 * * *"
     # Allow manual triggering
     workflow_dispatch:
 
@@ -32,31 +32,20 @@ jobs:
               id: run_script
               run: |
                   python update_manifest.py
-                  echo "::set-output name=exit_code::$?"
+                  echo "exit_code=$?" >> $GITHUB_OUTPUT
 
             - name: Warn if up-to-date
               if: steps.run_script.outputs.exit_code == 1
               run: |
                   echo "Warning: Local manifest is up-to-date."
-                  exit 1
+                  exit 0
 
-            - name: Check for changes
-              id: git_status
+            - name: Commit changes
               if: steps.run_script.outputs.exit_code == 0
               run: |
                   git config user.name "GitHub Actions"
                   git config user.email ""
                   git add .
-
-            - name: Warn if no changes
-              if: steps.git_status.outputs.stdout == ''
-              run: |
-                  echo "Warning: New manifest produced no changes."
-                  exit 1
-
-            - name: Commit changes
-              if: steps.git_status.outputs.stdout != ''
-              run: |
                   REV_NUMBER="$(cat manifests/LATEST_VERSION)"
                   git commit -m "Update manifest to revision v$REV_NUMBER"
                   git push origin manifest-update
