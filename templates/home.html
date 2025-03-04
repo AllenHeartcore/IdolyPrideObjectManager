@@ -1,18 +1,15 @@
 {% extends "layout.html" %} {% block content %}
 
-<div class="d-flex justify-content-center">
+<script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/home.js') }}"
+></script>
+
+<div id="loadingSpinner" class="d-flex justify-content-center">
     <div class="spinner-border me-2" role="status"></div>
     <span>Fetching manifest...</span>
 </div>
 
 <div id="dataContainer"></div>
-
-<script>
-    fetch("/api/manifest")
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-        });
-</script>
 
 {% endblock %}
