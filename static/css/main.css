@@ -1,9 +1,3 @@
-@font-face {
-    font-family: "NYC Sans";
-    src: url("https://hex.xyz/NYC_Sans/NYC_Sans_v0.3_Variable.woff2")
-        format("woff2");
-}
-
 .container {
     width: 100%;
     font-family: "NYC Sans", sans-serif;
@@ -16,7 +10,7 @@
 }
 
 .text-bold {
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .text-semibold {

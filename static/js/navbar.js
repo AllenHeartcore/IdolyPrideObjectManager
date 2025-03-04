@@ -57,7 +57,7 @@ function setRandomAccentColor() {
     let hsl = rgb2hsl(...hex2rgb(accent));
 
     console.log(accent, hsl);
-    $("#navbarSticker").attr("src", `/static/stickers/${key}.png`);
+    $("#navbarSticker").attr("src", `/static/img/${key}.png`);
     $(".navbar").css(
         "background-color",
         `hsl(${hsl[0] * 360}, ${hsl[1] * 100}%, 90%)`
