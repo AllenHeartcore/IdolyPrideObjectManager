@@ -8,6 +8,7 @@
     width: 100%;
     font-family: "NYC Sans", sans-serif;
     font-size: 20px;
+    font-weight: 400;
 }
 
 .full-width {
@@ -45,12 +46,15 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+#navbarText {
+    font-size: 1.5rem !important;
 }
 
 #navbarSticker {
-    position: sticky;
-    top: 0;
+    /* position: sticky;
     z-index: 1000;
+    top: 0; */
     height: 60px;
 }

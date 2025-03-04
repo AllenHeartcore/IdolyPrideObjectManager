@@ -17,6 +17,7 @@
             rel="stylesheet"
             href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
         />
+        <script src="{{ url_for('static', filename='navbar.js') }}"></script>
 
         <!-- Bootstrap CSS -->
         <link
@@ -32,11 +33,12 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container w-100" id="navbarNav">
-                <a class="navbar-brand text-bold" href="/">
-                    <img
-                        src="{{ url_for('static', filename='stickers/ttmr.png') }}"
-                        id="navbarSticker"
-                    />GkmasObjectManager</a
+                <a class="navbar-brand" href="/">
+                    <img src="" id="navbarSticker" class="me-2" />
+                    <span id="navbarText">
+                        <span class="text-bold">GkmasObjectManager</span>
+                        <span>by Ziyuan "Heartcore" Chen</span>
+                    </span></a
                 >
                 <form class="d-flex" id="searchForm">
                     <input
