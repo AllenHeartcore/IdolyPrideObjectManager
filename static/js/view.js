@@ -39,20 +39,22 @@ function populateViewpageContainers(info) {
         info.dependencies
             ? $("<tr>").append(
                   $("<th>").text("Dependencies"),
-                  $("<td>").append(
-                      $("<ul>").append(
-                          info.dependencies.map((dep) =>
-                              $("<li>").append(
-                                  $("<a>")
-                                      .attr(
-                                          "href",
-                                          `/view/assetbundle/${dep.id}`
-                                      )
-                                      .text(dep.name)
+                  $("<td>")
+                      .addClass("text-monospace")
+                      .append(
+                          $("<ul>").append(
+                              info.dependencies.map((dep) =>
+                                  $("<li>").append(
+                                      $("<a>")
+                                          .attr(
+                                              "href",
+                                              `/view/assetbundle/${dep.id}`
+                                          )
+                                          .text(dep.name)
+                                  )
                               )
                           )
                       )
-                  )
               )
             : ""
     );

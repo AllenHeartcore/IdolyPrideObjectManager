@@ -14,6 +14,10 @@ def _get_manifest():
     return m
 
 
+def _abid2name(id):
+    return _get_manifest().assetbundles[int(id)].name
+
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -29,6 +33,14 @@ def api_assetbundle(id):
     obj = _get_manifest().assetbundles[int(id)]
     info = obj._get_canon_repr()
     info["id"] = f"AssetBundle #{info["id"]}"
+    if "dependencies" in info:
+        info["dependencies"] = [
+            {
+                "id": dep,
+                "name": _abid2name(dep),
+            }
+            for dep in info["dependencies"]
+        ]
     info["embed_url"] = obj._get_embed_url()
     return jsonify(info)
 
@@ -40,12 +52,6 @@ def api_resource(id):
     info["id"] = f"Resource #{info["id"]}"
     info["embed_url"] = obj._get_embed_url()
     return jsonify(info)
-
-
-# exclusively for dependency list rendering
-@app.route("/api/abid2name/<id>")
-def api_abid2name(id):
-    return _get_manifest().assetbundles[int(id)].name
 
 
 @app.route("/view/assetbundle/<id>")
