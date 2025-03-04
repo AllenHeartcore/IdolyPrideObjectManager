@@ -9,8 +9,43 @@
 <div id="viewSubtitle">{{ info.name }}</div>
 
 <div>
-    <!-- height must not exceed 300px -->
-    <img src="{{ embed_url }}" class="img-fluid" alt="Image" />
+    <img src="{{ embed_url }}" id="viewImageResponsive" />
 </div>
 
-{% endblock %}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Size</td>
+            <td>{{ info.size }}</td>
+        </tr>
+        <tr>
+            <td>MD5</td>
+            <td>{{ info.md5 }}</td>
+        </tr>
+        <tr>
+            <td>Direct Download</td>
+            <td>
+                <a
+                    href="https://object.asset.game-gakuen-idolmaster.jp/{{ info.objectName }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download="{{ info.name }}"
+                >
+                    {{ info.objectName }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Dependencies</td>
+            <td id="viewDependencies"></td>
+        </tr>
+    </tbody>
+
+    {% endblock %}
+</table>

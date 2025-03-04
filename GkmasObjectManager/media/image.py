@@ -44,7 +44,7 @@ class GkmasUnityImage(GkmasDummyMedia):
 
     def _get_embed_url(self) -> str:
         io = BytesIO()
-        self.obj.convert("RGB").save(io, format="PNG")
+        self.obj.save(io, format="PNG")
         return f"data:image/png;base64,{base64.b64encode(io.getvalue()).decode()}"
 
     def export(

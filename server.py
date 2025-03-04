@@ -28,7 +28,7 @@ def api_manifest():
 def view_assetbundle(id):
     obj = get_manifest().assetbundles[int(id)]
     info = obj._get_canon_repr()
-    info["id"] = f"AB{info["id"]:05d}"
+    info["id"] = f"AssetBundle #{info["id"]:05d}"
     return render_template(
         "view.html",
         info=info,
@@ -40,7 +40,7 @@ def view_assetbundle(id):
 def view_resource(id):
     obj = get_manifest().resources[int(id)]
     info = obj._get_canon_repr()
-    info["id"] = f"RS{info["id"]:05d}"
+    info["id"] = f"Resource #{info["id"]:05d}"
     return render_template(
         "view.html",
         info=info,
