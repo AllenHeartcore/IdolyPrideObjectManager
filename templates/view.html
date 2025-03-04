@@ -1,0 +1,16 @@
+{% extends "layout.html" %} {% block content %}
+
+<script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/view.js') }}"
+></script>
+
+<div id="viewTitle">{{ info.id }}</div>
+<div id="viewSubtitle">{{ info.name }}</div>
+
+<div>
+    <!-- height must not exceed 300px -->
+    <img src="{{ embed_url }}" class="img-fluid" alt="Image" />
+</div>
+
+{% endblock %}

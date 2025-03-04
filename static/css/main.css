@@ -58,3 +58,17 @@
     font-size: 1.8rem;
     line-height: 1.5;
 }
+
+#viewTitle {
+    padding: 30px 0 0 0;
+    font-size: 5.4rem;
+    line-height: 1;
+}
+
+#viewSubtitle {
+    padding: 0 0 30px 0;
+    font-family: Consolas, monospace;
+    font-weight: bold;
+    font-size: 1.8rem;
+    line-height: 1;
+}
