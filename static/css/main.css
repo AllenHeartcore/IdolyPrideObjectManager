@@ -78,5 +78,8 @@
     max-height: 50vh;
     width: auto;
     height: auto;
-    padding: 0 0 30px 0;
+}
+
+#viewPropertyTable {
+    padding: 30px 0 0 0;
 }

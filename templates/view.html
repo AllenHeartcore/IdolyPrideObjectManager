@@ -5,47 +5,36 @@
     src="{{ url_for('static', filename='js/view.js') }}"
 ></script>
 
-<div id="viewTitle">{{ info.id }}</div>
-<div id="viewSubtitle">{{ info.name }}</div>
+<!-- AJAX Interface -->
+<!-- Must make these visible to JS even if no json conversion is involved -->
+<script>
+    let id = "{{ id }}";
+    let type = "{{ type }}";
+</script>
 
-<div>
-    <img src="{{ embed_url }}" id="viewImageResponsive" />
+<div id="loadingSpinner">
+    <div class="spinner-border me-2" role="status"></div>
+    <span>Fetching object...</span>
 </div>
 
-<table class="table table-bordered table-hover">
+<div id="viewTitle" class="hide-by-default"></div>
+<div id="viewSubtitle" class="hide-by-default"></div>
+
+<div>
+    <img src="" id="viewImageResponsive" />
+</div>
+
+<table
+    id="viewPropertyTable"
+    class="table table-bordered table-hover hide-by-default"
+>
     <thead>
         <tr>
             <th>Property</th>
             <th>Value</th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td>Size</td>
-            <td>{{ info.size }}</td>
-        </tr>
-        <tr>
-            <td>MD5</td>
-            <td>{{ info.md5 }}</td>
-        </tr>
-        <tr>
-            <td>Direct Download</td>
-            <td>
-                <a
-                    href="https://object.asset.game-gakuen-idolmaster.jp/{{ info.objectName }}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download="{{ info.name }}"
-                >
-                    {{ info.objectName }}
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>Dependencies</td>
-            <td id="viewDependencies"></td>
-        </tr>
-    </tbody>
-
-    {% endblock %}
+    <tbody></tbody>
 </table>
+
+{% endblock %}
