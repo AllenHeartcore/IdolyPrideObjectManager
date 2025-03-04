@@ -5,9 +5,29 @@
     src="{{ url_for('static', filename='js/home.js') }}"
 ></script>
 
-<div id="loadingSpinner" class="d-flex justify-content-center">
+<div id="loadingSpinner">
     <div class="spinner-border me-2" role="status"></div>
     <span>Fetching manifest...</span>
+</div>
+
+<div id="homeMetadata" class="hide-by-default">
+    <div>
+        <span>GkmasManifest revision</span>
+        <span id="homeMetadataRevision" class="text-bold"></span>
+    </div>
+    <div>
+        <span>with</span>
+        <span id="homeMetadataAbCount" class="text-bold"></span>
+        <span>assetbundles</span>
+    </div>
+    <div>
+        <span>and</span>
+        <span id="homeMetadataResCount" class="text-bold"></span>
+        <span>resources.</span>
+    </div>
+    <div>
+        <span>Standby.</span>
+    </div>
 </div>
 
 <div id="dataContainer"></div>

@@ -9,31 +9,16 @@
     width: 100%;
 }
 
+.hide-by-default {
+    display: none;
+}
+
 .text-bold {
     font-weight: 900;
 }
 
-.text-semibold {
-    font-weight: 600;
-}
-
 .text-italic {
     font-style: italic;
-}
-
-.warning {
-    color: hsl(0, 100%, 50%);
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.vert-center {
-    align-items: center;
-}
-
-.vert-center-padded {
-    align-items: center;
-    padding: 6px;
 }
 
 #navbarNav {
@@ -48,4 +33,17 @@
 
 #navbarSticker {
     height: 60px;
+}
+
+#loadingSpinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+#homeMetadata {
+    padding: 30px 0;
+    font-size: 4.2rem;
+    line-height: 1;
 }

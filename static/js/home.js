@@ -5,9 +5,11 @@ $(document).ready(function () {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (result) {
-            // .hide() is not sufficient to override 'display: flex !important' in class 'd-flex'
-            $("#loadingSpinner").css("display", "none", "important");
-            $("#dataContainer").text(JSON.stringify(result, null, 2));
+            $("#loadingSpinner").hide();
+            $("#homeMetadata").show();
+            $("#homeMetadataRevision").text(result.revision);
+            $("#homeMetadataAbCount").text(result.assetBundleList.length);
+            $("#homeMetadataResCount").text(result.resourceList.length);
         },
         error: function (request, status, error) {
             console.log("Error");
