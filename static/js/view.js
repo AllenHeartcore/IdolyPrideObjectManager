@@ -24,7 +24,7 @@ function populateViewpageContainers(info) {
                         `https://object.asset.game-gakuen-idolmaster.jp/${info.objectName}`
                     )
                     .attr("rel", "noopener noreferrer")
-                    .text(`Raw ${type}`),
+                    .text(`Raw ${type.toLowerCase()}`),
                 info.embed_url
                     ? [
                           "&emsp; | &emsp;",
@@ -60,12 +60,21 @@ function populateViewpageContainers(info) {
     );
 }
 
+function reportViewpageError() {
+    $("#loadingSpinner").hide();
+    $("#viewTitle").show();
+    $("#viewTitle").html(`
+        ${type} #${id} cannot be found, <br>
+        or we encountered a parsing error. <br>
+        Check console and Flask terminal. <br>
+        Refresh to retry.
+    `);
+}
+
 $(document).ready(function () {
-    console.log("Querying API for view page data...");
-    console.log("URL is: " + `/api/${type}/${id}`);
     $.ajax({
         type: "GET",
-        url: `/api/${type}/${id}`,
+        url: `/api/${type.toLowerCase()}/${id}`,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (result) {
@@ -76,7 +85,7 @@ $(document).ready(function () {
             console.log(request);
             console.log(status);
             console.log(error);
-            $("#loadingSpinner").hide();
+            reportViewpageError();
         },
     });
 });

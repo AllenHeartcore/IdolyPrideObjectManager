@@ -48,25 +48,25 @@
 }
 
 #homeMetadata {
-    padding: 30px 0;
+    margin: 30px 0;
     font-size: 4.2rem;
     line-height: 1;
 }
 
 #homeDigest {
-    padding: 30px 0;
+    margin: 30px 0;
     font-size: 1.8rem;
     line-height: 1.5;
 }
 
 #viewTitle {
-    padding: 30px 0 0 0;
+    margin: 30px 0 0 0;
     font-size: 5.4rem;
     line-height: 1;
 }
 
 #viewSubtitle {
-    padding: 0 0 30px 0;
+    margin: 0 0 30px 0;
     font-family: Consolas, monospace;
     font-weight: bold;
     font-size: 1.8rem;
@@ -75,11 +75,11 @@
 
 #viewImageResponsive {
     max-width: 100%;
-    max-height: 50vh;
+    max-height: 42vh;
     width: auto;
     height: auto;
 }
 
 #viewPropertyTable {
-    padding: 30px 0 0 0;
+    margin: 30px 0 0 0;
 }

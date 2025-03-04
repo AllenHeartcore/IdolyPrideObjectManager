@@ -3,6 +3,9 @@ import GkmasObjectManager as gom
 from flask import Flask, render_template, request, jsonify
 
 
+# Bookkeeping
+
+
 app = Flask(__name__)
 m = None
 
@@ -18,9 +21,7 @@ def _abid2name(id):
     return _get_manifest().assetbundles[int(id)].name
 
 
-@app.route("/")
-def home():
-    return render_template("home.html")
+# API endpoints
 
 
 @app.route("/api/manifest")
@@ -54,9 +55,17 @@ def api_resource(id):
     return jsonify(info)
 
 
+# Frontend routes
+
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
 @app.route("/view/assetbundle/<id>")
 def view_assetbundle(id):
-    return render_template("view.html", id=id, type="assetbundle")
+    return render_template("view.html", id=id, type="AssetBundle")
     # Used to query obj here and pass obj._get_canon_repr() and obj._get_embed_url()
     # directly to the template, but if user starts at viewpage instead of homepage,
     # manifest + object fetch (both handled by backend) will create a serious delay,
@@ -66,7 +75,7 @@ def view_assetbundle(id):
 
 @app.route("/view/resource/<id>")
 def view_resource(id):
-    return render_template("view.html", id=id, type="resource")
+    return render_template("view.html", id=id, type="Resource")
 
 
 if __name__ == "__main__":

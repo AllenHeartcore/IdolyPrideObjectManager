@@ -26,6 +26,16 @@ function populateHomepageContainers(data) {
     });
 }
 
+function reportHomepageError() {
+    $("#loadingSpinner").hide();
+    $("#homeMetadata").show();
+    $("#homeMetadata").html(`
+        GkmasManifest cannot be fetched. <br>
+        Check Internet connection. <br>
+        Refresh to retry.
+    `);
+}
+
 $(document).ready(function () {
     $.ajax({
         type: "GET",
@@ -40,7 +50,7 @@ $(document).ready(function () {
             console.log(request);
             console.log(status);
             console.log(error);
-            $("#loadingSpinner").hide();
+            reportHomepageError();
         },
     });
 });
