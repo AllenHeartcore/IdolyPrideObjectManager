@@ -4,12 +4,20 @@ from flask import Flask, render_template, request, jsonify
 
 
 app = Flask(__name__)
-manifest = None
+m = None
 
 
 @app.route("/")
-def welcome():
-    return render_template("layout.html")
+def home():
+    return render_template("home.html")
+
+
+@app.route("/api/manifest")
+def get_manifest():
+    global m
+    if m is None:
+        m = gom.fetch()
+    return jsonify(m._get_canon_repr())
 
 
 if __name__ == "__main__":
