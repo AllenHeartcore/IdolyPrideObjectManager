@@ -46,6 +46,6 @@ jobs:
                   git config user.name "GitHub Actions"
                   git config user.email ""
                   git add .
-                  REV_NUMBER="$(cat manifests/LATEST_VERSION)"
+                  REV_NUMBER="$(cat manifests/LATEST_REVISION)"
                   git commit -m "Update manifest to revision v$REV_NUMBER"
                   git push origin manifest-update
