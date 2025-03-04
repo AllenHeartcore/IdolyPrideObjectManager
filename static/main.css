@@ -1,0 +1,56 @@
+@font-face {
+    font-family: "NYC Sans";
+    src: url("https://hex.xyz/NYC_Sans/NYC_Sans_v0.3_Variable.woff2")
+        format("woff2");
+}
+
+.container {
+    width: 100%;
+    font-family: "NYC Sans", sans-serif;
+    font-size: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.text-bold {
+    font-weight: 800;
+}
+
+.text-semibold {
+    font-weight: 600;
+}
+
+.text-italic {
+    font-style: italic;
+}
+
+.warning {
+    color: hsl(0, 100%, 50%);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.vert-center {
+    align-items: center;
+}
+
+.vert-center-padded {
+    align-items: center;
+    padding: 6px;
+}
+
+#navbarNav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+#navbarSticker {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 60px;
+}
