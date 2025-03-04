@@ -10,13 +10,13 @@ instructions_dl = [
     (r"img_general_icon_contest-rank.*", "profile"),
     (r"img_general_meishi_illust_idol.*", "idol/full"),
     (r"img_general_meishi_illust_sd.*", "idol/mini", "2:3"),
-    (r"img_general_cidol.*full\..*", "idol/produce", "9:16", "jpg"),
+    (r"img_general_cidol.*full.*", "idol/produce", "9:16", "jpg"),
     (r"img_general_cidol.*thumb-landscape-large.*", "idol/produce", "16:9", "jpg"),
     (r"img_general_cidol.*thumb-portrait.*", "idol/produce", "3:4"),
     (r"img_general_meishi_illust_sign.*", "idol/sign"),
-    (r"img_general_csprt.*full\..*", "support", "16:9", "jpg"),
+    (r"img_general_csprt.*full.*", "support", "16:9", "jpg"),
     (r"img_general_meishi_base_story-bg.*", "base/commu", "16:9", "jpg"),
-    (r"img_general_meishi_base_(?!story-bg).*full\..*", "base", "16:9", "jpg"),
+    (r"img_general_meishi_base_(?!story-bg).*full.*", "base", "16:9", "png"),
     (r"img_general_achievement_produce.*", "achievement/produce"),
     (r"img_general_achievement_common.*", "achievement/misc"),
     (r"img_general_meishi_illust_music-logo.*", "parts/logo", "3:2"),
@@ -24,7 +24,7 @@ instructions_dl = [
     (r"img_general_meishi_illust_stamp.*", "parts/misc"),
     (r"img_general_meishi_illust_hatsuboshi-logo.*", "parts/misc"),
     (r"img_general_meishi_illust_event.*", "parts/event"),  # Inferred
-    (r"img_general_meishi_illust_highscore.*full\..*", "parts/highscore"),  # Inferred
+    (r"img_general_meishi_illust_highscore.*full.*", "parts/highscore"),  # Inferred
     (r"img_general_skillcard.*", "produce/skillcard"),
     (r"img_general_pitem.*", "produce/pitem"),
     (r"img_general_pdrink.*", "produce/pdrink"),
