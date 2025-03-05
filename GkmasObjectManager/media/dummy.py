@@ -27,6 +27,9 @@ class GkmasDummyMedia:
     def _get_embed_url(self) -> str:
         return ""
 
+    def caption(self) -> str:
+        return "[Captioning not supported for raw binary data.]"
+
     def export(
         self,
         path: Path,

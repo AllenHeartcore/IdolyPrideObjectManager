@@ -96,6 +96,9 @@ class GkmasResource:
     def _get_embed_url(self) -> str:
         return self._get_media()._get_embed_url()
 
+    def caption(self) -> str:
+        return self._get_media().caption()
+
     def download(
         self,
         path: PATH_ARGTYPE = DEFAULT_DOWNLOAD_PATH,
