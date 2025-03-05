@@ -47,16 +47,28 @@ class GkmasAWBAudio(GkmasAudio):
 
         super().__init__(name, data)
 
-        self.obj = BytesIO(data)
-        self.obj.seek(0)
-        # It would be more reasonable to let self.obj be an AudioSegment,
-        # but the AWB format is not directly supported by pydub.
-
-        # Overwriting self.obj at conversion-enabled export is also bad for consistency, ...
-        self.wav = None  # ... but having a separate attribute is a valid workaround.
+        try:
+            process = subprocess.Popen(
+                [Path(__file__).parent / "vgmstream/vgmstream", "-o", "-", "-"],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
+            )
+            wav_data, _ = process.communicate(input=data)
+            assert process.returncode == 0
+            self.obj = AudioSegment.from_file(BytesIO(wav_data))
+        except:
+            logger.warning(
+                f"{name} is not recognized by vgmstream, fallback to rawdump"
+            )
+            self.valid = False
+        # fallback case is handled within this class
 
     def _get_embed_url(self) -> str:
-        return ""
+        if not self.valid:
+            return super()._get_embed_url()
+        return f"data:audio/wav;base64,{base64.b64encode(self.obj.export(format='wav')).decode()}"
 
     def export(
         self,
@@ -79,10 +91,7 @@ class GkmasAWBAudio(GkmasAudio):
         if not (self.valid and extract_audio):
             super().export(path)
 
-        subprocess.run(
-            "media/vgmstream/vgmstream",
-            input=self.obj.read(),
-            stdout=Path(path).with_suffix(".wav").open("wb"),
-            stderr=subprocess.PIPE,
-            check=True,
+        self.obj.export(path.with_suffix(f".{audio_format}"), format=audio_format)
+        logger.success(
+            f"{self.name} downloaded and extracted as {audio_format.upper()}"
         )
