@@ -14,7 +14,8 @@ from ..const import (
 
 from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
-from ..media import GkmasDummyMedia, GkmasUnityImage
+from ..media import GkmasDummyMedia
+from ..media.image import GkmasUnityImage
 
 from pathlib import Path
 

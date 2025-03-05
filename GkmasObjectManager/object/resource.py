@@ -13,7 +13,9 @@ from ..const import (
     CHARACTER_ABBREVS,
 )
 
-from ..media import GkmasDummyMedia, GkmasAudio, GkmasImage, GkmasAWBAudio
+from ..media import GkmasDummyMedia
+from ..media.image import GkmasImage
+from ..media.audio import GkmasAudio, GkmasAWBAudio
 
 import re
 import requests
