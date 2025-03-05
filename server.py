@@ -31,14 +31,12 @@ def api_manifest():
 
 @app.route("/api/search/<query>")
 def api_search(query):
-    print("Enter")
-    print(_get_manifest().search(f".*{query.lower().replace(' ', '.*')}.*")[0])
     return jsonify(
         [
             {
-                id: obj.id,
-                name: obj.name,
-                type: type(obj).__name__[5:],  # valid names start with "Gkmas"
+                "id": obj.id,
+                "name": obj.name,
+                "type": type(obj).__name__[5:],  # valid names start with "Gkmas"
             }
             for obj in _get_manifest().search(f".*{query.lower().replace(' ', '.*')}.*")
         ]
@@ -80,8 +78,7 @@ def home():
 
 
 @app.route("/search/<query>")
-def search():
-    print("Start rendering")
+def search(query):
     return render_template("search.html", query=query)
 
 

@@ -8,7 +8,6 @@
 <!-- AJAX Interface -->
 <script>
     let query = "{{ query }}";
-    let result = {{ result | tojson }};
 </script>
 
 <div id="loadingSpinner">
@@ -16,6 +15,9 @@
     <span>Searching...</span>
 </div>
 
+<div id="searchQuery" class="hide-by-default">
+    Search results for "{{ query }}"
+</div>
 <div id="searchResultDigest" class="hide-by-default"></div>
 
 <table
