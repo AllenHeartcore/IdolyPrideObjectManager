@@ -22,7 +22,8 @@ class GkmasDummyMedia:
     ):
         self.valid = True
         self.name = name  # only for logging
-        self.obj = data
+        self.data = data  # raw binary data (we don't want to reencode known formats)
+        self.obj = None  # parsed object, if applicable
 
     def _get_embed_url(self) -> str:
         return ""
@@ -34,5 +35,5 @@ class GkmasDummyMedia:
         self,
         path: Path,
     ):
-        path.write_bytes(self.obj)
+        path.write_bytes(self.data)
         logger.success(f"{self.name} downloaded")
