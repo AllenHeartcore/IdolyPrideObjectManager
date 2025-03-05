@@ -36,7 +36,8 @@ class GkmasImage(GkmasDummyMedia):
             # fallback case is handled within parent class
 
     def _get_embed_url(self) -> str:
-        return f"data:image/{self.name.split('.')[-1]};base64,{base64.b64encode(self.data).decode()}"
+        # 'self.name' is actually 'self._idname' in object, therefore the name is enclosed in quotes
+        return f"data:image/{self.name.split('.')[-1][:-1]};base64,{base64.b64encode(self.data).decode()}"
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())

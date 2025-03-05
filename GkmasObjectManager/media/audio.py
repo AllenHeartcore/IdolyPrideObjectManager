@@ -33,7 +33,8 @@ class GkmasAudio(GkmasDummyMedia):
             # fallback case is handled within parent class
 
     def _get_embed_url(self) -> str:
-        return f"data:audio/{self.name.split('.')[-1]};base64,{base64.b64encode(self.data).decode()}"
+        # 'self.name' is actually 'self._idname' in object, therefore the name is enclosed in quotes
+        return f"data:audio/{self.name.split('.')[-1][:-1]};base64,{base64.b64encode(self.data).decode()}"
 
 
 class GkmasAWBAudio(GkmasAudio):

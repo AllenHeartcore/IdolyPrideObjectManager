@@ -2,7 +2,6 @@
 function buildViewpageEmbeddedMedia() {
     let base64Url = $("#viewEmbeddedMedia").attr("data-src");
     if (!base64Url) return;
-    console.log(base64Url);
 
     let mimeType = base64Url.match(/^data:([^;]+);base64,/);
     if (!mimeType) return;
