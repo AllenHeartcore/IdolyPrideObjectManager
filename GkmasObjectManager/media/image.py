@@ -6,7 +6,7 @@ Unity image extraction plugin for GkmasAssetBundle.
 from ..log import Logger
 from ..const import IMG_RESIZE_ARGTYPE
 from .dummy import GkmasDummyMedia
-from .ai_caption import GPTCaptionEngine
+from .ai_caption import GPTImageCaptionEngine
 
 import base64
 import UnityPy
@@ -49,16 +49,7 @@ class GkmasUnityImage(GkmasDummyMedia):
         return f"data:image/png;base64,{base64.b64encode(io.getvalue()).decode()}"
 
     def caption(self) -> str:
-        return GPTCaptionEngine().generate(
-            self._get_embed_url(),
-            """
-            You are an imaginative storyteller.
-            Describe the following anime-style image in exactly four to five sentences.
-            Capture the setting, the character's appearance, and the overall mood.
-            Provide no additional text or formatting -- only the pure description.
-            End your response after the final sentence without offering any further commentary or disclaimers.
-            """,
-        )
+        return GPTImageCaptionEngine().generate(self._get_embed_url())
 
     def export(
         self,
