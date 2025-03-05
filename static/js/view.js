@@ -74,6 +74,12 @@ function reportViewpageError() {
     `);
 }
 
+function displayCaption(text) {
+    $("#loadingSpinnerCaption").hide();
+    $("#viewCaptionText").show();
+    $("#viewCaptionText").text(text);
+}
+
 function getCaption() {
     $.ajax({
         type: "GET",
@@ -81,20 +87,14 @@ function getCaption() {
         dataType: "text",
         contentType: "charset=utf-8",
         success: function (caption) {
-            $("loadingSpinnerCaption").css("display", "none");
-            $("#viewCaptionText").show();
-            $("#viewCaptionText").text(caption);
+            displayCaption(caption);
         },
         error: function (request, status, error) {
             console.log("Error");
             console.log(request);
             console.log(status);
             console.log(error);
-            $("loadingSpinnerCaption").css("display", "none");
-            $("#viewCaptionText").show();
-            $("#viewCaptionText").text(
-                "[An error occurred while generating caption.]"
-            );
+            displayCaption("[An error occurred while generating caption.]");
         },
     });
 }
