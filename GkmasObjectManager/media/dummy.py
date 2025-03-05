@@ -15,11 +15,7 @@ logger = Logger()
 
 class GkmasDummyMedia:
 
-    def __init__(
-        self,
-        name: str,
-        data: bytes,
-    ):
+    def __init__(self, name: str, data: bytes):
         self.valid = True
         self.name = name  # only for logging
         self.data = data  # raw binary data (we don't want to reencode known formats)

@@ -21,11 +21,7 @@ logger = Logger()
 
 class GkmasImage(GkmasDummyMedia):
 
-    def __init__(
-        self,
-        name: str,
-        data: bytes,
-    ):
+    def __init__(self, name: str, data: bytes):
         """
         Initializes **one** image of common formats recognized by PIL.
         Raises a warning and falls back to raw dump if the image is not recognized.
@@ -50,11 +46,7 @@ class GkmasImage(GkmasDummyMedia):
 
 class GkmasUnityImage(GkmasImage):
 
-    def __init__(
-        self,
-        name: str,
-        data: bytes,
-    ):
+    def __init__(self, name: str, data: bytes):
         """
         Initializes **one** Unity image from raw assetbundle bytes.
         Raises a warning and falls back to raw dump if the bundle contains multiple objects.
