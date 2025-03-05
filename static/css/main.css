@@ -92,6 +92,16 @@
     height: auto;
 }
 
+#viewCaption {
+    margin: 30px 0;
+    height: 15vh;
+}
+
+#loadingSpinnerCaption {
+    display: flex;
+    align-items: center;
+}
+
 #viewPropertyTable {
-    margin: 30px 0 0 0;
+    margin: 30px 0;
 }

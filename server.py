@@ -64,6 +64,11 @@ def api_assetbundle(id):
     return jsonify(info)
 
 
+@app.route("/api/assetbundle/<id>/caption")
+def api_assetbundle_caption(id):
+    return _get_manifest().assetbundles[int(id)].get_caption()
+
+
 @app.route("/api/resource/<id>")
 def api_resource(id):
     obj = _get_manifest().resources[int(id)]
@@ -71,6 +76,11 @@ def api_resource(id):
     info["id"] = f"Resource #{info["id"]}"
     info["embed_url"] = obj._get_embed_url()
     return jsonify(info)
+
+
+@app.route("/api/resource/<id>/caption")
+def api_resource_caption(id):
+    return _get_manifest().resources[int(id)].get_caption()
 
 
 # Frontend routes

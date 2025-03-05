@@ -58,6 +58,9 @@ function populateViewpageContainers(info) {
               )
             : ""
     );
+
+    $("#viewCaption").show();
+    getCaption();
 }
 
 function reportViewpageError() {
@@ -69,6 +72,31 @@ function reportViewpageError() {
         Check console and Flask terminal. <br>
         Refresh to retry.
     `);
+}
+
+function getCaption() {
+    $.ajax({
+        type: "GET",
+        url: `/api/${type.toLowerCase()}/${id}/caption`,
+        dataType: "text",
+        contentType: "charset=utf-8",
+        success: function (caption) {
+            $("loadingSpinnerCaption").css("display", "none");
+            $("#viewCaptionText").show();
+            $("#viewCaptionText").text(caption);
+        },
+        error: function (request, status, error) {
+            console.log("Error");
+            console.log(request);
+            console.log(status);
+            console.log(error);
+            $("loadingSpinnerCaption").css("display", "none");
+            $("#viewCaptionText").show();
+            $("#viewCaptionText").text(
+                "[An error occurred while generating caption.]"
+            );
+        },
+    });
 }
 
 $(document).ready(function () {
