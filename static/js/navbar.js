@@ -67,4 +67,10 @@ function setRandomAccentColor() {
 $(document).ready(function () {
     setRandomAccentColor();
     $("#navbarSticker").click(setRandomAccentColor);
+
+    $("#searchForm").submit(function (event) {
+        event.preventDefault();
+        let query = $("#searchInput").val();
+        window.location.href = `/search/${query}`;
+    });
 });

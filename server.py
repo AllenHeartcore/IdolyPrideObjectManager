@@ -29,6 +29,22 @@ def api_manifest():
     return jsonify(_get_manifest()._get_canon_repr())
 
 
+@app.route("/api/search/<query>")
+def api_search(query):
+    print("Enter")
+    print(_get_manifest().search(f".*{query.lower().replace(' ', '.*')}.*")[0])
+    return jsonify(
+        [
+            {
+                id: obj.id,
+                name: obj.name,
+                type: type(obj).__name__[5:],  # valid names start with "Gkmas"
+            }
+            for obj in _get_manifest().search(f".*{query.lower().replace(' ', '.*')}.*")
+        ]
+    )
+
+
 @app.route("/api/assetbundle/<id>")
 def api_assetbundle(id):
     obj = _get_manifest().assetbundles[int(id)]
@@ -61,6 +77,12 @@ def api_resource(id):
 @app.route("/")
 def home():
     return render_template("home.html")
+
+
+@app.route("/search/<query>")
+def search():
+    print("Start rendering")
+    return render_template("search.html", query=query)
 
 
 @app.route("/view/assetbundle/<id>")

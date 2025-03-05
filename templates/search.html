@@ -1,0 +1,34 @@
+{% extends "layout.html" %} {% block content %}
+
+<script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/search.js') }}"
+></script>
+
+<!-- AJAX Interface -->
+<script>
+    let query = "{{ query }}";
+    let result = {{ result | tojson }};
+</script>
+
+<div id="loadingSpinner">
+    <div class="spinner-border me-2" role="status"></div>
+    <span>Searching...</span>
+</div>
+
+<div id="searchResultDigest" class="hide-by-default"></div>
+
+<table
+    id="searchResultTable"
+    class="table table-bordered table-hover hide-by-default"
+>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+{% endblock %}
