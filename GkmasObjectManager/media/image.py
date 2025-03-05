@@ -19,7 +19,7 @@ from PIL import Image
 logger = Logger()
 
 
-class GkmasUnityImage(GkmasDummyMedia):
+class GkmasImage(GkmasDummyMedia):
 
     def __init__(
         self,
@@ -27,21 +27,17 @@ class GkmasUnityImage(GkmasDummyMedia):
         data: bytes,
     ):
         """
-        Initializes **one** Unity image from raw assetbundle bytes.
-        Raises a warning and falls back to raw dump if the bundle contains multiple objects.
+        Initializes **one** image of common formats recognized by PIL.
+        Raises a warning and falls back to raw dump if the image is not recognized.
         """
 
         super().__init__(name, data)
 
-        env = UnityPy.load(data)
-        values = list(env.container.values())
-
-        if len(values) != 1:
-            logger.warning(f"{name} contains {len(values)} images, fallback to rawdump")
-            self.valid = False
-            return  # fallback case is handled within this class
-
-        self.obj = values[0].read().image
+        try:
+            self.obj = Image.open(BytesIO(data))
+        except:
+            logger.warning(f"{name} is not recognized by PIL, fallback to rawdump")
+            # fallback case is handled within p
 
     def _get_embed_url(self) -> str:
         io = BytesIO()
@@ -139,3 +135,28 @@ class GkmasUnityImage(GkmasDummyMedia):
 
         round = lambda x: int(x + 0.5)  # round to the nearest integer
         return round(w_new), round(h_new)
+
+
+class GkmasUnityImage(GkmasImage):
+
+    def __init__(
+        self,
+        name: str,
+        data: bytes,
+    ):
+        """
+        Initializes **one** Unity image from raw assetbundle bytes.
+        Raises a warning and falls back to raw dump if the bundle contains multiple objects.
+        """
+
+        super().__init__(name, data)
+
+        env = UnityPy.load(data)
+        values = list(env.container.values())
+
+        if len(values) != 1:
+            logger.warning(f"{name} contains {len(values)} images, fallback to rawdump")
+            self.valid = False
+            return  # fallback case is handled within this class
+
+        self.obj = values[0].read().image

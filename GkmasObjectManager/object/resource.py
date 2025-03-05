@@ -13,7 +13,7 @@ from ..const import (
     CHARACTER_ABBREVS,
 )
 
-from ..media import GkmasDummyMedia, GkmasAWBAudio
+from ..media import GkmasDummyMedia, GkmasImage, GkmasAWBAudio
 
 import re
 import requests
@@ -90,7 +90,9 @@ class GkmasResource:
 
         if self._media is None:
             data = self._download_bytes()
-            if self.name.startswith("sud_"):
+            if self.name.startswith("img_") and self.name.endswith(".png"):
+                self._media = GkmasImage(self._idname, data)
+            elif self.name.startswith("sud_"):
                 self._media = GkmasAWBAudio(self._idname, data)
             else:
                 self._media = GkmasDummyMedia(self._idname, data)
