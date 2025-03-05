@@ -48,27 +48,38 @@ class GkmasAWBAudio(GkmasAudio):
         super().__init__(name, data)
 
         try:
-            process = subprocess.Popen(
-                [Path(__file__).parent / "vgmstream/vgmstream", "-o", "-", "-"],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+            input_ext = name.split(".")[-1][:-1]
+            Path(f"tmp.{input_ext}").write_bytes(data)
+            process = subprocess.run(
+                [
+                    Path(__file__).parent / "vgmstream/vgmstream",
+                    "-o",
+                    "tmp.wav",
+                    f"tmp.{input_ext}",
+                ],
                 shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,  # suppresses console output
             )
-            wav_data, _ = process.communicate(input=data)
             assert process.returncode == 0
-            self.obj = AudioSegment.from_file(BytesIO(wav_data))
+            self.obj = AudioSegment.from_file("tmp.wav")
         except:
             logger.warning(
                 f"{name} is not recognized by vgmstream, fallback to rawdump"
             )
+            # fallback case is handled within this class
             self.valid = False
-        # fallback case is handled within this class
+        finally:
+            Path(f"tmp.{input_ext}").unlink(missing_ok=True)
+            Path("tmp.wav").unlink(missing_ok=True)
 
     def _get_embed_url(self) -> str:
         if not self.valid:
             return super()._get_embed_url()
-        return f"data:audio/wav;base64,{base64.b64encode(self.obj.export(format='wav')).decode()}"
+        buffer = BytesIO()
+        self.obj.export(buffer, format="wav")
+        buffer.seek(0)
+        return f"data:audio/wav;base64,{base64.b64encode(buffer.getvalue()).decode()}"
 
     def export(
         self,

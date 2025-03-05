@@ -25,7 +25,7 @@ class GkmasDummyMedia:
         return ""
 
     def caption(self) -> str:
-        return "[Captioning not supported for raw binary data.]"
+        return "[Captioning not supported for this data type.]"
 
     def export(
         self,

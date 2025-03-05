@@ -1,3 +1,5 @@
+from .dummy import GkmasDummyMedia
+
 from ..const import GKMAS_UNITY_VERSION
 
 import UnityPy

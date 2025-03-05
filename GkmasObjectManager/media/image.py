@@ -66,6 +66,8 @@ class GkmasUnityImage(GkmasImage):
         self.obj = values[0].read().image
 
     def _get_embed_url(self) -> str:
+        if not self.valid:
+            return super()._get_embed_url()
         io = BytesIO()
         self.obj.save(io, format="PNG")
         return f"data:image/png;base64,{base64.b64encode(io.getvalue()).decode()}"
