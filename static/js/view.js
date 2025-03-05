@@ -1,3 +1,44 @@
+// general-purpose base64 media viewer
+function buildViewpageEmbeddedMedia() {
+    let base64Url = $("#viewEmbeddedMedia").attr("data-src");
+    if (!base64Url) return;
+    console.log(base64Url);
+
+    let mimeType = base64Url.match(/^data:([^;]+);base64,/);
+    if (!mimeType) return;
+
+    let type = mimeType[1].split("/")[0];
+    let $embedElement;
+
+    switch (type) {
+        case "image":
+            $embedElement = $("<img>").attr("src", base64Url);
+            $embedElement.attr("id", "viewImageResponsive");
+            break;
+        case "audio":
+            $embedElement = $("<audio>").attr({
+                src: base64Url,
+                controls: true,
+            });
+            break;
+        case "video":
+            $embedElement = $("<video>").attr({
+                src: base64Url,
+                controls: true,
+            });
+            break;
+        case "text":
+            $embedElement = $("<iframe>").attr({
+                src: base64Url,
+            });
+            break;
+        default:
+            $embedElement = $("<span>").text("Unsupported Base64 content");
+    }
+
+    $("#viewEmbeddedMedia").append($embedElement);
+}
+
 function populateViewpageContainers(info) {
     $("#loadingSpinner").hide();
 
@@ -5,8 +46,10 @@ function populateViewpageContainers(info) {
     $("#viewTitle").text(info.id);
     $("#viewSubtitle").show();
     $("#viewSubtitle").text(info.name);
-    $("viewImageResponsive").show();
-    $("#viewImageResponsive").attr("src", info.embed_url);
+
+    $("viewEmbeddedMedia").show();
+    $("#viewEmbeddedMedia").attr("data-src", info.embed_url);
+    buildViewpageEmbeddedMedia();
 
     $("#viewPropertyTable").show();
     $("#viewPropertyTable tbody").append(
