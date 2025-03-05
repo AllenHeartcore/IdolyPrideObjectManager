@@ -7,7 +7,7 @@ logger = Logger()
 
 
 def read_api_key():
-    with open("../../credentials.yml", "r") as file:
+    with open("credentials.yml", "r") as file:
         credentials = yaml.safe_load(file)
         key = credentials.get("openai_api_key")
         if not key.startswith("sk-"):
@@ -16,15 +16,14 @@ def read_api_key():
 
 
 class GPTCaptionEngine:
+    """Adapted from https://platform.openai.com/docs/guides/vision"""
 
     def __init__(self):
         try:
             import openai
 
-            openai.api_key = read_api_key()
-            self.client = openai.Client()
+            self.client = openai.Client(api_key=read_api_key())
             self.active = True
-            logger.success("GPTCaptionEngine active")
 
         except:
             self.active = False
@@ -38,34 +37,37 @@ class GPTCaptionEngine:
     ):
 
         if not self.active:
-            logger.warning("GPTCaptionEngine inactive")
             return "[GPT captioning engine is inactive.]"
 
-        return self.client.Completion.create(
-            model="gpt-4o",
-            messages=[
-                {
-                    "role": "system",
-                    "content": """
+        return (
+            self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """
                         You are a helpful assistant that provides concise yet descriptive
-                        captions for multimedia content like images and audio.
+                        captions for images, typically anime-style illustrations.
                         The media content will be provided as a base64-encoded string.
                         """,
-                },
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "content": prompt,
-                        },
-                        {
-                            "type": "image_url",
-                            "image_url": embed_url,
-                        },
-                    ],
-                },
-            ],
-            max_tokens=max_tokens,
-            temperature=temperature,
-        ).choices[0]
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": prompt,
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {"url": embed_url},
+                            },
+                        ],
+                    },
+                ],
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            .choices[0]
+            .message.content
+        )
