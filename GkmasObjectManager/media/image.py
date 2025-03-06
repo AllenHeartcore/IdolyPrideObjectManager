@@ -29,19 +29,41 @@ class GkmasImage(GkmasDummyMedia):
         self._mimesubtype = name.split(".")[-1][:-1]
         self.converted = self.raw  # default to no reencoding
 
-        # - Once a resource PNG is downloaded with image_format='JPEG',
-        #   _get_embed_url() will return JPEG according to self._mimesubtype.
-        # - If **the same GkmasResource object** is downloaded again with image_format unspecified,
-        #   we also get JPEG since at the absense of specified format Dummy._get_converted() returns ._mimesubtype,
-        #   which was overwritten by the previous JPEG download.
-        # - If we now download the third time with image_format='PNG',
-        #   we get reencoded PNG bytes different from the original.
+        # Assume we're working with **the same GkmasResource object**, called R, to handle a PNG.
+        # We run the following sequence of operations:
+
+        # - R.download()
+        #   returns non-reencoded PNG bytes B1, since self.converted is initialized to self.raw.
+        #       -   SIDE EFFECT: Children classes of GkmasImage will have to set self.converted to None to force reencoding.
+        # - R._get_embed_url()
+        #   returns base64-encoded B1 as PNG.
+
+        # - R.download(image_format='JPEG')
+        #   returns reencoded JPEG bytes B2 and update self.converted and self._mimesubtype.
+        # - R._get_embed_url()
+        #   returns base64-encoded B2 as JPEG, according to self._mimesubtype.
+
+        # - R.download()
+        #   returns JPEG bytes B2 this time since Dummy doesn't call _get_converted().
+        #       -   IMPLICATIONS: kwargs.get("image_format", self._mimesubtype) == self._mimesubtype
+        #           implies that no conversion is performed unless image_format is explicitly specified!
+        # - R._get_embed_url()
+        #   returns base64-encoded B2 as JPEG (unchanged)
+
+        # - R.download(image_format='PNG')
+        #   returns **reencoded** PNG bytes B3 and update self.converted and self._mimesubtype.
+        # - R._get_embed_url()
+        #   returns base64-encoded B3 as PNG, which is different from B1 since the image was JPEG-compressed once!
+        #       -   The only way to get non-reencoded B1 at this point is to initialize a new GkmasResource object.
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())
 
-    # don't put 'image_resize' in signature to match the parent class
     def _convert(self, raw: bytes, **kwargs) -> bytes:
+        return self._img2bytes(Image.open(BytesIO(raw)), **kwargs)
+
+    # don't put 'image_resize' in signature to match the parent class
+    def _img2bytes(self, img: Image, **kwargs) -> bytes:
         """
         Args:
             image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
@@ -50,7 +72,6 @@ class GkmasImage(GkmasDummyMedia):
                 If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        img = Image.open(BytesIO(raw))
         image_resize = kwargs.get("image_resize", None)
         if image_resize:
             if type(image_resize) == str:
@@ -125,12 +146,8 @@ class GkmasUnityImage(GkmasImage):
         self.converted = None  # don't inherit; Unity images are always reencoded
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
-
         env = UnityPy.load(raw)
         values = list(env.container.values())
         if len(values) != 1:
             raise ValueError(f"{self.name} contains {len(values)} images.")
-
-        io = BytesIO()
-        values[0].read().image.save(io, format="BMP")  # will be immediately reencoded
-        return super()._convert(io.getvalue(), **kwargs)
+        return super()._img2bytes(values[0].read().image, **kwargs)
