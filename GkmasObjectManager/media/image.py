@@ -33,29 +33,21 @@ class GkmasImage(GkmasDummyMedia):
         # Assume we're working with **the same GkmasResource object**, called R, to handle a PNG.
         # We run the following sequence of operations:
 
-        # - R.download()
+        # - R._get_embed_url()
         #   returns non-reencoded PNG bytes B1, since self.converted is initialized to self.raw.
         #       -   SIDE EFFECT: Children classes of GkmasImage will have to set self.converted to None to force reencoding.
-        # - R._get_embed_url()
-        #   returns base64-encoded B1 as PNG.
 
-        # - R.download(image_format='JPEG')
+        # - R._get_embed_url(image_format='jpeg')
         #   returns reencoded JPEG bytes B2 and update self.converted and self._mimesubtype.
-        # - R._get_embed_url()
-        #   returns base64-encoded B2 as JPEG, according to self._mimesubtype.
 
-        # - R.download()
+        # - R._get_embed_url()
         #   returns JPEG bytes B2 this time since Dummy doesn't call _get_converted().
         #       -   IMPLICATIONS: kwargs.get("image_format", self._mimesubtype) == self._mimesubtype
         #           implies that no conversion is performed unless image_format is explicitly specified!
-        # - R._get_embed_url()
-        #   returns base64-encoded B2 as JPEG (unchanged)
 
-        # - R.download(image_format='PNG')
-        #   returns **reencoded** PNG bytes B3 and update self.converted and self._mimesubtype.
-        # - R._get_embed_url()
-        #   returns base64-encoded B3 as PNG, which is different from B1 since the image was JPEG-compressed once!
-        #       -   The only way to get non-reencoded B1 at this point is to initialize a new GkmasResource object.
+        # - R._get_embed_url(image_format='png')
+        #   returns non-reencoded PNG bytes B1 and update self.converted and self._mimesubtype,
+        #   achieved through the rawdump branch in _get_converted().
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())

@@ -106,8 +106,8 @@ class GkmasResource:
 
         return self._media
 
-    def _get_embed_url(self) -> str:
-        return self._get_media()._get_embed_url()
+    def _get_embed_url(self, **kwargs) -> str:
+        return self._get_media()._get_embed_url(**kwargs)
 
     # No leading underscore, since this should be client-side visible
     def get_caption(self) -> str:

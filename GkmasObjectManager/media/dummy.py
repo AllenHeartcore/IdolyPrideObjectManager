@@ -52,8 +52,9 @@ class GkmasDummyMedia:
 
         return self.converted
 
-    def _get_embed_url(self) -> str:
-        return f"data:{self._mimetype}/{self._mimesubtype};base64,{base64.b64encode(self._get_converted()).decode()}"
+    def _get_embed_url(self, **kwargs) -> str:
+        converted = self._get_converted(**kwargs)  # may overwrite self._mimesubtype
+        return f"data:{self._mimetype}/{self._mimesubtype};base64,{base64.b64encode(converted).decode()}"
 
     def caption(self) -> str:
         return "[Captioning not supported for this data type.]"
