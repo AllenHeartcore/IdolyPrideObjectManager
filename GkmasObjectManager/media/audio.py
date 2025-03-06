@@ -7,11 +7,13 @@ and MP3 audio handler for GkmasResource.
 from ..log import Logger
 from .dummy import GkmasDummyMedia
 
-from pathlib import Path
-
 import os
 import tempfile
 import subprocess
+from io import BytesIO
+from pathlib import Path
+
+import UnityPy
 from pydub import AudioSegment
 
 
@@ -25,9 +27,28 @@ class GkmasAudio(GkmasDummyMedia):
         super().__init__(name, raw)
         self._mimetype = "audio"
         self._mimesubtype = name.split(".")[-1][:-1]
+        self.converted = self.raw  # default to no reencoding
+        # see media/image.py for detailed notes on reencoding & shared conversion logic
 
-    def _convert(self, raw: bytes) -> bytes:
-        return raw
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
+        audio = AudioSegment.from_file(BytesIO(raw))
+        return audio.export(format=self._mimesubtype).read()
+
+
+class GkmasUnityAudio(GkmasAudio):
+    """Conversion plugin for Unity audio."""
+
+    def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self._mimesubtype = "wav"
+        self.converted = None  # force reencoding
+
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
+        env = UnityPy.load(raw)
+        values = list(env.container.values())
+        assert len(values) == 1, "f{self.name} contains {len(values)} audio clips."
+        samples = values[0].read().samples
+        return super()._convert(list(samples.values())[0], **kwargs)
 
 
 class GkmasAWBAudio(GkmasDummyMedia):

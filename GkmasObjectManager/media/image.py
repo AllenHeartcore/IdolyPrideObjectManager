@@ -148,6 +148,5 @@ class GkmasUnityImage(GkmasImage):
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         env = UnityPy.load(raw)
         values = list(env.container.values())
-        if len(values) != 1:
-            raise ValueError(f"{self.name} contains {len(values)} images.")
+        assert len(values) == 1, f"{self.name} contains {len(values)} images."
         return super()._img2bytes(values[0].read().image, **kwargs)

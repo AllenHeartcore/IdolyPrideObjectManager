@@ -16,6 +16,7 @@ from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
 from ..media import GkmasDummyMedia
 from ..media.image import GkmasUnityImage
+from ..media.audio import GkmasUnityAudio
 
 from pathlib import Path
 
@@ -81,6 +82,8 @@ class GkmasAssetBundle(GkmasResource):
             data = self._download_bytes()
             if self.name.startswith("img_"):
                 self._media = GkmasUnityImage(self._idname, data)
+            elif self.name.startswith("sud_"):
+                self._media = GkmasUnityAudio(self._idname, data)
             else:
                 self._media = GkmasDummyMedia(self._idname, data)
 
