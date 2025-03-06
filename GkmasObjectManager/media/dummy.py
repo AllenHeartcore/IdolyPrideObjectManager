@@ -37,7 +37,10 @@ class GkmasDummyMedia:
 
     def _get_converted(self, **kwargs) -> bytes:
 
-        fmt = kwargs.get(f"{self._mimetype}_format", self._mimesubtype)
+        fmt = kwargs.get(
+            f"{self._mimetype}_format",
+            self._raw_format or self._mimesubtype,  # fallback if _raw_format is None
+        )
         if self._raw_format == fmt:  # rawdump
             return self.raw
 

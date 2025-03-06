@@ -28,26 +28,6 @@ class GkmasImage(GkmasDummyMedia):
         self._mimetype = "image"
         self._mimesubtype = name.split(".")[-1][:-1]
         self._raw_format = self._mimesubtype
-        self.converted = self.raw  # default to no reencoding
-
-        # Assume we're working with **the same GkmasResource object**, called R, to handle a PNG.
-        # We run the following sequence of operations:
-
-        # - R._get_embed_url()
-        #   returns non-reencoded PNG bytes B1, since self.converted is initialized to self.raw.
-        #       -   SIDE EFFECT: Children classes of GkmasImage will have to set self.converted to None to force reencoding.
-
-        # - R._get_embed_url(image_format='jpeg')
-        #   returns reencoded JPEG bytes B2 and update self.converted and self._mimesubtype.
-
-        # - R._get_embed_url()
-        #   returns JPEG bytes B2 this time since Dummy doesn't call _get_converted().
-        #       -   IMPLICATIONS: kwargs.get("image_format", self._mimesubtype) == self._mimesubtype
-        #           implies that no conversion is performed unless image_format is explicitly specified!
-
-        # - R._get_embed_url(image_format='png')
-        #   returns non-reencoded PNG bytes B1 and update self.converted and self._mimesubtype,
-        #   achieved through the rawdump branch in _get_converted().
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())
@@ -135,7 +115,6 @@ class GkmasUnityImage(GkmasImage):
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
         self._mimesubtype = "png"
-        self.converted = None  # don't inherit; Unity images are always reencoded
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         env = UnityPy.load(raw)

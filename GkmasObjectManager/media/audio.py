@@ -28,8 +28,6 @@ class GkmasAudio(GkmasDummyMedia):
         self._mimetype = "audio"
         self._mimesubtype = name.split(".")[-1][:-1]
         self._raw_format = self._mimesubtype
-        self.converted = self.raw  # default to no reencoding
-        # see media/image.py for detailed notes on reencoding & shared conversion logic
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         audio = AudioSegment.from_file(BytesIO(raw))
