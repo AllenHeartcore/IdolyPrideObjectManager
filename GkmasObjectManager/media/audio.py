@@ -9,6 +9,7 @@ from .dummy import GkmasDummyMedia
 
 from pathlib import Path
 
+import os
 import tempfile
 import subprocess
 from pydub import AudioSegment
@@ -44,9 +45,9 @@ class GkmasAWBAudio(GkmasDummyMedia):
 
         try:
             input_ext = self.name.split(".")[-1][:-1]
-            tmp_in = tempfile.NamedTemporaryFile(suffix=f".{input_ext}")
+            tmp_in = tempfile.NamedTemporaryFile(suffix=f".{input_ext}", delete=False)
             tmp_in.write(raw)
-            tmp_out = tempfile.NamedTemporaryFile(suffix=".wav")
+            tmp_out = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
             process = subprocess.run(
                 [
                     Path(__file__).parent / "vgmstream/vgmstream",
@@ -65,10 +66,13 @@ class GkmasAWBAudio(GkmasDummyMedia):
             exception = e  # 'e' only lives in the 'except' block
             # parent class handles the rest
         finally:
-            tmp_in.close()  # also deletes the files
+            tmp_in.close()
             tmp_out.close()
+            os.remove(tmp_in.name)
+            os.remove(tmp_out.name)
             # this 'finally' block is why the 'success' flag,
             # along with all these try-catch hassle, ever exists
+            # (vgmstream doesn't like NamedTemporaryFile with delete=True)
 
         if success:
             return audio.export(format="wav").read()
