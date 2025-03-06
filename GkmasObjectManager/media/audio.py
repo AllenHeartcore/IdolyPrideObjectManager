@@ -9,6 +9,7 @@ from .dummy import GkmasDummyMedia
 
 from pathlib import Path
 
+import tempfile
 import subprocess
 from pydub import AudioSegment
 
@@ -43,30 +44,33 @@ class GkmasAWBAudio(GkmasDummyMedia):
 
         try:
             input_ext = self.name.split(".")[-1][:-1]
-            Path(f"tmp.{input_ext}").write_bytes(raw)
+            tmp_in = tempfile.NamedTemporaryFile(suffix=f".{input_ext}")
+            tmp_in.write(raw)
+            tmp_out = tempfile.NamedTemporaryFile(suffix=".wav")
             process = subprocess.run(
                 [
                     Path(__file__).parent / "vgmstream/vgmstream",
                     "-o",
-                    "tmp.wav",
-                    f"tmp.{input_ext}",
+                    tmp_out.name,
+                    tmp_in.name,
                 ],
                 shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,  # suppresses console output
             )
             assert process.returncode == 0
-            audio = AudioSegment.from_file("tmp.wav")
+            audio = AudioSegment.from_file(tmp_out.name)
             success = True
         except Exception as e:
-            pass  # handled by parent class
+            exception = e  # 'e' only lives in the 'except' block
+            # parent class handles the rest
         finally:
-            Path(f"tmp.{input_ext}").unlink(missing_ok=True)
-            Path("tmp.wav").unlink(missing_ok=True)
+            tmp_in.close()  # also deletes the files
+            tmp_out.close()
             # this 'finally' block is why the 'success' flag,
             # along with all these try-catch hassle, ever exists
 
         if success:
             return audio.export(format="wav").read()
         else:
-            raise e  # delay the exception after cleanup
+            raise exception  # delay the exception after cleanup
