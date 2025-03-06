@@ -25,12 +25,12 @@ class GkmasDummyMedia:
         self._mimetype = None  # TO BE OVERRIDDEN
         self._mimesubtype = None  # TO BE OVERRIDDEN
 
-    def _convert(self, raw: bytes) -> bytes:
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
         raise NotImplementedError  # TO BE OVERRIDDEN
 
-    def _get_converted(self) -> bytes:
+    def _get_converted(self, **kwargs) -> bytes:
         if self.converted is None:
-            self.converted = self._convert(self.raw)
+            self.converted = self._convert(self.raw, **kwargs)
         return self.converted
 
     def _get_embed_url(self) -> str:
@@ -54,7 +54,9 @@ class GkmasDummyMedia:
         logger.success(f"{self.name} downloaded")
 
     def _export_converted(self, path: Path, **kwargs):
-        path.with_suffix(f".{self._mimesubtype}").write_bytes(self._get_converted())
+        path.with_suffix(f".{self._mimesubtype}").write_bytes(
+            self._get_converted(**kwargs)
+        )
         logger.success(
             f"{self.name} downloaded and converted to {self._mimesubtype.upper()}"
         )

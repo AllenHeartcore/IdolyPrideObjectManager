@@ -44,25 +44,12 @@ class GkmasUnityImage(GkmasDummyMedia):
         self._mimetype = "image"
         self._mimesubtype = "png"
 
-    def _convert(self, raw: bytes) -> bytes:
-
-        env = UnityPy.load(raw)
-        values = list(env.container.values())
-        if len(values) != 1:
-            raise ValueError(f"{self.name} contains {len(values)} images.")
-
-        io = BytesIO()
-        values[0].read().image.save(io, format="PNG")
-        return io.getvalue()
-
-    # we don't usually override this,
-    # but it's for the sake of image_resize
-    def _export_converted(
+    def _convert(
         self,
-        path: Path,
+        raw: bytes,
         image_format: str = "png",
         image_resize: IMAGE_RESIZE_ARGTYPE = None,
-    ):
+    ) -> bytes:
         """
         Args:
             image_format (str) = 'png': Image format for conversion. Case-insensitive.
@@ -74,22 +61,24 @@ class GkmasUnityImage(GkmasDummyMedia):
                 If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        img = Image.open(BytesIO(self._get_converted()))
+        env = UnityPy.load(raw)
+        values = list(env.container.values())
+        if len(values) != 1:
+            raise ValueError(f"{self.name} contains {len(values)} images.")
 
+        img = values[0].read().image
         if image_resize:
             if type(image_resize) == str:
                 image_resize = self._determine_new_size(img.size, ratio=image_resize)
             img = img.resize(image_resize, Image.LANCZOS)
 
+        io = BytesIO()
         try:
-            img.save(path.with_suffix(f".{image_format.lower()}"), quality=100)
+            img.save(io, format=image_format.upper(), quality=100)
         except OSError:  # cannot write mode RGBA as {image_format}
-            img = img.convert("RGB")
-            img.save(path.with_suffix(f".{image_format.lower()}"), quality=100)
+            img.convert("RGB").save(io, format=image_format.upper(), quality=100)
 
-        logger.success(
-            f"{self.name} downloaded and converted to {image_format.upper()}"
-        )
+        return io.getvalue()
 
     def _determine_new_size(
         self,
