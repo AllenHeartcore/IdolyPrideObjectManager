@@ -11,7 +11,7 @@ from typing import Union, Tuple
 
 # argument type hints
 PATH_ARGTYPE = Union[str, Path]
-IMG_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
+IMAGE_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
 
 # manifest request
 GKMAS_APPID = 400

@@ -25,6 +25,6 @@ if __name__ == "__main__":
             pattern,
             path=target + subdir,
             categorize=False,
-            img_format=fmt,
-            img_resize=ratio,
+            image_format=fmt,
+            image_resize=ratio,
         )

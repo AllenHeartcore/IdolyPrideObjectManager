@@ -66,9 +66,9 @@ if __name__ == "__main__":
             pattern,
             path=target + subdir,
             categorize=False,
-            extract_img=True,
-            img_format=fmt,
-            img_resize=ratio,
+            convert_image=True,
+            image_format=fmt,
+            image_resize=ratio,
         )
 
     for subdir, cat_func in instructions_pack:

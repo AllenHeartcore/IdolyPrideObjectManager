@@ -46,9 +46,9 @@ class GkmasManifest:
             nworker: int = DEFAULT_DOWNLOAD_NWORKER,
             path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
-            extract_img: bool = True,
-            img_format: str = "png",
-            img_resize: Union[None, str, Tuple[int, int]] = None,
+            convert_image: bool = True,
+            image_format: str = "png",
+            image_resize: Union[None, str, Tuple[int, int]] = None,
         ) -> None:
             Downloads the regex-specified assetbundles/resources to the specified path.
         export(path: Union[str, Path]) -> None:
@@ -282,12 +282,12 @@ class GkmasManifest:
                 *WARNING: Behavior is undefined if the path points to an definite file (with extension).*
             categorize (bool) = True: Whether to categorize the downloaded objects into subdirectories.
                 If False, all objects are downloaded to the specified 'path' in a flat structure.
-            extract_img (bool) = True: Whether to extract images from assetbundles of type 'img'.
+            convert_image (bool) = True: Whether to extract images from assetbundles of type 'img'.
                 If False, 'img_.*\\.unity3d' are downloaded as is.
-            img_format (str) = 'png': Image format for extraction. Case-insensitive.
-                Effective only when 'extract_img' is True. Format must support RGBA mode.
+            image_format (str) = 'png': Image format for extraction. Case-insensitive.
+                Effective only when 'convert_image' is True. Format must support RGBA mode.
                 Valid options are checked by PIL.Image.save() and are not enumerated.
-            img_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
+            image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
                 If None, images are downloaded as is.
                 If str, string must contain exactly one ':' and images are resized to the specified ratio.
                 If Tuple[int, int], images are resized to the specified exact dimensions.

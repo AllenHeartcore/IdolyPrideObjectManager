@@ -27,9 +27,6 @@ class GkmasDummyMedia:
     def caption(self) -> str:
         return "[Captioning not supported for this data type.]"
 
-    def export(
-        self,
-        path: Path,
-    ):
+    def export(self, path: Path):
         path.write_bytes(self.data)
         logger.success(f"{self.name} downloaded")

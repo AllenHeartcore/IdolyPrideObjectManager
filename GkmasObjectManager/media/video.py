@@ -48,9 +48,9 @@ class GkmasVideo(GkmasDummyMedia):
     def _get_embed_url(self) -> str:
         return f"data:video/mp4;base64,{base64.b64encode(self.obj).decode()}"
 
-    def export(self, path: Path, extract_video: bool = True):
+    def export(self, path: Path, convert_video: bool = True):
 
-        if not (self.valid and extract_video):
+        if not (self.valid and convert_video):
             super().export(path)
             return
 

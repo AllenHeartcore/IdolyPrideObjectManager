@@ -37,9 +37,9 @@ class GkmasAssetBundle(GkmasResource):
         download(
             path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
-            extract_img: bool = True,
-            img_format: str = "png",
-            img_resize: Union[None, str, Tuple[int, int]] = None,
+            convert_image: bool = True,
+            image_format: str = "png",
+            image_resize: Union[None, str, Tuple[int, int]] = None,
         ) -> None:
             Downloads and deobfuscates the assetbundle to the specified path.
             Also extracts a single image from each bundle with type 'img'.

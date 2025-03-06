@@ -4,7 +4,7 @@ Unity image extraction plugin for GkmasAssetBundle.
 """
 
 from ..log import Logger
-from ..const import IMG_RESIZE_ARGTYPE
+from ..const import IMAGE_RESIZE_ARGTYPE
 from .dummy import GkmasDummyMedia
 from .ai_caption import GPTImageCaptionEngine
 
@@ -75,42 +75,45 @@ class GkmasUnityImage(GkmasImage):
     def export(
         self,
         path: Path,
-        extract_img: bool = True,
-        img_format: str = "png",
-        img_resize: IMG_RESIZE_ARGTYPE = None,
+        convert_image: bool = True,
+        image_format: str = "png",
+        image_resize: IMAGE_RESIZE_ARGTYPE = None,
     ):
         """
         Attempts to extract a single image from the assetbundle's container.
 
         Args:
-            extract_img (bool) = True: Whether to extract a single image from assetbundles of type 'img'.
+            convert_image (bool) = True: Whether to extract a single image from assetbundles of type 'img'.
                 If False, 'img_.*\\.unity3d' is downloaded as is.
-            img_format (str) = 'png': Image format for extraction. Case-insensitive.
-                Effective only when 'extract_img' is True.
+            image_format (str) = 'png': Image format for extraction. Case-insensitive.
+                Effective only when 'convert_image' is True.
                 Valid options are checked by PIL.Image.save() and are not enumerated.
-            img_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
+            image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
                 If None, image is downloaded as is.
                 If str, string must contain exactly one ':' and image is resized to the specified ratio.
                 If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        if not (self.valid and extract_img):
+        if not (self.valid and convert_image):
             super().export(path)
+            return
 
         img = self.obj
 
-        if img_resize:
-            if type(img_resize) == str:
-                img_resize = self._determine_new_size(img.size, ratio=img_resize)
-            img = img.resize(img_resize, Image.LANCZOS)
+        if image_resize:
+            if type(image_resize) == str:
+                image_resize = self._determine_new_size(img.size, ratio=image_resize)
+            img = img.resize(image_resize, Image.LANCZOS)
 
         try:
-            img.save(path.with_suffix(f".{img_format.lower()}"), quality=100)
-        except OSError:  # cannot write mode RGBA as {img_format}
+            img.save(path.with_suffix(f".{image_format.lower()}"), quality=100)
+        except OSError:  # cannot write mode RGBA as {image_format}
             img = img.convert("RGB")
-            img.save(path.with_suffix(f".{img_format.lower()}"), quality=100)
+            img.save(path.with_suffix(f".{image_format.lower()}"), quality=100)
 
-        logger.success(f"{self.name} downloaded and extracted as {img_format.upper()}")
+        logger.success(
+            f"{self.name} downloaded and extracted as {image_format.upper()}"
+        )
 
     def _determine_new_size(
         self,

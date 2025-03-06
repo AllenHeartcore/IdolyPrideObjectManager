@@ -84,23 +84,23 @@ class GkmasAWBAudio(GkmasAudio):
     def export(
         self,
         path: Path,
-        extract_audio: bool = True,
+        convert_audio: bool = True,
         audio_format: str = "wav",
     ):
         """
         Attempts to extract a single audio track from the archive.
 
         Args:
-            extract_audio (bool) = True: Whether to extract a single audio track from the archive.
+            convert_audio (bool) = True: Whether to extract a single audio track from the archive.
                 If False, 'sud_.*\\.awb/acb' is downloaded as is.
-                There are also cases where the audio is readily encoded in MP3.
             audio_format (str) = 'wav': Audio format for extraction. Case-insensitive.
-                Effective only when 'extract_audio' is True.
+                Effective only when 'convert_audio' is True.
                 Valid options are checked by pydub.AudioSegment.export() and are not enumerated.
         """
 
-        if not (self.valid and extract_audio):
+        if not (self.valid and convert_audio):
             super().export(path)
+            return
 
         self.obj.export(path.with_suffix(f".{audio_format}"), format=audio_format)
         logger.success(
