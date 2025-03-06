@@ -27,22 +27,18 @@ class GkmasImage(GkmasDummyMedia):
         super().__init__(name, raw)
         self._mimetype = "image"
         self._mimesubtype = name.split(".")[-1][:-1]
+        self.converted = self.raw  # default to no reencoding
 
-    def _convert(self, raw: bytes) -> bytes:
-        # we download as-is, even if the image is invalid
-        return raw
+        # - Once a resource PNG is downloaded with image_format='JPEG',
+        #   _get_embed_url() will return JPEG according to self._mimesubtype.
+        # - If **the same GkmasResource object** is downloaded again with image_format unspecified,
+        #   we also get JPEG since at the absense of specified format Dummy._get_converted() returns ._mimesubtype,
+        #   which was overwritten by the previous JPEG download.
+        # - If we now download the third time with image_format='PNG',
+        #   we get reencoded PNG bytes different from the original.
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())
-
-
-class GkmasUnityImage(GkmasDummyMedia):
-    """Conversion plugin for Unity images."""
-
-    def __init__(self, name: str, raw: bytes):
-        super().__init__(name, raw)
-        self._mimetype = "image"
-        self._mimesubtype = "png"
 
     # don't put 'image_resize' in signature to match the parent class
     def _convert(self, raw: bytes, **kwargs) -> bytes:
@@ -54,12 +50,7 @@ class GkmasUnityImage(GkmasDummyMedia):
                 If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        env = UnityPy.load(raw)
-        values = list(env.container.values())
-        if len(values) != 1:
-            raise ValueError(f"{self.name} contains {len(values)} images.")
-
-        img = values[0].read().image
+        img = Image.open(BytesIO(raw))
         image_resize = kwargs.get("image_resize", None)
         if image_resize:
             if type(image_resize) == str:
@@ -122,3 +113,24 @@ class GkmasUnityImage(GkmasDummyMedia):
 
         round = lambda x: int(x + 0.5)  # round to the nearest integer
         return round(w_new), round(h_new)
+
+
+class GkmasUnityImage(GkmasImage):
+    """Conversion plugin for Unity images."""
+
+    def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self._mimetype = "image"
+        self._mimesubtype = "png"
+        self.converted = None  # don't inherit; Unity images are always reencoded
+
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
+
+        env = UnityPy.load(raw)
+        values = list(env.container.values())
+        if len(values) != 1:
+            raise ValueError(f"{self.name} contains {len(values)} images.")
+
+        io = BytesIO()
+        values[0].read().image.save(io, format="BMP")  # will be immediately reencoded
+        return super()._convert(io.getvalue(), **kwargs)
