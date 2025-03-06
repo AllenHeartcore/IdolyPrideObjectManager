@@ -27,6 +27,7 @@ class GkmasImage(GkmasDummyMedia):
         super().__init__(name, raw)
         self._mimetype = "image"
         self._mimesubtype = name.split(".")[-1][:-1]
+        self._raw_format = self._mimesubtype
         self.converted = self.raw  # default to no reencoding
 
         # Assume we're working with **the same GkmasResource object**, called R, to handle a PNG.
@@ -141,7 +142,6 @@ class GkmasUnityImage(GkmasImage):
 
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
-        self._mimetype = "image"
         self._mimesubtype = "png"
         self.converted = None  # don't inherit; Unity images are always reencoded
 

@@ -22,8 +22,13 @@ class GkmasDummyMedia:
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
-        self._mimetype = None  # TO BE OVERRIDDEN
-        self._mimesubtype = None  # TO BE OVERRIDDEN
+        self._mimetype = None  # TO BE OVERRIDDEN ('image', 'audio', 'video', etc.)
+        self._mimesubtype = None  # TO BE OVERRIDDEN (desired format for self.converted)
+        self._raw_format = None  # TO BE OVERRIDDEN
+        # self._mimesubtype is the **desired** format for self.converted,
+        #   and may be overwritten by _get_converted() if the format is specified in kwargs.
+        # self._raw_format is the **inherent** format of self.raw,
+        #   is used to determine if rawdump is necessary, and is never overwritten.
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         return raw  # TO BE OVERRIDDEN
@@ -33,6 +38,9 @@ class GkmasDummyMedia:
     def _get_converted(self, **kwargs) -> bytes:
 
         fmt = kwargs.get(f"{self._mimetype}_format", self._mimesubtype)
+        if self._raw_format == fmt:  # rawdump
+            return self.raw
+
         if self._mimesubtype != fmt:
             self._mimesubtype = fmt  # maintain consistency
             self.converted = None

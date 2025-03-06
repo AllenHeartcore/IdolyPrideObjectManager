@@ -27,6 +27,7 @@ class GkmasAudio(GkmasDummyMedia):
         super().__init__(name, raw)
         self._mimetype = "audio"
         self._mimesubtype = name.split(".")[-1][:-1]
+        self._raw_format = self._mimesubtype
         self.converted = self.raw  # default to no reencoding
         # see media/image.py for detailed notes on reencoding & shared conversion logic
 
@@ -39,16 +40,18 @@ class GkmasUnityAudio(GkmasAudio):
     """Conversion plugin for Unity audio."""
 
     def __init__(self, name: str, raw: bytes):
-        super().__init__(name, raw)
-        self._mimesubtype = "wav"
-        self.converted = None  # force reencoding
 
-    def _convert(self, raw: bytes, **kwargs) -> bytes:
+        # It's rare to have unpacking logic at init,
+        # but UnityPy is decompressing AudioClip into clean PCM bytes for us,
+        # so we introduce a bit of overhead here, and let GkmasAudio take over.
         env = UnityPy.load(raw)
         values = list(env.container.values())
         assert len(values) == 1, "f{self.name} contains {len(values)} audio clips."
         samples = values[0].read().samples
-        return super()._convert(list(samples.values())[0], **kwargs)
+        self.raw = list(samples.values())[0]
+
+        super().__init__(name, self.raw)
+        self._mimesubtype = "wav"
 
 
 class GkmasAWBAudio(GkmasDummyMedia):
@@ -60,6 +63,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
         self._mimesubtype = "wav"
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
+        # doesn't use pydub, which is why this class is not inherited from GkmasAudio
 
         audio = None
         success = False
