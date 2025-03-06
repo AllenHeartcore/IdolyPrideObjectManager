@@ -22,7 +22,7 @@ class GkmasVideo(GkmasDummyMedia):
         self._mimetype = "video"
         self._mimesubtype = "mp4"
 
-    def _convert(self, raw: bytes) -> bytes:
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
 
         stream_in = ffmpeg.input("pipe:0")
         stream_out = ffmpeg.output(
@@ -30,7 +30,7 @@ class GkmasVideo(GkmasDummyMedia):
             "pipe:1",
             vcodec="libx264",
             preset="ultrafast",
-            format="mp4",
+            format=self._mimesubtype,
             movflags="frag_keyframe+empty_moov",
             # otherwise libx264 reports 'muxer does not support non seekable output'
         )

@@ -29,8 +29,17 @@ class GkmasDummyMedia:
         raise NotImplementedError  # TO BE OVERRIDDEN
 
     def _get_converted(self, **kwargs) -> bytes:
+
+        fmt = kwargs.get(f"{self._mimetype}_format", self._mimesubtype)
+        if self._mimesubtype != fmt:
+            self._mimesubtype = fmt  # maintain consistency
+            self.converted = None
+
         if self.converted is None:
             self.converted = self._convert(self.raw, **kwargs)
+            # child classes don't need to put '..._format' in signature of _convert()
+            # since it has already been synchronized into self._mimesubtype
+
         return self.converted
 
     def _get_embed_url(self) -> str:
@@ -54,9 +63,8 @@ class GkmasDummyMedia:
         logger.success(f"{self.name} downloaded")
 
     def _export_converted(self, path: Path, **kwargs):
-        path.with_suffix(f".{self._mimesubtype}").write_bytes(
-            self._get_converted(**kwargs)
-        )
+        converted = self._get_converted(**kwargs)  # may overwrite self._mimesubtype
+        path.with_suffix(f".{self._mimesubtype}").write_bytes(converted)
         logger.success(
             f"{self.name} downloaded and converted to {self._mimesubtype.upper()}"
         )

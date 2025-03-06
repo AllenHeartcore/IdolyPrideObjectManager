@@ -44,17 +44,10 @@ class GkmasUnityImage(GkmasDummyMedia):
         self._mimetype = "image"
         self._mimesubtype = "png"
 
-    def _convert(
-        self,
-        raw: bytes,
-        image_format: str = "png",
-        image_resize: IMAGE_RESIZE_ARGTYPE = None,
-    ) -> bytes:
+    # don't put 'image_resize' in signature to match the parent class
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
         """
         Args:
-            image_format (str) = 'png': Image format for conversion. Case-insensitive.
-                Effective only when 'convert_image' is True.
-                Valid options are checked by PIL.Image.save() and are not enumerated.
             image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
                 If None, image is downloaded as is.
                 If str, string must contain exactly one ':' and image is resized to the specified ratio.
@@ -67,6 +60,7 @@ class GkmasUnityImage(GkmasDummyMedia):
             raise ValueError(f"{self.name} contains {len(values)} images.")
 
         img = values[0].read().image
+        image_resize = kwargs.get("image_resize", None)
         if image_resize:
             if type(image_resize) == str:
                 image_resize = self._determine_new_size(img.size, ratio=image_resize)
@@ -74,9 +68,9 @@ class GkmasUnityImage(GkmasDummyMedia):
 
         io = BytesIO()
         try:
-            img.save(io, format=image_format.upper(), quality=100)
-        except OSError:  # cannot write mode RGBA as {image_format}
-            img.convert("RGB").save(io, format=image_format.upper(), quality=100)
+            img.save(io, format=self._mimesubtype.upper(), quality=100)
+        except OSError:  # cannot write mode RGBA as {self._mimesubtype}
+            img.convert("RGB").save(io, format=self._mimesubtype.upper(), quality=100)
 
         return io.getvalue()
 

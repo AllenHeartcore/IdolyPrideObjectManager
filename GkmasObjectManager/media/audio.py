@@ -38,7 +38,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
         self._mimetype = "audio"
         self._mimesubtype = "wav"
 
-    def _convert(self, raw: bytes) -> bytes:
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
 
         audio = None
         success = False
@@ -47,7 +47,9 @@ class GkmasAWBAudio(GkmasDummyMedia):
             input_ext = self.name.split(".")[-1][:-1]
             tmp_in = tempfile.NamedTemporaryFile(suffix=f".{input_ext}", delete=False)
             tmp_in.write(raw)
-            tmp_out = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+            tmp_out = tempfile.NamedTemporaryFile(
+                suffix=f".{self._mimesubtype}", delete=False
+            )
             process = subprocess.run(
                 [
                     Path(__file__).parent / "vgmstream/vgmstream",
@@ -75,6 +77,6 @@ class GkmasAWBAudio(GkmasDummyMedia):
             # (vgmstream doesn't like NamedTemporaryFile with delete=True)
 
         if success:
-            return audio.export(format="wav").read()
+            return audio.export(format=self._mimesubtype).read()
         else:
             raise exception  # delay the exception after cleanup
