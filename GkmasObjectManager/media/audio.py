@@ -1,15 +1,15 @@
 """
 media/audio.py
-AWB audio extraction plugin for GkmasResource.
+AWB/ACB audio conversion plugin for GkmasResource,
+and MP3 audio handler for GkmasResource.
 """
 
 from ..log import Logger
 from .dummy import GkmasDummyMedia
 
-import base64
-import subprocess
-from io import BytesIO
 from pathlib import Path
+
+import subprocess
 from pydub import AudioSegment
 
 
@@ -17,39 +17,33 @@ logger = Logger()
 
 
 class GkmasAudio(GkmasDummyMedia):
+    """Handler for audio of common formats recognized by pydub."""
 
-    def __init__(self, name: str, data: bytes):
-        """
-        Initializes **one** audio of common formats recognized by pydub.
-        Raises a warning and falls back to raw dump if the audio is not recognized.
-        """
+    def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self._mimetype = "audio"
+        self._mimesubtype = name.split(".")[-1][:-1]
 
-        super().__init__(name, data)
-
-        try:
-            self.obj = AudioSegment.from_file(BytesIO(data))
-        except:
-            logger.warning(f"{name} is not recognized by pydub, fallback to rawdump")
-            # fallback case is handled within parent class
-
-    def _get_embed_url(self) -> str:
-        # 'self.name' is actually 'self._idname' in object, therefore the name is enclosed in quotes
-        return f"data:audio/{self.name.split('.')[-1][:-1]};base64,{base64.b64encode(self.data).decode()}"
+    def _convert(self, raw: bytes) -> bytes:
+        return raw
 
 
-class GkmasAWBAudio(GkmasAudio):
+class GkmasAWBAudio(GkmasDummyMedia):
+    """Conversion plugin for AWB audio."""
 
-    def __init__(self, name: str, data: bytes):
-        """
-        Initializes **one** AWB audio from raw resource bytes.
-        Raises a warning and falls back to raw dump if the archive contains multiple tracks.
-        """
+    def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self._mimetype = "audio"
+        self._mimesubtype = "wav"
 
-        super().__init__(name, data)
+    def _convert(self, raw: bytes) -> bytes:
+
+        audio = None
+        success = False
 
         try:
-            input_ext = name.split(".")[-1][:-1]
-            Path(f"tmp.{input_ext}").write_bytes(data)
+            input_ext = self.name.split(".")[-1][:-1]
+            Path(f"tmp.{input_ext}").write_bytes(raw)
             process = subprocess.run(
                 [
                     Path(__file__).parent / "vgmstream/vgmstream",
@@ -62,47 +56,17 @@ class GkmasAWBAudio(GkmasAudio):
                 stderr=subprocess.DEVNULL,  # suppresses console output
             )
             assert process.returncode == 0
-            self.obj = AudioSegment.from_file("tmp.wav")
-        except:
-            logger.warning(
-                f"{name} is not recognized by vgmstream, fallback to rawdump"
-            )
-            # fallback case is handled within this class
-            self.valid = False
+            audio = AudioSegment.from_file("tmp.wav")
+            success = True
+        except Exception as e:
+            pass  # handled by parent class
         finally:
             Path(f"tmp.{input_ext}").unlink(missing_ok=True)
             Path("tmp.wav").unlink(missing_ok=True)
+            # this 'finally' block is why the 'success' flag,
+            # along with all these try-catch hassle, ever exists
 
-    def _get_embed_url(self) -> str:
-        if not self.valid:
-            return super()._get_embed_url()
-        buffer = BytesIO()
-        self.obj.export(buffer, format="wav")
-        buffer.seek(0)
-        return f"data:audio/wav;base64,{base64.b64encode(buffer.getvalue()).decode()}"
-
-    def export(
-        self,
-        path: Path,
-        convert_audio: bool = True,
-        audio_format: str = "wav",
-    ):
-        """
-        Attempts to extract a single audio track from the archive.
-
-        Args:
-            convert_audio (bool) = True: Whether to extract a single audio track from the archive.
-                If False, 'sud_.*\\.awb/acb' is downloaded as is.
-            audio_format (str) = 'wav': Audio format for extraction. Case-insensitive.
-                Effective only when 'convert_audio' is True.
-                Valid options are checked by pydub.AudioSegment.export() and are not enumerated.
-        """
-
-        if not (self.valid and convert_audio):
-            super().export(path)
-            return
-
-        self.obj.export(path.with_suffix(f".{audio_format}"), format=audio_format)
-        logger.success(
-            f"{self.name} downloaded and extracted as {audio_format.upper()}"
-        )
+        if success:
+            return audio.export(format="wav").read()
+        else:
+            raise e  # delay the exception after cleanup

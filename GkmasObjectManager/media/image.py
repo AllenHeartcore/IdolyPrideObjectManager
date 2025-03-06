@@ -1,6 +1,7 @@
 """
 media/image.py
-Unity image extraction plugin for GkmasAssetBundle.
+Unity image conversion plugin for GkmasAssetBundle,
+and PNG image handler for GkmasResource.
 """
 
 from ..log import Logger
@@ -8,11 +9,11 @@ from ..const import IMAGE_RESIZE_ARGTYPE
 from .dummy import GkmasDummyMedia
 from .ai_caption import GPTImageCaptionEngine
 
-import base64
-import UnityPy
 from io import BytesIO
 from pathlib import Path
 from typing import Union, Tuple
+
+import UnityPy
 from PIL import Image
 
 
@@ -20,57 +21,39 @@ logger = Logger()
 
 
 class GkmasImage(GkmasDummyMedia):
+    """Handler for images of common formats recognized by PIL."""
 
-    def __init__(self, name: str, data: bytes):
-        """
-        Initializes **one** image of common formats recognized by PIL.
-        Raises a warning and falls back to raw dump if the image is not recognized.
-        """
+    def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self._mimetype = "image"
+        self._mimesubtype = name.split(".")[-1][:-1]
 
-        super().__init__(name, data)
-
-        try:
-            self.obj = Image.open(BytesIO(data))  # sanity check, not used for output
-        except:
-            logger.warning(f"{name} is not recognized by PIL, fallback to rawdump")
-            # fallback case is handled within parent class
-
-    def _get_embed_url(self) -> str:
-        # 'self.name' is actually 'self._idname' in object, therefore the name is enclosed in quotes
-        return f"data:image/{self.name.split('.')[-1][:-1]};base64,{base64.b64encode(self.data).decode()}"
+    def _convert(self, raw: bytes) -> bytes:
+        # we download as-is, even if the image is invalid
+        return raw
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())
 
-    # export() is inherited from GkmasDummyMedia (raw dump to avoid reencoding)
 
+class GkmasUnityImage(GkmasDummyMedia):
+    """Conversion plugin for Unity images."""
 
-class GkmasUnityImage(GkmasImage):
+    def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self._mimetype = "image"
+        self._mimesubtype = "png"
 
-    def __init__(self, name: str, data: bytes):
-        """
-        Initializes **one** Unity image from raw assetbundle bytes.
-        Raises a warning and falls back to raw dump if the bundle contains multiple objects.
-        """
+    def _convert(self, raw: bytes) -> bytes:
 
-        super().__init__(name, data)
-
-        env = UnityPy.load(data)
+        env = UnityPy.load(raw)
         values = list(env.container.values())
-
         if len(values) != 1:
-            logger.warning(f"{name} contains {len(values)} images, fallback to rawdump")
-            self.valid = False
-            return  # fallback case is handled within this class
+            raise ValueError(f"{self.name} contains {len(values)} images.")
 
-        self.obj = values[0].read().image
-
-    def _get_embed_url(self) -> str:
-        if not self.valid:
-            return super()._get_embed_url()
         io = BytesIO()
-        self.obj.save(io, format="PNG")
-        return f"data:image/png;base64,{base64.b64encode(io.getvalue()).decode()}"
+        values[0].read().image.save(io, format="PNG")
+        return io.getvalue()
 
     def export(
         self,
