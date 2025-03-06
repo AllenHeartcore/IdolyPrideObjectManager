@@ -55,20 +55,17 @@ class GkmasUnityImage(GkmasDummyMedia):
         values[0].read().image.save(io, format="PNG")
         return io.getvalue()
 
-    def export(
+    # we don't usually override this,
+    # but it's for the sake of image_resize
+    def _export_converted(
         self,
         path: Path,
-        convert_image: bool = True,
         image_format: str = "png",
         image_resize: IMAGE_RESIZE_ARGTYPE = None,
     ):
         """
-        Attempts to extract a single image from the assetbundle's container.
-
         Args:
-            convert_image (bool) = True: Whether to extract a single image from assetbundles of type 'img'.
-                If False, 'img_.*\\.unity3d' is downloaded as is.
-            image_format (str) = 'png': Image format for extraction. Case-insensitive.
+            image_format (str) = 'png': Image format for conversion. Case-insensitive.
                 Effective only when 'convert_image' is True.
                 Valid options are checked by PIL.Image.save() and are not enumerated.
             image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
@@ -77,11 +74,7 @@ class GkmasUnityImage(GkmasDummyMedia):
                 If Tuple[int, int], image is resized to the specified exact dimensions.
         """
 
-        if not (self.valid and convert_image):
-            super().export(path)
-            return
-
-        img = self.obj
+        img = Image.open(BytesIO(self._get_converted()))
 
         if image_resize:
             if type(image_resize) == str:
@@ -95,7 +88,7 @@ class GkmasUnityImage(GkmasDummyMedia):
             img.save(path.with_suffix(f".{image_format.lower()}"), quality=100)
 
         logger.success(
-            f"{self.name} downloaded and extracted as {image_format.upper()}"
+            f"{self.name} downloaded and converted to {image_format.upper()}"
         )
 
     def _determine_new_size(

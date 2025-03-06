@@ -42,7 +42,7 @@ class GkmasDummyMedia:
     def export(self, path: Path, **kwargs):
         if kwargs.get(f"convert_{self._mimetype}", True):
             try:
-                self._export_converted(path)
+                self._export_converted(path, **kwargs)
             except:
                 logger.warning(f"{self.name} failed to convert, fallback to rawdump")
                 self._export_raw(path)
@@ -53,7 +53,7 @@ class GkmasDummyMedia:
         path.write_bytes(self.raw)
         logger.success(f"{self.name} downloaded")
 
-    def _export_converted(self, path: Path):
+    def _export_converted(self, path: Path, **kwargs):
         path.with_suffix(f".{self._mimesubtype}").write_bytes(self._get_converted())
         logger.success(
             f"{self.name} downloaded and converted to {self._mimesubtype.upper()}"
