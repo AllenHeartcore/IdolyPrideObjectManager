@@ -12,7 +12,6 @@ function buildViewpageEmbeddedMedia() {
     switch (type) {
         case "image":
             $embedElement = $("<img>").attr("src", base64Url);
-            $embedElement.attr("id", "viewImageResponsive");
             break;
         case "audio":
             $embedElement = $("<audio>").attr({

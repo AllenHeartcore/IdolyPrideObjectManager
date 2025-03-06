@@ -85,7 +85,8 @@
     line-height: 1;
 }
 
-#viewImageResponsive {
+#viewEmbeddedMedia > img,
+#viewEmbeddedMedia > video {
     max-width: 100%;
     max-height: 42vh;
     width: auto;

@@ -1,13 +1,20 @@
 rich
 flask
 
+# Manifest:
+# request, decrypt, parse, export
 requests
 pycryptodome
 protobuf
 pandas
 
+# Object/Media plugins for
+# .unity3d, image, audio, video
 UnityPy
 pillow
 pydub
+ffmpeg-python
+
+# GPT captioning engine
 PyYAML
 openai
