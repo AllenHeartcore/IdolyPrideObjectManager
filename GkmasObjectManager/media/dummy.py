@@ -26,7 +26,9 @@ class GkmasDummyMedia:
         self._mimesubtype = None  # TO BE OVERRIDDEN
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
-        raise NotImplementedError  # TO BE OVERRIDDEN
+        return raw  # TO BE OVERRIDDEN
+        # a NotImplementedError would propagate to the frontend;
+        # instead, we return a clean bytestream for download
 
     def _get_converted(self, **kwargs) -> bytes:
 
