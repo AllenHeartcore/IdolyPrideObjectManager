@@ -52,7 +52,18 @@ class GkmasDummyMedia:
 
         return self.converted, self.converted_format
 
-    def _get_embed_url(self, **kwargs) -> str:
+    # the following three _get's call _get_data SEPARATELY and don't depend on each other
+
+    def get_bytestream(self, **kwargs) -> bytes:
+        return self._get_data(**kwargs)[0]
+
+    def get_mimetype(self, **kwargs) -> str:
+        return f"{self.mimetype}/{self._get_data(**kwargs)[1]}"
+        # this will be called by the frontend immediately following get_bytestream
+        # so we can safely assume that self.converted_format is up-to-date
+        # and we don't need to wait for another conversion
+
+    def get_embed_url(self, **kwargs) -> str:
         data, mimesubtype = self._get_data(**kwargs)
         return f"data:{self.mimetype}/{mimesubtype};base64,{base64.b64encode(data).decode()}"
 

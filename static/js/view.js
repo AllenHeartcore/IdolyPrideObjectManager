@@ -1,41 +1,3 @@
-// general-purpose base64 media viewer
-function buildViewpageEmbeddedMedia(base64Url) {
-    if (!base64Url) return;
-
-    let mimeType = base64Url.match(/^data:([^;]+);base64,/);
-    if (!mimeType) return;
-
-    let type = mimeType[1].split("/")[0];
-    let $embedElement;
-
-    switch (type) {
-        case "image":
-            $embedElement = $("<img>").attr("src", base64Url);
-            break;
-        case "audio":
-            $embedElement = $("<audio>").attr({
-                src: base64Url,
-                controls: true,
-            });
-            break;
-        case "video":
-            $embedElement = $("<video>").attr({
-                src: base64Url,
-                controls: true,
-            });
-            break;
-        case "text":
-            $embedElement = $("<iframe>").attr({
-                src: base64Url,
-            });
-            break;
-        default:
-            $embedElement = $("<span>").text("Unsupported Base64 content");
-    }
-
-    $("#viewEmbeddedMedia").append($embedElement);
-}
-
 function populateViewpageContainers(info) {
     $("#loadingSpinner").hide();
 
@@ -43,9 +5,6 @@ function populateViewpageContainers(info) {
     $("#viewTitle").text(info.id);
     $("#viewSubtitle").show();
     $("#viewSubtitle").text(info.name);
-
-    $("viewEmbeddedMedia").show();
-    buildViewpageEmbeddedMedia(info.embed_url);
 
     $("#viewPropertyTable").show();
     $("#viewPropertyTable tbody").append(
@@ -98,6 +57,9 @@ function populateViewpageContainers(info) {
             : ""
     );
 
+    $("#viewMedia").show();
+    getMedia(info.mimetype);
+
     $("#viewCaption").show();
     getCaption();
 }
@@ -113,10 +75,31 @@ function reportViewpageError() {
     `);
 }
 
-function displayCaption(text) {
-    $("#loadingSpinnerCaption").hide();
-    $("#viewCaptionText").show();
-    $("#viewCaptionText").text(text);
+function getMedia(mimetype) {
+    $.ajax({
+        type: "GET",
+        url: `/api/${type.toLowerCase()}/${id}/bytestream`,
+        dataType: "binary",
+        contentType: mimetype,
+        success: function (result) {
+            displayMedia(result, mimetype);
+        },
+        error: function (request, status, error) {
+            console.log("Error");
+            console.log(request);
+            console.log(status);
+            console.log(error);
+            displayMedia(null, mimetype);
+        },
+    });
+}
+
+function displayMedia(data, mimetype) {
+    $("#loadingSpinnerMedia").hide();
+    if (!data) return;
+    const blob = new Blob([data], { type: mimetype });
+    const url = URL.createObjectURL(blob);
+    $("#viewMediaContent").attr("src", url);
 }
 
 function getCaption() {
@@ -136,6 +119,12 @@ function getCaption() {
             displayCaption("[An error occurred while generating caption.]");
         },
     });
+}
+
+function displayCaption(text) {
+    $("#loadingSpinnerCaption").hide();
+    $("#viewCaptionText").show();
+    $("#viewCaptionText").text(text);
 }
 
 $(document).ready(function () {

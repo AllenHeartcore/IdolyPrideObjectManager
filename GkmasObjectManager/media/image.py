@@ -29,7 +29,7 @@ class GkmasImage(GkmasDummyMedia):
         self.raw_format = name.split(".")[-1][:-1]
 
     def caption(self) -> str:
-        return GPTImageCaptionEngine().generate(self._get_embed_url())
+        return GPTImageCaptionEngine().generate(self.get_embed_url())
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         return self._img2bytes(Image.open(BytesIO(raw)), **kwargs)

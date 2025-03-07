@@ -60,8 +60,13 @@ def api_assetbundle(id):
             }
             for dep in info["dependencies"]
         ]
-    info["embed_url"] = obj._get_embed_url()
+    info["mimetype"] = obj.get_mimetype()
     return jsonify(info)
+
+
+@app.route("/api/assetbundle/<id>/bytestream")
+def api_assetbundle_bytestream(id):
+    return _get_manifest().assetbundles[int(id)].get_bytestream()
 
 
 @app.route("/api/assetbundle/<id>/caption")
@@ -74,8 +79,13 @@ def api_resource(id):
     obj = _get_manifest().resources[int(id)]
     info = obj._get_canon_repr()
     info["id"] = f"Resource #{info["id"]}"
-    info["embed_url"] = obj._get_embed_url()
+    info["mimetype"] = obj.get_mimetype()
     return jsonify(info)
+
+
+@app.route("/api/resource/<id>/bytestream")
+def api_resource_bytestream(id):
+    return _get_manifest().resources[int(id)].get_bytestream()
 
 
 @app.route("/api/resource/<id>/caption")
@@ -99,7 +109,7 @@ def search(query):
 @app.route("/view/assetbundle/<id>")
 def view_assetbundle(id):
     return render_template("view.html", id=id, type="AssetBundle")
-    # Used to query obj here and pass obj._get_canon_repr() and obj._get_embed_url()
+    # Used to query obj here and pass obj._get_canon_repr(), bytes, and mimetype
     # directly to the template, but if user starts at viewpage instead of homepage,
     # manifest + object fetch (both handled by backend) will create a serious delay,
     # during which time we must display a loading spinner. Thus these logic are now

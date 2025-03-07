@@ -85,12 +85,10 @@
     line-height: 1;
 }
 
-#viewEmbeddedMedia > img,
-#viewEmbeddedMedia > video {
+#viewMedia {
     max-width: 100%;
-    max-height: 42vh;
     width: auto;
-    height: auto;
+    height: 42vh;
 }
 
 #viewCaption {
@@ -99,7 +97,7 @@
     overflow: hidden;
 }
 
-#loadingSpinnerCaption {
+#loadingSpinnerMedia #loadingSpinnerCaption {
     display: flex;
     align-items: center;
 }
