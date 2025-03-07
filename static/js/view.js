@@ -1,6 +1,5 @@
 // general-purpose base64 media viewer
-function buildViewpageEmbeddedMedia() {
-    let base64Url = $("#viewEmbeddedMedia").attr("data-src");
+function buildViewpageEmbeddedMedia(base64Url) {
     if (!base64Url) return;
 
     let mimeType = base64Url.match(/^data:([^;]+);base64,/);
@@ -46,8 +45,7 @@ function populateViewpageContainers(info) {
     $("#viewSubtitle").text(info.name);
 
     $("viewEmbeddedMedia").show();
-    $("#viewEmbeddedMedia").attr("data-src", info.embed_url);
-    buildViewpageEmbeddedMedia();
+    buildViewpageEmbeddedMedia(info.embed_url);
 
     $("#viewPropertyTable").show();
     $("#viewPropertyTable tbody").append(
