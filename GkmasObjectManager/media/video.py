@@ -14,7 +14,7 @@ import ffmpeg
 logger = Logger()
 
 
-class GkmasVideo(GkmasDummyMedia):
+class GkmasUSMVideo(GkmasDummyMedia):
     """Conversion plugin for USM videos."""
 
     def __init__(self, name: str, raw: bytes):
