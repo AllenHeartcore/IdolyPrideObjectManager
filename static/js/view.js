@@ -13,24 +13,17 @@ function populateViewpageContainers(info) {
         $("<tr>").append($("<th>").text("MD5"), $("<td>").text(info.md5)),
         $("<tr>").append(
             $("<th>").text("Download Links"),
-            $("<td>").append(
-                $("<a>")
-                    .attr(
-                        "href",
-                        `https://object.asset.game-gakuen-idolmaster.jp/${info.objectName}`
-                    )
-                    .attr("rel", "noopener noreferrer")
-                    .text(`Raw ${type.toLowerCase()}`),
-                info.embed_url
-                    ? [
-                          "&emsp; | &emsp;",
-                          $("<a>")
-                              .attr("href", info.embed_url)
-                              .attr("download", info.name) // specify download name
-                              .text("Extracted media"),
-                      ]
-                    : ""
-            )
+            $("<td>")
+                .attr("id", "downloadLinks")
+                .append(
+                    $("<a>")
+                        .attr(
+                            "href",
+                            `https://object.asset.game-gakuen-idolmaster.jp/${info.objectName}`
+                        )
+                        .attr("rel", "noopener noreferrer")
+                        .text(`Raw ${type.toLowerCase()}`)
+                )
         ),
         info.dependencies
             ? $("<tr>").append(
@@ -56,7 +49,9 @@ function populateViewpageContainers(info) {
     );
 
     $("#viewMedia").show();
-    getMedia(info.mimetype);
+    getMedia(info.mimetype, info.name.replace(/\.[^/.]+$/, ""));
+    // info.name, with extension removed, is passed all the way to filename
+    // in displayMedia and used to build the direct download link
 
     $("#viewCaption").show();
     getCaption();
@@ -72,14 +67,14 @@ function reportViewpageError() {
     `);
 }
 
-function getMedia(mimetype) {
+function getMedia(mimetype, filename) {
     $.ajax({
         type: "GET",
         url: `/api/${type.toLowerCase()}/${id}/bytestream`,
         xhrFields: { responseType: "arraybuffer" },
         success: function (data, status, request) {
             const mimetype = request.getResponseHeader("Content-Type");
-            displayMedia(data, mimetype);
+            displayMedia(data, mimetype, filename);
         },
         error: function (request, status, error) {
             console.log("Error");
@@ -88,13 +83,14 @@ function getMedia(mimetype) {
             console.log(error);
             displayMedia(
                 "text/plain",
-                "An error occurred while fetching media."
+                "An error occurred while fetching media.",
+                filename
             );
         },
     });
 }
 
-function displayMedia(data, mimetype) {
+function displayMedia(data, mimetype, filename) {
     $("#loadingSpinnerMedia").hide();
     $("#viewMediaContent").show();
     let container = $("#viewMediaContent");
@@ -116,6 +112,14 @@ function displayMedia(data, mimetype) {
                 .attr("download", "")
         );
     }
+
+    $("#downloadLinks").append(
+        "&emsp; | &emsp;",
+        $("<a>")
+            .attr("href", url)
+            .attr("download", filename)
+            .text("Converted media")
+    );
 }
 
 function getCaption() {
