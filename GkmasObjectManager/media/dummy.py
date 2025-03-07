@@ -32,7 +32,7 @@ class GkmasDummyMedia:
         # a NotImplementedError would propagate to the frontend;
         # instead, we return a clean bytestream for download
 
-    def _get_data(self, **kwargs) -> Tuple[bytes, str]:
+    def get_data(self, **kwargs) -> Tuple[bytes, str]:
 
         fmt = kwargs.get(
             f"{self.mimetype}_format",
@@ -40,7 +40,7 @@ class GkmasDummyMedia:
         )
 
         if self.raw_format == fmt:  # rawdump
-            return self.raw, self.raw_format
+            return self.raw, f"{self.mimetype}/{self.raw_format}"
 
         if self.converted_format != fmt:  # record and convert
             self.converted_format = fmt
@@ -50,22 +50,11 @@ class GkmasDummyMedia:
             self.converted = self._convert(self.raw, **kwargs)
             # the only place where **kwargs are used is image_resize in GkmasImage
 
-        return self.converted, self.converted_format
-
-    # the following three _get's call _get_data SEPARATELY and don't depend on each other
-
-    def get_bytestream(self, **kwargs) -> bytes:
-        return self._get_data(**kwargs)[0]
-
-    def get_mimetype(self, **kwargs) -> str:
-        return f"{self.mimetype}/{self._get_data(**kwargs)[1]}"
-        # this will be called by the frontend immediately following get_bytestream
-        # so we can safely assume that self.converted_format is up-to-date
-        # and we don't need to wait for another conversion
+        return self.converted, f"{self.mimetype}/{self.converted_format}"
 
     def get_embed_url(self, **kwargs) -> str:
-        data, mimesubtype = self._get_data(**kwargs)
-        return f"data:{self.mimetype}/{mimesubtype};base64,{base64.b64encode(data).decode()}"
+        data, mimetype = self.get_data(**kwargs)
+        return f"data:{mimetype};base64,{base64.b64encode(data).decode()}"
 
     def caption(self) -> str:
         return "[Captioning not supported for this data type.]"
@@ -85,6 +74,6 @@ class GkmasDummyMedia:
         logger.success(f"{self.name} downloaded")
 
     def _export_converted(self, path: Path, **kwargs):
-        data, mimesubtype = self._get_data(**kwargs)
-        path.with_suffix(f".{mimesubtype}").write_bytes(data)
+        data, mimetype = self.get_data(**kwargs)
+        path.with_suffix(f".{mimetype.split('/')[1]}").write_bytes(data)
         logger.success(f"{self.name} downloaded and converted to {mimesubtype.upper()}")

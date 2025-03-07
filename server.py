@@ -60,14 +60,13 @@ def api_assetbundle(id):
             }
             for dep in info["dependencies"]
         ]
-    info["mimetype"] = obj.get_mimetype()
     return jsonify(info)
 
 
 @app.route("/api/assetbundle/<id>/bytestream")
 def api_assetbundle_bytestream(id):
-    bytestream = _get_manifest().assetbundles[int(id)].get_bytestream()
-    return Response(bytestream, mimetype="application/octet-stream")
+    bytestream, mimetype = _get_manifest().assetbundles[int(id)].get_data()
+    return Response(bytestream, mimetype=mimetype)
 
 
 @app.route("/api/assetbundle/<id>/caption")
@@ -80,14 +79,13 @@ def api_resource(id):
     obj = _get_manifest().resources[int(id)]
     info = obj._get_canon_repr()
     info["id"] = f"Resource #{info["id"]}"
-    info["mimetype"] = obj.get_mimetype()
     return jsonify(info)
 
 
 @app.route("/api/resource/<id>/bytestream")
 def api_resource_bytestream(id):
-    bytestream = _get_manifest().resources[int(id)].get_bytestream()
-    return Response(bytestream, mimetype="application/octet-stream")
+    bytestream, mimetype = _get_manifest().resources[int(id)].get_data()
+    return Response(bytestream, mimetype=mimetype)
 
 
 @app.route("/api/resource/<id>/caption")

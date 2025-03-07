@@ -23,6 +23,7 @@ import requests
 from hashlib import md5
 from pathlib import Path
 from urllib.parse import urljoin
+from typing import Tuple
 
 
 logger = Logger()
@@ -106,11 +107,8 @@ class GkmasResource:
 
         return self._media
 
-    def get_bytestream(self, **kwargs) -> bytes:
-        return self._get_media().get_bytestream(**kwargs)
-
-    def get_mimetype(self, **kwargs) -> str:
-        return self._get_media().get_mimetype(**kwargs)
+    def get_data(self, **kwargs) -> Tuple[bytes, str]:
+        return self._get_media().get_data(**kwargs)
 
     # No leading underscore, since this should be client-side visible
     def get_caption(self) -> str:

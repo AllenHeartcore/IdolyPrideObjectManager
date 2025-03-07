@@ -79,10 +79,10 @@ function getMedia(mimetype) {
     $.ajax({
         type: "GET",
         url: `/api/${type.toLowerCase()}/${id}/bytestream`,
-        dataType: "binary",
         xhrFields: { responseType: "arraybuffer" },
-        success: function (result) {
-            displayMedia(result, mimetype);
+        success: function (data, status, request) {
+            const mimetype = request.getResponseHeader("Content-Type");
+            displayMedia(data, mimetype);
         },
         error: function (request, status, error) {
             console.log("Error");
