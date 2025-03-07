@@ -80,7 +80,7 @@ function getMedia(mimetype) {
         type: "GET",
         url: `/api/${type.toLowerCase()}/${id}/bytestream`,
         dataType: "binary",
-        contentType: mimetype,
+        xhrFields: { responseType: "arraybuffer" },
         success: function (result) {
             displayMedia(result, mimetype);
         },
@@ -89,17 +89,36 @@ function getMedia(mimetype) {
             console.log(request);
             console.log(status);
             console.log(error);
-            displayMedia(null, mimetype);
+            displayMedia(
+                "text/plain",
+                "An error occurred while fetching media."
+            );
         },
     });
 }
 
 function displayMedia(data, mimetype) {
     $("#loadingSpinnerMedia").hide();
-    if (!data) return;
+    $("#viewMediaContent").show();
+    let container = $("#viewMediaContent");
+
     const blob = new Blob([data], { type: mimetype });
     const url = URL.createObjectURL(blob);
-    $("#viewMediaContent").attr("src", url);
+
+    if (mimetype.startsWith("image/")) {
+        container.append($("<img>").attr("src", url));
+    } else if (mimetype.startsWith("audio/")) {
+        container.append($("<audio>").attr({ src: url, controls: true }));
+    } else if (mimetype.startsWith("video/")) {
+        container.append($("<video>").attr({ src: url, controls: true }));
+    } else {
+        container.append(
+            $("<a>")
+                .attr("href", url)
+                .text("Download Media")
+                .attr("download", "")
+        );
+    }
 }
 
 function getCaption() {

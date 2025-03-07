@@ -1,6 +1,6 @@
 import GkmasObjectManager as gom
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 import re
 
 
@@ -66,7 +66,8 @@ def api_assetbundle(id):
 
 @app.route("/api/assetbundle/<id>/bytestream")
 def api_assetbundle_bytestream(id):
-    return _get_manifest().assetbundles[int(id)].get_bytestream()
+    bytestream = _get_manifest().assetbundles[int(id)].get_bytestream()
+    return Response(bytestream, mimetype="application/octet-stream")
 
 
 @app.route("/api/assetbundle/<id>/caption")
@@ -85,7 +86,8 @@ def api_resource(id):
 
 @app.route("/api/resource/<id>/bytestream")
 def api_resource_bytestream(id):
-    return _get_manifest().resources[int(id)].get_bytestream()
+    bytestream = _get_manifest().resources[int(id)].get_bytestream()
+    return Response(bytestream, mimetype="application/octet-stream")
 
 
 @app.route("/api/resource/<id>/caption")

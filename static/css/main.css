@@ -85,7 +85,8 @@
     line-height: 1;
 }
 
-#viewMedia {
+#viewMedia,
+#viewMedia * {
     max-width: 100%;
     width: auto;
     height: 42vh;
