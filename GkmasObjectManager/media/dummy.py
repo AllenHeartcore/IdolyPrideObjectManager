@@ -9,6 +9,7 @@ from ..log import Logger
 
 import base64
 from pathlib import Path
+from typing import Tuple
 
 
 logger = Logger()
@@ -31,29 +32,29 @@ class GkmasDummyMedia:
         # a NotImplementedError would propagate to the frontend;
         # instead, we return a clean bytestream for download
 
-    def _get_data(self, **kwargs) -> bytes:
+    def _get_data(self, **kwargs) -> Tuple[bytes, str]:
 
         fmt = kwargs.get(
             f"{self.mimetype}_format",
-            self.raw_format or self.converted_format,  # fallback if _raw_format is None
+            self.raw_format or self.converted_format,  # fallback if raw_format is None
         )
-        if self.raw_format == fmt:  # rawdump
-            return self.raw
 
-        if self.converted_format != fmt:
-            self.converted_format = fmt  # maintain consistency
+        if self.raw_format == fmt:  # rawdump
+            return self.raw, self.raw_format
+
+        if self.converted_format != fmt:  # record and convert
+            self.converted_format = fmt
             self.converted = None
 
         if self.converted is None:
             self.converted = self._convert(self.raw, **kwargs)
-            # child classes don't need to put '..._format' in signature of _convert()
-            # since it has already been synchronized into self.converted_format
+            # the only place where **kwargs are used is image_resize in GkmasImage
 
-        return self.converted
+        return self.converted, self.converted_format
 
     def _get_embed_url(self, **kwargs) -> str:
-        converted = self._get_data(**kwargs)  # may overwrite self.converted_format
-        return f"data:{self.mimetype}/{self.converted_format};base64,{base64.b64encode(converted).decode()}"
+        data, mimesubtype = self._get_data(**kwargs)
+        return f"data:{self.mimetype}/{mimesubtype};base64,{base64.b64encode(data).decode()}"
 
     def caption(self) -> str:
         return "[Captioning not supported for this data type.]"
@@ -73,8 +74,6 @@ class GkmasDummyMedia:
         logger.success(f"{self.name} downloaded")
 
     def _export_converted(self, path: Path, **kwargs):
-        converted = self._get_data(**kwargs)  # may overwrite self.converted_format
-        path.with_suffix(f".{self.converted_format}").write_bytes(converted)
-        logger.success(
-            f"{self.name} downloaded and converted to {self.converted_format.upper()}"
-        )
+        data, mimesubtype = self._get_data(**kwargs)
+        path.with_suffix(f".{mimesubtype}").write_bytes(data)
+        logger.success(f"{self.name} downloaded and converted to {mimesubtype.upper()}")

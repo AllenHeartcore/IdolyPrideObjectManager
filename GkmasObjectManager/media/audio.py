@@ -26,8 +26,7 @@ class GkmasAudio(GkmasDummyMedia):
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
         self.mimetype = "audio"
-        self.converted_format = name.split(".")[-1][:-1]
-        self.raw_format = self.converted_format
+        self.raw_format = name.split(".")[-1][:-1]
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         audio = AudioSegment.from_file(BytesIO(raw))
@@ -38,18 +37,18 @@ class GkmasUnityAudio(GkmasAudio):
     """Conversion plugin for Unity audio."""
 
     def __init__(self, name: str, raw: bytes):
+        super().__init__(name, raw)
+        self.raw_format = None  # don't override
+        self.converted_format = "wav"
 
-        # It's rare to have unpacking logic at init,
-        # but UnityPy is decompressing AudioClip into clean PCM bytes for us,
-        # so we introduce a bit of overhead here, and let GkmasAudio take over.
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
         env = UnityPy.load(raw)
         values = list(env.container.values())
-        assert len(values) == 1, "f{self.name} contains {len(values)} audio clips."
+        assert len(values) == 1, f"{self.name} contains {len(values)} audio clips."
         samples = values[0].read().samples
-        self.raw = list(samples.values())[0]
-
-        super().__init__(name, self.raw)
-        self.converted_format = "wav"
+        sample = list(samples.values())[0]
+        return sample if self.converted_format == "wav" else super()._convert(sample)
+        # UnityPy is decompressing AudioClip into clean PCM bytes for us
 
 
 class GkmasAWBAudio(GkmasDummyMedia):
