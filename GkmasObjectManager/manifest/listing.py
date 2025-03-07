@@ -32,6 +32,7 @@ class GkmasObjectList:
         infos.sort(key=lambda x: x[OBJLIST_ID_FIELD])
         self.infos = infos
         self.base_class = base_class
+        self._objects = [None] * len(infos)
         self._id_idx = {info[OBJLIST_ID_FIELD]: i for i, info in enumerate(infos)}
         self._name_idx = {info[OBJLIST_NAME_FIELD]: i for i, info in enumerate(infos)}
         # 'self._*_idx' are int/str -> int lookup tables
@@ -39,13 +40,19 @@ class GkmasObjectList:
     def __repr__(self):
         return f"<GkmasObjectList of {len(self.infos)} {self.base_class.__name__}'s>"
 
-    def __getitem__(self, key: Union[int, str]) -> dict:
+    def __getitem__(self, key: Union[int, str]) -> object:
+
         if isinstance(key, int):
-            return self.base_class(self.infos[self._id_idx[key]])
+            idx = self._id_idx[key]
         elif isinstance(key, str):
-            return self.base_class(self.infos[self._name_idx[key]])
+            idx = self._name_idx[key]
         else:
             raise TypeError  # just in case, should never reach here
+
+        if self._objects[idx] is None:
+            self._objects[idx] = self.base_class(self.infos[idx])
+
+        return self._objects[idx]
 
     def __iter__(self):
         for info in self.infos:
