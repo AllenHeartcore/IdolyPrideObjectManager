@@ -22,48 +22,44 @@ class GkmasDummyMedia:
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
-        self._mimetype = None  # TO BE OVERRIDDEN ('image', 'audio', 'video', etc.)
-        self._mimesubtype = None  # TO BE OVERRIDDEN (desired format for self.converted)
-        self._raw_format = None  # TO BE OVERRIDDEN
-        # self._mimesubtype is the **desired** format for self.converted,
-        #   and may be overwritten by _get_converted() if the format is specified in kwargs.
-        # self._raw_format is the **inherent** format of self.raw,
-        #   is used to determine if rawdump is necessary, and is never overwritten.
+        self.mimetype = None  # TO BE OVERRIDDEN ('image', 'audio', 'video', etc.)
+        self.raw_format = None  # TO BE OVERRIDDEN
+        self.converted_format = None  # TO BE OVERRIDDEN
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         return raw  # TO BE OVERRIDDEN
         # a NotImplementedError would propagate to the frontend;
         # instead, we return a clean bytestream for download
 
-    def _get_converted(self, **kwargs) -> bytes:
+    def _get_data(self, **kwargs) -> bytes:
 
         fmt = kwargs.get(
-            f"{self._mimetype}_format",
-            self._raw_format or self._mimesubtype,  # fallback if _raw_format is None
+            f"{self.mimetype}_format",
+            self.raw_format or self.converted_format,  # fallback if _raw_format is None
         )
-        if self._raw_format == fmt:  # rawdump
+        if self.raw_format == fmt:  # rawdump
             return self.raw
 
-        if self._mimesubtype != fmt:
-            self._mimesubtype = fmt  # maintain consistency
+        if self.converted_format != fmt:
+            self.converted_format = fmt  # maintain consistency
             self.converted = None
 
         if self.converted is None:
             self.converted = self._convert(self.raw, **kwargs)
             # child classes don't need to put '..._format' in signature of _convert()
-            # since it has already been synchronized into self._mimesubtype
+            # since it has already been synchronized into self.converted_format
 
         return self.converted
 
     def _get_embed_url(self, **kwargs) -> str:
-        converted = self._get_converted(**kwargs)  # may overwrite self._mimesubtype
-        return f"data:{self._mimetype}/{self._mimesubtype};base64,{base64.b64encode(converted).decode()}"
+        converted = self._get_data(**kwargs)  # may overwrite self.converted_format
+        return f"data:{self.mimetype}/{self.converted_format};base64,{base64.b64encode(converted).decode()}"
 
     def caption(self) -> str:
         return "[Captioning not supported for this data type.]"
 
     def export(self, path: Path, **kwargs):
-        if kwargs.get(f"convert_{self._mimetype}", True):
+        if kwargs.get(f"convert_{self.mimetype}", True):
             try:
                 self._export_converted(path, **kwargs)
             except:
@@ -77,8 +73,8 @@ class GkmasDummyMedia:
         logger.success(f"{self.name} downloaded")
 
     def _export_converted(self, path: Path, **kwargs):
-        converted = self._get_converted(**kwargs)  # may overwrite self._mimesubtype
-        path.with_suffix(f".{self._mimesubtype}").write_bytes(converted)
+        converted = self._get_data(**kwargs)  # may overwrite self.converted_format
+        path.with_suffix(f".{self.converted_format}").write_bytes(converted)
         logger.success(
-            f"{self.name} downloaded and converted to {self._mimesubtype.upper()}"
+            f"{self.name} downloaded and converted to {self.converted_format.upper()}"
         )

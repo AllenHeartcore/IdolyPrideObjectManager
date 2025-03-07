@@ -25,13 +25,13 @@ class GkmasAudio(GkmasDummyMedia):
 
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
-        self._mimetype = "audio"
-        self._mimesubtype = name.split(".")[-1][:-1]
-        self._raw_format = self._mimesubtype
+        self.mimetype = "audio"
+        self.converted_format = name.split(".")[-1][:-1]
+        self.raw_format = self.converted_format
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         audio = AudioSegment.from_file(BytesIO(raw))
-        return audio.export(format=self._mimesubtype).read()
+        return audio.export(format=self.converted_format).read()
 
 
 class GkmasUnityAudio(GkmasAudio):
@@ -49,7 +49,7 @@ class GkmasUnityAudio(GkmasAudio):
         self.raw = list(samples.values())[0]
 
         super().__init__(name, self.raw)
-        self._mimesubtype = "wav"
+        self.converted_format = "wav"
 
 
 class GkmasAWBAudio(GkmasDummyMedia):
@@ -57,8 +57,8 @@ class GkmasAWBAudio(GkmasDummyMedia):
 
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
-        self._mimetype = "audio"
-        self._mimesubtype = "wav"
+        self.mimetype = "audio"
+        self.converted_format = "wav"
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         # doesn't use pydub, which is why this class is not inherited from GkmasAudio
@@ -71,7 +71,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
             tmp_in = tempfile.NamedTemporaryFile(suffix=f".{input_ext}", delete=False)
             tmp_in.write(raw)
             tmp_out = tempfile.NamedTemporaryFile(
-                suffix=f".{self._mimesubtype}", delete=False
+                suffix=f".{self.converted_format}", delete=False
             )
             process = subprocess.run(
                 [
@@ -100,6 +100,6 @@ class GkmasAWBAudio(GkmasDummyMedia):
             # (vgmstream doesn't like NamedTemporaryFile with delete=True)
 
         if success:
-            return audio.export(format=self._mimesubtype).read()
+            return audio.export(format=self.converted_format).read()
         else:
             raise exception  # delay the exception after cleanup

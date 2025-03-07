@@ -25,9 +25,9 @@ class GkmasImage(GkmasDummyMedia):
 
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
-        self._mimetype = "image"
-        self._mimesubtype = name.split(".")[-1][:-1]
-        self._raw_format = self._mimesubtype
+        self.mimetype = "image"
+        self.converted_format = name.split(".")[-1][:-1]
+        self.raw_format = self.converted_format
 
     def caption(self) -> str:
         return GPTImageCaptionEngine().generate(self._get_embed_url())
@@ -53,9 +53,11 @@ class GkmasImage(GkmasDummyMedia):
 
         io = BytesIO()
         try:
-            img.save(io, format=self._mimesubtype.upper(), quality=100)
-        except OSError:  # cannot write mode RGBA as {self._mimesubtype}
-            img.convert("RGB").save(io, format=self._mimesubtype.upper(), quality=100)
+            img.save(io, format=self.converted_format.upper(), quality=100)
+        except OSError:  # cannot write mode RGBA as {self.converted_format}
+            img.convert("RGB").save(
+                io, format=self.converted_format.upper(), quality=100
+            )
 
         return io.getvalue()
 
@@ -114,7 +116,7 @@ class GkmasUnityImage(GkmasImage):
 
     def __init__(self, name: str, raw: bytes):
         super().__init__(name, raw)
-        self._mimesubtype = "png"
+        self.converted_format = "png"
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         env = UnityPy.load(raw)
