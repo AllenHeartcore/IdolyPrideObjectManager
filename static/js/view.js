@@ -1,6 +1,4 @@
 function populateViewpageContainers(info) {
-    $("#loadingSpinner").hide();
-
     $("#viewTitle").show();
     $("#viewTitle").text(info.id);
     $("#viewSubtitle").show();
@@ -65,7 +63,6 @@ function populateViewpageContainers(info) {
 }
 
 function reportViewpageError() {
-    $("#loadingSpinner").hide();
     $("#viewTitle").show();
     $("#viewTitle").html(`
         ${type} #${id} cannot be found, <br>
