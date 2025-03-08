@@ -1,4 +1,6 @@
 function populateViewpageContainers(info) {
+    setAccentColorByString(info.name);
+
     $("#viewTitle").show();
     $("#viewTitle").text(info.id);
     $("#viewSubtitle").show();

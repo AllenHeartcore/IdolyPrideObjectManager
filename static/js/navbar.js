@@ -1,6 +1,5 @@
 $(document).ready(function () {
     setRandomAccentColor();
-    $("#navbarSticker").click(setRandomAccentColor);
 
     // Search event listener
     $("#searchForm").submit(function (event) {

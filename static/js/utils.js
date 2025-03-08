@@ -50,9 +50,14 @@ function rgb2hsl(r, g, b) {
     return [h, s, l];
 }
 
-function setRandomAccentColor() {
-    let keys = Object.keys(ACCENT_COLORS);
-    let key = keys[Math.floor(Math.random() * keys.length)];
+function findAccentColorKey(str) {
+    const keysPattern = Object.keys(ACCENT_COLORS).join("|");
+    const regex = new RegExp(`\\b(${keysPattern})\\b`);
+    const match = str.match(regex);
+    return match ? match[1] : "";
+}
+
+function setAccentColorByKey(key) {
     let accent = ACCENT_COLORS[key];
     let hsl = rgb2hsl(...hex2rgb(accent));
 
@@ -62,6 +67,17 @@ function setRandomAccentColor() {
         `hsl(${hsl[0] * 360}, ${hsl[1] * 100}%, 90%)`
     );
     $("#navbarText").css("color", `hsl(${hsl[0] * 360}, 50%, 50%)`);
+}
+
+function setAccentColorByString(str) {
+    let key = findAccentColorKey(str);
+    if (key) setAccentColorByKey(key);
+}
+
+function setRandomAccentColor() {
+    let keys = Object.keys(ACCENT_COLORS);
+    let key = keys[Math.floor(Math.random() * keys.length)];
+    setAccentColorByKey(key);
 }
 
 function dumpErrorToConsole(...args) {
