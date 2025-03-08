@@ -259,7 +259,7 @@ class GkmasManifest:
 
         names = []
         for obj in self:
-            if re.match(criterion, obj.name):
+            if re.match(criterion, obj.name, flags=re.IGNORECASE):
                 names.append(obj.name)
         return [self[name] for name in sorted(names)]
         # This will be called by frontend.
