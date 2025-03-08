@@ -47,22 +47,6 @@ def api_search(query):
     )
 
 
-@app.route("/api/assetbundle/<id>")
-def api_assetbundle(id):
-    obj = _get_manifest().assetbundles[int(id)]
-    info = obj._get_canon_repr()
-    info["id"] = f"AssetBundle #{info["id"]}"
-    if "dependencies" in info:
-        info["dependencies"] = [
-            {
-                "id": dep,
-                "name": _abid2name(dep),
-            }
-            for dep in info["dependencies"]
-        ]
-    return jsonify(info)
-
-
 @app.route("/api/assetbundle/<id>/bytestream")
 def api_assetbundle_bytestream(id):
     bytestream, mimetype = _get_manifest().assetbundles[int(id)].get_data()
@@ -72,14 +56,6 @@ def api_assetbundle_bytestream(id):
 @app.route("/api/assetbundle/<id>/caption")
 def api_assetbundle_caption(id):
     return _get_manifest().assetbundles[int(id)].get_caption()
-
-
-@app.route("/api/resource/<id>")
-def api_resource(id):
-    obj = _get_manifest().resources[int(id)]
-    info = obj._get_canon_repr()
-    info["id"] = f"Resource #{info["id"]}"
-    return jsonify(info)
 
 
 @app.route("/api/resource/<id>/bytestream")
@@ -108,17 +84,24 @@ def search(query):
 
 @app.route("/view/assetbundle/<id>")
 def view_assetbundle(id):
-    return render_template("view.html", id=id, type="AssetBundle")
-    # Used to query obj here and pass obj._get_canon_repr(), bytes, and mimetype
-    # directly to the template, but if user starts at viewpage instead of homepage,
-    # manifest + object fetch (both handled by backend) will create a serious delay,
-    # during which time we must display a loading spinner. Thus these logic are now
-    # packed in an API call, and view.js handles dependency list rendering altogether.
+    obj = _get_manifest().assetbundles[int(id)]
+    info = obj._get_canon_repr()
+    if "dependencies" in info:
+        info["dependencies"] = [
+            {
+                "id": dep,
+                "name": _abid2name(dep),
+            }
+            for dep in info["dependencies"]
+        ]
+    return render_template("view.html", info=info, type="AssetBundle")
 
 
 @app.route("/view/resource/<id>")
 def view_resource(id):
-    return render_template("view.html", id=id, type="Resource")
+    obj = _get_manifest().resources[int(id)]
+    info = obj._get_canon_repr()
+    return render_template("view.html", info=info, type="Resource")
 
 
 if __name__ == "__main__":
