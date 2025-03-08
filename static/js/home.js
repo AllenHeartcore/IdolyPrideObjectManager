@@ -45,11 +45,8 @@ $(document).ready(function () {
         success: function (result) {
             populateHomepageContainers(result);
         },
-        error: function (request, status, error) {
-            console.log("Error");
-            console.log(request);
-            console.log(status);
-            console.log(error);
+        error: function (...args) {
+            dumpErrorToConsole(...args);
             reportHomepageError();
         },
     });

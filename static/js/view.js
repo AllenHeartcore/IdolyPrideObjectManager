@@ -49,7 +49,7 @@ function populateViewpageContainers(info) {
     );
 
     $("#viewMedia").show();
-    getMedia(info.mimetype, info.name.replace(/\.[^/.]+$/, ""));
+    getMedia(info.name.replace(/\.[^/.]+$/, ""));
     // info.name, with extension removed, is passed all the way to filename
     // in displayMedia and used to build the direct download link
 
@@ -67,7 +67,7 @@ function reportViewpageError() {
     `);
 }
 
-function getMedia(mimetype, filename) {
+function getMedia(filename) {
     $.ajax({
         type: "GET",
         url: `/api/${type.toLowerCase()}/${id}/bytestream`,
@@ -76,11 +76,8 @@ function getMedia(mimetype, filename) {
             const mimetype = request.getResponseHeader("Content-Type");
             displayMedia(data, mimetype, filename);
         },
-        error: function (request, status, error) {
-            console.log("Error");
-            console.log(request);
-            console.log(status);
-            console.log(error);
+        error: function (...args) {
+            dumpErrorToConsole(...args);
             displayMedia(
                 "text/plain",
                 "An error occurred while fetching media.",
@@ -131,11 +128,8 @@ function getCaption() {
         success: function (caption) {
             displayCaption(caption);
         },
-        error: function (request, status, error) {
-            console.log("Error");
-            console.log(request);
-            console.log(status);
-            console.log(error);
+        error: function (...args) {
+            dumpErrorToConsole(...args);
             displayCaption("[An error occurred while generating caption.]");
         },
     });
@@ -156,11 +150,8 @@ $(document).ready(function () {
         success: function (result) {
             populateViewpageContainers(result);
         },
-        error: function (request, status, error) {
-            console.log("Error");
-            console.log(request);
-            console.log(status);
-            console.log(error);
+        error: function (...args) {
+            dumpErrorToConsole(...args);
             reportViewpageError();
         },
     });
