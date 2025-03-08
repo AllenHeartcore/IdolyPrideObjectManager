@@ -1,4 +1,8 @@
-function populateSearchResult(result) {
+let searchResult = [];
+let currentIDAscending = false;
+let currentNameAscending = true;
+
+function populateSearchpageContainers(result) {
     $("#loadingSpinner").hide();
 
     $("#searchQuery").show();
@@ -10,6 +14,11 @@ function populateSearchResult(result) {
     $("#searchResultDigest").text(`Found ${result.length} result(s).`);
 
     $("#searchResultTable").show();
+    populateSearchResultTable(result);
+}
+
+function populateSearchResultTable(result) {
+    $("#searchResultTableBody").empty();
     result.forEach((entry) => {
         $("#searchResultTable").append(
             $("<tr>").append(
@@ -27,8 +36,6 @@ function populateSearchResult(result) {
     });
 }
 
-function reportSearchError() {}
-
 $(document).ready(function () {
     $.ajax({
         type: "GET",
@@ -36,11 +43,36 @@ $(document).ready(function () {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (result) {
-            populateSearchResult(result);
+            searchResult = result;
+            populateSearchpageContainers(searchResult);
         },
         error: function (...args) {
             dumpErrorToConsole(...args);
-            reportSearchError();
         },
+    });
+
+    $("#sortID").click(function () {
+        currentIDAscending = !currentIDAscending;
+        let sortedResult = searchResult.sort((a, b) => {
+            // alphabetical order in entry.type implies AssetBundle < Resource
+            if (a.type < b.type) return -1;
+            if (a.type > b.type) return 1;
+            return a.id - b.id;
+        });
+        if (!currentIDAscending) {
+            sortedResult.reverse();
+        }
+        populateSearchResultTable(sortedResult);
+    });
+
+    $("#sortName").click(function () {
+        currentNameAscending = !currentNameAscending;
+        let sortedResult = searchResult.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        });
+        if (!currentNameAscending) {
+            sortedResult.reverse();
+        }
+        populateSearchResultTable(sortedResult);
     });
 });
