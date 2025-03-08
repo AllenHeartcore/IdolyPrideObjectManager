@@ -52,8 +52,8 @@ function rgb2hsl(r, g, b) {
 
 function findAccentColorKey(str) {
     const keysPattern = Object.keys(ACCENT_COLORS).join("|");
-    const regex = new RegExp(`\\b(${keysPattern})\\b`);
-    const match = str.match(regex);
+    const regex = new RegExp(`\\b(${keysPattern})\\b`); // ensure whole word match
+    const match = str.replace(/_/g, "-").match(regex); // _ is not a word boundary
     return match ? match[1] : "";
 }
 
