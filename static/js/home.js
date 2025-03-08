@@ -14,8 +14,8 @@ function populateHomepageContainers(data) {
         .map((ab) => ({ id: ab.id, name: ab.name }));
 
     $("#homeDigest").show();
-    let randomSamples = matches.sort(() => Math.random() - 0.5).slice(0, 5);
-    randomSamples.forEach((item) => {
+    let latestSamples = matches.sort((a, b) => a.id - b.id).slice(-5);
+    latestSamples.forEach((item) => {
         $("#homeDigestList").append(
             $("<li>").append(
                 $("<a>")
