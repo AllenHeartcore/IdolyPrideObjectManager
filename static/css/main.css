@@ -55,6 +55,13 @@
     line-height: 1;
 }
 
+.text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
 /* Navbar */
 
 #navbarNav {

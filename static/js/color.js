@@ -12,6 +12,8 @@ const ACCENT_COLORS = {
     "jsna": "#C6904A",
 };
 
+const HUE_GRADIENT_VARIANCE = 12;
+
 function hex2rgb(hex) {
     return [
         parseInt(hex.slice(1, 3), 16),
@@ -61,12 +63,21 @@ function setAccentColorByKey(key) {
     let accent = ACCENT_COLORS[key];
     let hsl = rgb2hsl(...hex2rgb(accent));
 
+    let baseHue = hsl[0] * 360;
+    let leftHue = (baseHue - HUE_GRADIENT_VARIANCE + 360) % 360; // prevent underflow
+    let rightHue = (baseHue + HUE_GRADIENT_VARIANCE) % 360;
+
     $("#navbarSticker").attr("src", `/static/img/${key}.png`);
     $(".navbar").css(
         "background-color",
-        `hsl(${hsl[0] * 360}, ${hsl[1] * 100}%, 90%)`
+        `hsl(${baseHue}, ${hsl[1] * 100}%, 90%)`
     );
-    $("#navbarText").css("color", `hsl(${hsl[0] * 360}, 50%, 50%)`);
+    $("#navbarText").css("color", `hsl(${baseHue}, 50%, 50%)`);
+
+    $("#homeTitleGakumas").css(
+        "background-image",
+        `linear-gradient(to right, hsl(${leftHue}, 70%, 50%), hsl(${rightHue}, 70%, 50%))`
+    );
 }
 
 function setAccentColorByString(str) {
