@@ -62,7 +62,7 @@
     color: transparent;
 }
 
-/* Navbar */
+/* Search bars (navbar, home) */
 
 .gentle-button {
     background-color: #fff;
@@ -86,16 +86,6 @@
     transform: translateY(-50%);
 }
 
-#navbarNav {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-#navbarSticker {
-    height: 60px;
-}
-
 #navbarSearchForm {
     width: 25%;
 }
@@ -108,7 +98,11 @@
     font-size: 1rem;
 }
 
-/* Home */
+#homeSearchButton #homeGotoButton {
+    font-size: 1.25rem;
+}
+
+/* Spinners (home, search, view) */
 
 #loadingSpinner {
     display: flex;
@@ -117,8 +111,21 @@
     height: 80vh;
 }
 
-#homeSearchButton #homeGotoButton {
-    font-size: 1.25rem;
+#loadingSpinnerMedia #loadingSpinnerCaption {
+    display: flex;
+    align-items: center;
+}
+
+/* Navbar */
+
+#navbarNav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#navbarSticker {
+    height: 60px;
 }
 
 /* Search */
@@ -139,9 +146,4 @@
 #viewCaption {
     min-height: 15vh;
     overflow: hidden;
-}
-
-#loadingSpinnerMedia #loadingSpinnerCaption {
-    display: flex;
-    align-items: center;
 }
