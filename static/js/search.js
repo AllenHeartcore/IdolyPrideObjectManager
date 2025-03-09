@@ -4,21 +4,6 @@ let sortState = {
     ascending: true,
 }; // backend sorts by ascending name
 
-function populateSearchpageContainers(result) {
-    $("#loadingSpinner").hide();
-
-    $("#searchQuery").show();
-    $("#searchResultDigest").show();
-    if (result.length === 0) {
-        $("#searchResultDigest").text("No results found.");
-        return;
-    }
-    $("#searchResultDigest").text(`Found ${result.length} result(s).`);
-
-    $("#searchResultTable").show();
-    populateSearchResultTable(result);
-}
-
 function updateSortIcons() {
     if (sortState.byID) {
         $("#sortNameIcon").hide();
@@ -41,7 +26,7 @@ function updateSortIcons() {
     }
 }
 
-function populateSearchResultTable(result) {
+function buildResultTable(result) {
     updateSortIcons();
     $("#searchResultTableBody").empty();
     result.forEach((entry) => {
@@ -66,7 +51,22 @@ function sortAndBuildResultTable(comparator) {
     if (!sortState.ascending) {
         sortedResult.reverse();
     }
-    populateSearchResultTable(sortedResult);
+    buildResultTable(sortedResult);
+}
+
+function populateSearchpageContainers(result) {
+    $("#loadingSpinner").hide();
+
+    $("#searchQuery").show();
+    $("#searchResultDigest").show();
+    if (result.length === 0) {
+        $("#searchResultDigest").text("No results found.");
+        return;
+    }
+    $("#searchResultDigest").text(`Found ${result.length} result(s).`);
+
+    $("#searchResultTable").show();
+    buildResultTable(result);
 }
 
 $(document).ready(function () {
