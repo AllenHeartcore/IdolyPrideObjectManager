@@ -1,0 +1,39 @@
+/* Search bars (navbar, home) */
+
+.gentle-button {
+    background-color: #fff;
+    transition: background-color 0.3s;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    color: grey;
+    cursor: pointer;
+}
+.gentle-button:hover {
+    background-color: #eee;
+}
+.gentle-button:active {
+    background-color: lightgrey;
+}
+
+.floating-button {
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#navbarSearchForm {
+    width: 25%;
+}
+
+#navbarSearchInput #homeSearchInput {
+    padding-right: 3rem; /* don't overlap with icon */
+}
+
+#navbarSearchButton {
+    font-size: 1rem;
+}
+
+#homeSearchButton #homeGotoButton {
+    font-size: 1.25rem;
+}

@@ -1,0 +1,31 @@
+/* Navbar */
+
+#navbarNav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#navbarSticker {
+    height: 60px;
+}
+
+/* Search */
+
+#sortID,
+#sortName {
+    cursor: pointer;
+}
+
+/* View */
+
+#viewMedia,
+#viewMediaContent * {
+    max-width: 100%;
+    height: 42vh;
+}
+
+#viewCaption {
+    min-height: 15vh;
+    overflow: hidden;
+}

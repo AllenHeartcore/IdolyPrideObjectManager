@@ -1,3 +1,8 @@
+@import url("font.css");
+@import url("search.css");
+@import url("spinner.css");
+@import url("pages.css");
+
 .container {
     width: 100%;
     font-family: "NYC Sans", sans-serif;
@@ -60,90 +65,4 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-}
-
-/* Search bars (navbar, home) */
-
-.gentle-button {
-    background-color: #fff;
-    transition: background-color 0.3s;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    color: grey;
-    cursor: pointer;
-}
-.gentle-button:hover {
-    background-color: #eee;
-}
-.gentle-button:active {
-    background-color: lightgrey;
-}
-
-.floating-button {
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#navbarSearchForm {
-    width: 25%;
-}
-
-#navbarSearchInput #homeSearchInput {
-    padding-right: 3rem; /* don't overlap with icon */
-}
-
-#navbarSearchButton {
-    font-size: 1rem;
-}
-
-#homeSearchButton #homeGotoButton {
-    font-size: 1.25rem;
-}
-
-/* Spinners (home, search, view) */
-
-#loadingSpinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-}
-
-#loadingSpinnerMedia #loadingSpinnerCaption {
-    display: flex;
-    align-items: center;
-}
-
-/* Navbar */
-
-#navbarNav {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-#navbarSticker {
-    height: 60px;
-}
-
-/* Search */
-
-#sortID,
-#sortName {
-    cursor: pointer;
-}
-
-/* View */
-
-#viewMedia,
-#viewMediaContent * {
-    max-width: 100%;
-    height: 42vh;
-}
-
-#viewCaption {
-    min-height: 15vh;
-    overflow: hidden;
 }
