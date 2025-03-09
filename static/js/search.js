@@ -1,6 +1,8 @@
 let searchResult = [];
-let currentIDAscending = false;
-let currentNameAscending = true;
+let sortState = {
+    byID: false,
+    ascending: true,
+}; // backend sorts by ascending name
 
 function populateSearchpageContainers(result) {
     $("#loadingSpinner").hide();
@@ -15,6 +17,28 @@ function populateSearchpageContainers(result) {
 
     $("#searchResultTable").show();
     populateSearchResultTable(result);
+}
+
+function updateSortIcons() {
+    if (sortState.byID) {
+        $("#sortNameIcon").hide();
+        $("#sortIDIcon").show();
+        $("#sortIDIcon").removeClass("bi-caret-up-fill bi-caret-down-fill");
+        if (sortState.ascending) {
+            $("#sortIDIcon").addClass("bi-caret-up-fill");
+        } else {
+            $("#sortIDIcon").addClass("bi-caret-down-fill");
+        }
+    } else {
+        $("#sortIDIcon").hide();
+        $("#sortNameIcon").show();
+        $("#sortNameIcon").removeClass("bi-caret-up-fill bi-caret-down-fill");
+        if (sortState.ascending) {
+            $("#sortNameIcon").addClass("bi-caret-up-fill");
+        } else {
+            $("#sortNameIcon").addClass("bi-caret-down-fill");
+        }
+    }
 }
 
 function populateSearchResultTable(result) {
@@ -44,6 +68,7 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (result) {
             searchResult = result;
+            updateSortIcons();
             populateSearchpageContainers(searchResult);
         },
         error: function (...args) {
@@ -52,25 +77,39 @@ $(document).ready(function () {
     });
 
     $("#sortID").click(function () {
-        currentIDAscending = !currentIDAscending;
+        if (sortState.byID) {
+            sortState.ascending = !sortState.ascending;
+        } else {
+            sortState.byID = true;
+            sortState.ascending = true;
+        }
+        updateSortIcons();
+
         let sortedResult = searchResult.sort((a, b) => {
             // alphabetical order in entry.type implies AssetBundle < Resource
             if (a.type < b.type) return -1;
             if (a.type > b.type) return 1;
             return a.id - b.id;
         });
-        if (!currentIDAscending) {
+        if (!sortState.ascending) {
             sortedResult.reverse();
         }
         populateSearchResultTable(sortedResult);
     });
 
     $("#sortName").click(function () {
-        currentNameAscending = !currentNameAscending;
+        if (!sortState.byID) {
+            sortState.ascending = !sortState.ascending;
+        } else {
+            sortState.byID = false;
+            sortState.ascending = true;
+        }
+        updateSortIcons();
+
         let sortedResult = searchResult.sort((a, b) => {
             return a.name.localeCompare(b.name);
         });
-        if (!currentNameAscending) {
+        if (!sortState.ascending) {
             sortedResult.reverse();
         }
         populateSearchResultTable(sortedResult);

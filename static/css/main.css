@@ -9,6 +9,11 @@
     width: 100%;
 }
 
+.align-right {
+    text-align: right;
+    float: right;
+}
+
 .hide-by-default {
     display: none;
 }
