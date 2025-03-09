@@ -1,30 +1,11 @@
-function getMedia(filename) {
-    $.ajax({
-        type: "GET",
-        url: `/api/${type.toLowerCase()}/${info.id}/bytestream`,
-        xhrFields: { responseType: "arraybuffer" },
-        success: function (data, status, request) {
-            const mimetype = request.getResponseHeader("Content-Type");
-            displayMedia(data, mimetype, filename);
-        },
-        error: function (...args) {
-            dumpErrorToConsole(...args);
-            displayMedia(
-                "text/plain",
-                "An error occurred while fetching media.",
-                filename
-            );
-        },
-    });
-}
-
-function displayMedia(data, mimetype, filename) {
+function displayMedia() {
     $("#loadingSpinnerMedia").hide();
     $("#viewMediaContent").show();
     let container = $("#viewMediaContent");
 
-    const blob = new Blob([data], { type: mimetype });
+    const blob = getMediaBlob(type, info.id);
     const url = URL.createObjectURL(blob);
+    const mimetype = blob.type;
 
     if (mimetype.startsWith("image/")) {
         container.append($("<img>").attr("src", url));
@@ -45,7 +26,7 @@ function displayMedia(data, mimetype, filename) {
         "&emsp; | &emsp;",
         $("<a>")
             .attr("href", url)
-            .attr("download", filename)
+            .attr("download", info.name.replace(/\.[^/.]+$/, ""))
             .text("Converted media")
     );
 }
@@ -57,26 +38,25 @@ function getCaption() {
         dataType: "text",
         contentType: "charset=utf-8",
         success: function (caption) {
-            displayCaption(caption);
+            return caption;
         },
         error: function (...args) {
             dumpErrorToConsole(...args);
-            displayCaption("[An error occurred while generating caption.]");
+            return "[An error occurred while generating caption.]";
         },
     });
 }
 
-function displayCaption(text) {
+function displayCaption() {
+    let caption = getCaption();
     $("#loadingSpinnerCaption").hide();
     $("#viewCaptionText").show();
-    $("#viewCaptionText").text(text);
+    $("#viewCaptionText").text(caption);
 }
 
 $(document).ready(function () {
     setAccentColorByString(info.name);
 
-    // info.name, with extension removed, is passed all the way to filename
-    // in displayMedia and used to build the direct download link
-    getMedia(info.name.replace(/\.[^/.]+$/, ""));
+    displayMedia();
     getCaption();
 });

@@ -29,3 +29,21 @@ function enterKeyOverriderFactory(form_id) {
         }
     };
 }
+
+function getMediaBlob(type, id) {
+    $.ajax({
+        type: "GET",
+        url: `/api/${type.toLowerCase()}/${id}/bytestream`,
+        xhrFields: { responseType: "arraybuffer" },
+    })
+        .then(function (data, status, request) {
+            const mimetype = request.getResponseHeader("Content-Type");
+            return new Blob([data], { type: mimetype });
+        })
+        .catch(function (...args) {
+            dumpErrorToConsole(...args);
+            return new Blob(["An error occurred while fetching media."], {
+                type: "text/plain",
+            });
+        });
+}
