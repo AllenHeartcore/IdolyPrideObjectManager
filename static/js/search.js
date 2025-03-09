@@ -70,7 +70,8 @@ function populateSearchpageContainers(result) {
 $(document).ready(function () {
     $.ajax({
         type: "GET",
-        url: `/api/search/${query}`,
+        url: `/api/search`,
+        data: { query: query },
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (result) {

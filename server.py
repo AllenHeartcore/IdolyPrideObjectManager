@@ -30,8 +30,9 @@ def api_manifest():
     return jsonify(_get_manifest()._get_canon_repr())
 
 
-@app.route("/api/search/<query>")
-def api_search(query):
+@app.route("/api/search")
+def api_search():
+    query = request.args.get("query", "")
     return jsonify(
         [
             {
@@ -77,8 +78,9 @@ def home():
     return render_template("home.html")
 
 
-@app.route("/search/<query>")
-def search(query):
+@app.route("/search")
+def search():
+    query = request.args.get("query", "")
     return render_template("search.html", query=query)
 
 

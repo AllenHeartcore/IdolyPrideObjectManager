@@ -10,7 +10,7 @@ $(document).ready(function () {
             $("#searchInput").focus();
             return;
         }
-        window.location.href = `/search/${query}`;
+        window.location.href = `/search?query=${encodeURIComponent(query)}`;
     });
 
     // Override Enter key
