@@ -15,28 +15,25 @@
     <span>Searching...</span>
 </div>
 
-<div id="searchQuery" class="hide-by-default">
-    Search results for "{{ query }}"
-</div>
-<div id="searchResultDigest" class="hide-by-default"></div>
+<div id="searchpageElements" class="container hide-by-default">
+    <div id="searchQuery">Search results for "{{ query }}"</div>
+    <div id="searchResultDigest"></div>
 
-<table
-    id="searchResultTable"
-    class="table table-bordered table-hover hide-by-default"
->
-    <thead>
-        <tr>
-            <th id="sortID">
-                ID
-                <span id="sortIDIcon" class="align-right"></span>
-            </th>
-            <th id="sortName">
-                Name
-                <span id="sortNameIcon" class="align-right"></span>
-            </th>
-        </tr>
-    </thead>
-    <tbody id="searchResultTableBody"></tbody>
-</table>
+    <table id="searchResultTable" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th id="sortID">
+                    ID
+                    <span id="sortIDIcon" class="align-right"></span>
+                </th>
+                <th id="sortName">
+                    Name
+                    <span id="sortNameIcon" class="align-right"></span>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="searchResultTableBody"></tbody>
+    </table>
+</div>
 
 {% endblock %}

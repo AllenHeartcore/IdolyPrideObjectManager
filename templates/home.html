@@ -10,31 +10,33 @@
     <span>Fetching manifest...</span>
 </div>
 
-<div id="homeMetadata" class="hide-by-default">
-    <div>
-        <span>GkmasManifest revision</span>
-        <span id="homeMetadataRevision" class="text-bold"></span>
+<div id="homepageElements" class="container hide-by-default">
+    <div id="homeMetadata">
+        <div>
+            <span>GkmasManifest revision</span>
+            <span id="homeMetadataRevision" class="text-bold"></span>
+        </div>
+        <div>
+            <span>with</span>
+            <span id="homeMetadataAbCount" class="text-bold"></span>
+            <span>assetbundles</span>
+        </div>
+        <div>
+            <span>and</span>
+            <span id="homeMetadataResCount" class="text-bold"></span>
+            <span>resources.</span>
+        </div>
+        <div>
+            <span>Standby.</span>
+        </div>
     </div>
-    <div>
-        <span>with</span>
-        <span id="homeMetadataAbCount" class="text-bold"></span>
-        <span>assetbundles</span>
-    </div>
-    <div>
-        <span>and</span>
-        <span id="homeMetadataResCount" class="text-bold"></span>
-        <span>resources.</span>
-    </div>
-    <div>
-        <span>Standby.</span>
-    </div>
-</div>
 
-<div id="homeDigest" class="hide-by-default">
-    <div>
-        <span>Five latest wallpapers of landscape orientation:</span>
+    <div id="homeDigest">
+        <div>
+            <span>Five latest wallpapers of landscape orientation:</span>
+        </div>
+        <ul id="homeDigestList" class="text-monospace"></ul>
     </div>
-    <ul id="homeDigestList" class="text-monospace"></ul>
 </div>
 
 {% endblock %}

@@ -2,9 +2,6 @@ const WALLPAPER_REGEX_PATTERN =
     /^img_general_(cidol.*thumb-landscape-large|(csprt|meishi_base).*full)$/;
 
 function populateHomepageContainers(data) {
-    $("#loadingSpinner").hide();
-
-    $("#homeMetadata").show();
     $("#homeMetadataRevision").text(data.revision);
     $("#homeMetadataAbCount").text(data.assetBundleList.length);
     $("#homeMetadataResCount").text(data.resourceList.length);
@@ -13,7 +10,6 @@ function populateHomepageContainers(data) {
         .filter((ab) => WALLPAPER_REGEX_PATTERN.test(ab.name))
         .map((ab) => ({ id: ab.id, name: ab.name }));
 
-    $("#homeDigest").show();
     let latestSamples = matches.sort((a, b) => a.id - b.id).slice(-5);
     latestSamples.forEach((item) => {
         $("#homeDigestList").append(
@@ -24,11 +20,13 @@ function populateHomepageContainers(data) {
             )
         );
     });
+
+    $("#loadingSpinner").hide();
+    $("#homepageElements").show();
 }
 
 function reportHomepageError() {
     $("#loadingSpinner").hide();
-    $("#homeMetadata").show();
     $("#homeMetadata").html(`
         GkmasManifest cannot be fetched. <br>
         Check Internet connection. <br>

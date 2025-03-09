@@ -55,18 +55,16 @@ function sortAndBuildResultTable(comparator) {
 }
 
 function populateSearchpageContainers(result) {
-    $("#loadingSpinner").hide();
-
-    $("#searchQuery").show();
-    $("#searchResultDigest").show();
     if (result.length === 0) {
         $("#searchResultDigest").text("No results found.");
         return;
     }
     $("#searchResultDigest").text(`Found ${result.length} result(s).`);
 
-    $("#searchResultTable").show();
     buildResultTable(result);
+
+    $("#loadingSpinner").hide();
+    $("#searchpageElements").show();
 }
 
 $(document).ready(function () {
