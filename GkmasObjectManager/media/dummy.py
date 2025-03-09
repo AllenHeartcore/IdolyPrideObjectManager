@@ -60,7 +60,8 @@ class GkmasDummyMedia:
         return "[Captioning not supported for this data type.]"
 
     def export(self, path: Path, **kwargs):
-        if kwargs.get(f"convert_{self.mimetype}", True):
+        # not overriding self.mimetype indicates unhandled media type
+        if self.mimetype and kwargs.get(f"convert_{self.mimetype}", True):
             try:
                 self._export_converted(path, **kwargs)
             except:
