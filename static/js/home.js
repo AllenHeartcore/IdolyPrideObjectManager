@@ -50,21 +50,6 @@ $(document).ready(function () {
         },
     });
 
-    $("#homeSearchForm").submit(function (event) {
-        event.preventDefault();
-        let query = $("#homeSearchInput").val();
-        if (!query.trim()) {
-            $("#homeSearchInput").val("");
-            $("#homeSearchInput").focus();
-            return;
-        }
-        window.location.href = `/search?query=${encodeURIComponent(query)}`;
-    });
-
-    $("#homeSearchInput").keydown(function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            $("#homeSearchForm").submit();
-        }
-    });
+    $("#homeSearchForm").submit(searchEventListenerFactory("#homeSearchInput"));
+    $("#homeSearchInput").keydown(enterKeyOverriderFactory("#homeSearchForm"));
 });
