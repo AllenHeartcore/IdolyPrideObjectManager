@@ -42,6 +42,7 @@ function updateSortIcons() {
 }
 
 function populateSearchResultTable(result) {
+    updateSortIcons();
     $("#searchResultTableBody").empty();
     result.forEach((entry) => {
         $("#searchResultTable").append(
@@ -60,6 +61,14 @@ function populateSearchResultTable(result) {
     });
 }
 
+function sortAndBuildResultTable(comparator) {
+    let sortedResult = searchResult.sort(comparator);
+    if (!sortState.ascending) {
+        sortedResult.reverse();
+    }
+    populateSearchResultTable(sortedResult);
+}
+
 $(document).ready(function () {
     $.ajax({
         type: "GET",
@@ -68,7 +77,6 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (result) {
             searchResult = result;
-            updateSortIcons();
             populateSearchpageContainers(searchResult);
         },
         error: function (...args) {
@@ -83,18 +91,13 @@ $(document).ready(function () {
             sortState.byID = true;
             sortState.ascending = true;
         }
-        updateSortIcons();
 
-        let sortedResult = searchResult.sort((a, b) => {
+        sortAndBuildResultTable((a, b) => {
             // alphabetical order in entry.type implies AssetBundle < Resource
             if (a.type < b.type) return -1;
             if (a.type > b.type) return 1;
             return a.id - b.id;
         });
-        if (!sortState.ascending) {
-            sortedResult.reverse();
-        }
-        populateSearchResultTable(sortedResult);
     });
 
     $("#sortName").click(function () {
@@ -104,14 +107,9 @@ $(document).ready(function () {
             sortState.byID = false;
             sortState.ascending = true;
         }
-        updateSortIcons();
 
-        let sortedResult = searchResult.sort((a, b) => {
+        sortAndBuildResultTable((a, b) => {
             return a.name.localeCompare(b.name);
         });
-        if (!sortState.ascending) {
-            sortedResult.reverse();
-        }
-        populateSearchResultTable(sortedResult);
     });
 });
