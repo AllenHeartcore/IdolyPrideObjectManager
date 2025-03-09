@@ -27,6 +27,10 @@
 
 /* General text */
 
+.text-size-150 * {
+    font-size: 1.5rem !important;
+}
+
 .text-bold {
     font-weight: 900;
 }
@@ -76,14 +80,16 @@
     background-color: lightgrey;
 }
 
+.floating-button {
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 #navbarNav {
     display: flex;
     justify-content: space-between;
     width: 100%;
-}
-
-#navbarText {
-    font-size: 1.5rem !important;
 }
 
 #navbarSticker {
@@ -94,15 +100,12 @@
     width: 25%;
 }
 
-#navbarSearchInput {
+#navbarSearchInput #homeSearchInput {
     padding-right: 3rem; /* don't overlap with icon */
 }
 
 #navbarSearchButton {
     font-size: 1rem;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 /* Home */
@@ -114,16 +117,8 @@
     height: 80vh;
 }
 
-#homeSearchInput {
-    font-size: 1.5rem;
-    padding-right: 3rem; /* don't overlap with icon */
-}
-
-#homeSearchButton {
+#homeSearchButton #homeGotoButton {
     font-size: 1.25rem;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 /* Search */

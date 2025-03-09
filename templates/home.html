@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 mb-5">
+    <div class="row mt-3 mb-5 gx-2 text-size-150 align-items-center">
         <div class="col-md-6">
             <form id="homeSearchForm" class="position-relative">
                 <input
@@ -40,14 +40,34 @@
                 />
                 <button
                     id="homeSearchButton"
-                    class="bi bi-search position-absolute gentle-button"
+                    class="bi bi-search position-absolute gentle-button floating-button"
                     type="submit"
                 ></button>
             </form>
         </div>
-        <div class="col-md-1">or</div>
-        <div class="col-md-2">TYPE</div>
-        <div class="col-md-3">GOTO</div>
+        <div class="col-md-1">or Goto</div>
+        <div class="col-md-2">
+            <select id="homeGotoType" class="form-select">
+                <option value="assetbundle">AssetBundle</option>
+                <option value="resource">Resource</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <form id="homeGotoForm" class="position-relative">
+                <input
+                    id="homeGotoInput"
+                    class="form-control"
+                    type="number"
+                    min="1"
+                    placeholder="ID"
+                />
+                <button
+                    id="homeGotoButton"
+                    class="bi bi-arrow-right position-absolute gentle-button floating-button"
+                    type="submit"
+                ></button>
+            </form>
+        </div>
     </div>
 
     <div class="row mt-5">

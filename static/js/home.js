@@ -52,4 +52,12 @@ $(document).ready(function () {
 
     $("#homeSearchForm").submit(searchEventListenerFactory("#homeSearchInput"));
     $("#homeSearchInput").keydown(enterKeyOverriderFactory("#homeSearchForm"));
+
+    $("#homeGotoForm").submit(function (event) {
+        event.preventDefault();
+        let id = $("#homeGotoInput").val();
+        let type = $("#homeGotoType").val();
+        window.location.href = `/view/${type}/${id}`;
+    });
+    $("#homeGotoInput").keydown(enterKeyOverriderFactory("#homeGotoForm"));
 });
