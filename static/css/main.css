@@ -5,6 +5,8 @@
     font-weight: 400;
 }
 
+/* General layout */
+
 .full-width {
     width: 100%;
 }
@@ -18,6 +20,8 @@
     display: none;
 }
 
+/* General text */
+
 .text-bold {
     font-weight: 900;
 }
@@ -28,7 +32,18 @@
 
 .text-monospace {
     font-family: Consolas, monospace;
-    font-size: 1.2rem;
+}
+
+.title {
+    margin: 30px 0 0 0;
+    font-size: 4.2rem;
+    line-height: 1;
+}
+
+.subtitle {
+    margin: 0 0 30px 0;
+    font-size: 1.8rem;
+    line-height: 1;
 }
 
 /* Navbar */
@@ -56,31 +71,7 @@
     height: 80vh;
 }
 
-#homeMetadata {
-    margin: 30px 0;
-    font-size: 4.2rem;
-    line-height: 1;
-}
-
-#homeDigest {
-    margin: 30px 0;
-    font-size: 1.8rem;
-    line-height: 1.5;
-}
-
 /* Search */
-
-#searchQuery {
-    margin: 30px 0 0 0;
-    font-size: 4.2rem;
-    line-height: 1;
-}
-
-#searchResultDigest {
-    margin: 0 0 30px 0;
-    font-size: 2.4rem;
-    line-height: 1;
-}
 
 #sortID,
 #sortName {
@@ -88,20 +79,6 @@
 }
 
 /* View */
-
-#viewTitle {
-    margin: 30px 0 0 0;
-    font-size: 4.2rem;
-    line-height: 1;
-}
-
-#viewSubtitle {
-    margin: 0 0 30px 0;
-    font-family: Consolas, monospace;
-    font-weight: bold;
-    font-size: 1.8rem;
-    line-height: 1;
-}
 
 #viewMedia,
 #viewMediaContent * {

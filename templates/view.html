@@ -12,8 +12,8 @@
     let info = {{ info | tojson }};
 </script>
 
-<div id="viewTitle">{{ type }} #{{ info.id }}</div>
-<div id="viewSubtitle">{{ info.name }}</div>
+<div class="title">{{ type }} #{{ info.id }}</div>
+<div class="subtitle text-monospace">{{ info.name }}</div>
 
 <div id="viewMedia" class="container">
     <div id="loadingSpinnerMedia">
