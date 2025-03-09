@@ -62,16 +62,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <form class="d-flex" id="navbarSearchForm">
+                <form id="navbarSearchForm" class="position-relative">
                     <input
                         id="navbarSearchInput"
                         class="form-control"
                         type="search"
-                        placeholder="Search"
+                        placeholder="Search..."
                     />
-                    <button class="btn btn-outline-success" type="submit">
-                        Search
-                    </button>
+                    <button
+                        id="navbarSearchButton"
+                        class="bi bi-search position-absolute gentle-button"
+                        type="submit"
+                    ></button>
                 </form>
             </div>
         </nav>

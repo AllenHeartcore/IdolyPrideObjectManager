@@ -35,6 +35,7 @@ function reportHomepageError() {
 }
 
 $(document).ready(function () {
+    $("#navbarSearchForm").hide();
     $.ajax({
         type: "GET",
         url: "/api/manifest",
@@ -47,5 +48,23 @@ $(document).ready(function () {
             dumpErrorToConsole(...args);
             reportHomepageError();
         },
+    });
+
+    $("#homeSearchForm").submit(function (event) {
+        event.preventDefault();
+        let query = $("#homeSearchInput").val();
+        if (!query.trim()) {
+            $("#homeSearchInput").val("");
+            $("#homeSearchInput").focus();
+            return;
+        }
+        window.location.href = `/search?query=${encodeURIComponent(query)}`;
+    });
+
+    $("#homeSearchInput").keydown(function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            $("#homeSearchForm").submit();
+        }
     });
 });

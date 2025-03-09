@@ -60,6 +60,22 @@
 
 /* Navbar */
 
+.gentle-button {
+    background-color: #fff;
+    transition: background-color 0.3s;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    color: grey;
+    cursor: pointer;
+}
+.gentle-button:hover {
+    background-color: #eee;
+}
+.gentle-button:active {
+    background-color: lightgrey;
+}
+
 #navbarNav {
     display: flex;
     justify-content: space-between;
@@ -72,6 +88,21 @@
 
 #navbarSticker {
     height: 60px;
+}
+
+#navbarSearchForm {
+    width: 25%;
+}
+
+#navbarSearchInput {
+    padding-right: 3rem; /* don't overlap with icon */
+}
+
+#navbarSearchButton {
+    font-size: 1rem;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Home */
@@ -90,11 +121,9 @@
 
 #homeSearchButton {
     font-size: 1.25rem;
-    color: grey;
-    right: 1rem;
+    right: 0.5rem;
     top: 50%;
     transform: translateY(-50%);
-    cursor: pointer;
 }
 
 /* Search */
