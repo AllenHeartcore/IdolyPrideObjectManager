@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     font-family: "NYC Sans", sans-serif;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 400;
 }
 
@@ -19,10 +19,6 @@
 .align-right {
     text-align: right;
     float: right;
-}
-
-.blank-space {
-    margin: 60px 0;
 }
 
 .hide-by-default {
@@ -44,13 +40,13 @@
 }
 
 .title {
-    margin: 30px 0 10px 0;
+    margin: 30px 0 0 0;
     font-size: 4.2rem;
     line-height: 1;
 }
 
 .subtitle {
-    margin: 10px 0 30px 0;
+    margin: 0 0 30px 0;
     font-size: 2.1rem;
     line-height: 1;
 }
@@ -87,6 +83,20 @@
     height: 80vh;
 }
 
+#homeSearchInput {
+    font-size: 1.5rem;
+    padding-right: 3rem; /* don't overlap with icon */
+}
+
+#homeSearchButton {
+    font-size: 1.25rem;
+    color: grey;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 /* Search */
 
 #sortID,
@@ -103,7 +113,6 @@
 }
 
 #viewCaption {
-    margin: 30px 0;
     min-height: 15vh;
     overflow: hidden;
 }

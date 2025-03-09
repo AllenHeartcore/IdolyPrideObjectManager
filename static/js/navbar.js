@@ -2,22 +2,22 @@ $(document).ready(function () {
     setRandomAccentColor();
 
     // Search event listener
-    $("#searchForm").submit(function (event) {
+    $("#navbarSearchForm").submit(function (event) {
         event.preventDefault();
-        let query = $("#searchInput").val();
+        let query = $("#navbarSearchInput").val();
         if (!query.trim()) {
-            $("#searchInput").val("");
-            $("#searchInput").focus();
+            $("#navbarSearchInput").val("");
+            $("#navbarSearchInput").focus();
             return;
         }
         window.location.href = `/search?query=${encodeURIComponent(query)}`;
     });
 
     // Override Enter key
-    $("#searchInput").keydown(function (event) {
+    $("#navbarSearchInput").keydown(function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
-            $("#searchForm").submit();
+            $("#navbarSearchForm").submit();
         }
     });
 });
