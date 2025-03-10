@@ -6,14 +6,14 @@
     border: none;
     border-radius: 0.5rem;
     padding: 0.25rem 0.5rem;
-    color: grey;
+    color: gray;
     cursor: pointer;
 }
 .gentle-button:hover {
     background-color: #eee;
 }
 .gentle-button:active {
-    background-color: lightgrey;
+    background-color: lightgray;
 }
 
 .floating-button {
