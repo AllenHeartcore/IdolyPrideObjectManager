@@ -4,6 +4,7 @@
 @import url("pages.css");
 
 .container {
+    padding: 0;
     width: 100%;
     font-family: "NYC Sans", sans-serif;
     font-size: 24px;
@@ -71,4 +72,6 @@
 .image-landscape * {
     aspect-ratio: 16 / 9;
     overflow: hidden;
+    width: 100%;
+    height: auto;
 }
