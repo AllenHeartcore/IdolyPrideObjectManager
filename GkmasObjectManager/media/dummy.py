@@ -23,8 +23,8 @@ class GkmasDummyMedia:
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
-        self.mimetype = "application"  # TO BE OVERRIDDEN
-        self.raw_format = "octet-stream"  # TO BE OVERRIDDEN
+        self.mimetype = None  # TO BE OVERRIDDEN (e.g., "image", "audio", "video")
+        self.raw_format = None  # TO BE OVERRIDDEN
         self.converted_format = None  # TO BE OVERRIDDEN
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
@@ -38,7 +38,11 @@ class GkmasDummyMedia:
         )
 
         if self.raw_format == fmt:  # rawdump
-            return self.raw, f"{self.mimetype}/{self.raw_format}"
+            return self.raw, (
+                f"{self.mimetype}/{self.raw_format}"
+                if self.mimetype and self.raw_format
+                else "application/octet-stream"
+            )
 
         if self.converted_format != fmt:  # record and convert
             self.converted_format = fmt
@@ -48,7 +52,13 @@ class GkmasDummyMedia:
             self.converted = self._convert(self.raw, **kwargs)
             # the only place where **kwargs are used is image_resize in GkmasImage
 
-        return self.converted, f"{self.mimetype}/{self.converted_format}"
+        return self.converted, (
+            f"{self.mimetype}/{self.converted_format}"
+            if self.mimetype and self.converted_format
+            else "application/octet-stream"
+            # in case some malicious user escaped the 'if self.raw_format == fmt' branch
+            # by explicitly specifying 'None_format' as some random value
+        )
 
     def get_embed_url(self, **kwargs) -> str:
         data, mimetype = self.get_data(**kwargs)
@@ -59,9 +69,7 @@ class GkmasDummyMedia:
 
     def export(self, path: Path, **kwargs):
         # not overriding self.mimetype indicates unhandled media type
-        if self.mimetype != "application" and kwargs.get(
-            f"convert_{self.mimetype}", True
-        ):
+        if self.mimetype and kwargs.get(f"convert_{self.mimetype}", True):
             try:
                 self._export_converted(path, **kwargs)
             except:
