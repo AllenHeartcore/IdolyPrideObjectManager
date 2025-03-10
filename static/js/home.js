@@ -14,7 +14,15 @@ function populateHomepageContainers(data) {
     let latestSamples = matches
         .sort((a, b) => b.id - a.id)
         .slice(0, NUM_FEATURED_SAMPLES);
-    latestSamples.forEach((item) => {
+
+    // Pre-populate with empty divs for indexing
+    let container = $("#homeFeaturedContainer");
+    for (let i = 0; i < NUM_FEATURED_SAMPLES; i++) {
+        container.append($("<div>").addClass("col-md-2 image-landscape"));
+    }
+
+    // Place images in the correct order since Promise's are async
+    latestSamples.forEach((item, index) => {
         getMediaBlobURL("AssetBundle", item.id).then(({ url, mimetype }) => {
             if (!mimetype.startsWith("image/")) {
                 console.log(
@@ -22,16 +30,11 @@ function populateHomepageContainers(data) {
                 );
                 return;
             }
-            let container = $("<div>")
-                .addClass("col-md-2 image-landscape")
-                .append(
-                    $("<a>")
-                        .attr("href", `/view/assetbundle/${item.id}`)
-                        .append(
-                            $("<img>").attr("src", url).attr("alt", item.name)
-                        )
-                );
-            $("#homeFeaturedContainer").append(container);
+            let image = $("<img>").attr("src", url).attr("alt", item.name);
+            let link = $("<a>")
+                .attr("href", `/view/assetbundle/${item.id}`)
+                .append(image);
+            container.children().eq(index).append(link);
         });
     });
 
