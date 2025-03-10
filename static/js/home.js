@@ -1,6 +1,6 @@
 const WALLPAPER_REGEX_PATTERN =
-    /^img_general_(cidol.*thumb-landscape-large|(csprt|meishi_base).*full)$/;
-const NUM_FEATURED_SAMPLES = 12;
+    /^img_general_(cidol.*1-thumb-landscape-large|(csprt|meishi_base).*full)$/;
+const NUM_FEATURED_SAMPLES = 24;
 
 function populateHomepageContainers(data) {
     $("#homeMetadataRevision").text(data.revision);
@@ -18,7 +18,7 @@ function populateHomepageContainers(data) {
     // Pre-populate with empty divs for indexing
     let container = $("#homeFeaturedContainer");
     for (let i = 0; i < NUM_FEATURED_SAMPLES; i++) {
-        container.append($("<div>").addClass("col-md-2 image-landscape"));
+        container.append($("<div>").addClass("col-md-2 mt-3 image-landscape"));
     }
 
     // Place images in the correct order since Promise's are async
