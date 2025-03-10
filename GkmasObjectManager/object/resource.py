@@ -113,7 +113,10 @@ class GkmasResource:
     # No leading underscore, since this should be client-side visible
     def get_caption(self) -> str:
         if self._caption is None:
-            self._caption = self._get_media().caption()
+            caption = self._get_media().caption()
+            if caption.startswith("["):  # error message
+                return caption  # display in frontend, but don't cache
+            self._caption = caption
         return self._caption
 
     def download(
