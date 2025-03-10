@@ -57,11 +57,10 @@ function sortAndBuildResultTable(comparator) {
 function populateSearchpageContainers(result) {
     if (result.length === 0) {
         $("#searchResultDigest").text("No results found.");
-        return;
+    } else {
+        $("#searchResultDigest").text(`Found ${result.length} result(s).`);
+        buildResultTable(result);
     }
-    $("#searchResultDigest").text(`Found ${result.length} result(s).`);
-
-    buildResultTable(result);
 
     $("#loadingSpinner").hide();
     $("#searchpageElements").show();
