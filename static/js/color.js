@@ -67,7 +67,7 @@ function setAccentColorByKey(key) {
     let leftHue = (baseHue - HUE_GRADIENT_VARIANCE + 360) % 360; // prevent underflow
     let rightHue = (baseHue + HUE_GRADIENT_VARIANCE) % 360;
 
-    $("#navbarSticker").attr("src", `/static/img/${key}.png`);
+    $("#navbarSticker").attr("src", `/static/img/face/${key}.png`);
     $(".navbar").css(
         "background-color",
         `hsl(${baseHue}, ${hsl[1] * 100}%, 90%)`
