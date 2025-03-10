@@ -9,6 +9,7 @@ const ACCENT_COLORS = {
     "kcna": "#DE6429",
     "amao": "#41295E",
     "hume": "#E55039",
+    "hmsz": "#18399A",
     "jsna": "#C6904A",
 };
 
