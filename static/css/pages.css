@@ -10,6 +10,12 @@
     height: 60px;
 }
 
+/* Home */
+
+#homeFeaturedContainer * {
+    max-width: 100%;
+}
+
 /* Search */
 
 #sortID,

@@ -1,5 +1,6 @@
 const WALLPAPER_REGEX_PATTERN =
     /^img_general_(cidol.*thumb-landscape-large|(csprt|meishi_base).*full)$/;
+const NUM_FEATURED_SAMPLES = 12;
 
 function populateHomepageContainers(data) {
     $("#homeMetadataRevision").text(data.revision);
@@ -10,15 +11,28 @@ function populateHomepageContainers(data) {
         .filter((ab) => WALLPAPER_REGEX_PATTERN.test(ab.name))
         .map((ab) => ({ id: ab.id, name: ab.name }));
 
-    let latestSamples = matches.sort((a, b) => a.id - b.id).slice(-5);
+    let latestSamples = matches
+        .sort((a, b) => b.id - a.id)
+        .slice(0, NUM_FEATURED_SAMPLES);
     latestSamples.forEach((item) => {
-        $("#homeDigestList").append(
-            $("<li>").append(
-                $("<a>")
-                    .attr("href", `/view/assetbundle/${item.id}`)
-                    .text(item.name)
-            )
-        );
+        getMediaBlobURL("AssetBundle", item.id).then(({ url, mimetype }) => {
+            if (!mimetype.startsWith("image/")) {
+                console.log(
+                    `Expected an image mimetype for asset ${item.id}, but got ${mimetype}`
+                );
+                return;
+            }
+            let container = $("<div>")
+                .addClass("col-md-2 image-landscape")
+                .append(
+                    $("<a>")
+                        .attr("href", `/view/assetbundle/${item.id}`)
+                        .append(
+                            $("<img>").attr("src", url).attr("alt", item.name)
+                        )
+                );
+            $("#homeFeaturedContainer").append(container);
+        });
     });
 
     $("#loadingSpinner").hide();
