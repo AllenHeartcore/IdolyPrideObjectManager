@@ -8,6 +8,7 @@ from ..log import Logger
 from .dummy import GkmasDummyMedia
 
 import os
+import platform
 import tempfile
 import subprocess
 from io import BytesIO
@@ -72,9 +73,20 @@ class GkmasAWBAudio(GkmasDummyMedia):
             tmp_out = tempfile.NamedTemporaryFile(
                 suffix=f".{self.converted_format}", delete=False
             )
+
+            system_name = platform.system()
+            if system_name == "Windows":
+                exe_suffix = "win"
+            elif system_name == "Linux":
+                exe_suffix = "linux"
+            elif system_name == "Darwin":
+                exe_suffix = "mac"
+            else:
+                raise OSError(f"Unsupported system: {system_name}")
+
             process = subprocess.run(
                 [
-                    Path(__file__).parent / "vgmstream/vgmstream",
+                    Path(__file__).parent / f"vgmstream/vgmstream-{exe_suffix}",
                     "-o",
                     tmp_out.name,
                     tmp_in.name,
