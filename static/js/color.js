@@ -13,7 +13,7 @@ const ACCENT_COLORS = {
     "jsna": "#C6904A",
 };
 
-const HUE_GRADIENT_VARIANCE = 12;
+const HUE_GRADIENT_VARIANCE = 18;
 
 function hex2rgb(hex) {
     return [
@@ -75,7 +75,7 @@ function setAccentColorByKey(key) {
     );
     $("#navbarText").css("color", `hsl(${baseHue}, 50%, 50%)`);
 
-    $("#homeTitleGakumas").css(
+    $(".text-gradient").css(
         "background-image",
         `linear-gradient(to right, hsl(${leftHue}, 70%, 50%), hsl(${rightHue}, 70%, 50%))`
     );

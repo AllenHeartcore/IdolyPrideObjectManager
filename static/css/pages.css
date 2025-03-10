@@ -10,6 +10,11 @@
     height: 60px;
 }
 
+.bi-github:hover {
+    color: black !important;
+    transition: color 0.3s;
+}
+
 /* Home */
 
 #homeFeaturedContainer * {
