@@ -76,5 +76,6 @@ class GkmasDummyMedia:
 
     def _export_converted(self, path: Path, **kwargs):
         data, mimetype = self.get_data(**kwargs)
-        path.with_suffix(f".{mimetype.split('/')[1]}").write_bytes(data)
+        mimesubtype = mimetype.split("/")[1]
+        path.with_suffix(f".{mimesubtype}").write_bytes(data)
         logger.success(f"{self.name} downloaded and converted to {mimesubtype.upper()}")
