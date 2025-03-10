@@ -19,13 +19,11 @@ function displayMedia() {
             );
         }
 
-        $("#downloadLinks").append(
-            "&emsp; | &emsp;",
-            $("<a>")
-                .attr("href", url)
-                .attr("download", info.name.replace(/\.[^/.]+$/, ""))
-                .text("Converted media")
-        );
+        $("#downloadConvertedMedia")
+            .text("Download Converted " + mimetype.split("/")[1].toUpperCase())
+            .attr("href", url)
+            .attr("download", info.name.replace(/\.[^/.]+$/, ""))
+            .removeClass("hide-by-default"); // 'show()' ignores previous padding styles
     });
 }
 

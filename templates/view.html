@@ -12,73 +12,116 @@
     let info = {{ info | tojson }};
 </script>
 
-<div class="title">{{ type }} #{{ info.id }}</div>
-<div class="subtitle text-monospace">{{ info.name }}</div>
-
-<div id="viewMedia" class="container">
-    <div id="loadingSpinnerMedia">
-        <div class="spinner-border me-2" role="status"></div>
-        Loading media...
+<div id="viewpageElements" class="container">
+    <div class="row">
+        <div class="col-md-12 title">{{ type }} #{{ info.id }}</div>
+        <div class="col-md-12 subtitle text-monospace">{{ info.name }}</div>
     </div>
-    <div id="viewMediaContent" class="hide-by-default"></div>
-</div>
 
-<div id="viewCaption" class="container">
-    <div id="loadingSpinnerCaption">
-        <div class="spinner-border me-2" role="status"></div>
-        Generating caption...
+    <div class="row mt-4">
+        <div class="col-md-8" id="viewpageLeftColumn">
+            <!-- upper left -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="viewMedia" class="container">
+                        <div id="loadingSpinnerMedia">
+                            <div
+                                class="spinner-border me-2"
+                                role="status"
+                            ></div>
+                            Loading media...
+                        </div>
+                        <div
+                            id="viewMediaContent"
+                            class="hide-by-default"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- lower left -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div id="viewCaption" class="container">
+                        <div id="loadingSpinnerCaption">
+                            <div
+                                class="spinner-border me-2"
+                                role="status"
+                            ></div>
+                            Generating caption...
+                        </div>
+                        <div id="viewCaptionText" class="hide-by-default"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4" id="viewpageRightColumn">
+            <!-- upper right -->
+            <div class="row">
+                <div class="col-md-12">
+                    <a
+                        href="https://object.asset.game-gakuen-idolmaster.jp/{{ info.objectName }}"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary w-100 fs-3"
+                    >
+                        Download Raw {{ type }}
+                    </a>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <a
+                        id="downloadConvertedMedia"
+                        class="btn btn-primary w-100 fs-3 hide-by-default"
+                    >
+                    </a>
+                </div>
+            </div>
+
+            <!-- lower right -->
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover">
+                        <tbody class="align-middle">
+                            <tr>
+                                <th>Size</th>
+                                <td>{{ info.size }}</td>
+                            </tr>
+                            {% if info.crc %}
+                            <tr>
+                                <th>CRC</th>
+                                <td>{{ info.crc }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th>MD5</th>
+                                <td class="text-monospace fs-6">
+                                    {{ info.md5 }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Dependencies</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <ul>
+                                        {% if info.dependencies %} {% for dep in
+                                        info.dependencies %}
+                                        <li class="text-monospace fs-6">
+                                            <a
+                                                href="/view/assetbundle/{{ dep.id }}"
+                                                >{{ dep.name }}</a
+                                            >
+                                        </li>
+                                        {% endfor %} {% else %} None {% endif %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="viewCaptionText" class="hide-by-default"></div>
 </div>
-
-<table id="viewPropertyTable" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Value</th>
-        </tr>
-        <tr>
-            <th>Size</th>
-            <td>{{ info.size }}</td>
-        </tr>
-        {% if info.crc %}
-        <tr>
-            <th>CRC</th>
-            <td>{{ info.crc }}</td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>MD5</th>
-            <td>{{ info.md5 }}</td>
-        </tr>
-        <tr>
-            <th>Download Links</th>
-            <td id="downloadLinks">
-                <a
-                    href="https://object.asset.game-gakuen-idolmaster.jp/{{ info.objectName }}"
-                    rel="noopener noreferrer"
-                    >Raw {{ type }}
-                </a>
-            </td>
-        </tr>
-        {% if info.dependencies %}
-        <tr>
-            <th>Dependencies</th>
-            <td class="text-monospace">
-                <ul>
-                    {% for dep in info.dependencies %}
-                    <li>
-                        <a href="/view/assetbundle/{{ dep.id }}"
-                            >{{ dep.name }}</a
-                        >
-                    </li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        {% endif %}
-    </thead>
-    <tbody></tbody>
-</table>
 
 {% endblock %}
