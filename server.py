@@ -86,7 +86,12 @@ def search():
 
 @app.route("/view/assetbundle/<id>")
 def view_assetbundle(id):
-    obj = _get_manifest().assetbundles[int(id)]
+
+    try:
+        obj = _get_manifest().assetbundles[int(id)]
+    except KeyError:
+        return render_template("404.html"), 404
+
     info = obj._get_canon_repr()
     if "dependencies" in info:
         info["dependencies"] = [
@@ -101,7 +106,12 @@ def view_assetbundle(id):
 
 @app.route("/view/resource/<id>")
 def view_resource(id):
-    obj = _get_manifest().resources[int(id)]
+
+    try:
+        obj = _get_manifest().resources[int(id)]
+    except KeyError:
+        return render_template("404.html"), 404
+
     info = obj._get_canon_repr()
     return render_template("view.html", info=info, type="Resource")
 
