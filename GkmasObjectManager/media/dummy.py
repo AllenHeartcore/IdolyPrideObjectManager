@@ -23,14 +23,12 @@ class GkmasDummyMedia:
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
-        self.mimetype = None  # TO BE OVERRIDDEN ('image', 'audio', 'video', etc.)
-        self.raw_format = None  # TO BE OVERRIDDEN
+        self.mimetype = "application"  # TO BE OVERRIDDEN
+        self.raw_format = "octet-stream"  # TO BE OVERRIDDEN
         self.converted_format = None  # TO BE OVERRIDDEN
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
-        return raw  # TO BE OVERRIDDEN
-        # a NotImplementedError would propagate to the frontend;
-        # instead, we return a clean bytestream for download
+        raise NotImplementedError  # TO BE OVERRIDDEN
 
     def get_data(self, **kwargs) -> Tuple[bytes, str]:
 
@@ -57,11 +55,13 @@ class GkmasDummyMedia:
         return f"data:{mimetype};base64,{base64.b64encode(data).decode()}"
 
     def caption(self) -> str:
-        return "[Captioning not supported for this data type.]"
+        return "[Captioning not supported for this type of media.]"
 
     def export(self, path: Path, **kwargs):
         # not overriding self.mimetype indicates unhandled media type
-        if self.mimetype and kwargs.get(f"convert_{self.mimetype}", True):
+        if self.mimetype != "application" and kwargs.get(
+            f"convert_{self.mimetype}", True
+        ):
             try:
                 self._export_converted(path, **kwargs)
             except:
