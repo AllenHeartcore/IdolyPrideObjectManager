@@ -35,6 +35,12 @@ const CHARACTER_ALIAS = {
     "jsna": "Juo Sena",
 };
 
+const RARITY_ALIAS = {
+    "-1-": "R",
+    "-2-": "SR",
+    "-3-": "SSR",
+};
+
 const SONG_ALIAS = {
     "all -001": "初",
     "all -002": "Campus mode!!",

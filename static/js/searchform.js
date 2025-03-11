@@ -26,6 +26,7 @@ function buildButtonList(containerID, aliasMap, columnClass) {
 function buildFiltersMenu() {
     buildButtonList("#filtersMediaContainer", MEDIA_ALIAS, "col-md-3");
     buildButtonList("#filtersSubtypeContainer", SUBTYPE_ALIAS, "col-md-3");
+    buildButtonList("#filtersRarityContainer", RARITY_ALIAS, "col-md-4");
     buildButtonList("#filtersSongContainer", SONG_ALIAS, "col-md-4");
 
     for (let alias in CHARACTER_ALIAS) {
