@@ -35,7 +35,10 @@ function populateCardContainer() {
             console.log(url, mimetype);
             if (mimetype.startsWith("image/")) {
                 card.prepend(
-                    $("<img>").addClass("card-img-top").attr("src", url)
+                    $("<img>")
+                        .addClass("card-img-top")
+                        .attr("src", url)
+                        .attr("id", "searchEntryCardImage")
                 );
             }
         });
