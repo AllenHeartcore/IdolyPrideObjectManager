@@ -36,8 +36,9 @@ function populateCardContainer() {
                 card.prepend(
                     $("<img>")
                         .addClass("card-img-top")
-                        .attr("src", url)
                         .attr("id", "searchEntryCardImage")
+                        .attr("src", url)
+                        .attr("alt", entry.name)
                 );
             });
         }

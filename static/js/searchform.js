@@ -33,8 +33,8 @@ function buildFiltersMenu() {
         let name = CHARACTER_ALIAS[alias];
         let column = $("<div>").addClass("col-md-1");
         let img = $("<img>")
-            .attr("src", `/static/img/figure/${alias}.png`)
             .attr("id", "filtersCharacterFigure")
+            .attr("src", `/static/img/figure/${alias}.png`)
             .attr("alt", name)
             .attr("onclick", `keywordFilter('${alias}')`);
         column.append(img);

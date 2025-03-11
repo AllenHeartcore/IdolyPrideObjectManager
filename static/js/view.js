@@ -5,11 +5,21 @@ function displayMedia() {
         let container = $("#viewMediaContent");
 
         if (mimetype.startsWith("image/")) {
-            container.append($("<img>").attr("src", url));
+            container.append(
+                $("<img>").attr("src", url).attr("alt", info.name)
+            );
         } else if (mimetype.startsWith("audio/")) {
-            container.append($("<audio>").attr({ src: url, controls: true }));
+            container.append(
+                $("<audio>")
+                    .attr({ src: url, controls: true })
+                    .attr("alt", info.name)
+            );
         } else if (mimetype.startsWith("video/")) {
-            container.append($("<video>").attr({ src: url, controls: true }));
+            container.append(
+                $("<video>")
+                    .attr({ src: url, controls: true })
+                    .attr("alt", info.name)
+            );
         } else {
             handleUnsupportedMedia(url);
             return;
