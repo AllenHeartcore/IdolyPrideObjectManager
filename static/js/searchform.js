@@ -64,6 +64,11 @@ $(document).ready(function () {
     });
 
     $("#searchInput").focus(function () {
+        if ($("#filtersMenu").is(":visible")) {
+            return;
+            // otherwise, clicking on filters in the menu triggers a focus on the search bar,
+            // which then immediately hides the menu and slowly shows it again
+        }
         $("#filtersMenu").removeClass("slide-out").show().addClass("slide-in");
         $("#filtersMenu").one("animationend", function () {
             $(this).removeClass("slide-in");
@@ -73,6 +78,14 @@ $(document).ready(function () {
     // the menu should only hide when the user is
     // NEITHER clicking on the menu NOR focusing on the search input
     $(document).mouseup(function (e) {
+        if (!$("#filtersMenu").is(":visible")) {
+            console.log("ignore");
+            return;
+            // otherwise, the animation works just fine when the page first loads,
+            // but clicking randomly on the page will add style="display: none;"
+            // to the menu, which interferes with the menu and makes it glitch out
+            // at animation complete when the user tries to show it again
+        }
         var container = $("#filtersMenu, #searchInput");
         if (!container.is(e.target) && container.has(e.target).length === 0) {
             $("#filtersMenu").removeClass("slide-in").addClass("slide-out");
