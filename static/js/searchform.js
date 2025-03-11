@@ -9,18 +9,24 @@ function keywordFilter(alias) {
     $("#searchInput").focus();
 }
 
-function buildFiltersMenu() {
-    for (let alias in MEDIA_ALIAS) {
-        let name = MEDIA_ALIAS[alias];
-        let column = $("<div>").addClass("col-md-3");
+function buildButtonList(containerID, aliasMap, columnClass) {
+    for (let alias in aliasMap) {
+        let name = aliasMap[alias];
+        let column = $("<div>").addClass(columnClass);
         let button = $("<button>")
             .attr("type", "button") // otherwise submits the form
             .addClass("btn btn-outline-primary btn-sm w-100 mb-2")
             .attr("onclick", `keywordFilter('${alias}')`)
             .text(name);
         column.append(button);
-        $("#filtersMediaContainer").append(column);
+        $(containerID).append(column);
     }
+}
+
+function buildFiltersMenu() {
+    buildButtonList("#filtersMediaContainer", MEDIA_ALIAS, "col-md-3");
+    buildButtonList("#filtersSubtypeContainer", SUBTYPE_ALIAS, "col-md-3");
+    buildButtonList("#filtersSongContainer", SONG_ALIAS, "col-md-4");
 
     for (let alias in CHARACTER_ALIAS) {
         let name = CHARACTER_ALIAS[alias];

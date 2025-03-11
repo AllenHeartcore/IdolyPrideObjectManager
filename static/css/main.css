@@ -49,6 +49,10 @@
     font-size: 1.25rem !important;
 }
 
+.text-size-75-force * {
+    font-size: 0.75rem !important;
+}
+
 .text-bold {
     font-weight: 900;
 }

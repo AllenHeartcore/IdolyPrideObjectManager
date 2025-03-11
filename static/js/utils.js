@@ -9,6 +9,17 @@ const MEDIA_ALIAS = {
     "fbx": "FBX",
 };
 
+const SUBTYPE_ALIAS = {
+    "cidol full": "Idol Card",
+    "csprt full": "Support Card",
+    "story-bg": "Background",
+    "meishi_base full": "Namecard Bg",
+    "pdrink": "P Drink",
+    "pitem": "P Item",
+    "skillcard": "Skillcard",
+    "meishi_illust": "Namecard Elt",
+};
+
 const CHARACTER_ALIAS = {
     "hski": "Hanami Saki",
     "ttmr": "Tsukimura Temari",
@@ -22,6 +33,21 @@ const CHARACTER_ALIAS = {
     "hume": "Hanami Ume",
     "hmsz": "Hataya Misuzu",
     "jsna": "Juo Sena",
+};
+
+const SONG_ALIAS = {
+    "all -001": "初",
+    "all -002": "Campus mode!!",
+    "all -003": "キミとセミブルー",
+    "all -004": "冠菊",
+    "all -005": "仮装狂騒曲",
+    "all -006": "White Night! White Wish!",
+    "all -007": "ハッピーミルフィーユ",
+    "all -008": "古今東西ちょちょいのちょい",
+    "all -009": "雪解けに",
+    "char -001": "(1st Single)",
+    "char -002": "(2nd Single)",
+    "char -003": "(2024-25 Birthday Song)",
 };
 
 function dumpErrorToConsole(...args) {

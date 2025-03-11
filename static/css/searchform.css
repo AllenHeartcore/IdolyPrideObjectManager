@@ -50,7 +50,7 @@
     position: absolute;
     right: 0;
     width: 750%; /* since its parent is a tiny toggle button */
-    padding: 0.5rem;
+    padding: 0.75rem;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
