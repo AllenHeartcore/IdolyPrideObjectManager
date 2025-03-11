@@ -6,30 +6,6 @@ function dumpErrorToConsole(...args) {
     });
 }
 
-// Search event listener
-function searchEventListenerFactory(input_field_id) {
-    return function (event) {
-        event.preventDefault();
-        let query = $(input_field_id).val();
-        if (!query.trim()) {
-            $(input_field_id).val("");
-            $(input_field_id).focus();
-            return;
-        }
-        window.location.href = `/search?query=${encodeURIComponent(query)}`;
-    };
-}
-
-// Override Enter key
-function enterKeyOverriderFactory(form_id) {
-    return function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            $(form_id).submit();
-        }
-    };
-}
-
 function getMediaBlobURL(type, id) {
     return new Promise((resolve, reject) => {
         $.ajax({

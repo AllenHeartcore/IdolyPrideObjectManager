@@ -23,19 +23,11 @@
     transform: translateY(-50%);
 }
 
-#navbarSearchForm {
-    width: 25%;
-}
-
-#navbarSearchInput #homeSearchInput {
+#searchInput {
     padding-right: 3rem; /* don't overlap with icon */
 }
 
-#navbarSearchButton {
-    font-size: 1rem;
-}
-
-#homeSearchButton #homeGotoButton {
+#searchButton #homeGotoButton {
     font-size: 1.25rem;
 }
 

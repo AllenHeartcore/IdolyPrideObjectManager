@@ -1,11 +1,10 @@
 $(document).ready(function () {
     setRandomAccentColor();
 
-    $("#navbarSearchForm").submit(
-        searchEventListenerFactory("#navbarSearchInput")
-    );
+    $("#navbarSearchForm").css("width", "25%");
+    $("#searchButton").css("font-size", "1rem");
 
-    $("#navbarSearchInput").keydown(
-        enterKeyOverriderFactory("#navbarSearchForm")
-    );
+    $("#navbarSearchForm").submit(searchEventListenerFactory("#searchInput"));
+
+    $("#searchInput").keydown(enterKeyOverriderFactory("#navbarSearchForm"));
 });

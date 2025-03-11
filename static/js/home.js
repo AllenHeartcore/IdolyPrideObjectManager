@@ -70,8 +70,8 @@ $(document).ready(function () {
         },
     });
 
-    $("#homeSearchForm").submit(searchEventListenerFactory("#homeSearchInput"));
-    $("#homeSearchInput").keydown(enterKeyOverriderFactory("#homeSearchForm"));
+    $("#homeSearchForm").submit(searchEventListenerFactory("#searchInput"));
+    $("#searchInput").keydown(enterKeyOverriderFactory("#homeSearchForm"));
 
     $("#homeGotoForm").submit(function (event) {
         event.preventDefault();

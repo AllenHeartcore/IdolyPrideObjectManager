@@ -1,8 +1,21 @@
 <script
     type="text/javascript"
-    src="{{ url_for('static', filename='js/filter.js') }}"
+    src="{{ url_for('static', filename='js/searchform.js') }}"
 ></script>
 
+<!-- Can't move <form> here since home.js calls $("#navbarSearchForm").remove(); -->
+
+<input
+    id="searchInput"
+    class="form-control"
+    type="search"
+    placeholder="Search..."
+/>
+<button
+    id="searchButton"
+    class="bi bi-search gentle-button floating-button"
+    type="submit"
+></button>
 <div id="filtersContainer">
     <button id="filtersToggleButton" class="gentle-button" type="button">
         Filters <span class="bi bi-caret-down-fill"></span>
