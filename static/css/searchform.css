@@ -57,3 +57,19 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 9999;
 }
+
+#filtersCharacterFigure {
+    max-width: 100%; /* the figures are quite small */
+    padding: 0.1rem;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+#filtersCharacterFigure:hover {
+    background-color: #eee;
+}
+#filtersCharacterFigure:active {
+    background-color: lightgray;
+}
+/* Fine, we could've used some button class */

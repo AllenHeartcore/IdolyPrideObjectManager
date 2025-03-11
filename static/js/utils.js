@@ -1,3 +1,29 @@
+const MEDIA_TYPE_ALIAS = {
+    "img": "Image",
+    "sud": "Audio",
+    "mov": "Video",
+    "adv": "Story",
+    "mdl": "Model",
+    "mot": "Motion",
+    "env": "Environment",
+    "fbx": "FBX",
+};
+
+const CHARACTER_ALIAS = {
+    "hski": "Hanami Saki",
+    "ttmr": "Tsukimura Temari",
+    "fktn": "Fujita Kotone",
+    "amao": "Arimura Mao",
+    "kllj": "Katsuragi Lilja",
+    "kcna": "Kuramoto China",
+    "ssmk": "Shiun Sumika",
+    "shro": "Shinosawa Hiro",
+    "hrnm": "Himesaki Rinami",
+    "hume": "Hanami Ume",
+    "hmsz": "Hataya Misuzu",
+    "jsna": "Juo Sena",
+};
+
 function dumpErrorToConsole(...args) {
     var name_of_parent_function = arguments.callee.caller.name;
     console.log("Error in " + name_of_parent_function);
