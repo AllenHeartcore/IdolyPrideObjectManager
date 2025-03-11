@@ -1,7 +1,6 @@
 import GkmasObjectManager as gom
 
 from flask import Flask, render_template, request, jsonify, Response
-import re
 
 
 # Bookkeeping
@@ -41,7 +40,7 @@ def api_search():
                 "type": type(obj).__name__[5:],  # valid names start with "Gkmas"
             }
             for obj in _get_manifest().search(
-                "".join(f"(?=.*{re.escape(word)})" for word in query.split())
+                "".join(f"(?=.*{word})" for word in query.split())
                 # use lookahead to match all words in any order
             )
         ]

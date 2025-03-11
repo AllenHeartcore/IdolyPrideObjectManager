@@ -1,4 +1,4 @@
-const MEDIA_TYPE_ALIAS = {
+const MEDIA_ALIAS = {
     "img": "Image",
     "sud": "Audio",
     "mov": "Video",

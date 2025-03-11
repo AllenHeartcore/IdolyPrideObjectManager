@@ -10,8 +10,8 @@ function keywordFilter(alias) {
 }
 
 function buildFiltersMenu() {
-    for (let alias in MEDIA_TYPE_ALIAS) {
-        let name = MEDIA_TYPE_ALIAS[alias];
+    for (let alias in MEDIA_ALIAS) {
+        let name = MEDIA_ALIAS[alias];
         let column = $("<div>").addClass("col-md-3");
         let button = $("<button>")
             .attr("type", "button") // otherwise submits the form
@@ -19,7 +19,7 @@ function buildFiltersMenu() {
             .attr("onclick", `keywordFilter('${alias}')`)
             .text(name);
         column.append(button);
-        $("#filtersMediaTypeContainer").append(column);
+        $("#filtersMediaContainer").append(column);
     }
 
     for (let alias in CHARACTER_ALIAS) {
@@ -58,6 +58,15 @@ $(document).ready(function () {
 
     $("#filtersToggleButton").click(function (event) {
         event.preventDefault();
+        event.stopPropagation();
+        // otherwise, this event will bubble up to the document
+        // and immediately hide the menu again, as defined below
         $("#filtersMenu").toggleClass("hide-by-default");
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest("#filtersMenu").length) {
+            $("#filtersMenu").addClass("hide-by-default");
+        }
     });
 });
