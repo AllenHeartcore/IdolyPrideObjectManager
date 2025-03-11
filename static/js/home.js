@@ -52,7 +52,10 @@ function reportHomepageError() {
 }
 
 $(document).ready(function () {
-    $("#navbarSearchForm").hide();
+    $("#navbarSearchForm").remove();
+    // Using .hide() ends up having duplicate #filtersContainer and children;
+    // this won't affect other pages since layout.html will be reloaded.
+
     $.ajax({
         type: "GET",
         url: "/api/manifest",

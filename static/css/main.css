@@ -17,7 +17,13 @@
     width: 100%;
 }
 
+.align-left {
+    text-align: left;
+    float: left;
+}
+
 .align-center {
+    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -36,7 +42,11 @@
 /* General text */
 
 .text-size-150 * {
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
+}
+
+.text-size-125-force * {
+    font-size: 1.25rem !important;
 }
 
 .text-bold {
