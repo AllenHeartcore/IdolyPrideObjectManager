@@ -31,34 +31,18 @@
     font-size: 1.25rem;
 }
 
-#filtersContainer {
-    position: absolute;
-    right: 3rem;
-    top: 50%;
-    transform: translateY(-55%);
-    /*  such that its 1rem size is vertically centered in the 1.5rem search bar.
-        This is a bit of a hack, but even 'display: flex' in .align-center
-        will be overridden by this position-absolute. */
-    z-index: 9999;
-    /*  This was moved from #filtersMenu to raise the *context* of this entire
-        filter thing to the top under all conditions,
-        specifically above the search entry cards. */
-}
-
-#filtersToggleButton,
-#filtersToggleButton .bi {
-    font-size: 1rem !important;
-}
-
 #filtersMenu {
     position: absolute;
     right: 0;
-    width: 750%; /* since its parent is a tiny toggle button */
+    width: 39rem;
+    /*  The menu appears both on the navbar and the home page,
+        whose search bars have different widths. */
     padding: 0.75rem;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
 }
 
 #filtersCharacterFigure {

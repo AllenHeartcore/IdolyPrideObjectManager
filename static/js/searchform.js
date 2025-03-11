@@ -33,7 +33,7 @@ function buildFiltersMenu() {
         let name = CHARACTER_ALIAS[alias];
         let column = $("<div>").addClass("col-md-1");
         let img = $("<img>")
-            .attr("src", `../static/img/figure/${alias}.png`) // Jinja's url_for doesn't work here
+            .attr("src", `/static/img/figure/${alias}.png`)
             .attr("id", "filtersCharacterFigure")
             .attr("alt", name)
             .attr("onclick", `keywordFilter('${alias}')`);
@@ -63,16 +63,15 @@ $(document).ready(function () {
         }
     });
 
-    $("#filtersToggleButton").click(function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        // otherwise, this event will bubble up to the document
-        // and immediately hide the menu again, as defined below
-        $("#filtersMenu").toggleClass("hide-by-default");
+    $("#searchInput").focus(function () {
+        $("#filtersMenu").removeClass("hide-by-default");
     });
 
-    $(document).click(function (event) {
-        if (!$(event.target).closest("#filtersMenu").length) {
+    // the menu should only hide when the user is
+    // NEITHER clicking on the menu NOR focusing on the search input
+    $(document).mouseup(function (e) {
+        var container = $("#filtersMenu, #searchInput");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
             $("#filtersMenu").addClass("hide-by-default");
         }
     });
