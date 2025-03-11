@@ -1,0 +1,48 @@
+/* Spinners (home, search, view) */
+
+#loadingSpinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+#loadingSpinnerMedia,
+#loadingSpinnerCaption {
+    display: flex;
+    align-items: center;
+}
+
+/* Smooth fade-in/out animation */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+        display: none;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+        display: none;
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.2s ease-out forwards;
+}
+
+.slide-out {
+    animation: slideOut 0.2s ease-in forwards;
+}

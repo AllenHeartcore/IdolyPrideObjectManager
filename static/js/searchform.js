@@ -64,7 +64,10 @@ $(document).ready(function () {
     });
 
     $("#searchInput").focus(function () {
-        $("#filtersMenu").removeClass("hide-by-default");
+        $("#filtersMenu").removeClass("slide-out").show().addClass("slide-in");
+        $("#filtersMenu").one("animationend", function () {
+            $(this).removeClass("slide-in");
+        });
     });
 
     // the menu should only hide when the user is
@@ -72,7 +75,10 @@ $(document).ready(function () {
     $(document).mouseup(function (e) {
         var container = $("#filtersMenu, #searchInput");
         if (!container.is(e.target) && container.has(e.target).length === 0) {
-            $("#filtersMenu").addClass("hide-by-default");
+            $("#filtersMenu").removeClass("slide-in").addClass("slide-out");
+            $("#filtersMenu").one("animationend", function () {
+                $(this).hide().removeClass("slide-out");
+            });
         }
     });
 });
