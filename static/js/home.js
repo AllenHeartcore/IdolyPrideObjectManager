@@ -74,5 +74,11 @@ $(document).ready(function () {
         let type = $("#homeGotoType").val();
         window.location.href = `/view/${type}/${id}`;
     });
-    $("#homeGotoInput").keydown(enterKeyOverriderFactory("#homeGotoForm"));
+
+    $("#homeGotoInput").keydown(function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            $("#homeGotoForm").submit();
+        }
+    });
 });
