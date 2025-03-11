@@ -1,4 +1,5 @@
-let searchResult = [];
+// We keep these vars global to avoid passing them around
+let searchEntries = []; // this can be huge (up to ~10k entries)
 let sortState = {
     byID: false,
     ascending: true,
@@ -26,40 +27,63 @@ function updateSortIcons() {
     }
 }
 
-function buildResultTable(result) {
-    updateSortIcons();
-    $("#searchResultTableBody").empty();
-    result.forEach((entry) => {
-        $("#searchResultTable").append(
-            $("<tr>").append(
-                $("<td>").text(`${entry.type} #${entry.id}`),
-                $("<td>").append(
-                    $("<a>")
-                        .attr(
-                            "href",
-                            `/view/${entry.type.toLowerCase()}/${entry.id}`
-                        )
-                        .text(entry.name)
-                )
-            )
+function populateCardContainer() {
+    $("#searchEntryCardContainer").empty();
+    searchEntries.forEach((entry) => {
+        let card = $("<div>").addClass("card").attr("id", "searchEntryCard");
+        getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
+            console.log(url, mimetype);
+            if (mimetype.startsWith("image/")) {
+                card.prepend(
+                    $("<img>").addClass("card-img-top").attr("src", url)
+                );
+            }
+        });
+        let cardBody = $("<div>")
+            .addClass("card-body")
+            .append(
+                $("<h5>").addClass("fs-3").text(`${entry.type} #${entry.id}`),
+                $("<p>").addClass("fs-6 lh-1").text(entry.name)
+            );
+        card.append(cardBody);
+        card.click(function () {
+            window.location.href = `/view/${entry.type.toLowerCase()}/${
+                entry.id
+            }`;
+        });
+        $("#searchEntryCardContainer").append(
+            $("<div>").addClass("col-md-3").append(card)
         );
     });
 }
 
-function sortAndBuildResultTable(comparator) {
-    let sortedResult = searchResult.sort(comparator);
-    if (!sortState.ascending) {
-        sortedResult.reverse();
+function sortSearchEntries() {
+    if (sortState.byID) {
+        searchEntries.sort((a, b) => {
+            // alphabetical order in entry.type implies AssetBundle < Resource
+            if (a.type < b.type) return -1;
+            if (a.type > b.type) return 1;
+            return a.id - b.id;
+        });
+    } else {
+        searchEntries.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        });
     }
-    buildResultTable(sortedResult);
+    if (!sortState.ascending) {
+        searchEntries.reverse();
+    }
 }
 
-function populateSearchpageContainers(result) {
-    if (result.length === 0) {
+function populateSearchpageContainers() {
+    if (searchEntries.length === 0) {
         $("#searchResultDigest").text("No results found.");
     } else {
-        $("#searchResultDigest").text(`Found ${result.length} result(s).`);
-        buildResultTable(result);
+        $("#searchResultDigest").text(
+            `Found ${searchEntries.length}` +
+                (searchEntries.length === 1 ? " entry." : " entries.")
+        );
+        populateCardContainer();
     }
 
     $("#loadingSpinner").hide();
@@ -67,6 +91,8 @@ function populateSearchpageContainers(result) {
 }
 
 $(document).ready(function () {
+    $("#searchInput").val(query); // allows immediate edit/resubmission
+
     $.ajax({
         type: "GET",
         url: `/api/search`,
@@ -74,8 +100,8 @@ $(document).ready(function () {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (result) {
-            searchResult = result;
-            populateSearchpageContainers(searchResult);
+            searchEntries = result;
+            populateSearchpageContainers();
         },
         error: function (...args) {
             dumpErrorToConsole(...args);
@@ -89,13 +115,8 @@ $(document).ready(function () {
             sortState.byID = true;
             sortState.ascending = true;
         }
-
-        sortAndBuildResultTable((a, b) => {
-            // alphabetical order in entry.type implies AssetBundle < Resource
-            if (a.type < b.type) return -1;
-            if (a.type > b.type) return 1;
-            return a.id - b.id;
-        });
+        sortSearchEntries();
+        populateCardContainer();
     });
 
     $("#sortName").click(function () {
@@ -105,9 +126,7 @@ $(document).ready(function () {
             sortState.byID = false;
             sortState.ascending = true;
         }
-
-        sortAndBuildResultTable((a, b) => {
-            return a.name.localeCompare(b.name);
-        });
+        sortSearchEntries();
+        populateCardContainer();
     });
 });
