@@ -5,28 +5,6 @@ let sortState = {
     ascending: true,
 }; // backend sorts by ascending name
 
-function updateSortIcons() {
-    if (sortState.byID) {
-        $("#sortNameIcon").hide();
-        $("#sortIDIcon").show();
-        $("#sortIDIcon").removeClass("bi-caret-up-fill bi-caret-down-fill");
-        if (sortState.ascending) {
-            $("#sortIDIcon").addClass("bi-caret-up-fill");
-        } else {
-            $("#sortIDIcon").addClass("bi-caret-down-fill");
-        }
-    } else {
-        $("#sortIDIcon").hide();
-        $("#sortNameIcon").show();
-        $("#sortNameIcon").removeClass("bi-caret-up-fill bi-caret-down-fill");
-        if (sortState.ascending) {
-            $("#sortNameIcon").addClass("bi-caret-up-fill");
-        } else {
-            $("#sortNameIcon").addClass("bi-caret-down-fill");
-        }
-    }
-}
-
 function populateCardContainer() {
     $("#searchEntryCardContainer").empty();
     searchEntries.forEach((entry) => {
@@ -78,6 +56,19 @@ function sortSearchEntries() {
     }
 }
 
+function updateSort() {
+    let byID_new = $("#sortByID").is(":checked");
+    let ascending_new = $("#sortAsc").is(":checked");
+    console.log(byID_new, ascending_new);
+    if (byID_new === sortState.byID && ascending_new === sortState.ascending) {
+        return;
+    }
+    sortState.byID = byID_new;
+    sortState.ascending = ascending_new;
+    sortSearchEntries();
+    populateCardContainer();
+}
+
 function populateSearchpageContainers() {
     if (searchEntries.length === 0) {
         $("#searchResultDigest").text("No results found.");
@@ -111,25 +102,8 @@ $(document).ready(function () {
         },
     });
 
-    $("#sortID").click(function () {
-        if (sortState.byID) {
-            sortState.ascending = !sortState.ascending;
-        } else {
-            sortState.byID = true;
-            sortState.ascending = true;
-        }
-        sortSearchEntries();
-        populateCardContainer();
-    });
-
-    $("#sortName").click(function () {
-        if (!sortState.byID) {
-            sortState.ascending = !sortState.ascending;
-        } else {
-            sortState.byID = false;
-            sortState.ascending = true;
-        }
-        sortSearchEntries();
-        populateCardContainer();
-    });
+    $("#sortByID").click(updateSort);
+    $("#sortByName").click(updateSort);
+    $("#sortAsc").click(updateSort);
+    $("#sortDesc").click(updateSort);
 });

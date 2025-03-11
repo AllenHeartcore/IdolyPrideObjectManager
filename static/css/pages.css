@@ -23,11 +23,6 @@
 
 /* Search */
 
-#sortID,
-#sortName {
-    cursor: pointer;
-}
-
 #searchEntryCard {
     cursor: pointer;
     margin: 0.5rem 0;
