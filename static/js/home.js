@@ -52,9 +52,7 @@ function reportHomepageError() {
 }
 
 $(document).ready(function () {
-    $("#navbarSearchForm").remove();
-    // Using .hide() ends up having duplicate #filtersContainer and children;
-    // this won't affect other pages since layout.html will be reloaded.
+    $("#navbarNav").children("#searchForm").remove();
 
     $.ajax({
         type: "GET",
@@ -69,9 +67,6 @@ $(document).ready(function () {
             reportHomepageError();
         },
     });
-
-    $("#homeSearchForm").submit(searchEventListenerFactory("#searchInput"));
-    $("#searchInput").keydown(enterKeyOverriderFactory("#homeSearchForm"));
 
     $("#homeGotoForm").submit(function (event) {
         event.preventDefault();

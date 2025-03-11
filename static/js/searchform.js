@@ -1,26 +1,22 @@
-function searchEventListenerFactory(input_field_id) {
-    return function (event) {
+$(document).ready(function () {
+    $("#searchForm").submit(function (event) {
         event.preventDefault();
-        let query = $(input_field_id).val();
+        let query = $("#searchInput").val();
         if (!query.trim()) {
-            $(input_field_id).val("");
-            $(input_field_id).focus();
+            $("#searchInput").val("");
+            $("#searchInput").focus();
             return;
         }
         window.location.href = `/search?query=${encodeURIComponent(query)}`;
-    };
-}
+    });
 
-function enterKeyOverriderFactory(form_id) {
-    return function (event) {
+    $("#searchInput").keydown(function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
-            $(form_id).submit();
+            $("#searchForm").submit();
         }
-    };
-}
+    });
 
-$(document).ready(function () {
     $("#filtersToggleButton").click(function (event) {
         event.preventDefault();
         $("#filtersMenu").toggleClass("hide-by-default");

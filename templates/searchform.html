@@ -3,31 +3,31 @@
     src="{{ url_for('static', filename='js/searchform.js') }}"
 ></script>
 
-<!-- Can't move <form> here since home.js calls $("#navbarSearchForm").remove(); -->
-
-<input
-    id="searchInput"
-    class="form-control"
-    type="search"
-    placeholder="Search..."
-/>
-<button
-    id="searchButton"
-    class="bi bi-search gentle-button floating-button"
-    type="submit"
-></button>
-<div id="filtersContainer">
-    <button id="filtersToggleButton" class="gentle-button" type="button">
-        Filters <span class="bi bi-caret-down-fill"></span>
-    </button>
-    <div id="filtersMenu" class="text-size-125-force hide-by-default">
-        <div class="row">
-            <div class="col-md-12 align-left">By media type</div>
+<form id="searchForm" class="position-relative">
+    <input
+        id="searchInput"
+        class="form-control"
+        type="search"
+        placeholder="Search..."
+    />
+    <button
+        id="searchButton"
+        class="bi bi-search gentle-button floating-button"
+        type="submit"
+    ></button>
+    <div id="filtersContainer">
+        <button id="filtersToggleButton" class="gentle-button" type="button">
+            Filters <span class="bi bi-caret-down-fill"></span>
+        </button>
+        <div id="filtersMenu" class="text-size-125-force hide-by-default">
+            <div class="row">
+                <div class="col-md-12 align-left">By media type</div>
+            </div>
+            <div class="row" id="filtersMediaTypeContainer"></div>
+            <div class="row mt-3">
+                <div class="col-md-12 align-left">By character</div>
+            </div>
+            <div class="row" id="filtersCharacterContainer"></div>
         </div>
-        <div class="row" id="filtersMediaTypeContainer"></div>
-        <div class="row mt-3">
-            <div class="col-md-12 align-left">By character</div>
-        </div>
-        <div class="row" id="filtersCharacterContainer"></div>
     </div>
-</div>
+</form>
