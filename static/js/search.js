@@ -31,17 +31,16 @@ function populateCardContainer() {
     $("#searchEntryCardContainer").empty();
     searchEntries.forEach((entry) => {
         let card = $("<div>").addClass("card").attr("id", "searchEntryCard");
-        getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
-            console.log(url, mimetype);
-            if (mimetype.startsWith("image/")) {
+        if (entry.name.startsWith("img_")) {
+            getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
                 card.prepend(
                     $("<img>")
                         .addClass("card-img-top")
                         .attr("src", url)
                         .attr("id", "searchEntryCardImage")
                 );
-            }
-        });
+            });
+        }
         let cardBody = $("<div>")
             .addClass("card-body")
             .append(

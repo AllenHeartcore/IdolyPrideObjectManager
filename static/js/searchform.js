@@ -79,7 +79,6 @@ $(document).ready(function () {
     // NEITHER clicking on the menu NOR focusing on the search input
     $(document).mouseup(function (e) {
         if (!$("#filtersMenu").is(":visible")) {
-            console.log("ignore");
             return;
             // otherwise, the animation works just fine when the page first loads,
             // but clicking randomly on the page will add style="display: none;"
