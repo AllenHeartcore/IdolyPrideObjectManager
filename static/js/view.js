@@ -37,18 +37,10 @@ function handleUnsupportedMedia(url) {
     $("#viewMediaContent").append(
         $("<div>").text("Preview not available for this type of media.")
     );
-    if (type === "AssetBundle") {
-        $("#downloadConvertedMedia")
-            .text("Deobfuscated AssetBundle")
-            .attr("href", url)
-            .attr("download", info.name.replace(/\.[^/.]+$/, "") + ".unity3d")
-            .removeClass("disabled");
-    } else {
-        $("#downloadConvertedMedia")
-            .text("Conversion Unavailable")
-            .removeClass("btn-primary")
-            .addClass("btn-secondary");
-    }
+    $("#downloadConvertedMedia")
+        .text("Conversion Unavailable")
+        .removeClass("btn-primary")
+        .addClass("btn-secondary");
 }
 
 function getCaption() {

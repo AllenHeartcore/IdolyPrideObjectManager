@@ -13,12 +13,8 @@ m = None
 def _get_manifest():
     global m
     if m is None:
-        m = gom.fetch()
+        m = gom.load("manifest.json")
     return m
-
-
-def _abid2name(id):
-    return _get_manifest().assetbundles[int(id)].name
 
 
 # API endpoints
@@ -47,25 +43,14 @@ def api_search():
     )
 
 
-@app.route("/api/assetbundle/<id>/bytestream")
-def api_assetbundle_bytestream(id):
-    bytestream, mimetype = _get_manifest().assetbundles[int(id)].get_data()
-    return Response(bytestream, mimetype=mimetype)
-
-
-@app.route("/api/assetbundle/<id>/caption")
-def api_assetbundle_caption(id):
-    return _get_manifest().assetbundles[int(id)].get_caption()
-
-
-@app.route("/api/resource/<id>/bytestream")
-def api_resource_bytestream(id):
+@app.route("/api/<id>/bytestream")
+def api_bytestream(id):
     bytestream, mimetype = _get_manifest().resources[int(id)].get_data()
     return Response(bytestream, mimetype=mimetype)
 
 
-@app.route("/api/resource/<id>/caption")
-def api_resource_caption(id):
+@app.route("/api/<id>/caption")
+def api_caption(id):
     return _get_manifest().resources[int(id)].get_caption()
 
 
@@ -83,28 +68,8 @@ def search():
     return render_template("search.html", query=query)
 
 
-@app.route("/view/assetbundle/<id>")
-def view_assetbundle(id):
-
-    try:
-        obj = _get_manifest().assetbundles[int(id)]
-    except KeyError:
-        return render_template("404.html"), 404
-
-    info = obj._get_canon_repr()
-    if "dependencies" in info:
-        info["dependencies"] = [
-            {
-                "id": dep,
-                "name": _abid2name(dep),
-            }
-            for dep in info["dependencies"]
-        ]
-    return render_template("view.html", info=info, type="AssetBundle")
-
-
-@app.route("/view/resource/<id>")
-def view_resource(id):
+@app.route("/view/<id>")
+def view(id):
 
     try:
         obj = _get_manifest().resources[int(id)]

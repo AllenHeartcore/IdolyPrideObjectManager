@@ -1,25 +1,3 @@
-const MEDIA_ALIAS = {
-    "img": "Image",
-    "sud": "Audio",
-    "mov": "Video",
-    "adv": "Story",
-    "mdl": "Model",
-    "mot": "Motion",
-    "env": "Environment",
-    "fbx": "FBX",
-};
-
-const SUBTYPE_ALIAS = {
-    "cidol full": "Idol Card",
-    "csprt full": "Support Card",
-    "story-bg": "Background",
-    "meishi_base full": "Namecard Bg",
-    "pdrink": "P Drink",
-    "pitem": "P Item",
-    "skillcard": "Skillcard",
-    "meishi_illust": "Namecard Elt",
-};
-
 const CHARACTER_ALIAS = {
     "hski": "Hanami Saki",
     "ttmr": "Tsukimura Temari",
@@ -35,25 +13,19 @@ const CHARACTER_ALIAS = {
     "jsna": "Juo Sena",
 };
 
-const RARITY_ALIAS = {
-    "-1-": "R",
-    "-2-": "SR",
-    "-3-": "SSR",
-};
-
 const SONG_ALIAS = {
-    "all -001": "初",
-    "all -002": "Campus mode!!",
-    "all -003": "キミとセミブルー",
-    "all -004": "冠菊",
-    "all -005": "仮装狂騒曲",
-    "all -006": "White Night! White Wish!",
-    "all -007": "ハッピーミルフィーユ",
-    "all -008": "古今東西ちょちょいのちょい",
-    "all -009": "雪解けに",
-    "char -001": "(1st Single)",
-    "char -002": "(2nd Single)",
-    "char -003": "(2024-25 Birthday Song)",
+    "all-001": "初",
+    "all-002": "Campus mode!!",
+    "all-003": "キミとセミブルー",
+    "all-004": "冠菊",
+    "all-005": "仮装狂騒曲",
+    "all-006": "White Night! White Wish!",
+    "all-007": "ハッピーミルフィーユ",
+    "all-008": "古今東西ちょちょいのちょい",
+    "all-009": "雪解けに",
+    "char-001": "(1st Single)",
+    "char-002": "(2nd Single)",
+    "char-003": "(2024-25 Birthday Song)",
 };
 
 function dumpErrorToConsole(...args) {
@@ -80,7 +52,7 @@ function getMediaBlobURL(type, id) {
             },
             error: function (...args) {
                 dumpErrorToConsole(...args);
-                blob = new Blob(["An error occurred while fetching media."], {
+                blob = new Blob(["An error occurred while loading media."], {
                     type: "text/plain",
                 });
                 reject({

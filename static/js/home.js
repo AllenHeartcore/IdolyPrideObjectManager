@@ -4,7 +4,6 @@ const NUM_FEATURED_SAMPLES = 24;
 
 function populateHomepageContainers(data) {
     $("#homeMetadataRevision").text(data.revision);
-    $("#homeMetadataAbCount").text(data.assetBundleList.length);
     $("#homeMetadataResCount").text(data.resourceList.length);
 
     let matches = data.assetBundleList
@@ -48,8 +47,8 @@ function populateHomepageContainers(data) {
 function reportHomepageError() {
     $("#loadingSpinner").hide();
     $("#homeMetadata").html(`
-        GkmasManifest cannot be fetched. <br>
-        Check Internet connection. <br>
+        GkmasManifest cannot be loaded. <br>
+        manifest.json may be missing or corrupted. <br>
         Refresh to retry.
     `);
 }

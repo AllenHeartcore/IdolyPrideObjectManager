@@ -140,9 +140,6 @@ function updateCardContainer() {
 function sortSearchEntries() {
     if (sortState.byID) {
         searchEntries.sort((a, b) => {
-            // alphabetical order in entry.type implies AssetBundle < Resource
-            if (a.type < b.type) return -1;
-            if (a.type > b.type) return 1;
             return a.id - b.id;
         });
     } else {
