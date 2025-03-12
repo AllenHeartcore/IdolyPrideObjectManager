@@ -11,7 +11,6 @@ PATH_ARGTYPE = Union[str, Path]
 RESOURCE_INFO_FIELDS = [
     "id",
     "name",
-    "title",
     "size",
     "md5",
     "url",

@@ -17,4 +17,6 @@ def load(src: PATH_ARGTYPE, base_revision: int = 0) -> GkmasManifest:
             **Must be manually specified if loading a diff genereated
             by GkmasObjectManager older than or equal to v0.4-beta.**
     """
-    return GkmasManifest(json.loads(Path(src).read_text()), base_revision)
+    return GkmasManifest(
+        json.loads(Path(src).read_text(encoding="utf-8")), base_revision
+    )

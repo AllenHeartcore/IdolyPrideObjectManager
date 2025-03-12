@@ -119,7 +119,10 @@ class GkmasManifest:
             logger.warning("Attempting to write JSON into a non-.json file")
 
         try:
-            path.write_text(json.dumps(self._get_canon_repr(), indent=4))
+            path.write_text(
+                json.dumps(self._get_canon_repr(), indent=4, ensure_ascii=False),
+                encoding="utf-8",
+            )
             logger.success(f"JSON has been written into {path}")
         except:
             logger.error(f"Failed to write JSON into {path}")
