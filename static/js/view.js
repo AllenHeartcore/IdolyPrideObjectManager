@@ -1,46 +1,3 @@
-function displayMedia() {
-    $("#loadingSpinnerMedia").hide();
-    $("#viewMediaContent").show();
-    let container = $("#viewMediaContent");
-
-    if (mimetype.startsWith("image/")) {
-        container.append(
-            $("<img>").attr("src", info.url).attr("alt", info.name)
-        );
-    } else if (mimetype.startsWith("audio/")) {
-        container.append(
-            $("<audio>")
-                .attr({ src: info.url, controls: true })
-                .attr("alt", info.name)
-        );
-    } else if (mimetype.startsWith("video/")) {
-        container.append(
-            $("<video>")
-                .attr({ src: info.url, controls: true })
-                .attr("alt", info.name)
-        );
-    } else {
-        handleUnsupportedMedia(info.url);
-        return;
-    }
-
-    $("#downloadConvertedMedia")
-        .text("Download Converted " + mimetype.split("/")[1].toUpperCase())
-        .attr("href", info.url)
-        .attr("download", info.name.replace(/\.[^/.]+$/, ""))
-        .removeClass("disabled");
-}
-
-function handleUnsupportedMedia(url) {
-    $("#viewMediaContent").append(
-        $("<div>").text("Preview not available for this type of media.")
-    );
-    $("#downloadConvertedMedia")
-        .text("Conversion Unavailable")
-        .removeClass("btn-primary")
-        .addClass("btn-secondary");
-}
-
 function getCaption() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -69,7 +26,5 @@ function displayCaption() {
 
 $(document).ready(function () {
     setAccentColorByString(info.name);
-
-    displayMedia();
     displayCaption();
 });

@@ -65,6 +65,10 @@
     font-family: Consolas, monospace;
 }
 
+.text-gray {
+    color: gray;
+}
+
 .title {
     margin: 30px 0 0 0;
     font-size: 4.2rem;

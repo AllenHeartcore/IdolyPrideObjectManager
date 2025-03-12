@@ -32,6 +32,7 @@
 
 #viewMedia {
     display: flex;
+    flex-direction: column; /* stack children vertically */
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
@@ -39,13 +40,17 @@
     border: 2px dotted lightgray;
 }
 
-#viewMediaContent img,
-#viewMediaContent video {
+#viewMediaImage {
     display: block;
-    max-width: 100%;
+    width: 42%;
     max-height: 30rem;
     object-fit: contain;
     object-position: center;
+}
+
+#viewMediaAudio {
+    display: block;
+    width: 42%;
 }
 
 #viewCaption {
