@@ -1,35 +1,22 @@
-const WALLPAPER_REGEX_PATTERN =
-    /^img_general_(cidol.*1-thumb-landscape-large|(csprt|meishi_base).*full)$/;
-const NUM_FEATURED_SAMPLES = 24;
+const NUM_FEATURED_SAMPLES = 12;
 
 function populateHomepageContainers(data) {
     $("#homeMetadataRevision").text(data.revision);
     $("#homeMetadataResCount").text(data.resourceList.length);
 
-    let matches = data.assetBundleList
-        .filter((ab) => WALLPAPER_REGEX_PATTERN.test(ab.name))
-        .map((ab) => ({ id: ab.id, name: ab.name }));
-
-    let latestSamples = matches
+    let latestSamples = data.resourceList
         .sort((a, b) => b.id - a.id)
         .slice(0, NUM_FEATURED_SAMPLES);
 
-    // Pre-populate with empty divs for indexing
-    let container = $("#homeFeaturedContainer");
-    for (let i = 0; i < NUM_FEATURED_SAMPLES; i++) {
-        container.append($("<div>").addClass("col-md-2 mt-3 "));
-    }
-
-    // Place images in the correct order since Promise's are async
     latestSamples.forEach((item, index) => {
         let image = $("<img>")
-            .attr("src", item.url)
+            .attr("src", item.cover)
             .attr("alt", item.name)
-            .addClass("image-landscape image-roundedge shadow-at-hover");
-        let link = $("<a>")
-            .attr("href", `/view/assetbundle/${item.id}`)
-            .append(image);
-        container.children().eq(index).append(link);
+            .addClass("image-roundedge shadow-at-hover");
+        let link = $("<a>").attr("href", `/view/${item.id}`).append(image);
+        $("#homeFeaturedContainer").append(
+            $("<div>").addClass("col-md-2 mt-4").append(link)
+        );
     });
 
     $("#loadingSpinner").hide();
@@ -66,7 +53,7 @@ $(document).ready(function () {
         event.preventDefault();
         let id = $("#homeGotoInput").val();
         let type = $("#homeGotoType").val();
-        window.location.href = `/view/${type}/${id}`;
+        window.location.href = `/view/${id}`;
     });
 
     $("#homeGotoInput").keydown(function (event) {
