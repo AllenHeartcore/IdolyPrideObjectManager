@@ -8,9 +8,7 @@ from typing import Union
 
 
 PATH_ARGTYPE = Union[str, Path]
-RESOURCE_INFO_FIELDS_HEAD = ["id", "name", "size"]
-RESOURCE_INFO_FIELDS_TAIL = ["md5", "objectName"]
-RESOURCE_INFO_FIELDS = RESOURCE_INFO_FIELDS_HEAD + RESOURCE_INFO_FIELDS_TAIL
+RESOURCE_INFO_FIELDS = ["id", "name", "size", "md5", "url", "cover", "keywords"]
 
 # manifest diff
 OBJLIST_ID_FIELD = "id"
