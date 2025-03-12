@@ -88,3 +88,12 @@
 .image-roundedge {
     border-radius: 0.5rem;
 }
+
+.anchor-no-decoration {
+    text-decoration: none;
+    color: inherit;
+}
+.anchor-no-decoration:hover {
+    text-decoration: none;
+    color: inherit;
+}

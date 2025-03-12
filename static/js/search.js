@@ -113,20 +113,21 @@ function updateCardContainer() {
                 .attr("src", entry.cover)
                 .attr("alt", entry.name)
         );
-        let cardBody = $("<div>")
-            .addClass("card-body")
-            .append(
-                $("<h5>").addClass("fs-3").text(`Resource #${entry.id}`),
-                $("<p>").addClass("fs-6 lh-1").text(entry.name)
-            );
-        card.append(cardBody);
-        card.click(function () {
-            window.location.href = `/view/${entry.type.toLowerCase()}/${
-                entry.id
-            }`;
-        });
+        card.append(
+            $("<div>")
+                .addClass("card-body")
+                .append(
+                    $("<div>")
+                        .addClass("fs-4 lh-sm")
+                        .html(entry.name.replace(" (", "<br>("))
+                )
+        );
+        let anchor = $("<a>")
+            .attr("href", `/view/${entry.id}`)
+            .addClass("anchor-no-decoration")
+            .append(card);
         $("#searchEntryCardContainer").append(
-            $("<div>").addClass("col-md-3").append(card)
+            $("<div>").addClass("col-md-3").append(anchor)
         );
     });
 
