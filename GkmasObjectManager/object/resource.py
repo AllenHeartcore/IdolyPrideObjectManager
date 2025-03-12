@@ -15,8 +15,7 @@ from ..const import (
 
 from ..media import GkmasDummyMedia
 from ..media.image import GkmasImage
-from ..media.audio import GkmasAudio, GkmasAWBAudio
-from ..media.video import GkmasUSMVideo
+from ..media.audio import GkmasAudio
 
 import re
 import requests
@@ -94,10 +93,6 @@ class GkmasResource:
                 self._media = GkmasImage(self._idname, data)
             elif self.name.startswith("sud_") and self.name.endswith(".mp3"):
                 self._media = GkmasAudio(self._idname, data)
-            elif self.name.startswith("sud_"):
-                self._media = GkmasAWBAudio(self._idname, data)
-            elif self.name.startswith("mov_"):
-                self._media = GkmasUSMVideo(self._idname, data)
             else:
                 self._media = GkmasDummyMedia(self._idname, data)
 
