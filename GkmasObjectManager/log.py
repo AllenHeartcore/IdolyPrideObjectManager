@@ -4,7 +4,7 @@ Console logger.
 """
 
 
-class Logger(Console):
+class Logger:
     """
     A console logger with custom log levels.
 

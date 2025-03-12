@@ -3,26 +3,18 @@ const.py
 Module-wide constants (macro equivalents).
 """
 
-import multiprocessing
-from hashlib import md5, sha256
 from pathlib import Path
-from typing import Union, Tuple
+from typing import Union
 
 
-# argument type hints
 PATH_ARGTYPE = Union[str, Path]
-IMAGE_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
-
-GKMAS_VERSION = 205000
+RESOURCE_INFO_FIELDS_HEAD = ["id", "name", "size"]
+RESOURCE_INFO_FIELDS_TAIL = ["md5", "objectName"]
+RESOURCE_INFO_FIELDS = RESOURCE_INFO_FIELDS_HEAD + RESOURCE_INFO_FIELDS_TAIL
 
 # manifest diff
 OBJLIST_ID_FIELD = "id"
 OBJLIST_NAME_FIELD = "name"
-
-# object instantiation
-RESOURCE_INFO_FIELDS_HEAD = ["id", "name", "size"]
-RESOURCE_INFO_FIELDS_TAIL = ["state", "md5", "objectName", "uploadVersionId"]
-RESOURCE_INFO_FIELDS = RESOURCE_INFO_FIELDS_HEAD + RESOURCE_INFO_FIELDS_TAIL
 
 CHARACTER_ABBREVS = [
     "hski",  # Hanami SaKI

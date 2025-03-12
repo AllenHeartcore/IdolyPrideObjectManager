@@ -21,11 +21,6 @@ logger = Logger()
 class GkmasAssetBundle(GkmasResource):
     """
     An assetbundle. Class inherits from GkmasResource.
-
-    Attributes:
-        All attributes from GkmasResource, plus
-        name (str): Human-readable name.
-        crc (int): CRC checksum, unused for now (since scheme is unknown).
     """
 
     def __init__(self, info: dict):
@@ -35,11 +30,10 @@ class GkmasAssetBundle(GkmasResource):
 
         Args:
             info (dict): An info dictionary.
-                Must contain the following keys: id, name, objectName, size, md5, state, crc.
+                Must contain the following keys: id, name, objectName, size, md5.
         """
 
         super().__init__(info)
-        self.crc = info["crc"]  # unused (for now)
         self.dependencies = info.get("dependencies", [])
         self._idname = f"AB[{self.id:05}] '{self.name}'"
 
@@ -48,7 +42,6 @@ class GkmasAssetBundle(GkmasResource):
 
     def _get_canon_repr(self):
         ret = {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_HEAD}
-        ret["crc"] = self.crc
         if self.dependencies:
             ret["dependencies"] = self.dependencies  # for ordering
         ret.update({field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_TAIL})

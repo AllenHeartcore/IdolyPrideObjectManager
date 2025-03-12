@@ -7,7 +7,6 @@ from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
     RESOURCE_INFO_FIELDS,
-    GKMAS_VERSION,
     CHARACTER_ABBREVS,
 )
 
@@ -30,8 +29,6 @@ class GkmasResource:
         objectName (str): Object name on server, 6-character alphanumeric.
         size (int): Resource size in bytes, used for integrity check.
         md5 (str): MD5 hash of the resource, used for integrity check.
-        state (str): Resource state in manifest (ADD/UPDATE), unused for now.
-            Other possible states of NONE, LATEST, and DELETE have not yet been observed.
     """
 
     def __init__(self, info: dict):
@@ -41,17 +38,12 @@ class GkmasResource:
 
         Args:
             info (dict): An info dictionary.
-                Must contain the following keys: id, name, objectName, size, md5, state.
+                Must contain the following keys: id, name, objectName, size, md5.
         """
 
         for field in RESOURCE_INFO_FIELDS:
-            if field != "uploadVersionId":
-                setattr(self, field, info[field])
-            else:
-                setattr(self, field, info.get(field, GKMAS_VERSION))
-                # this might be missing in older manifests
+            setattr(self, field, info[field])
 
-        # 'self.state' unused, but retained for compatibility
         self._idname = f"RS[{self.id:05}] '{self.name}'"
 
     def __repr__(self):
