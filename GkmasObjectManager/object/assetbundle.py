@@ -1,6 +1,6 @@
 """
 assetbundle.py
-Asset bundle downloading, deobfuscation, and media extraction.
+Asset bundle handling.
 """
 
 from ..log import Logger
@@ -8,12 +8,9 @@ from ..const import (
     PATH_ARGTYPE,
     RESOURCE_INFO_FIELDS_HEAD,
     RESOURCE_INFO_FIELDS_TAIL,
-    DEFAULT_DOWNLOAD_PATH,
 )
 
 from .resource import GkmasResource
-from .deobfuscate import GkmasAssetBundleDeobfuscator
-from ..media import GkmasDummyMedia
 
 from pathlib import Path
 
@@ -29,17 +26,6 @@ class GkmasAssetBundle(GkmasResource):
         All attributes from GkmasResource, plus
         name (str): Human-readable name.
         crc (int): CRC checksum, unused for now (since scheme is unknown).
-
-    Methods:
-        download(
-            path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
-            categorize: bool = True,
-            convert_image: bool = True,
-            image_format: str = "png",
-            image_resize: Union[None, str, Tuple[int, int]] = None,
-        ) -> None:
-            Downloads and deobfuscates the assetbundle to the specified path.
-            Also extracts a single image from each bundle with type 'img'.
     """
 
     def __init__(self, info: dict):
@@ -67,25 +53,3 @@ class GkmasAssetBundle(GkmasResource):
             ret["dependencies"] = self.dependencies  # for ordering
         ret.update({field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_TAIL})
         return ret
-
-    def _get_media(self):
-        """
-        [INTERNAL] Instantiates a high-level media class based on the assetbundle name.
-        Used to dispatch download and extraction.
-        """
-
-        if self._media is None:
-            data = self._download_bytes()
-            self._media = GkmasDummyMedia(self._idname, data)
-
-        return self._media
-
-    def _download_bytes(self) -> bytes:
-        """
-        [INTERNAL] Downloads, and optionally deobfuscates, the assetbundle as raw bytes.
-        Sanity checks are implemented in parent class GkmasResource.
-        """
-
-        data = super()._download_bytes()
-        data = GkmasAssetBundleDeobfuscator(self.name).process(data)
-        return data

@@ -1,15 +1,11 @@
 """
 manifest.py
-Manifest exporting and object downloading.
+Manifest exporting.
 """
 
 from ..object import GkmasAssetBundle, GkmasResource
 from ..log import Logger
-from ..const import (
-    PATH_ARGTYPE,
-    DEFAULT_DOWNLOAD_PATH,
-    DEFAULT_DOWNLOAD_NWORKER,
-)
+from ..const import PATH_ARGTYPE
 
 from .revision import GkmasManifestRevision
 from .octodb_pb2 import dict2pdbytes
@@ -34,21 +30,10 @@ class GkmasManifest:
         revision (GkmasManifestRevision): Manifest revision this-diff-base (see revision.py).
         assetbundles (GkmasObjectList): List of assetbundle *info dictionaries*.
         resources (GkmasObjectList): List of resource *info dictionaries*.
-        urlformat (str): URL format for downloading assetbundles/resources.
-            Solely for faithful reconstruction of the manifest.
+        urlformat (str): Solely for faithful reconstruction of the manifest.
     *Documentation for GkmasObjectList can be found in listing.py.*
 
     Methods:
-        download(
-            *criteria: str,
-            nworker: int = DEFAULT_DOWNLOAD_NWORKER,
-            path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
-            categorize: bool = True,
-            convert_image: bool = True,
-            image_format: str = "png",
-            image_resize: Union[None, str, Tuple[int, int]] = None,
-        ) -> None:
-            Downloads the regex-specified assetbundles/resources to the specified path.
         export(path: Union[str, Path]) -> None:
             Exports the manifest as ProtoDB and/or JSON to the specified path.
     """
@@ -215,8 +200,6 @@ class GkmasManifest:
         except:
             logger.error(f"Failed to write JSON into {path}")
 
-    # ----------- DOWNLOAD ----------- #
-
     def search(self, criterion: str):
         """
         Searches the manifest for objects matching the specified criterion.
@@ -233,80 +216,3 @@ class GkmasManifest:
         return [self[name] for name in sorted(names)]
         # This will be called by frontend.
         # We instantiate here to make ID's readily available.
-
-    def download(
-        self,
-        *criteria: str,
-        nworker: int = DEFAULT_DOWNLOAD_NWORKER,
-        **kwargs,
-    ):
-        """
-        Downloads the regex-specified assetbundles/resources to the specified path.
-
-        Args:
-            *criteria (str): Regex patterns of assetbundle/resource names.
-            nworker (int) = DEFAULT_DOWNLOAD_NWORKER: Number of concurrent download workers.
-                Defaults to multiprocessing.cpu_count().
-            path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
-                *WARNING: Behavior is undefined if the path points to an definite file (with extension).*
-            categorize (bool) = True: Whether to categorize the downloaded objects into subdirectories.
-                If False, all objects are downloaded to the specified 'path' in a flat structure.
-            convert_image (bool) = True: Whether to extract images from assetbundles of type 'img'.
-            image_format (str) = 'png': Image format for extraction. Case-insensitive.
-                Effective only when 'convert_image' is True. Format must support RGBA mode.
-                Valid options are checked by PIL.Image.save() and are not enumerated.
-            image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
-                If None, images are downloaded as is.
-                If str, string must contain exactly one ':' and images are resized to the specified ratio.
-                If Tuple[int, int], images are resized to the specified exact dimensions.
-        """
-
-        objects = []
-
-        for criterion in criteria:
-            objects.extend(self.search(criterion))
-
-        if not objects:
-            logger.warning("No objects matched the criteria, aborted")
-            return
-
-        self._do_download(objects, nworker, **kwargs)
-
-    def download_all_assetbundles(
-        self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs
-    ):
-        """
-        Downloads all assetbundles to the specified path.
-        See download() for a list of keyword arguments.
-        """
-        objects = [ab for ab in self.assetbundles]
-        self._do_download(objects, nworker, **kwargs)
-
-    def download_all_resources(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
-        """
-        Downloads all resources to the specified path.
-        See download() for a list of keyword arguments.
-        """
-        objects = [res for res in self.resources]
-        self._do_download(objects, nworker, **kwargs)
-
-    def download_all(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
-        """
-        Downloads all assetbundles and resources to the specified path.
-        See download() for a list of keyword arguments.
-        """
-        # Instead of calling two separate methods,
-        # this approach ensures all workers are busy at transition.
-        objects = [ab for ab in self.assetbundles]
-        objects.extend([res for res in self.resources])
-        self._do_download(objects, nworker, **kwargs)
-
-    def _do_download(self, objects: list, nworker: int, **kwargs):
-        """
-        [INTERNAL] Dispatches a list of objects to concurrent download tasks.
-        """
-        self.executor = ThreadPoolExecutor(max_workers=nworker)
-        futures = [self.executor.submit(obj.download, **kwargs) for obj in objects]
-        for future in as_completed(futures):
-            future.result()
-        self.executor.shutdown()

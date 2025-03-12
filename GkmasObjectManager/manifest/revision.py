@@ -11,8 +11,7 @@ class GkmasManifestRevision:
     Attributes:
         this (int): The revision number of this manifest,
             as represented in the ProtoDB.
-        base (int): The revision number of the base manifest,
-            *inferred* at API call in fetch() and unused in load().
+        base (int): The revision number of the base manifest, unused in load().
             base = 0 indicates a complete manifest of 'this' revision
             (which is not necessarily the case if manifest is loaded from a file),
             while base > 0 indicates a diff to be applied to the base manifest.
