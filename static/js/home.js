@@ -22,22 +22,14 @@ function populateHomepageContainers(data) {
 
     // Place images in the correct order since Promise's are async
     latestSamples.forEach((item, index) => {
-        getMediaBlobURL("AssetBundle", item.id).then(({ url, mimetype }) => {
-            if (!mimetype.startsWith("image/")) {
-                console.log(
-                    `Expected an image mimetype for asset ${item.id}, but got ${mimetype}`
-                );
-                return;
-            }
-            let image = $("<img>")
-                .attr("src", url)
-                .attr("alt", item.name)
-                .addClass("image-landscape image-roundedge shadow-at-hover");
-            let link = $("<a>")
-                .attr("href", `/view/assetbundle/${item.id}`)
-                .append(image);
-            container.children().eq(index).append(link);
-        });
+        let image = $("<img>")
+            .attr("src", item.url)
+            .attr("alt", item.name)
+            .addClass("image-landscape image-roundedge shadow-at-hover");
+        let link = $("<a>")
+            .attr("href", `/view/assetbundle/${item.id}`)
+            .append(image);
+        container.children().eq(index).append(link);
     });
 
     $("#loadingSpinner").hide();

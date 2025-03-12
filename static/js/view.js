@@ -1,36 +1,34 @@
 function displayMedia() {
-    getMediaBlobURL(type, info.id).then(({ url, mimetype }) => {
-        $("#loadingSpinnerMedia").hide();
-        $("#viewMediaContent").show();
-        let container = $("#viewMediaContent");
+    $("#loadingSpinnerMedia").hide();
+    $("#viewMediaContent").show();
+    let container = $("#viewMediaContent");
 
-        if (mimetype.startsWith("image/")) {
-            container.append(
-                $("<img>").attr("src", url).attr("alt", info.name)
-            );
-        } else if (mimetype.startsWith("audio/")) {
-            container.append(
-                $("<audio>")
-                    .attr({ src: url, controls: true })
-                    .attr("alt", info.name)
-            );
-        } else if (mimetype.startsWith("video/")) {
-            container.append(
-                $("<video>")
-                    .attr({ src: url, controls: true })
-                    .attr("alt", info.name)
-            );
-        } else {
-            handleUnsupportedMedia(url);
-            return;
-        }
+    if (mimetype.startsWith("image/")) {
+        container.append(
+            $("<img>").attr("src", info.url).attr("alt", info.name)
+        );
+    } else if (mimetype.startsWith("audio/")) {
+        container.append(
+            $("<audio>")
+                .attr({ src: info.url, controls: true })
+                .attr("alt", info.name)
+        );
+    } else if (mimetype.startsWith("video/")) {
+        container.append(
+            $("<video>")
+                .attr({ src: info.url, controls: true })
+                .attr("alt", info.name)
+        );
+    } else {
+        handleUnsupportedMedia(info.url);
+        return;
+    }
 
-        $("#downloadConvertedMedia")
-            .text("Download Converted " + mimetype.split("/")[1].toUpperCase())
-            .attr("href", url)
-            .attr("download", info.name.replace(/\.[^/.]+$/, ""))
-            .removeClass("disabled");
-    });
+    $("#downloadConvertedMedia")
+        .text("Download Converted " + mimetype.split("/")[1].toUpperCase())
+        .attr("href", info.url)
+        .attr("download", info.name.replace(/\.[^/.]+$/, ""))
+        .removeClass("disabled");
 }
 
 function handleUnsupportedMedia(url) {

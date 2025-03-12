@@ -107,15 +107,13 @@ function updateCardContainer() {
             .addClass("card shadow-at-hover")
             .attr("id", "searchEntryCard");
         if (entry.name.startsWith("img_")) {
-            getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
-                card.prepend(
-                    $("<img>")
-                        .addClass("card-img-top")
-                        .attr("id", "searchEntryCardImage")
-                        .attr("src", url)
-                        .attr("alt", entry.name)
-                );
-            });
+            card.prepend(
+                $("<img>")
+                    .addClass("card-img-top")
+                    .attr("id", "searchEntryCardImage")
+                    .attr("src", entry.url)
+                    .attr("alt", entry.name)
+            );
         }
         let cardBody = $("<div>")
             .addClass("card-body")

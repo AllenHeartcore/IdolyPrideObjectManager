@@ -43,12 +43,6 @@ def api_search():
     )
 
 
-@app.route("/api/<id>/bytestream")
-def api_bytestream(id):
-    bytestream, mimetype = _get_manifest().resources[int(id)].get_data()
-    return Response(bytestream, mimetype=mimetype)
-
-
 @app.route("/api/<id>/caption")
 def api_caption(id):
     return _get_manifest().resources[int(id)].get_caption()
