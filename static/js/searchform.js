@@ -25,8 +25,8 @@ function buildButtonList(containerID, eltList, columnClass) {
 function buildFiltersMenu() {
     buildButtonList("#filtersSongContainer", SONG_LIST, "col-md-4");
 
-    for (let alias in CHARACTER_ALIAS) {
-        let name = CHARACTER_ALIAS[alias];
+    for (let name in CHARACTER_ALIAS) {
+        let alias = CHARACTER_ALIAS[name];
         let column = $("<div>").addClass("col-md-1");
         let img = $("<img>")
             .attr("id", "filtersCharacterFigure")
