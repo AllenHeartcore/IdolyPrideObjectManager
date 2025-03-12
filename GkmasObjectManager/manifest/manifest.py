@@ -1,6 +1,6 @@
 """
 manifest.py
-Manifest decryption, exporting, and object downloading.
+Manifest exporting and object downloading.
 """
 
 from ..object import GkmasAssetBundle, GkmasResource

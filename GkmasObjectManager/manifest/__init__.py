@@ -8,7 +8,6 @@ from ..const import (
 )
 
 from .manifest import GkmasManifest
-from .decrypt import AESCBCDecryptor
 from .octodb_pb2 import pdbytes2dict
 
 import json
@@ -28,22 +27,19 @@ def fetch(revision: int = 0) -> GkmasManifest:
             and the latest. Defaults to 0 (latest).
     """
     url = urljoin(GKMAS_API_URL, str(revision))
-    enc = requests.get(url, headers=GKMAS_API_HEADER).content
-    dec = AESCBCDecryptor(GKMAS_ONLINEPDB_KEY, enc[:16]).process(enc[16:])
+    dec = requests.get(url, headers=GKMAS_API_HEADER).content
     return GkmasManifest(pdbytes2dict(dec), base_revision=revision)
 
 
 def load(src: PATH_ARGTYPE, base_revision: int = 0) -> GkmasManifest:
     """
     Initializes a manifest from the given offline source.
-    The protobuf referred to can be either encrypted or not.
     Also supports importing from JSON.
 
     Args:
         src (Union[str, Path]): Path to the manifest file.
             Can be the path to
-            - an encrypted octocache (usually named 'octocacheevai'),
-            - a decrypted protobuf, or
+            - a protobuf (usually named 'octocacheevai'), or
             - a JSON file exported from another manifest.
         base_revision (int) = 0: The revision number of the base manifest.
             **Must be manually specified if loading a diff genereated
@@ -52,9 +48,5 @@ def load(src: PATH_ARGTYPE, base_revision: int = 0) -> GkmasManifest:
     try:
         return GkmasManifest(json.loads(Path(src).read_text()), base_revision)
     except:
-        enc = Path(src).read_bytes()
-        try:
-            return GkmasManifest(pdbytes2dict(enc), base_revision)
-        except:
-            dec = AESCBCDecryptor(GKMAS_OCTOCACHE_KEY, GKMAS_OCTOCACHE_IV).process(enc)
-            return GkmasManifest(pdbytes2dict(dec[16:]), base_revision)  # trim md5 hash
+        dec = Path(src).read_bytes()
+        return GkmasManifest(pdbytes2dict(dec), base_revision)

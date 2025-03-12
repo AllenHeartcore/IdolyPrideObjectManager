@@ -1,7 +1,6 @@
 flask
 
 # Manifest:
-# request, decrypt, parse
+# request, parse
 requests
-pycryptodome
 protobuf

@@ -11,7 +11,7 @@ in the mobile game Gakuen Idolm@ster (https://gakuen.idolmaster-official.jp/).
 
 Features
 --------
-- Decrypt and export octocache as raw ProtoDB or JSON
+- Export octocache as raw ProtoDB or JSON
 - Differentiate between octocache revisions
 - Download and deobfuscate objects in parallel
 
@@ -19,13 +19,13 @@ Example Usage
 -------------
 ```python
 from GkmasObjectManager import GkmasManifest
-manifest = GkmasManifest("EncryptedCache/octocacheevai")
-manifest.export('DecryptedCache/')
+manifest = GkmasManifest("octocacheevai")
+manifest.export('manifest.json')
 manifest.download('adv.*ttmr.*', 'sud_vo.*fktn.*', 'mdl.*hski.*', nworker=8)
 
-manifest_old = GkmasManifest("EncryptedCache/octocacheevai_old")
+manifest_old = GkmasManifest("octocacheevai_old")
 mdiff = manifest - manifest_old
-mdiff.export('DecryptedCache/diff/')
+mdiff.export('manifest_diff.json')
 ```
 """
 

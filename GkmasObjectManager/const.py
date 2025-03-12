@@ -24,13 +24,6 @@ GKMAS_API_HEADER = {
     "X-OCTO-KEY": GKMAS_API_KEY,
 }
 
-# manifest decrypt
-sha256sum = lambda x: sha256(bytes(x, "utf-8")).digest()
-md5sum = lambda x: md5(bytes(x, "utf-8")).digest()
-GKMAS_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd")
-GKMAS_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk")
-GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz")
-
 # manifest diff
 OBJLIST_ID_FIELD = "id"
 OBJLIST_NAME_FIELD = "name"
