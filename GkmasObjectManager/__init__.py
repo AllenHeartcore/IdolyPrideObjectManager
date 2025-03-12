@@ -10,4 +10,4 @@ in the mobile game Gakuen Idolm@ster (https://gakuen.idolmaster-official.jp/).
 """
 
 from .manifest import GkmasManifest, load
-from .object import GkmasAssetBundle, GkmasResource
+from .object import GkmasResource

@@ -21,7 +21,7 @@ logger = Logger()
 
 class GkmasResource:
     """
-    A general-purpose binary resource, presumably multimedia instead of an assetbundle.
+    A general-purpose binary resource, presumably multimedia.
 
     Attributes:
         id (int): Resource ID, unique across manifests.

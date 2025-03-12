@@ -14,7 +14,7 @@ from typing import Union
 
 class GkmasObjectList:
     """
-    A list of assetbundle/resource metadata, optimized for indexing and comparison.
+    A list of resource metadata, optimized for indexing and comparison.
     Implemented as listing utility wrappers around a list of dictionaries.
 
     Methods:

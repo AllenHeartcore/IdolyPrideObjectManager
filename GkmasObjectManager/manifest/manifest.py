@@ -3,7 +3,7 @@ manifest.py
 Manifest exporting.
 """
 
-from ..object import GkmasAssetBundle, GkmasResource
+from ..object import GkmasResource
 from ..log import Logger
 from ..const import PATH_ARGTYPE
 
@@ -23,11 +23,10 @@ logger = Logger()
 
 class GkmasManifest:
     """
-    A GKMAS manifest, containing info about assetbundles and resources.
+    A GKMAS manifest, containing info about resources.
 
     Attributes:
         revision (GkmasManifestRevision): Manifest revision this-diff-base (see revision.py).
-        assetbundles (GkmasObjectList): List of assetbundle *info dictionaries*.
         resources (GkmasObjectList): List of resource *info dictionaries*.
     *Documentation for GkmasObjectList can be found in listing.py.*
 
@@ -42,7 +41,7 @@ class GkmasManifest:
 
         Args:
             jdict (dict): JSON-serialized dictionary.
-                Must contain 'revision', 'assetBundleList', and 'resourceList' keys.
+                Must contain 'revision' and 'resourceList' keys.
             base_revision (int) = 0: The revision number of the base manifest.
                 Manually specified when loading a diff, at which case
                 a warning of conflict is raised if jdict['revision'] is already a tuple.
@@ -60,54 +59,42 @@ class GkmasManifest:
 
         try:  # instantiate from JSON
             self.revision = GkmasManifestRevision(*revision)
-            self.assetbundles = GkmasObjectList(
-                jdict.get("assetBundleList", []),  # might be empty in recent diffs
-                GkmasAssetBundle,
-            )
             self.resources = GkmasObjectList(
-                jdict.get("resourceList", []),  # same as above ^
+                jdict.get("resourceList", []),  # might be empty in recent diffs
                 GkmasResource,
             )
         except TypeError:  # instantiate from diff, skip type conversion
-            self.revision = jdict["revision"]
-            self.assetbundles = jdict["assetBundleList"]  # won't be missing since ...
+            self.revision = jdict["revision"]  # won't be missing since ...
             self.resources = jdict["resourceList"]  # this is constructed internally
 
         # 'jdict' is then discarded and losslessly reconstructed at export
 
     def __repr__(self):
-        return f"<GkmasManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
+        return f"<GkmasManifest revision {self.revision} with {len(self.resources)} resources>"
 
     def __getitem__(self, key: str):
-        try:
-            return self.assetbundles[key]
-        except KeyError:
-            return self.resources[key]
-            # any more KeyError's are raised as is
+        return self.resources[key]
 
     def __iter__(self):
-        for ab in self.assetbundles:
-            yield ab
         for res in self.resources:
             yield res
 
     def __len__(self):
-        return len(self.assetbundles) + len(self.resources)
+        return len(self.resources)
 
     def __contains__(self, key: str):
-        return key in self.assetbundles or key in self.resources
+        return key in self.resources
         # could also try self[key]
 
     def __sub__(self, other):
         """
         [INTERNAL] Creates a manifest from a differentiation dictionary.
         The diffdict refers to a dictionary containing differentiated
-        assetbundles and resources, created by listing.GkmasObjectList.diff().
+        resources, created by listing.GkmasObjectList.diff().
         """
         return GkmasManifest(
             {  # this is not a standard JSON dict, more like named arguments
                 "revision": self.revision - other.revision,  # handles sanity check
-                "assetBundleList": self.assetbundles - other.assetbundles,
                 "resourceList": self.resources - other.resources,
             }
         )
@@ -118,7 +105,6 @@ class GkmasManifest:
         """
         return {
             "revision": self.revision._get_canon_repr(),
-            "assetBundleList": self.assetbundles._get_canon_repr(),
             "resourceList": self.resources._get_canon_repr(),
         }
 
