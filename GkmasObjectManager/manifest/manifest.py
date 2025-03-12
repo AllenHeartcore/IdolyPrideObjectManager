@@ -8,7 +8,6 @@ from ..log import Logger
 from ..const import PATH_ARGTYPE
 
 from .revision import GkmasManifestRevision
-from .octodb_pb2 import dict2pdbytes
 from .listing import GkmasObjectList
 
 import re
@@ -30,12 +29,11 @@ class GkmasManifest:
         revision (GkmasManifestRevision): Manifest revision this-diff-base (see revision.py).
         assetbundles (GkmasObjectList): List of assetbundle *info dictionaries*.
         resources (GkmasObjectList): List of resource *info dictionaries*.
-        urlformat (str): Solely for faithful reconstruction of the manifest.
     *Documentation for GkmasObjectList can be found in listing.py.*
 
     Methods:
         export(path: Union[str, Path]) -> None:
-            Exports the manifest as ProtoDB and/or JSON to the specified path.
+            Exports the manifest as JSON to the specified path.
     """
 
     def __init__(self, jdict: dict, base_revision: int = 0):
@@ -43,9 +41,8 @@ class GkmasManifest:
         [INTERNAL] Initializes a manifest from the given JSON dictionary.
 
         Args:
-            jdict (dict): JSON-serialized dictionary extracted from protobuf.
-                Must contain 'revision', 'assetBundleList', 'resourceList',
-                and 'urlFormat' keys.
+            jdict (dict): JSON-serialized dictionary.
+                Must contain 'revision', 'assetBundleList', and 'resourceList' keys.
             base_revision (int) = 0: The revision number of the base manifest.
                 Manually specified when loading a diff, at which case
                 a warning of conflict is raised if jdict['revision'] is already a tuple.
@@ -76,7 +73,6 @@ class GkmasManifest:
             self.assetbundles = jdict["assetBundleList"]  # won't be missing since ...
             self.resources = jdict["resourceList"]  # this is constructed internally
 
-        self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
 
     def __repr__(self):
@@ -113,8 +109,6 @@ class GkmasManifest:
                 "revision": self.revision - other.revision,  # handles sanity check
                 "assetBundleList": self.assetbundles - other.assetbundles,
                 "resourceList": self.resources - other.resources,
-                "urlFormat": self.urlformat,
-                # always override with the higher revision, in case this ever differs
             }
         )
 
@@ -126,70 +120,14 @@ class GkmasManifest:
             "revision": self.revision._get_canon_repr(),
             "assetBundleList": self.assetbundles._get_canon_repr(),
             "resourceList": self.resources._get_canon_repr(),
-            "urlFormat": self.urlformat,
         }
 
-    # ------------ EXPORT ------------ #
-
-    def export(self, path: PATH_ARGTYPE, format: str = "infer"):
+    def export(self, path: PATH_ARGTYPE):
         """
-        Exports the manifest as ProtoDB and/or JSON to the specified path.
-        This is a dispatcher method.
-
-        Args:
-            path (Union[str, Path]): A file path.
-                The format is determined by the extension if 'format' is 'infer'.
-                (All extensions other than .json are inferred
-                as raw binary and therefore exported as ProtoDB, but
-                a warning is issued if the extension is not .pdb.)
-            format (str) = 'infer': The format to export.
-                Should be one of 'pdb', 'json', or 'infer'.
+        Writes JSON-serialized dictionary into the specified path.
         """
 
         path = Path(path)
-
-        if format == "infer":
-            if path.suffix == ".pdb":
-                format = "pdb"
-            elif path.suffix == ".json":
-                format = "json"
-            else:
-                logger.warning("Unrecognized file extension, defaulting to ProtoDB")
-                format = "pdb"
-
-        if format == "pdb":
-            self._export_pdb(path)
-        elif format == "json":
-            self._export_json(path)
-        else:
-            logger.warning(f"Unrecognized format '{format}', aborted")
-            # Could also be logger.error, but let's fail gracefully.
-            # This check used to appear in the type hint, but then
-            # this method would *silently* fail if the format was invalid.
-
-    def _export_pdb(self, path: Path):
-        """
-        [INTERNAL] Writes raw protobuf bytes into the specified path.
-        """
-
-        if path.suffix != ".pdb":
-            logger.warning("Attempting to write ProtoDB into a non-.pdb file")
-
-        jdict = self._get_canon_repr()
-        if isinstance(jdict["revision"], tuple):
-            logger.warning("Exporting a diff manifest as ProtoDB, base revision lost")
-            jdict["revision"] = jdict["revision"][0]
-
-        try:
-            path.write_bytes(dict2pdbytes(jdict))
-            logger.success(f"ProtoDB has been written into {path}")
-        except:
-            logger.error(f"Failed to write ProtoDB into {path}")
-
-    def _export_json(self, path: Path):
-        """
-        [INTERNAL] Writes JSON-serialized dictionary into the specified path.
-        """
 
         if path.suffix != ".json":
             logger.warning("Attempting to write JSON into a non-.json file")

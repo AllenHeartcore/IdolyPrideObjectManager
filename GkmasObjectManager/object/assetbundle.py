@@ -34,7 +34,7 @@ class GkmasAssetBundle(GkmasResource):
         Usually called from GkmasManifest.
 
         Args:
-            info (dict): An info dictionary, extracted from protobuf.
+            info (dict): An info dictionary.
                 Must contain the following keys: id, name, objectName, size, md5, state, crc.
         """
 

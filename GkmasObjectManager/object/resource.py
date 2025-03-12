@@ -14,7 +14,6 @@ from ..const import (
 import re
 from hashlib import md5
 from pathlib import Path
-from urllib.parse import urljoin
 from typing import Tuple
 
 
@@ -41,7 +40,7 @@ class GkmasResource:
         Usually called from GkmasManifest.
 
         Args:
-            info (dict): An info dictionary, extracted from protobuf.
+            info (dict): An info dictionary.
                 Must contain the following keys: id, name, objectName, size, md5, state.
         """
 

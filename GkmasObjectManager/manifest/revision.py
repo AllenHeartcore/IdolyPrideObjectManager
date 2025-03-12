@@ -9,8 +9,7 @@ class GkmasManifestRevision:
     A GKMAS manifest revision, useful for version control at creating/applying diffs.
 
     Attributes:
-        this (int): The revision number of this manifest,
-            as represented in the ProtoDB.
+        this (int): The revision number of this manifest.
         base (int): The revision number of the base manifest, unused in load().
             base = 0 indicates a complete manifest of 'this' revision
             (which is not necessarily the case if manifest is loaded from a file),
