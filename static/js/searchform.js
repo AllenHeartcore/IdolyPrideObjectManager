@@ -9,14 +9,13 @@ function keywordFilter(alias) {
     $("#searchInput").focus();
 }
 
-function buildButtonList(containerID, aliasMap, columnClass) {
-    for (let alias in aliasMap) {
-        let name = aliasMap[alias];
+function buildButtonList(containerID, eltList, columnClass) {
+    for (let name of eltList) {
         let column = $("<div>").addClass(columnClass);
         let button = $("<button>")
             .attr("type", "button") // otherwise submits the form
             .addClass("btn btn-outline-primary btn-sm w-100 mb-2")
-            .attr("onclick", `keywordFilter('${alias}')`)
+            .attr("onclick", `keywordFilter('${name}')`)
             .text(name);
         column.append(button);
         $(containerID).append(column);
@@ -24,10 +23,7 @@ function buildButtonList(containerID, aliasMap, columnClass) {
 }
 
 function buildFiltersMenu() {
-    buildButtonList("#filtersMediaContainer", MEDIA_ALIAS, "col-md-3");
-    buildButtonList("#filtersSubtypeContainer", SUBTYPE_ALIAS, "col-md-3");
-    buildButtonList("#filtersRarityContainer", RARITY_ALIAS, "col-md-4");
-    buildButtonList("#filtersSongContainer", SONG_ALIAS, "col-md-4");
+    buildButtonList("#filtersSongContainer", SONG_LIST, "col-md-4");
 
     for (let alias in CHARACTER_ALIAS) {
         let name = CHARACTER_ALIAS[alias];
@@ -36,7 +32,7 @@ function buildFiltersMenu() {
             .attr("id", "filtersCharacterFigure")
             .attr("src", `/static/img/figure/${alias}.png`)
             .attr("alt", name)
-            .attr("onclick", `keywordFilter('${alias}')`);
+            .attr("onclick", `keywordFilter('${name}')`);
         column.append(img);
         $("#filtersCharacterContainer").append(column);
     }

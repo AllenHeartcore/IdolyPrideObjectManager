@@ -13,20 +13,20 @@ const CHARACTER_ALIAS = {
     "jsna": "Juo Sena",
 };
 
-const SONG_ALIAS = {
-    "all-001": "初",
-    "all-002": "Campus mode!!",
-    "all-003": "キミとセミブルー",
-    "all-004": "冠菊",
-    "all-005": "仮装狂騒曲",
-    "all-006": "White Night! White Wish!",
-    "all-007": "ハッピーミルフィーユ",
-    "all-008": "古今東西ちょちょいのちょい",
-    "all-009": "雪解けに",
-    "char-001": "(1st Single)",
-    "char-002": "(2nd Single)",
-    "char-003": "(2024-25 Birthday Song)",
-};
+const SONG_LIST = [
+    "初",
+    "Campus mode!!",
+    "キミとセミブルー",
+    "冠菊",
+    "仮装狂騒曲",
+    "White Night! White Wish!",
+    "ハッピーミルフィーユ",
+    "古今東西ちょちょいのちょい",
+    "雪解けに",
+    "1st Single",
+    "2nd Single",
+    "Birthday Single",
+];
 
 function dumpErrorToConsole(...args) {
     var name_of_parent_function = arguments.callee.caller.name;
