@@ -1,9 +1,15 @@
 // We keep these vars global to avoid passing them around
 let searchEntries = []; // this can be huge (up to ~10k entries)
 let sortState = {
-    byID: false,
-    ascending: true,
-}; // backend sorts by ascending name
+    byID: null,
+    ascending: null,
+};
+/*  Even though backend returns entries by ascending name,
+    it's more extensible to avoid hardcoding this assumption,
+    since we now force a sort at initial display.
+    (Sorting by large amounts is made possible by pagination,
+    which removes the overhead of *displaying* them all at once.)
+*/
 
 // pagination support
 const ENTRIES_PER_PAGE = 8;
@@ -12,15 +18,19 @@ var currentPage = 1;
 var totalPages = 0;
 
 /*  CONTROL FLOW:
-    $(document).ready -> populateSearchpageContainers -> updateCardContainer
-    updateSort -> sortSearchEntries, updateCardContainer
-    updateCardContainer -> updatePagination -> appendPaginationButton
+    $(document).ready
+        -> populateSearchpageContainers
+        -> updateSort
+        -> sortSearchEntries, updateCardContainer
+    updateCardContainer
+        -> updatePagination
+        -> appendPaginationButton
 
-    [init] - PSC - UCC - UP - APB
-                 /
-              US
-                 \
-                   SSE
+                        UCC - UP - APB
+                      /
+    [init] - PSC - US
+                      \
+                        SSE
 */
 
 function appendPaginationButton(text, isEnabled, pageUpdater) {
@@ -117,8 +127,9 @@ function updateCardContainer() {
             $("<div>")
                 .addClass("card-body")
                 .append(
+                    $("<div>").addClass("fs-6").text(`Resource #${entry.id}`),
                     $("<div>")
-                        .addClass("fs-4 lh-sm")
+                        .addClass("fs-4 mt-2 lh-sm")
                         .html(entry.name.replace(" (", "<br>("))
                 )
         );
@@ -172,7 +183,7 @@ function populateSearchpageContainers(queryDisplay) {
             `Found ${searchEntries.length}` +
                 (searchEntries.length === 1 ? " entry." : " entries.")
         );
-        updateCardContainer();
+        updateSort();
     }
 
     $("#loadingSpinner").hide();
