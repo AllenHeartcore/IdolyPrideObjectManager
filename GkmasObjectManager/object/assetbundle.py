@@ -1,6 +1,6 @@
 """
 assetbundle.py
-Unity asset bundle downloading, deobfuscation, and media extraction.
+Asset bundle downloading, deobfuscation, and media extraction.
 """
 
 from ..log import Logger
@@ -9,14 +9,11 @@ from ..const import (
     RESOURCE_INFO_FIELDS_HEAD,
     RESOURCE_INFO_FIELDS_TAIL,
     DEFAULT_DOWNLOAD_PATH,
-    UNITY_SIGNATURE,
 )
 
 from .resource import GkmasResource
 from .deobfuscate import GkmasAssetBundleDeobfuscator
 from ..media import GkmasDummyMedia
-from ..media.image import GkmasUnityImage
-from ..media.audio import GkmasUnityAudio
 
 from pathlib import Path
 
@@ -31,7 +28,6 @@ class GkmasAssetBundle(GkmasResource):
     Attributes:
         All attributes from GkmasResource, plus
         name (str): Human-readable name.
-            Appended with '.unity3d' only at download and CSV export.
         crc (int): CRC checksum, unused for now (since scheme is unknown).
 
     Methods:
@@ -80,21 +76,9 @@ class GkmasAssetBundle(GkmasResource):
 
         if self._media is None:
             data = self._download_bytes()
-            if self.name.startswith("img_"):
-                self._media = GkmasUnityImage(self._idname, data)
-            elif self.name.startswith("sud_"):
-                self._media = GkmasUnityAudio(self._idname, data)
-            else:
-                self._media = GkmasDummyMedia(self._idname, data)
+            self._media = GkmasDummyMedia(self._idname, data)
 
         return self._media
-
-    def _download_path(self, path: PATH_ARGTYPE, categorize: bool) -> Path:
-        """
-        [INTERNAL] Refines the download path based on user input.
-        Inherited from GkmasResource, but imposes a '.unity3d' suffix.
-        """
-        return super()._download_path(path, categorize).with_suffix(".unity3d")
 
     def _download_bytes(self) -> bytes:
         """
@@ -103,12 +87,5 @@ class GkmasAssetBundle(GkmasResource):
         """
 
         data = super()._download_bytes()
-
-        if not data.startswith(UNITY_SIGNATURE):
-            data = GkmasAssetBundleDeobfuscator(self.name).process(data)
-            if not data.startswith(UNITY_SIGNATURE):
-                logger.warning(f"{self._idname} downloaded but LEFT OBFUSCATED")
-                # Unexpected things may happen...
-                # So unlike _download_bytes(), here we don't raise an error and abort.
-
+        data = GkmasAssetBundleDeobfuscator(self.name).process(data)
         return data

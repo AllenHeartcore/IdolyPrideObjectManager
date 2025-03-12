@@ -225,7 +225,6 @@ class GkmasManifest:
         """
         [INTERNAL] Writes CSV-serialized data into the specified path.
         Assetbundles and resources are concatenated into a single table and sorted by name.
-        Assetbundles can be distinguished by their '.unity3d' suffix.
         """
 
         if path.suffix != ".csv":
@@ -235,7 +234,6 @@ class GkmasManifest:
         # which handles integer keys (index by ID) and messes up with standard modules
         # like pandas that rely on self[0] as a "sample" object from the list.
         dfa = pd.DataFrame(self.assetbundles._get_canon_repr(), columns=CSV_COLUMNS)
-        dfa["name"] = dfa["name"].apply(lambda x: x + ".unity3d")
         dfr = pd.DataFrame(self.resources._get_canon_repr(), columns=CSV_COLUMNS)
         df = pd.concat([dfa, dfr], ignore_index=True)
         df.sort_values("name", inplace=True)
@@ -283,7 +281,6 @@ class GkmasManifest:
             categorize (bool) = True: Whether to categorize the downloaded objects into subdirectories.
                 If False, all objects are downloaded to the specified 'path' in a flat structure.
             convert_image (bool) = True: Whether to extract images from assetbundles of type 'img'.
-                If False, 'img_.*\\.unity3d' are downloaded as is.
             image_format (str) = 'png': Image format for extraction. Case-insensitive.
                 Effective only when 'convert_image' is True. Format must support RGBA mode.
                 Valid options are checked by PIL.Image.save() and are not enumerated.

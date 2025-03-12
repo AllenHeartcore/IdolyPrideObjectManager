@@ -75,7 +75,3 @@ CHARACTER_ABBREVS = [
     "ktko",  # Kuroi TaKaO
     "cmmn",  # (CoMMoN)
 ]
-
-# object deobfuscate
-GKMAS_UNITY_VERSION = "2022.3.21f1"
-UNITY_SIGNATURE = b"UnityFS"
