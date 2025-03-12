@@ -59,6 +59,12 @@ character_map = {
     "jsna": ("十王 星南", "Juo Sena"),
 }
 
+single_map = {
+    "001": "1st Single",
+    "002": "2nd Single",
+    "003": "Birthday Single",
+}
+
 
 if __name__ == "__main__":
 
@@ -71,7 +77,10 @@ if __name__ == "__main__":
         song_id, char_id = res["keywords"]
         title, release_date = song_map[song_id]
         char_jp, char_en = character_map[char_id]
-        title += f" ({char_jp} ver.)" if song_id.startswith("all-") else ""
+
+        songtype, songsubtype = song_id.split("-")
+        title += f" ({char_jp} ver.)" if songtype == "all" else ""
+        single_flag = single_map[songsubtype] if songtype != "all" else ""
 
         resourceList.append(
             {
@@ -85,6 +94,9 @@ if __name__ == "__main__":
                 "keywords": [release_date, char_en],
             }
         )
+
+        if single_flag:
+            resourceList[-1]["keywords"].append(single_flag)
 
     Path(p.stem + "_new.json").write_text(
         json.dumps(
