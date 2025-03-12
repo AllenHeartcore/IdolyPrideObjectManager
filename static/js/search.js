@@ -6,7 +6,7 @@ let sortState = {
 }; // backend sorts by ascending name
 
 // pagination support
-const ENTRIES_PER_PAGE = 12;
+const ENTRIES_PER_PAGE = 8;
 const PAGE_NAV_CONTEXT_SIZE = 1;
 var currentPage = 1;
 var totalPages = 0;
@@ -55,8 +55,8 @@ function updatePagination() {
     appendPaginationButton("1", currentPage !== 1, () => 1);
 
     if (totalPages <= PAGE_NAV_CONTEXT_SIZE * 2 + 1) {
-        // no need for ellipsis
-        for (let i = 2; i < totalPages; i++) {
+        // no need for ellipsis, display all buttons
+        for (let i = 2; i <= totalPages; i++) {
             appendPaginationButton(i.toString(), currentPage !== i, () => i);
         }
     } else {
@@ -80,14 +80,15 @@ function updatePagination() {
                 .append($("<span>").text("..."))
                 .addClass("mx-2");
         }
+
+        // tail
+        appendPaginationButton(
+            totalPages.toString(),
+            currentPage !== totalPages,
+            () => totalPages
+        );
     }
 
-    // tail
-    appendPaginationButton(
-        totalPages.toString(),
-        currentPage !== totalPages,
-        () => totalPages
-    );
     appendPaginationButton(
         "Next",
         currentPage < totalPages && totalPages > 0,
@@ -106,19 +107,16 @@ function updateCardContainer() {
         let card = $("<div>")
             .addClass("card shadow-at-hover")
             .attr("id", "searchEntryCard");
-        if (entry.name.startsWith("img_")) {
-            card.prepend(
-                $("<img>")
-                    .addClass("card-img-top")
-                    .attr("id", "searchEntryCardImage")
-                    .attr("src", entry.url)
-                    .attr("alt", entry.name)
-            );
-        }
+        card.prepend(
+            $("<img>")
+                .addClass("card-img-top")
+                .attr("src", entry.cover)
+                .attr("alt", entry.name)
+        );
         let cardBody = $("<div>")
             .addClass("card-body")
             .append(
-                $("<h5>").addClass("fs-3").text(`${entry.type} #${entry.id}`),
+                $("<h5>").addClass("fs-3").text(`Resource #${entry.id}`),
                 $("<p>").addClass("fs-6 lh-1").text(entry.name)
             );
         card.append(cardBody);

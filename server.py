@@ -30,11 +30,7 @@ def api_search():
     query = request.args.get("query", "")
     return jsonify(
         [
-            {
-                "id": obj.id,
-                "name": obj.name,
-                "type": type(obj).__name__[5:],  # valid names start with "Gkmas"
-            }
+            obj._get_canon_repr()
             for obj in _get_manifest().search(
                 "".join(f"(?=.*{word})" for word in query.split())
                 # use lookahead to match all words in any order
