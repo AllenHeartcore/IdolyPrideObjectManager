@@ -18,9 +18,7 @@ function populateHomepageContainers(data) {
     // Pre-populate with empty divs for indexing
     let container = $("#homeFeaturedContainer");
     for (let i = 0; i < NUM_FEATURED_SAMPLES; i++) {
-        container.append(
-            $("<div>").addClass("col-md-2 mt-3 image-landscape image-roundedge")
-        );
+        container.append($("<div>").addClass("col-md-2 mt-3 "));
     }
 
     // Place images in the correct order since Promise's are async
@@ -32,7 +30,10 @@ function populateHomepageContainers(data) {
                 );
                 return;
             }
-            let image = $("<img>").attr("src", url).attr("alt", item.name);
+            let image = $("<img>")
+                .attr("src", url)
+                .attr("alt", item.name)
+                .addClass("image-landscape image-roundedge shadow-at-hover");
             let link = $("<a>")
                 .attr("href", `/view/assetbundle/${item.id}`)
                 .append(image);

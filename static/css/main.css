@@ -85,13 +85,13 @@
 
 /* General multimedia */
 
-.image-landscape * {
+.image-landscape {
     aspect-ratio: 16 / 9;
     overflow: hidden;
     width: 100%;
     height: auto;
 }
 
-.image-roundedge * {
+.image-roundedge {
     border-radius: 0.5rem;
 }

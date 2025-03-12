@@ -103,7 +103,9 @@ function updateCardContainer() {
     let pageEntries = searchEntries.slice(start, end);
 
     pageEntries.forEach((entry) => {
-        let card = $("<div>").addClass("card").attr("id", "searchEntryCard");
+        let card = $("<div>")
+            .addClass("card shadow-at-hover")
+            .attr("id", "searchEntryCard");
         if (entry.name.startsWith("img_")) {
             getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
                 card.prepend(
