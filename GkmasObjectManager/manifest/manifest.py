@@ -7,7 +7,6 @@ from ..object import GkmasAssetBundle, GkmasResource
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
-    CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
     DEFAULT_DOWNLOAD_NWORKER,
 )
@@ -18,7 +17,6 @@ from .listing import GkmasObjectList
 
 import re
 import json
-import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -52,7 +50,7 @@ class GkmasManifest:
         ) -> None:
             Downloads the regex-specified assetbundles/resources to the specified path.
         export(path: Union[str, Path]) -> None:
-            Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+            Exports the manifest as ProtoDB and/or JSON to the specified path.
     """
 
     def __init__(self, jdict: dict, base_revision: int = 0):
@@ -150,17 +148,17 @@ class GkmasManifest:
 
     def export(self, path: PATH_ARGTYPE, format: str = "infer"):
         """
-        Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+        Exports the manifest as ProtoDB and/or JSON to the specified path.
         This is a dispatcher method.
 
         Args:
             path (Union[str, Path]): A file path.
                 The format is determined by the extension if 'format' is 'infer'.
-                (All extensions other than .json and .csv are inferred
+                (All extensions other than .json are inferred
                 as raw binary and therefore exported as ProtoDB, but
                 a warning is issued if the extension is not .pdb.)
             format (str) = 'infer': The format to export.
-                Should be one of 'pdb', 'json', 'csv', or 'infer'.
+                Should be one of 'pdb', 'json', or 'infer'.
         """
 
         path = Path(path)
@@ -170,8 +168,6 @@ class GkmasManifest:
                 format = "pdb"
             elif path.suffix == ".json":
                 format = "json"
-            elif path.suffix == ".csv":
-                format = "csv"
             else:
                 logger.warning("Unrecognized file extension, defaulting to ProtoDB")
                 format = "pdb"
@@ -180,8 +176,6 @@ class GkmasManifest:
             self._export_pdb(path)
         elif format == "json":
             self._export_json(path)
-        elif format == "csv":
-            self._export_csv(path)
         else:
             logger.warning(f"Unrecognized format '{format}', aborted")
             # Could also be logger.error, but let's fail gracefully.
@@ -220,29 +214,6 @@ class GkmasManifest:
             logger.success(f"JSON has been written into {path}")
         except:
             logger.error(f"Failed to write JSON into {path}")
-
-    def _export_csv(self, path: Path):
-        """
-        [INTERNAL] Writes CSV-serialized data into the specified path.
-        Assetbundles and resources are concatenated into a single table and sorted by name.
-        """
-
-        if path.suffix != ".csv":
-            logger.warning("Attempting to write CSV into a non-.csv file")
-
-        # [RESOLVED] Forced list conversion is necessary since GkmasObjectList overrides __iter__,
-        # which handles integer keys (index by ID) and messes up with standard modules
-        # like pandas that rely on self[0] as a "sample" object from the list.
-        dfa = pd.DataFrame(self.assetbundles._get_canon_repr(), columns=CSV_COLUMNS)
-        dfr = pd.DataFrame(self.resources._get_canon_repr(), columns=CSV_COLUMNS)
-        df = pd.concat([dfa, dfr], ignore_index=True)
-        df.sort_values("name", inplace=True)
-
-        try:
-            df.to_csv(path, index=False)
-            logger.success(f"CSV has been written into {path}")
-        except:
-            logger.error(f"Failed to write CSV into {path}")
 
     # ----------- DOWNLOAD ----------- #
 

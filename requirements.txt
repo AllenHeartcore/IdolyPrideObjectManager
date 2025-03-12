@@ -1,9 +1,7 @@
-rich
 flask
 
 # Manifest:
-# request, decrypt, parse, export
+# request, decrypt, parse
 requests
 pycryptodome
 protobuf
-pandas

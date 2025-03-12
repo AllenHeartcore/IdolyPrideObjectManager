@@ -35,9 +35,6 @@ GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz")
 OBJLIST_ID_FIELD = "id"
 OBJLIST_NAME_FIELD = "name"
 
-# manifest export
-CSV_COLUMNS = ["objectName", "md5", "name", "size", "state"]
-
 # manifest download dispatcher
 DEFAULT_DOWNLOAD_PATH = "objects/"
 DEFAULT_DOWNLOAD_NWORKER = multiprocessing.cpu_count()
