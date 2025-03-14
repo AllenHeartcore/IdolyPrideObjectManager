@@ -60,6 +60,12 @@ $(document).ready(function () {
         isImageLoaded = false;
     }
 
+    // <textarea> doesn't like indentations...
+    caption = $("#editorCaption").val();
+    $("#editorCaption").val(caption.trim());
+
+    // Event listeners for media preview
+
     $("#editorFieldSongUrl").on("input", function () {
         let url =
             "https://object.asset.game-gakuen-idolmaster.jp/" + $(this).val();
@@ -87,6 +93,8 @@ $(document).ready(function () {
     $("#editorMediaAudio").on("error", function () {
         isAudioLoaded = false;
     });
+
+    // Event listeners for buttons
 
     $("#editorKeywordsAddButton").on("click", function () {
         $("#keywords-list-ul").append(
@@ -116,7 +124,7 @@ $(document).ready(function () {
         let isKeywordsValid = true;
         $("#keywords-list-ul input").each(function () {
             if (checkEmptyInputAndWarn(this)) {
-                keywords.push($(this).val());
+                keywords.push($(this).val().trim());
             } else {
                 isKeywordsValid = false;
                 return; // this only breaks the loop but **stays in the function**
@@ -130,7 +138,7 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify({
                 id: info.id,
-                name: $("#editorFieldName").val(),
+                name: $("#editorFieldName").val().trim(),
                 url:
                     "https://object.asset.game-gakuen-idolmaster.jp/" +
                     $("#editorFieldSongUrl").val(),
@@ -138,7 +146,7 @@ $(document).ready(function () {
                     "https://object.asset.game-gakuen-idolmaster.jp/" +
                     $("#editorFieldCoverUrl").val(),
                 keywords: keywords,
-                caption: $("#editorCaption").val(),
+                caption: $("#editorCaption").val().trim(),
             }),
             success: function () {
                 window.location.href = "/view/" + info.id;
