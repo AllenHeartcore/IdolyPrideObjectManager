@@ -114,26 +114,16 @@ class GkmasManifest:
         """
         return self.resources._get_largest_id()
 
-    def add(self, info: dict):
+    def update(self, id: int, info: dict):
         """
-        Adds a new resource to the manifest. Handled by listing backend.
+        Adds or edits an existing resource in the manifest. Handled by listing backend.
 
         Args:
+            id (int): ID of the resource to add or edit.
             info (dict): Dictionary containing resource info.
-                Fields must be exactly ["name", "url", "cover", "keywords", "caption"].
+                Fields must be exactly ["id", "name", "url", "cover", "keywords", "caption"].
         """
-        self.resources.add(info)
-
-    def edit(self, id: int, info: dict):
-        """
-        Edits an existing resource in the manifest. Handled by listing backend.
-
-        Args:
-            id (int): ID of the resource to edit.
-            info (dict): Dictionary containing resource info.
-                Fields must be exactly ["name", "url", "cover", "keywords", "caption"].
-        """
-        self.resources.edit(id, info)
+        self.resources.update(id, info)
 
     def export(self, path: PATH_ARGTYPE):
         """

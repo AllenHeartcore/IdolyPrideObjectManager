@@ -108,34 +108,20 @@ class GkmasObjectList:
             raise ValueError(f"Failed to get size and MD5 for {url}")
         return len(response.content), md5(response.content).hexdigest()
 
-    def add(self, info: dict):
+    def update(self, id: int, info: dict):
         """
-        Adds a new object to the list.
+        Adds or edits an object in the list.
         """
-
-        assert set(info.keys()) == set(RESOURCE_INFO_CUSTOM_FIELDS)
-        size, md5 = self._url_to_size_and_md5(info["url"])
-        id = self._get_largest_id() + 1
-        info["size"] = size
-        info["md5"] = md5
-        info[OBJLIST_ID_FIELD] = id
-        # they must be present, but not necessarily sorted
-
-        self.infos.append(info)
-        self._id_idx[id] = len(self.infos) - 1
-        self._name_idx[info["name"]] = len(self.infos) - 1
-        self._objects.append(None)
-
-    def edit(self, id: int, info: dict):
-        """
-        Edits an existing object in the list.
-        """
-
-        # yeah, there's some redundancy
         assert set(info.keys()) == set(RESOURCE_INFO_CUSTOM_FIELDS)
         size, md5 = self._url_to_size_and_md5(info["url"])
         info["size"] = size
         info["md5"] = md5
 
-        self.infos[self._id_idx[id]].update(info)
-        self._objects[self._id_idx[id]] = None
+        try:  # edit case
+            self.infos[self._id_idx[id]].update(info)
+            self._objects[self._id_idx[id]] = None
+        except KeyError:  # add case
+            self.infos.append(info)
+            self._id_idx[id] = len(self.infos) - 1
+            self._name_idx[info["name"]] = len(self.infos) - 1
+            self._objects.append(None)

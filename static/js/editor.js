@@ -128,9 +128,10 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/api/edit/" + info.id,
+            url: "/api/update/" + info.id,
             contentType: "application/json",
             data: JSON.stringify({
+                id: info.id,
                 name: $("#editorFieldName").val(),
                 url:
                     "https://object.asset.game-gakuen-idolmaster.jp/" +

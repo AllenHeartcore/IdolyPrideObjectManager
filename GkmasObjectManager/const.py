@@ -19,6 +19,7 @@ RESOURCE_INFO_FIELDS = [
     "caption",
 ]
 RESOURCE_INFO_CUSTOM_FIELDS = [
+    "id",
     "name",
     "url",
     "cover",
