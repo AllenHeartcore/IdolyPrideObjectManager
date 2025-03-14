@@ -4,16 +4,7 @@ General-purpose resource.
 """
 
 from ..log import Logger
-from ..const import (
-    PATH_ARGTYPE,
-    RESOURCE_INFO_FIELDS,
-    CHARACTER_ABBREVS,
-)
-
-import re
-from hashlib import md5
-from pathlib import Path
-from typing import Tuple
+from ..const import RESOURCE_INFO_FIELDS
 
 
 logger = Logger()

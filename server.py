@@ -39,6 +39,20 @@ def api_search():
     )
 
 
+@app.route("/api/add", methods=["POST"])
+def api_add():
+    data = request.get_json()
+    _get_manifest().add(data)
+    return Response(status=200)
+
+
+@app.route("/api/edit/<id>", methods=["POST"])
+def api_edit(id):
+    data = request.get_json()
+    _get_manifest().edit(int(id), data)
+    return Response(status=200)
+
+
 # Frontend routes
 
 

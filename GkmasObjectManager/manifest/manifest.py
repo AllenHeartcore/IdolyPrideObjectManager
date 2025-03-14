@@ -13,7 +13,6 @@ from .listing import GkmasObjectList
 import re
 import json
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # The logger would better be a global variable in the
@@ -107,6 +106,27 @@ class GkmasManifest:
             "revision": self.revision._get_canon_repr(),
             "resourceList": self.resources._get_canon_repr(),
         }
+
+    def add(self, info: dict):
+        """
+        Adds a new resource to the manifest. Handled by listing backend.
+
+        Args:
+            info (dict): Dictionary containing resource info.
+                Fields must be exactly ["name", "url", "cover", "keywords", "caption"].
+        """
+        self.resources.add(info)
+
+    def edit(self, id: int, info: dict):
+        """
+        Edits an existing resource in the manifest. Handled by listing backend.
+
+        Args:
+            id (int): ID of the resource to edit.
+            info (dict): Dictionary containing resource info.
+                Fields must be exactly ["name", "url", "cover", "keywords", "caption"].
+        """
+        self.resources.edit(id, info)
 
     def export(self, path: PATH_ARGTYPE):
         """

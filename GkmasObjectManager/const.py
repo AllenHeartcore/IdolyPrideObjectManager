@@ -18,6 +18,13 @@ RESOURCE_INFO_FIELDS = [
     "keywords",
     "caption",
 ]
+RESOURCE_INFO_CUSTOM_FIELDS = [
+    "name",
+    "url",
+    "cover",
+    "keywords",
+    "caption",
+]
 
 # manifest diff
 OBJLIST_ID_FIELD = "id"
