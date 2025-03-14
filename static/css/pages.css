@@ -28,38 +28,42 @@
     margin: 0.5rem 0;
 }
 
-/* View */
+/* View, Editor */
 
-#viewMedia {
+#viewMedia,
+#editorMedia {
     display: flex;
     flex-direction: column; /* stack children vertically */
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
+    height: 30rem; /* unlike full build, don't lock aspect ratio to accomodate editor */
     overflow: hidden;
     border: 2px dotted lightgray;
     background-color: white; /* may be overridden by color.js */
 }
 
-#viewMediaImage {
+#viewMediaImage,
+#editorMediaImage {
     display: block;
-    width: 42%;
-    max-height: 30rem;
+    width: 22.5rem;
+    height: 22.5rem; /* fix for gray display at invalid url */
     object-fit: contain;
     object-position: center;
 }
 
-#viewMediaAudio {
+#viewMediaAudio,
+#editorMediaAudio {
     display: block;
-    width: 42%;
+    width: 22.5rem;
 }
 
-#viewCaption {
+#viewCaption,
+#editorCaption {
     min-height: 15vh;
     overflow: hidden;
 }
 
-#viewCaptionText {
+#viewCaptionText,
+#editorCaptionText {
     font-size: 1.25rem;
     line-height: 1.5;
 }

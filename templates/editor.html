@@ -8,18 +8,26 @@
 <!-- AJAX Interface -->
 <!-- Must make these visible to JS even if no json conversion is involved -->
 <script>
+    let edit_mode = "{{ edit_mode }}";
     let type = "{{ type }}";
     let info = {{ info | tojson }};
 </script>
 
 <div id="editorpageElements" class="container">
-    <div class="row">
-        <div class="col-md-12 subtitle mt-4">{{ type }} #{{ info.id }}</div>
-        <div class="col-md-12 title mt-2">{{ info.name }}</div>
+    <div class="row gx-0">
+        <div class="col-md-12 subtitle mt-4">
+            Editing {{ type }} #{{ info.id }}
+        </div>
+        <input
+            id="editorFieldName"
+            type="text"
+            class="form-control col-md-12 title mt-2"
+            value="{{ info.name }}"
+        />
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-8" id="editorpageLeftColumn">
+        <div class="col-md-6" id="editorpageLeftColumn">
             <!-- upper left -->
             <div class="row">
                 <div class="col-md-12">
@@ -57,31 +65,51 @@
             </div>
         </div>
 
-        <div class="col-md-4" id="editorpageRightColumn">
+        <div class="col-md-6" id="editorpageRightColumn">
             <!-- upper right -->
-            <div class="row">
-                <div class="col-md-12">
-                    <a
-                        href="{{ info.url }}"
-                        rel="noopener noreferrer"
-                        class="btn btn-primary w-100 fs-3"
-                    >
-                        Download Song
-                    </a>
+            <div class="row gx-0 text-size-125-force align-center">
+                <div class="col-md-2 text-bold align-left">Song URL:</div>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            https://object.asset.game-gakuen-idolmaster.jp/
+                        </span>
+                        <input
+                            id="editorFieldSongUrl"
+                            class="form-control"
+                            type="text"
+                            maxlength="6"
+                            pattern="^[A-Za-z0-9]{6}$"
+                            title="Enter exactly 6 alphanumerical characters"
+                            placeholder="6 digits"
+                            required
+                        />
+                    </div>
                 </div>
-                <div class="col-md-12 mt-3">
-                    <a
-                        href="{{ info.cover }}"
-                        rel="noopener noreferrer"
-                        class="btn btn-outline-primary w-100 fs-3"
-                    >
-                        Download Cover
-                    </a>
+            </div>
+            <div class="row mt-3 gx-0 text-size-125-force align-center">
+                <div class="col-md-2 text-bold align-left">Cover URL:</div>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            https://object.asset.game-gakuen-idolmaster.jp/
+                        </span>
+                        <input
+                            id="editorFieldCoverUrl"
+                            class="form-control"
+                            type="text"
+                            maxlength="6"
+                            pattern="^[A-Za-z0-9]{6}$"
+                            title="Enter exactly 6 alphanumerical characters"
+                            placeholder="6 digits"
+                            required
+                        />
+                    </div>
                 </div>
             </div>
 
             <!-- middle right -->
-            <div class="text-bold fs-2 mt-5">Explore by keywords</div>
+            <div class="text-bold fs-2 mt-5">Keywords</div>
             <ul>
                 {% if info.keywords %} {% for keyword in info.keywords %}
                 <li class="fs-4">
@@ -97,11 +125,14 @@
                         <tbody class="align-middle text-gray">
                             <tr>
                                 <th>Size</th>
-                                <td>{{ info.size }}</td>
+                                <td id="editorTableSize">{{ info.size }}</td>
                             </tr>
                             <tr>
                                 <th>MD5</th>
-                                <td class="text-monospace fs-6">
+                                <td
+                                    id="editorTableMD5"
+                                    class="text-monospace fs-6"
+                                >
                                     {{ info.md5 }}
                                 </td>
                             </tr>
