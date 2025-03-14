@@ -5,7 +5,7 @@ function keywordFilter(alias) {
         // to recognize our alias as a separate keyword
         query += " ";
     }
-    $("#searchInput").val(`${query}${alias} `); // so the user can directly continue
+    $("#searchInput").val(`${query}"${alias}" `); // so the user can directly continue
     $("#searchInput").focus();
 }
 

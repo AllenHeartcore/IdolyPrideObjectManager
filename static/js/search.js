@@ -191,6 +191,7 @@ function populateSearchpageContainers(queryDisplay) {
 }
 
 $(document).ready(function () {
+    let query = decodeURIComponent(window.location.search).split("=")[1];
     let queryDisplay = query.trim().replace(/\s+/g, " "); // trimmed, duplicate spaces removed
     $("#searchInput").val(queryDisplay + " "); // allows immediate edit/resubmission
     // search input should be displayed alongside the spinner, before a successful AJAX response

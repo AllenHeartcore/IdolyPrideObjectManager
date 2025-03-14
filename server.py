@@ -1,5 +1,7 @@
 import GkmasObjectManager as gom
 
+import re
+import html
 from flask import Flask, render_template, request, jsonify, Response
 
 
@@ -28,9 +30,10 @@ def api_manifest():
 @app.route("/api/search")
 def api_search():
     query = request.args.get("query", "")
+    tokens = re.findall(r'"[^"]+"|\S+', html.unescape(query))
     return jsonify(
         _get_manifest().search(
-            "".join(f"(?=.*{word})" for word in query.split())
+            "".join(f"(?=.*{token.strip('"')})" for token in tokens)
             # use lookahead to match all words in any order
         )
     )
