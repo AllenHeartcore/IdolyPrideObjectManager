@@ -63,7 +63,7 @@ function resetContainers() {
     $("#editorFieldName").val("");
     $("#editorFieldSongUrl").val("");
     $("#editorFieldCoverUrl").val("");
-    $("#keywords-list-ul").empty();
+    $("#editorKeywordsList").empty();
     $("#editorCaption").val("");
     $("#editorMediaImage").attr("src", GRAY_RECTANGLE_PLACEHOLDER);
     $("#editorMediaAudio").attr("src", "");
@@ -122,7 +122,7 @@ $(document).ready(function () {
     // Event listeners for buttons
 
     $("#editorKeywordsAddButton").on("click", function () {
-        $("#keywords-list-ul").append(
+        $("#editorKeywordsList").append(
             `<li class="mb-2 d-flex">
                 <input type="text" class="fs-4 form-control me-2" placeholder="Keyword" />
                 <button id="editorKeywordsDeleteButton" type="button" class="fs-4 btn btn-danger bi bi-trash"></button>
@@ -147,7 +147,7 @@ $(document).ready(function () {
 
         let keywords = [];
         let isKeywordsValid = true;
-        $("#keywords-list-ul input").each(function () {
+        $("#editorKeywordsList input").each(function () {
             if (checkEmptyInputAndWarn(this)) {
                 keywords.push($(this).val().trim());
             } else {
@@ -194,6 +194,10 @@ $(document).ready(function () {
         if (!confirm("Are you sure you want to discard your changes?")) {
             return;
         }
-        window.location.href = "/view/" + info.id;
+        if (edit_mode) {
+            window.location.href = "/view/" + info.id;
+        } else {
+            resetContainers();
+        }
     });
 });

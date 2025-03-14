@@ -16,9 +16,9 @@
 <div id="editorpageElements" class="container">
     <div class="row gx-0">
         <div class="col-md-12 subtitle mt-4">
-            <span
-                >{% if edit_mode %} Editing {% else %} Adding {% endif %}</span
-            >
+            <span>
+                {% if edit_mode %} Editing {% else %} Adding {% endif %}
+            </span>
             <span>{{ type }}</span>
             <span id="editorID">#{{ info.id }}</span>
         </div>
@@ -121,8 +121,8 @@
 
             <!-- middle right -->
             <div class="text-bold fs-2 mt-4 mb-1">Keywords</div>
-            <div class="#editorKeywordsContainer">
-                <ul id="keywords-list-ul" class="list-unstyled">
+            <div id="editorKeywordsContainer">
+                <ul id="editorKeywordsList" class="list-unstyled">
                     {% if info.keywords %} {% for keyword in info.keywords %}
                     <li class="mb-2 d-flex">
                         <input
