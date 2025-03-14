@@ -39,11 +39,6 @@ def api_search():
     )
 
 
-@app.route("/api/<id>/caption")
-def api_caption(id):
-    return _get_manifest().resources[int(id)].get_caption()
-
-
 # Frontend routes
 
 

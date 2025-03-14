@@ -48,19 +48,14 @@
             <!-- lower left -->
             <div class="row mt-4">
                 <div class="col-md-12">
-                    <div id="editorCaption" class="container">
-                        <div id="loadingSpinnerCaption">
-                            <div
-                                class="spinner-border me-2"
-                                role="status"
-                            ></div>
-                            Generating caption...
-                        </div>
-                        <div
-                            id="editorCaptionText"
-                            class="hide-by-default"
-                        ></div>
-                    </div>
+                    <textarea
+                        id="editorCaption"
+                        class="form-control"
+                        style="overflow: auto; resize: vertical"
+                        rows="3"
+                    >
+{{ info.caption }}
+                    </textarea>
                 </div>
             </div>
         </div>

@@ -16,6 +16,7 @@ RESOURCE_INFO_FIELDS = [
     "url",
     "cover",
     "keywords",
+    "caption",
 ]
 
 # manifest diff

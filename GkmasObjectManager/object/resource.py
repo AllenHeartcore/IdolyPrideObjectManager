@@ -52,7 +52,3 @@ class GkmasResource:
     def _get_canon_repr(self):
         # this format retains the order of fields
         return {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS}
-
-    # No leading underscore, since this should be client-side visible
-    def get_caption(self) -> str:
-        raise NotImplementedError
