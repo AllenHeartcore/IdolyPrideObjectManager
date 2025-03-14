@@ -103,7 +103,7 @@ class GkmasObjectList:
         Returns the size and MD5 hash of the object at the given URL.
         A helper function for add() and edit().
         """
-        response = requests.head(url)
+        response = requests.get(url)
         if response.status_code != requests.codes.ok:
             raise ValueError(f"Failed to get size and MD5 for {url}")
         return len(response.content), md5(response.content).hexdigest()
