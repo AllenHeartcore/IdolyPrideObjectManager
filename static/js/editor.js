@@ -1,3 +1,15 @@
+function checkEmptyInputAndWarn(element) {
+    if ($(element).val().trim() === "") {
+        $(element).addClass("is-invalid");
+        $(element).attr("placeholder", "Missing");
+        $(element).focus();
+        return false;
+    } else {
+        $(element).removeClass("is-invalid");
+        return true;
+    }
+}
+
 $(document).ready(function () {
     for (let keyword of info.keywords) {
         let alias = CHARACTER_ALIAS[keyword];
@@ -37,7 +49,7 @@ $(document).ready(function () {
     $("#editorKeywordsAddButton").on("click", function () {
         $("#keywords-list-ul").append(
             `<li class="mb-2 d-flex">
-                <input type="text" class="fs-4 form-control me-2" />
+                <input type="text" class="fs-4 form-control me-2" placeholder="Keyword" />
                 <button id="editorKeywordsDeleteButton" type="button" class="fs-4 btn btn-danger bi bi-trash"></button>
             </li>`
         );
@@ -46,5 +58,44 @@ $(document).ready(function () {
     // event delegation for dynamically added elements
     $(document).on("click", "#editorKeywordsDeleteButton", function () {
         $(this).parent().remove();
+    });
+
+    $("#editorSubmitButton").on("click", function () {
+        if (
+            !checkEmptyInputAndWarn("#editorFieldName") ||
+            !checkEmptyInputAndWarn("#editorFieldSongUrl") ||
+            !checkEmptyInputAndWarn("#editorFieldCoverUrl")
+        )
+            return;
+
+        let keywords = [];
+        $("#keywords-list-ul input").each(function () {
+            if (checkEmptyInputAndWarn(this)) {
+                keywords.push($(this).val());
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/api/edit/" + info.id,
+            contentType: "application/json",
+            data: JSON.stringify({
+                name: $("#editorFieldName").val(),
+                url:
+                    "https://object.asset.game-gakuen-idolmaster.jp/" +
+                    $("#editorFieldSongUrl").val(),
+                cover:
+                    "https://object.asset.game-gakuen-idolmaster.jp/" +
+                    $("#editorFieldCoverUrl").val(),
+                keywords: keywords,
+                caption: $("#editorCaption").val(),
+            }),
+            success: function () {
+                window.location.href = "/view/" + info.id;
+            },
+            error: function (...args) {
+                dumpErrorToConsole(...args);
+            },
+        });
     });
 });

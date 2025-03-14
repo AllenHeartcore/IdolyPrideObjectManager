@@ -20,9 +20,11 @@
         </div>
         <input
             id="editorFieldName"
-            type="text"
             class="form-control col-md-12 title mt-2"
+            type="text"
             value="{{ info.name }}"
+            placeholder="Title"
+            required
         />
     </div>
 
@@ -53,6 +55,7 @@
                         class="form-control"
                         style="overflow: auto; resize: vertical"
                         rows="3"
+                        placeholder="Image caption"
                     >
 {{ info.caption }}
                     </textarea>
@@ -106,15 +109,16 @@
             </div>
 
             <!-- middle right -->
-            <div class="text-bold fs-2 mt-5 mb-1">Keywords</div>
+            <div class="text-bold fs-2 mt-4 mb-1">Keywords</div>
             <div class="#editorKeywordsContainer">
                 <ul id="keywords-list-ul" class="list-unstyled">
                     {% if info.keywords %} {% for keyword in info.keywords %}
                     <li class="mb-2 d-flex">
                         <input
+                            class="fs-4 form-control me-2"
+                            placeholder="Keyword"
                             type="text"
                             value="{{ keyword }}"
-                            class="fs-4 form-control me-2"
                         />
                         <button
                             id="editorKeywordsDeleteButton"
@@ -155,6 +159,28 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- submission -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <button
+                        id="editorSubmitButton"
+                        type="button"
+                        class="btn btn-primary w-100 fs-3"
+                    >
+                        Submit
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button
+                        id="editorDiscardButton"
+                        type="button"
+                        class="btn btn-outline-danger w-100 fs-3"
+                    >
+                        Discard Changes
+                    </button>
                 </div>
             </div>
         </div>

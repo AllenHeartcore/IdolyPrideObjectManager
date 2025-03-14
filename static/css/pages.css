@@ -66,6 +66,11 @@
 
 /* Editor */
 
+#editButton {
+    margin: 0.5rem 0 0 0;
+    height: 50%;
+}
+
 #editorTableKey {
     width: 20%;
 }
