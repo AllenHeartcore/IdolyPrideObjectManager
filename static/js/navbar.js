@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $("#addButton").show();
     setRandomAccentColor();
 
     $("#searchForm").css("width", "25%");
