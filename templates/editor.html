@@ -16,8 +16,11 @@
 <div id="editorpageElements" class="container">
     <div class="row gx-0">
         <div class="col-md-12 subtitle mt-4">
-            {% if edit_mode %} Editing {{ type }} #{{ info.id }} {% else %}
-            Adding {{ type }} #{{ info.id }} {% endif %}
+            <span
+                >{% if edit_mode %} Editing {% else %} Adding {% endif %}</span
+            >
+            <span>{{ type }}</span>
+            <span id="editorID">#{{ info.id }}</span>
         </div>
         <input
             id="editorFieldName"
@@ -27,6 +30,13 @@
             placeholder="Title"
             required
         />
+    </div>
+
+    <div id="editorNotifBanner" class="hide-by-default">
+        Entry
+        <span id="editorNotifID" class="text-bold"></span>
+        successfully created.
+        <a href="#" id="editorNotifUrl"> View </a>
     </div>
 
     <div class="row mt-4">

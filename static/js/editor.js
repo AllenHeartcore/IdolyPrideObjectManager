@@ -46,6 +46,31 @@ function updateImage(url) {
     imgBuffer.src = url; // start loading
 }
 
+function showNotification() {
+    const banner = $("#editorNotifBanner");
+    banner.css("display", "block");
+    banner.css("opacity", "1");
+    setTimeout(() => {
+        banner.css("opacity", "0");
+        setTimeout(() => {
+            banner.css("display", "none");
+        }, 5000); // fade out
+    }, 10); // start immediately
+}
+
+function resetContainers() {
+    $("#editorID").text(info.id);
+    $("#editorFieldName").val("");
+    $("#editorFieldSongUrl").val("");
+    $("#editorFieldCoverUrl").val("");
+    $("#keywords-list-ul").empty();
+    $("#editorCaption").val("");
+    $("#editorMediaImage").attr("src", GRAY_RECTANGLE_PLACEHOLDER);
+    $("#editorMediaAudio").attr("src", "");
+    $("#editorTableSize").text("");
+    $("#editorTableMD5").text("");
+}
+
 $(document).ready(function () {
     for (let keyword of info.keywords) {
         let alias = CHARACTER_ALIAS[keyword];
@@ -149,7 +174,15 @@ $(document).ready(function () {
                 caption: $("#editorCaption").val().trim(),
             }),
             success: function () {
-                window.location.href = "/view/" + info.id;
+                if (edit_mode) {
+                    window.location.href = "/view/" + info.id;
+                } else {
+                    $("#editorNotifID").text(info.id);
+                    $("#editorNotifUrl").attr("href", "/view/" + info.id);
+                    showNotification();
+                    info.id = info.id + 1;
+                    resetContainers();
+                }
             },
             error: function (...args) {
                 dumpErrorToConsole(...args);
