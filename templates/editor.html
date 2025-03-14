@@ -80,6 +80,7 @@
                             type="text"
                             maxlength="6"
                             pattern="^[A-Za-z0-9]{6}$"
+                            value="{{ info.url[-6:] }}"
                             title="Enter exactly 6 alphanumerical characters"
                             placeholder="6 digits"
                             required
@@ -100,6 +101,7 @@
                             type="text"
                             maxlength="6"
                             pattern="^[A-Za-z0-9]{6}$"
+                            value="{{ info.cover[-6:] }}"
                             title="Enter exactly 6 alphanumerical characters"
                             placeholder="6 digits"
                             required
@@ -109,19 +111,39 @@
             </div>
 
             <!-- middle right -->
-            <div class="text-bold fs-2 mt-5">Keywords</div>
-            <ul>
-                {% if info.keywords %} {% for keyword in info.keywords %}
-                <li class="fs-4">
-                    <a href="/search?query={{ keyword }}">{{ keyword }}</a>
-                </li>
-                {% endfor %} {% endif %}
-            </ul>
+            <div class="text-bold fs-2 mt-5 mb-1">Keywords</div>
+            <div class="#editorKeywordsContainer">
+                <ul id="keywords-list-ul" class="list-unstyled">
+                    {% if info.keywords %} {% for keyword in info.keywords %}
+                    <li class="mb-2 d-flex">
+                        <input
+                            type="text"
+                            value="{{ keyword }}"
+                            class="fs-4 form-control me-2"
+                        />
+                        <button
+                            id="editorKeywordsDeleteButton"
+                            type="button"
+                            class="fs-4 btn btn-danger bi bi-trash"
+                        ></button>
+                    </li>
+                    {% endfor %} {% endif %}
+                </ul>
+                <button
+                    id="editorKeywordsAddButton"
+                    type="button"
+                    class="fs-4 btn btn-primary bi bi-plus-lg"
+                ></button>
+            </div>
 
             <!-- lower right -->
             <div class="row mt-5">
                 <div class="col-md-12">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col id="editorTableKey" />
+                            <col id="editorTableValue" />
+                        </colgroup>
                         <tbody class="align-middle text-gray">
                             <tr>
                                 <th>Size</th>
