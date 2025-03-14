@@ -29,13 +29,10 @@ def api_manifest():
 def api_search():
     query = request.args.get("query", "")
     return jsonify(
-        [
-            obj._get_canon_repr()
-            for obj in _get_manifest().search(
-                "".join(f"(?=.*{word})" for word in query.split())
-                # use lookahead to match all words in any order
-            )
-        ]
+        _get_manifest().search(
+            "".join(f"(?=.*{word})" for word in query.split())
+            # use lookahead to match all words in any order
+        )
     )
 
 

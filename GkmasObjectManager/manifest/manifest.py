@@ -144,19 +144,39 @@ class GkmasManifest:
         except:
             logger.error(f"Failed to write JSON into {path}")
 
+    def _search_by(self, field: str, criterion: str):
+        names = []
+        for obj in self:
+            if re.match(criterion, eval(f"obj.{field}"), flags=re.IGNORECASE):
+                names.append(obj.name)
+        return set(names)
+
+    def _search_by_listed(self, field: str, criterion: str):
+        names = []
+        for obj in self:
+            for val in eval(f"obj.{field}"):
+                if re.match(criterion, val, flags=re.IGNORECASE):
+                    names.append(obj.name)
+                    break
+        return set(names)
+
     def search(self, criterion: str):
         """
         Searches the manifest for objects matching the specified criterion.
-        Returns a list of object names.
+        Returns a list of canonical representations of objects.
 
         Args:
             criterion (str): Regex pattern of object names.
         """
 
-        names = []
-        for obj in self:
-            if re.match(criterion, obj.name, flags=re.IGNORECASE):
-                names.append(obj.name)
-        return [self[name] for name in sorted(names)]
+        return [
+            self[name]._get_canon_repr()
+            for name in set().union(
+                self._search_by("name", criterion),
+                self._search_by("caption", criterion),
+                self._search_by_listed("keywords", criterion),
+            )
+        ]
+
         # This will be called by frontend.
         # We instantiate here to make ID's readily available.
