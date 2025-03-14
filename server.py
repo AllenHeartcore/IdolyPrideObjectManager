@@ -70,6 +70,23 @@ def view(id):
     return render_template("view.html", info=info, type="Resource")
 
 
+@app.route("/add")
+def add():
+    return render_template("editor.html", edit_mode=False, info={}, type="Resource")
+
+
+@app.route("/edit/<id>")
+def edit(id):
+
+    try:
+        obj = _get_manifest().resources[int(id)]
+    except KeyError:
+        return render_template("404.html"), 404
+
+    info = obj._get_canon_repr()
+    return render_template("editor.html", edit_mode=True, info=info, type="Resource")
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("404.html"), 404
