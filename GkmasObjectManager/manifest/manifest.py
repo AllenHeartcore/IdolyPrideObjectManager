@@ -107,6 +107,13 @@ class GkmasManifest:
             "resourceList": self.resources._get_canon_repr(),
         }
 
+    def _get_largest_id(self):
+        """
+        [INTERNAL] Returns the largest ID in the manifest.
+        Used by frontend when previewing an add.
+        """
+        return self.resources._get_largest_id()
+
     def add(self, info: dict):
         """
         Adds a new resource to the manifest. Handled by listing backend.

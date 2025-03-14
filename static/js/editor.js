@@ -17,6 +17,7 @@ function checkInvalidMediaAndWarn(element, flag) {
     if (flag) {
         $(element).addClass("is-invalid");
         $(element).attr("placeholder", "Invalid");
+        $(element).val("");
         $(element).focus();
         return false;
     } else {
@@ -35,10 +36,7 @@ function updateImage(url) {
     };
 
     imgBuffer.onerror = function () {
-        $("#editorMediaImage").attr(
-            "src",
-            "data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><rect width='100%' height='100%' fill='%23dddddd'/></svg>"
-        );
+        $("#editorMediaImage").attr("src", GRAY_RECTANGLE_PLACEHOLDER);
         isImageLoaded = false;
         // Without the buffer, the action of loading the placeholder itself
         // will trigger the onload event, therefore the flag is never set to false!
@@ -54,6 +52,12 @@ $(document).ready(function () {
         if (alias) {
             setAccentColorByString(alias);
         }
+    }
+
+    if (~edit_mode) {
+        $("#editorMediaImage").attr("src", GRAY_RECTANGLE_PLACEHOLDER);
+        isAudioLoaded = false;
+        isImageLoaded = false;
     }
 
     $("#editorFieldSongUrl").on("input", function () {
@@ -144,5 +148,12 @@ $(document).ready(function () {
                 dumpErrorToConsole(...args);
             },
         });
+    });
+
+    $("#editorDiscardButton").on("click", function () {
+        if (!confirm("Are you sure you want to discard your changes?")) {
+            return;
+        }
+        window.location.href = "/view/" + info.id;
     });
 });

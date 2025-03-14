@@ -16,7 +16,8 @@
 <div id="editorpageElements" class="container">
     <div class="row gx-0">
         <div class="col-md-12 subtitle mt-4">
-            Editing {{ type }} #{{ info.id }}
+            {% if edit_mode %} Editing {{ type }} #{{ info.id }} {% else %}
+            Adding {{ type }} #{{ info.id }} {% endif %}
         </div>
         <input
             id="editorFieldName"

@@ -81,7 +81,22 @@ def view(id):
 
 @app.route("/add")
 def add():
-    return render_template("editor.html", edit_mode=False, info={}, type="Resource")
+    return render_template(
+        "editor.html",
+        edit_mode=False,
+        info={
+            "id": _get_manifest()._get_largest_id() + 1,
+            "name": "",
+            "size": "Unknown",
+            "md5": "Unknown",
+            "url": "",
+            "cover": "",
+            "keywords": [],
+            "caption": "",
+            # this is neater than writing sanity checks in the template
+        },
+        type="Resource",
+    )
 
 
 @app.route("/edit/<id>")

@@ -28,6 +28,9 @@ const SONG_LIST = [
     "Birthday Single",
 ];
 
+const GRAY_RECTANGLE_PLACEHOLDER =
+    "data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><rect width='100%' height='100%' fill='%23dddddd'/></svg>";
+
 function dumpErrorToConsole(...args) {
     var name_of_parent_function = arguments.callee.caller.name;
     console.log("Error in " + name_of_parent_function);
