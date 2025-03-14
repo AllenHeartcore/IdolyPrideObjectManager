@@ -8,7 +8,7 @@
 <!-- AJAX Interface -->
 <!-- Must make these visible to JS even if no json conversion is involved -->
 <script>
-    let edit_mode = "{{ edit_mode }}";
+    let edit_mode = {{ edit_mode | tojson }};
     let type = "{{ type }}";
     let info = {{ info | tojson }};
 </script>

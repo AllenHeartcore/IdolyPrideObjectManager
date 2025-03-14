@@ -54,7 +54,7 @@ $(document).ready(function () {
         }
     }
 
-    if (~edit_mode) {
+    if (!edit_mode) {
         $("#editorMediaImage").attr("src", GRAY_RECTANGLE_PLACEHOLDER);
         isAudioLoaded = false;
         isImageLoaded = false;
@@ -81,12 +81,10 @@ $(document).ready(function () {
     });
 
     $("#editorMediaAudio").on("loadeddata", function () {
-        console.log("Audio loaded");
         isAudioLoaded = true;
     });
 
     $("#editorMediaAudio").on("error", function () {
-        console.log("Audio error");
         isAudioLoaded = false;
     });
 
