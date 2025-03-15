@@ -178,6 +178,8 @@ function populateSearchpageContainers(queryDisplay) {
 
     if (searchEntries.length === 0) {
         $("#searchResultDigest").text("No results found.");
+        $("#searchEntryCardContainer").hide();
+        $("#paginationContainer").hide();
     } else {
         $("#searchResultDigest").text(
             `Found ${searchEntries.length}` +
