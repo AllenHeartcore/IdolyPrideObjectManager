@@ -28,6 +28,8 @@ const SONG_LIST = [
     "Birthday Single",
 ];
 
+const GKMAS_OBJECT_SERVER = "https://object.asset.game-gakuen-idolmaster.jp/";
+
 const GRAY_RECTANGLE_PLACEHOLDER =
     "data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><rect width='100%' height='100%' fill='%23dddddd'/></svg>";
 

@@ -92,8 +92,7 @@ $(document).ready(function () {
     // Event listeners for media preview
 
     $("#editorFieldSongUrl").on("input", function () {
-        let url =
-            "https://object.asset.game-gakuen-idolmaster.jp/" + $(this).val();
+        let url = GKMAS_OBJECT_SERVER + $(this).val();
         $("#editorMediaAudio").attr("src", url);
 
         if ($(this).val() !== info.url.slice(-6)) {
@@ -106,9 +105,7 @@ $(document).ready(function () {
     });
 
     $("#editorFieldCoverUrl").on("input", function () {
-        updateImage(
-            "https://object.asset.game-gakuen-idolmaster.jp/" + $(this).val()
-        );
+        updateImage(GKMAS_OBJECT_SERVER + $(this).val());
     });
 
     $("#editorMediaAudio").on("loadeddata", function () {
@@ -164,12 +161,8 @@ $(document).ready(function () {
             data: JSON.stringify({
                 id: info.id,
                 name: $("#editorFieldName").val().trim(),
-                url:
-                    "https://object.asset.game-gakuen-idolmaster.jp/" +
-                    $("#editorFieldSongUrl").val(),
-                cover:
-                    "https://object.asset.game-gakuen-idolmaster.jp/" +
-                    $("#editorFieldCoverUrl").val(),
+                url: GKMAS_OBJECT_SERVER + $("#editorFieldSongUrl").val(),
+                cover: GKMAS_OBJECT_SERVER + $("#editorFieldCoverUrl").val(),
                 keywords: keywords,
                 caption: $("#editorCaption").val().trim(),
             }),
