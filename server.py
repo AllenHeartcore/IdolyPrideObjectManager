@@ -32,10 +32,15 @@ def api_search():
     query = request.args.get("query", "")
     tokens = re.findall(r'"[^"]+"|\S+', html.unescape(query))
     return jsonify(
-        _get_manifest().search(
-            "".join(f"(?=.*{token.strip('"')})" for token in tokens)
-            # use lookahead to match all words in any order
-        )
+        [
+            _get_manifest()[id]._get_canon_repr()
+            for id in set.intersection(  # targets satisfy ALL conditions
+                *[
+                    _get_manifest().search(f".*{token.strip('\"')}.*")
+                    for token in tokens  # for each condition
+                ]
+            )
+        ]
     )
 
 
