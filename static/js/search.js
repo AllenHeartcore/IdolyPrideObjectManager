@@ -11,6 +11,9 @@ let sortState = {
     which removes the overhead of *displaying* them all at once.)
 */
 
+// highlighting support
+let tokens = [];
+
 // pagination support
 const ENTRIES_PER_PAGE = 8;
 const PAGE_NAV_CONTEXT_SIZE = 1;
@@ -23,12 +26,13 @@ var totalPages = 0;
         -> updateSort
         -> sortSearchEntries, updateCardContainer
     updateCardContainer
-        -> updatePagination
+        -> updatePagination, highlightTokens
+    updatePagination
         -> appendPaginationButton
 
                         UCC - UP - APB
-                      /
-    [init] - PSC - US
+                      /     \
+    [init] - PSC - US         HT
                       \
                         SSE
 */
@@ -106,6 +110,14 @@ function updatePagination() {
     );
 }
 
+function highlightTokens(text) {
+    if (tokens.length === 0) {
+        return text;
+    }
+    let regex = new RegExp(`(${tokens.join("|")})`, "gi");
+    return text.replace(regex, '<mark class="bg-warning">$1</mark>');
+}
+
 function updateCardContainer() {
     $("#searchEntryCardContainer").empty();
 
@@ -130,7 +142,9 @@ function updateCardContainer() {
                     $("<div>").addClass("fs-6").text(`Resource #${entry.id}`),
                     $("<div>")
                         .addClass("fs-4 mt-2 lh-sm")
-                        .html(entry.name.replace(" (", "<br>("))
+                        .html(
+                            highlightTokens(entry.name).replace(" (", "<br>(")
+                        )
                 )
         );
         let anchor = $("<a>")
@@ -197,6 +211,10 @@ $(document).ready(function () {
     let queryDisplay = query.trim().replace(/\s+/g, " "); // trimmed, duplicate spaces removed
     $("#searchInput").val(queryDisplay + " "); // allows immediate edit/resubmission
     // search input should be displayed alongside the spinner, before a successful AJAX response
+
+    tokens = query.match(/"[^"]+"|\S+/g);
+    tokens = tokens.map((token) => token.replace(/^"(.*)"$/, "$1"));
+    console.log(tokens);
 
     $.ajax({
         type: "GET",
