@@ -66,11 +66,10 @@ Starting from the provided 107 entries, the following table shows all the valid 
 | 45 | Edit | 冠菊 (篠澤 広 ver.) | `DwrrZf` | |
 | 46 | Edit | 冠菊 (藤田 ことね ver.) | `9Wt6Gs` | |
 | 47 | Edit | 冠菊 (花海 佑芽 ver.) | `DFwfpc` | |
-| 48 | Edit | 日々、発見的ステップ！ | | `yXR7hn` |
 | 67 | Edit | White Night! White Wish! (紫雲 清夏 ver.) | | `XSf0oj` |
 | 68 | Edit | White Night! White Wish! (姫崎 莉波 ver.) | | `aabOep` |
 | 69 | Edit | White Night! White Wish! (有村 麻央 ver.) | | `oW8UGV` |
-| 70 | Edit | White Night! White Wish! (葛城 リーリヤ ver.) | | `9hrq1V` |
+| 70 | Edit | White Night! White Wish! (倉本 千奈 ver.) | | `9hrq1V` |
 | 71 | Edit | White Night! White Wish! (月村 手毬 ver.) | | `ZPZVrx` |
 | 72 | Edit | White Night! White Wish! (花海 咲季 ver.) | | `GGjxnQ` |
 | 73 | Edit | White Night! White Wish! (篠澤 広 ver.) | | `nv9JAf` |
@@ -167,5 +166,5 @@ Starting from the provided 107 entries, the following table shows all the valid 
 | all-003 | #27 <br> 6038/8tllfB <br> - | #29 <br> 6088/Rzwcaw <br> - | #25 <br> 6012/JZ8G1Y <br> - | #28 <br> 6039/oqiH3Q <br> - | #26 <br> 6022/COZKHv <br> - | #32 <br> 6199/XwlZOm <br> - | #30 <br> 6132/dO1J7J <br> - | #34 <br> 6266/2DroMz <br> - | #31 <br> 6145/3kcXWe <br> - | #33 <br> 6214/UMSszG <br> - |
 | all-004 | #43 <br> 6441/Ks5tH0 <br> - | #41 <br> 6381/B9SnrG <br> - | #46 <br> 6589/9Wt6Gs <br> - | #39 <br> 6360/ctoDFI <br> - | #40 <br> 6372/zQHVoj <br> - | #44 <br> 6501/hYUgLC <br> - | #38 <br> 6353/s0Tnid <br> - | #45 <br> 6552/DwrrZf <br> - | #42 <br> 6439/Mf9rqI <br> - | #47 <br> 6591/DFwfpc <br> - |
 | all-006 | #72 <br> - <br> 8862/GGjxnQ | #71 <br> - <br> 8901/ZPZVrx | | #69 <br> - <br> 8748/oW8UGV | | #70 <br> - <br> 8732/9hrq1V | #67 <br> - <br> 8674/XSf0oj | #73 <br> - <br> 8891/nv9JAf | #68 <br> - <br> 8704/aabOep | |
-| char-002 | | | | | | #48 <br> - <br> 6648/yXR7hn | | #36 <br> 6309/kmS6W2 <br> - | | |
+| char-002 | | | | | | | | #36 <br> 6309/kmS6W2 <br> - | | |
 | char-003 | | | | | #35 <br> 6288/sZlsvv <br> - | | | | | |

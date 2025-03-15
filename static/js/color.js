@@ -68,8 +68,15 @@ function setAccentColorByKey(key) {
     let leftHue = (baseHue - HUE_GRADIENT_VARIANCE + 360) % 360; // prevent underflow
     let rightHue = (baseHue + HUE_GRADIENT_VARIANCE) % 360;
 
+    let char = Object.entries(CHARACTER_ALIAS).find(
+        ([, value]) => value === key
+    );
+
     // navbar
-    $("#navbarSticker").attr("src", `/static/img/face/${key}.png`);
+    $("#navbarSticker").attr({
+        "src": `/static/img/face/${key}.png`,
+        "alt": `Sticker of ${char[0]}`,
+    });
     $(".navbar").css(
         "background-color",
         `hsl(${baseHue}, ${hsl[1] * 100}%, 90%)`
