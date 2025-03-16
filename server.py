@@ -17,10 +17,6 @@ def _get_manifest():
     return m
 
 
-def _abid2name(id):
-    return _get_manifest().assetbundles[int(id)].name
-
-
 # API endpoints
 
 
@@ -96,7 +92,7 @@ def view_assetbundle(id):
         info["dependencies"] = [
             {
                 "id": dep,
-                "name": _abid2name(dep),
+                "name": _get_manifest().assetbundles[int(dep)].name,
             }
             for dep in info["dependencies"]
         ]

@@ -1,9 +1,18 @@
 // We keep these vars global to avoid passing them around
 let searchEntries = []; // this can be huge (up to ~10k entries)
 let sortState = {
-    byID: false,
-    ascending: true,
-}; // backend sorts by ascending name
+    byID: null,
+    ascending: null,
+};
+/*  Even though backend returns entries by ascending name,
+    it's more extensible to avoid hardcoding this assumption,
+    since we now force a sort at initial display.
+    (Sorting by large amounts is made possible by pagination,
+    which removes the overhead of *displaying* them all at once.)
+*/
+
+// highlighting support
+let tokens = [];
 
 // pagination support
 const ENTRIES_PER_PAGE = 12;
@@ -12,15 +21,20 @@ var currentPage = 1;
 var totalPages = 0;
 
 /*  CONTROL FLOW:
-    $(document).ready -> populateSearchpageContainers -> updateCardContainer
-    updateSort -> sortSearchEntries, updateCardContainer
-    updateCardContainer -> updatePagination -> appendPaginationButton
+    $(document).ready
+        -> populateSearchpageContainers
+        -> updateSort
+        -> sortSearchEntries, updateCardContainer
+    updateCardContainer
+        -> updatePagination, highlightTokens
+    updatePagination
+        -> appendPaginationButton
 
-    [init] - PSC - UCC - UP - APB
-                 /
-              US
-                 \
-                   SSE
+                        UCC - UP - APB
+                      /     \
+    [init] - PSC - US         HT
+                      \
+                        SSE
 */
 
 function appendPaginationButton(text, isEnabled, pageUpdater) {
@@ -55,8 +69,8 @@ function updatePagination() {
     appendPaginationButton("1", currentPage !== 1, () => 1);
 
     if (totalPages <= PAGE_NAV_CONTEXT_SIZE * 2 + 1) {
-        // no need for ellipsis
-        for (let i = 2; i < totalPages; i++) {
+        // no need for ellipsis, display all buttons
+        for (let i = 2; i <= totalPages; i++) {
             appendPaginationButton(i.toString(), currentPage !== i, () => i);
         }
     } else {
@@ -80,19 +94,28 @@ function updatePagination() {
                 .append($("<span>").text("..."))
                 .addClass("mx-2");
         }
+
+        // tail
+        appendPaginationButton(
+            totalPages.toString(),
+            currentPage !== totalPages,
+            () => totalPages
+        );
     }
 
-    // tail
-    appendPaginationButton(
-        totalPages.toString(),
-        currentPage !== totalPages,
-        () => totalPages
-    );
     appendPaginationButton(
         "Next",
         currentPage < totalPages && totalPages > 0,
         (page) => page + 1
     );
+}
+
+function highlightTokens(text) {
+    if (tokens.length === 0) {
+        return text;
+    }
+    let regex = new RegExp(`(${tokens.join("|")})`, "gi");
+    return text.replace(regex, '<mark class="bg-warning">$1</mark>');
 }
 
 function updateCardContainer() {
@@ -117,20 +140,24 @@ function updateCardContainer() {
                 );
             });
         }
-        let cardBody = $("<div>")
-            .addClass("card-body")
-            .append(
-                $("<h5>").addClass("fs-3").text(`${entry.type} #${entry.id}`),
-                $("<p>").addClass("fs-6 lh-1").text(entry.name)
-            );
-        card.append(cardBody);
-        card.click(function () {
-            window.location.href = `/view/${entry.type.toLowerCase()}/${
-                entry.id
-            }`;
-        });
+        card.append(
+            $("<div>")
+                .addClass("card-body")
+                .append(
+                    $("<div>")
+                        .addClass("fs-3")
+                        .text(`${entry.type} #${entry.id}`),
+                    $("<div>")
+                        .addClass("fs-6 lh-1")
+                        .html(highlightTokens(entry.name))
+                )
+        );
+        let anchor = $("<a>")
+            .attr("href", `/view/${entry.type.toLowerCase()}/${entry.id}`)
+            .addClass("anchor-no-decoration")
+            .append(card);
         $("#searchEntryCardContainer").append(
-            $("<div>").addClass("col-md-3").append(card)
+            $("<div>").addClass("col-md-3").append(anchor)
         );
     });
 
@@ -173,12 +200,14 @@ function populateSearchpageContainers(queryDisplay) {
 
     if (searchEntries.length === 0) {
         $("#searchResultDigest").text("No results found.");
+        $("#searchEntryCardContainer").hide();
+        $("#paginationContainer").hide();
     } else {
         $("#searchResultDigest").text(
             `Found ${searchEntries.length}` +
                 (searchEntries.length === 1 ? " entry." : " entries.")
         );
-        updateCardContainer();
+        updateSort();
     }
 
     $("#loadingSpinner").hide();
@@ -189,6 +218,8 @@ $(document).ready(function () {
     let queryDisplay = query.trim().replace(/\s+/g, " "); // trimmed, duplicate spaces removed
     $("#searchInput").val(queryDisplay + " "); // allows immediate edit/resubmission
     // search input should be displayed alongside the spinner, before a successful AJAX response
+
+    tokens = queryDisplay.split(/\s+/);
 
     $.ajax({
         type: "GET",

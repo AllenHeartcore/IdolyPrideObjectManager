@@ -68,13 +68,18 @@ function setAccentColorByKey(key) {
     let leftHue = (baseHue - HUE_GRADIENT_VARIANCE + 360) % 360; // prevent underflow
     let rightHue = (baseHue + HUE_GRADIENT_VARIANCE) % 360;
 
-    $("#navbarSticker").attr("src", `/static/img/face/${key}.png`);
+    // navbar
+    $("#navbarSticker").attr({
+        "src": `/static/img/face/${key}.png`,
+        "alt": `Sticker of ${CHARACTER_ALIAS[key]}`,
+    });
     $(".navbar").css(
         "background-color",
         `hsl(${baseHue}, ${hsl[1] * 100}%, 90%)`
     );
     $("#navbarText").css("color", `hsl(${baseHue}, 50%, 50%)`);
 
+    // homepage
     $(".text-gradient").css(
         "background-image",
         `linear-gradient(to right, hsl(${leftHue}, 70%, 50%), hsl(${rightHue}, 70%, 50%))`

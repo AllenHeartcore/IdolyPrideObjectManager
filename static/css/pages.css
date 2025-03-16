@@ -1,3 +1,9 @@
+#homepageElements,
+#searchpageElements,
+#viewpageElements {
+    margin-top: 6rem;
+}
+
 /* Navbar */
 
 #navbarNav {
@@ -8,6 +14,7 @@
 
 #navbarSticker {
     height: 60px;
+    width: 60px;
 }
 
 .bi-github:hover {
@@ -37,6 +44,7 @@
 
 #viewMedia {
     display: flex;
+    flex-direction: column; /* stack children vertically */
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
@@ -56,9 +64,6 @@
 #viewCaption {
     min-height: 15vh;
     overflow: hidden;
-}
-
-#viewCaptionText {
     font-size: 1.25rem;
     line-height: 1.5;
 }
