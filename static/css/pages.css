@@ -1,7 +1,11 @@
 #homepageElements,
+#missingpageElements {
+    margin-top: 7.5rem;
+}
+
 #searchpageElements,
 #viewpageElements {
-    margin-top: 6rem;
+    margin-top: 5rem;
 }
 
 /* Navbar */
