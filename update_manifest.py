@@ -33,5 +33,6 @@ def do_update(dir: str, pc: bool = False) -> bool:
 
 
 if __name__ == "__main__":
-    # if any run returns True, exit with 0
-    sys.exit(not (do_update("manifests") or do_update("manifests_pc", pc=True)))
+    has_update = do_update("manifests")
+    has_update_pc = do_update("manifests_pc", pc=True)
+    sys.exit(not (has_update or has_update_pc))  # avoids short-circuiting
