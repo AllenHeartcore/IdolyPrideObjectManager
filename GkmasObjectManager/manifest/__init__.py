@@ -17,20 +17,20 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 
-def fetch(revision: int = 0) -> GkmasManifest:
+def fetch(base_revision: int = 0) -> GkmasManifest:
     """
     Requests an online manifest by the specified revision.
     Algorithm courtesy of github.com/DreamGallery/HatsuboshiToolkit
 
     Args:
-        revision (int): The "base" revision number of the manifest.
-            This API return the *difference* between the requested revision
-            and the latest. Defaults to 0 (latest).
+        base_revision (int): The "base" revision number of the manifest.
+            This API return the *difference* between the specified base
+            revision and the latest. Defaults to 0 (standalone latest).
     """
-    url = urljoin(GKMAS_API_URL, str(revision))
+    url = urljoin(GKMAS_API_URL, str(base_revision))
     enc = requests.get(url, headers=GKMAS_API_HEADER).content
     dec = AESCBCDecryptor(GKMAS_ONLINEPDB_KEY, enc[:16]).process(enc[16:])
-    return GkmasManifest(pdbytes2dict(dec), base_revision=revision)
+    return GkmasManifest(pdbytes2dict(dec), base_revision=base_revision)
 
 
 def load(src: PATH_ARGTYPE, base_revision: int = 0) -> GkmasManifest:
