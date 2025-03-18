@@ -6,30 +6,32 @@ compatible with 'Update Manifest' workflow.
 
 import GkmasObjectManager as gom
 
+import os
 import sys
 from pathlib import Path
 
 
-def main():
+def do_update(dir: str, pc: bool = False) -> bool:
 
-    m_remote = gom.fetch()
+    m_remote = gom.fetch(pc=pc)
     rev_remote = m_remote.revision._get_canon_repr()
-    rev_local = int(Path("manifests/LATEST_REVISION").read_text())
+    rev_local = int((Path(dir) / "LATEST_REVISION").read_text())
 
     if rev_remote == rev_local:
         print("No update available.")
-        sys.exit(1)
+        return False
 
     # Only write to file after sanity check;
     # this number is used to construct commit message in workflow.
-    Path("manifests/LATEST_REVISION").write_text(str(rev_remote))
+    (Path(dir) / "LATEST_REVISION").write_text(str(rev_remote))
 
-    m_remote.export(f"manifests/v0000.json")
+    m_remote.export(os.path.join(dir, "v0000.json"))
     for i in range(1, rev_remote):
-        gom.fetch(i).export(f"manifests/v{i:04}.json")
+        gom.fetch(i, pc=pc).export(os.path.join(dir, f"v{i:04}.json"))
 
-    sys.exit(0)
+    return True
 
 
 if __name__ == "__main__":
-    main()
+    # if any run returns True, exit with 0
+    sys.exit(not (do_update("manifests") or do_update("manifests_pc", pc=True)))

@@ -6,6 +6,7 @@ Module-wide constants (macro equivalents).
 import multiprocessing
 from hashlib import md5, sha256
 from pathlib import Path
+from urllib.parse import urljoin
 from typing import Union, Tuple
 
 
@@ -16,8 +17,14 @@ IMAGE_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
 # manifest request
 GKMAS_APPID = 400
 GKMAS_VERSION = 205000
+GKMAS_VERSION_PC = 705000
 GKMAS_API_SERVER = f"https://api.asset.game-gakuen-idolmaster.jp/"
-GKMAS_API_URL = f"{GKMAS_API_SERVER}/v2/pub/a/{GKMAS_APPID}/v/{GKMAS_VERSION}/list/"
+GKMAS_API_URL = urljoin(
+    GKMAS_API_SERVER, f"v2/pub/a/{GKMAS_APPID}/v/{GKMAS_VERSION}/list/"
+)
+GKMAS_API_URL_PC = urljoin(
+    GKMAS_API_SERVER, f"v2/pub/a/{GKMAS_APPID}/v/{GKMAS_VERSION_PC}/list/"
+)
 GKMAS_API_KEY = "0jv0wsohnnsigttbfigushbtl3a8m7l5"
 GKMAS_API_HEADER = {
     "Accept": f"application/x-protobuf,x-octo-app/{GKMAS_APPID}",
@@ -28,6 +35,7 @@ GKMAS_API_HEADER = {
 sha256sum = lambda x: sha256(bytes(x, "utf-8")).digest()
 md5sum = lambda x: md5(bytes(x, "utf-8")).digest()
 GKMAS_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd")
+GKMAS_ONLINEPDB_KEY_PC = sha256sum("x5HFaJCJywDyuButLM0f")
 GKMAS_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk")
 GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz")
 
