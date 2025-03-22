@@ -7,18 +7,22 @@ import re
 import json
 
 
+# more like a collection of functions than a class
 class GkadvCommandParser:
 
     def _parse_structure(self, string: str) -> dict:
+        # assumes NO [] around the string,
+        # in order to "peel" nested structures layer by layer
 
+        # str.split() also matches newlines in long messages
         fields = re.split(r" +", string.strip())
         cmd = {"cmd": fields[0]}
-        idx = 1
+        idx = 1  # don't use for loop, since the recursive case does multiple increments
 
         while idx < len(fields):
             field = fields[idx]
 
-            if "=" not in field:
+            if "=" not in field:  # e.g., "Variant" in prop
                 if "flags" not in cmd:
                     cmd["flags"] = []
                 cmd["flags"].append(field)
@@ -26,15 +30,20 @@ class GkadvCommandParser:
                 continue
 
             key, value = field.split("=")
+            # raises ValueError if there are multiple "="s
+
             if value.startswith("\\{") and value.endswith("\\}"):
                 value = json.loads(value.replace("\\", ""))
+                # we only remove backslashes from "verified" dict strings,
+                # or else the newlines & emphasis in long messages will be lost
             elif value.startswith("["):
                 subfields = [value]
                 while not subfields[-1].endswith("]"):
                     idx += 1
                     subfields.append(fields[idx])
                 substring = " ".join(subfields)
-                value = self._parse_structure(substring[1:-1])
+                value = self._parse_structure(substring[1:-1])  # recursion
+            # else, record value as is
 
             if key not in cmd:
                 cmd[key] = value
@@ -47,7 +56,7 @@ class GkadvCommandParser:
 
         return cmd
 
-    def parse(self, string: str) -> dict:
-        string = string.strip()
-        assert string.startswith("[") and string.endswith("]")
+    def process(self, string: str) -> dict:
+        string = string.strip()  # remove trailing newlines
+        assert string.startswith("[") and string.endswith("]")  # initial check
         return self._parse_structure(string[1:-1])
