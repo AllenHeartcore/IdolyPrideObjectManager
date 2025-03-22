@@ -29,8 +29,10 @@ class GkadvCommandParser:
                 idx += 1
                 continue
 
-            key, value = field.split("=")
-            # raises ValueError if there are multiple "="s
+            key, value = re.split(r"(?<!\\)=", field, maxsplit=1)
+            # escapes text formats like superscript (<r\=...>...</r>) and emphasis (<em\=>...</em>);
+            # r"[^\\]=" would consume the first character in key, so we use negative lookbehind;
+            # maxsplit=1 ensures validity, but prevents ValueError if there are multiple "="s
 
             if value.startswith("\\{") and value.endswith("\\}"):
                 value = json.loads(value.replace("\\", ""))
