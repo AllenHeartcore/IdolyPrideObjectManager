@@ -7,9 +7,12 @@ as well as a fallback for unknown media types.
 
 from ..log import Logger
 
+import os
 import base64
 from pathlib import Path
 from typing import Tuple
+
+from zipfile import ZipFile
 
 
 logger = Logger()
@@ -95,3 +98,9 @@ class GkmasDummyMedia:
         mimesubtype = mimetype.split("/")[1]
         path.with_suffix(f".{mimesubtype}").write_bytes(data)
         logger.success(f"{self.name} downloaded and converted to {mimesubtype.upper()}")
+
+        if mimesubtype == "zip" and kwargs.get("unpack_subsongs", False):
+            with ZipFile(path.with_suffix(f".{mimesubtype}")) as z:
+                z.extractall(path.parent)
+            os.remove(path.with_suffix(f".{mimesubtype}"))
+            logger.success(f"{self.name} unpacked to {path.parent}")
