@@ -53,11 +53,16 @@ class GkmasDummyMedia:
             # the only place where **kwargs are used is image_resize in GkmasImage
 
         return self.converted, (
-            f"{self.mimetype}/{self.converted_format}"
-            if self.mimetype and self.converted_format
-            else "application/octet-stream"
-            # in case some malicious user escaped the 'if self.raw_format == fmt' branch
-            # by explicitly specifying 'None_format' as some random value
+            "application/zip"
+            if self.converted.startswith(b"PK\x03\x04")
+            # a bit of a hack, but we don't want to override bookkeeping vars
+            else (
+                f"{self.mimetype}/{self.converted_format}"
+                if self.mimetype and self.converted_format
+                else "application/octet-stream"
+                # in case some malicious user escaped the 'if self.raw_format == fmt' branch
+                # by explicitly specifying 'None_format' as some random value
+            )
         )
 
     def get_embed_url(self, **kwargs) -> str:
@@ -72,9 +77,12 @@ class GkmasDummyMedia:
         if self.mimetype and kwargs.get(f"convert_{self.mimetype}", True):
             try:
                 self._export_converted(path, **kwargs)
-            except:
-                logger.warning(f"{self.name} failed to convert, fallback to rawdump")
+            except Exception as e:
+                logger.warning(
+                    f"{self.name} failed to convert, fallback to rawdump; exception to follow"
+                )
                 self._export_raw(path)
+                raise e
         else:
             self._export_raw(path)
 

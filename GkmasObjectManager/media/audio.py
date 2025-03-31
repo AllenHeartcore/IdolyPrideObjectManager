@@ -16,6 +16,7 @@ from pathlib import Path
 
 import UnityPy
 from pydub import AudioSegment
+from zipfile import ZipFile
 
 
 logger = Logger()
@@ -61,7 +62,8 @@ class GkmasAWBAudio(GkmasDummyMedia):
         self.converted_format = "wav"
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
-        # doesn't use pydub, which is why this class is not inherited from GkmasAudio
+        # uses pydub in vastly different ways,
+        # thus this class is not inherited from GkmasAudio
 
         audio = None
         success = False
@@ -71,13 +73,10 @@ class GkmasAWBAudio(GkmasDummyMedia):
         # vgmstream doesn't like delete=True
         with tempfile.NamedTemporaryFile(
             suffix=f".{input_ext}", delete=False
-        ) as tmp_in, tempfile.NamedTemporaryFile(
-            suffix=f".{self.converted_format}", delete=False
-        ) as tmp_out:
+        ) as tmp_in, tempfile.TemporaryDirectory() as tmp_out:
 
             tmp_in.write(raw)
             tmp_in.flush()
-            tmp_out.flush()
 
             system_name = platform.system()
             if system_name == "Windows":
@@ -93,8 +92,10 @@ class GkmasAWBAudio(GkmasDummyMedia):
                 subprocess.run(
                     [
                         Path(__file__).parent / f"vgmstream/vgmstream-{exe_suffix}",
+                        "-S",  # select subsongs
+                        "-1",  # all of them (shell=True forces string args)
                         "-o",
-                        tmp_out.name,
+                        os.path.join(tmp_out, "?n.wav"),  # use internal stream name
                         tmp_in.name,
                     ],
                     shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
@@ -102,14 +103,28 @@ class GkmasAWBAudio(GkmasDummyMedia):
                     stderr=subprocess.DEVNULL,  # suppresses console output
                     check=True,
                 )
-                audio = AudioSegment.from_file(tmp_out.name)
+                audio = [
+                    (f, AudioSegment.from_file(os.path.join(tmp_out, f)))
+                    for f in os.listdir(tmp_out)
+                ]
                 success = True
             except Exception as e:
                 exception = e
 
         os.remove(tmp_in.name)
-        os.remove(tmp_out.name)
 
-        if success:
-            return audio.export(format=self.converted_format).read()
-        raise exception  # delay the exception after cleanup
+        if not success:
+            raise exception  # delay the exception after cleanup
+
+        if len(audio) == 1:
+            return audio[0][1].export(format=self.converted_format).read()
+            # discard stream name and follow filename
+
+        with BytesIO() as buffer:
+            with ZipFile(buffer, "w") as zip_file:
+                for f, segment in audio:
+                    zip_file.writestr(
+                        str(Path(f).with_suffix(f".{self.converted_format}")),
+                        segment.export(format=self.converted_format).read(),
+                    )
+            return buffer.getvalue()
