@@ -10,6 +10,8 @@ from GkmasObjectManager.log import Logger
 
 if __name__ == "__main__":
 
+    # ------------------------------ SETUP
+
     logger = Logger()
 
     parser = ArgumentParser(
@@ -18,8 +20,10 @@ if __name__ == "__main__":
     parser.add_argument("character", type=str, help="Character name")
     parser.add_argument("-o", "--output", type=str, default="", help="Output path")
     parser.add_argument("--format", type=str, default="wav", help="Output audio format")
-    parser.add_argument("--tmpdir", type=str, default="tmp", help="Temporary directory")
+    parser.add_argument("--tmpdir", type=str, default="tmp/", help="Temp directory")
     args = parser.parse_args()
+
+    # ------------------------------ SANITY CHECKS
 
     if args.output == "":
         args.output = f"sovits_dataset_{args.character}.{args.format}"
@@ -32,13 +36,16 @@ if __name__ == "__main__":
         args.output = str(Path(args.output).with_suffix(f".{args.format}"))
 
     assert not os.path.exists(args.output), f"{args.output} already exists"
-    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+    if os.path.dirname(args.output):
+        os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
     if os.path.exists(args.tmpdir):
         assert os.path.isdir(args.tmpdir), f"{args.tmpdir} is not a directory"
         assert os.listdir(args.tmpdir) == [], f"{args.tmpdir} is not empty"
     else:
         os.makedirs(args.tmpdir)
+
+    # ------------------------------ CORE
 
     logger.info("Fetching manifest...")
     m = gom.fetch()
@@ -49,28 +56,29 @@ if __name__ == "__main__":
         path=args.tmpdir,
         categorize=False,
         convert_audio=True,
-        audio_format=args.format,
+        audio_format="wav",  # avoid double compression
         unpack_subsongs=True,
     )
+
+    assert os.listdir(args.tmpdir), f"Found no voice samples for '{args.character}'"
 
     logger.info("Making dataset...")
     with open(os.path.join(args.tmpdir, "filelist.txt"), "w") as fout:
         for f in os.listdir(args.tmpdir):
-            assert f.endswith(args.format)
-            if (
+
+            if f == "filelist.txt" or (
                 f.startswith("sud_vo_adv_")
                 and f.split("_")[-1].split("-")[0] != args.character
             ):
+                continue
                 # exclude other characters in adventure voice pack
                 # (hardcoded, can also set unpack_subsongs=False and check ZIP contents here)
-                continue
-            fout.write(f'file "{f}"\n')
+
+            fout.write(f"file '{f}'\n")
 
     logger.info("Concatenating samples...")
     subprocess.run(
         f'ffmpeg -f concat -safe 0 -i {os.path.join(args.tmpdir, "filelist.txt")} -c copy -movflags +faststart "{args.output}"',
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
         check=True,
     )
 
