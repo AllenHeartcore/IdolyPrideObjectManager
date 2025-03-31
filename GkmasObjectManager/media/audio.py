@@ -65,14 +65,19 @@ class GkmasAWBAudio(GkmasDummyMedia):
 
         audio = None
         success = False
+        exception = None
+        input_ext = self.name.split(".")[-1][:-1]
 
-        try:
-            input_ext = self.name.split(".")[-1][:-1]
-            tmp_in = tempfile.NamedTemporaryFile(suffix=f".{input_ext}", delete=False)
+        # vgmstream doesn't like delete=True
+        with tempfile.NamedTemporaryFile(
+            suffix=f".{input_ext}", delete=False
+        ) as tmp_in, tempfile.NamedTemporaryFile(
+            suffix=f".{self.converted_format}", delete=False
+        ) as tmp_out:
+
             tmp_in.write(raw)
-            tmp_out = tempfile.NamedTemporaryFile(
-                suffix=f".{self.converted_format}", delete=False
-            )
+            tmp_in.flush()
+            tmp_out.flush()
 
             system_name = platform.system()
             if system_name == "Windows":
@@ -84,33 +89,27 @@ class GkmasAWBAudio(GkmasDummyMedia):
             else:
                 raise OSError(f"Unsupported system: {system_name}")
 
-            process = subprocess.run(
-                [
-                    Path(__file__).parent / f"vgmstream/vgmstream-{exe_suffix}",
-                    "-o",
-                    tmp_out.name,
-                    tmp_in.name,
-                ],
-                shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,  # suppresses console output
-            )
-            assert process.returncode == 0
-            audio = AudioSegment.from_file(tmp_out.name)
-            success = True
-        except Exception as e:
-            exception = e  # 'e' only lives in the 'except' block
-            # parent class handles the rest
-        finally:
-            tmp_in.close()
-            tmp_out.close()
-            os.remove(tmp_in.name)
-            os.remove(tmp_out.name)
-            # this 'finally' block is why the 'success' flag,
-            # along with all these try-catch hassle, ever exists
-            # (vgmstream doesn't like NamedTemporaryFile with delete=True)
+            try:
+                subprocess.run(
+                    [
+                        Path(__file__).parent / f"vgmstream/vgmstream-{exe_suffix}",
+                        "-o",
+                        tmp_out.name,
+                        tmp_in.name,
+                    ],
+                    shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,  # suppresses console output
+                    check=True,
+                )
+                audio = AudioSegment.from_file(tmp_out.name)
+                success = True
+            except Exception as e:
+                exception = e
+
+        os.remove(tmp_in.name)
+        os.remove(tmp_out.name)
 
         if success:
             return audio.export(format=self.converted_format).read()
-        else:
-            raise exception  # delay the exception after cleanup
+        raise exception  # delay the exception after cleanup
