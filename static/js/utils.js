@@ -33,6 +33,7 @@ const CHARACTER_ALIAS = {
     "hume": "Hanami Ume",
     "hmsz": "Hataya Misuzu",
     "jsna": "Juo Sena",
+    "nasr": "Neo Asari",
 };
 
 const RARITY_ALIAS = {

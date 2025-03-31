@@ -51,6 +51,11 @@ body {
     display: none;
 }
 
+.col-md-1-13 {
+    flex: 0 0 auto;
+    width: 7.69230769%;
+}
+
 /* General text */
 
 .text-size-150 * {
