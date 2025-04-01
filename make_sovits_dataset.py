@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", type=str, default="", help="Output path")
     parser.add_argument("-f", "--format", type=str, default="wav", help="Output format")
     parser.add_argument("-b", "--bitrate", type=int, default=128, help="Output bitrate")
-    parser.add_argument("--tmpdir", type=str, default="tmp/", help="Temp directory")
+    parser.add_argument("--cache-dir", type=str, default="tmp/", help="Temp directory")
     args = parser.parse_args()
 
     # ------------------------------ SANITY CHECKS
@@ -43,11 +43,11 @@ if __name__ == "__main__":
     if os.path.dirname(args.output):
         os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
-    if os.path.exists(args.tmpdir):
-        assert os.path.isdir(args.tmpdir), f"{args.tmpdir} is not a directory"
-        assert os.listdir(args.tmpdir) == [], f"{args.tmpdir} is not empty"
+    if os.path.exists(args.cache_dir):
+        assert os.path.isdir(args.cache_dir), f"{args.cache_dir} is not a directory"
+        assert os.listdir(args.cache_dir) == [], f"{args.cache_dir} is not empty"
     else:
-        os.makedirs(args.tmpdir)
+        os.makedirs(args.cache_dir)
 
     # ------------------------------ CORE
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     logger.info(f"Downloading voice samples of '{args.character}'...")
     m.download(
         f"sud_vo_adv.*" if args.greedy else f"sud_vo_adv.*{args.character}.*",
-        path=args.tmpdir,
+        path=args.cache_dir,
         categorize=False,
         convert_audio=True,
         audio_format="wav",  # avoid double compression
@@ -65,17 +65,17 @@ if __name__ == "__main__":
     )
     m.download(
         f"sud_vo(?!_adv).*{args.character}.*",
-        path=args.tmpdir,
+        path=args.cache_dir,
         categorize=False,
         convert_audio=True,
         audio_format="wav",
     )
 
-    assert os.listdir(args.tmpdir), f"Found no voice samples for '{args.character}'"
+    assert os.listdir(args.cache_dir), f"Found no voice samples for '{args.character}'"
 
     logger.info("Making dataset...")
-    with open(os.path.join(args.tmpdir, "filelist.txt"), "w") as fout:
-        for f in os.listdir(args.tmpdir):
+    with open(os.path.join(args.cache_dir, "filelist.txt"), "w") as fout:
+        for f in os.listdir(args.cache_dir):
 
             if f == "filelist.txt" or (
                 f.startswith("sud_vo_adv_")
@@ -89,10 +89,10 @@ if __name__ == "__main__":
 
     logger.info("Concatenating samples...")
     subprocess.run(
-        f'ffmpeg -f concat -safe 0 -i {os.path.join(args.tmpdir, "filelist.txt")} -b:a {args.bitrate}k "{args.output}"',
+        f'ffmpeg -f concat -safe 0 -i {os.path.join(args.cache_dir, "filelist.txt")} -b:a {args.bitrate}k "{args.output}"',
         check=True,
     )
 
     logger.success(f"Dataset saved to {args.output}")
     logger.info("Cleaning up temporary files...")
-    shutil.rmtree(args.tmpdir)
+    shutil.rmtree(args.cache_dir)
