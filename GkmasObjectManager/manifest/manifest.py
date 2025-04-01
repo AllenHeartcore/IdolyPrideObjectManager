@@ -257,6 +257,11 @@ class GkmasManifest:
             criterion (str): Regex pattern of object names.
         """
 
+        try:
+            return [self[criterion]]
+        except KeyError:
+            pass
+
         names = []
         for obj in self:
             if re.match(criterion, obj.name, flags=re.IGNORECASE):
