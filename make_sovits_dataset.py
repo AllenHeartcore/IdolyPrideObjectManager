@@ -18,8 +18,12 @@ if __name__ == "__main__":
         description="Create a dataset for training a voice cloning model"
     )
     parser.add_argument("character", type=str, help="Character name")
+    parser.add_argument(
+        "-g", "--greedy", action="store_true", help="Search through all adventures"
+    )
     parser.add_argument("-o", "--output", type=str, default="", help="Output path")
-    parser.add_argument("--format", type=str, default="wav", help="Output audio format")
+    parser.add_argument("-f", "--format", type=str, default="wav", help="Output format")
+    parser.add_argument("-b", "--bitrate", type=int, default=128, help="Output bitrate")
     parser.add_argument("--tmpdir", type=str, default="tmp/", help="Temp directory")
     args = parser.parse_args()
 
@@ -52,12 +56,19 @@ if __name__ == "__main__":
 
     logger.info(f"Downloading voice samples of '{args.character}'...")
     m.download(
-        f"sud_vo.*{args.character}.*",
+        f"sud_vo_adv.*" if args.greedy else f"sud_vo_adv.*{args.character}.*",
         path=args.tmpdir,
         categorize=False,
         convert_audio=True,
         audio_format="wav",  # avoid double compression
         unpack_subsongs=True,
+    )
+    m.download(
+        f"sud_vo(?!_adv).*{args.character}.*",
+        path=args.tmpdir,
+        categorize=False,
+        convert_audio=True,
+        audio_format="wav",
     )
 
     assert os.listdir(args.tmpdir), f"Found no voice samples for '{args.character}'"
@@ -78,7 +89,7 @@ if __name__ == "__main__":
 
     logger.info("Concatenating samples...")
     subprocess.run(
-        f'ffmpeg -f concat -safe 0 -i {os.path.join(args.tmpdir, "filelist.txt")} -c copy -movflags +faststart "{args.output}"',
+        f'ffmpeg -f concat -safe 0 -i {os.path.join(args.tmpdir, "filelist.txt")} -b:a {args.bitrate}k "{args.output}"',
         check=True,
     )
 
