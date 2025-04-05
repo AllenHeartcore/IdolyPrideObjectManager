@@ -52,7 +52,7 @@
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    overflow-y: scroll;
+    overflow: hidden;
     border: 2px dotted lightgray;
 }
 

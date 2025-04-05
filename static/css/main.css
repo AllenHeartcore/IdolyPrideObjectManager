@@ -51,9 +51,15 @@ body {
     display: none;
 }
 
+.vertically-scrollable {
+    overflow-y: auto;
+    max-height: 100%;
+    width: 100% !important;
+}
+
 .col-md-1-13 {
     flex: 0 0 auto;
-    width: 7.69230769%;
+    width: calc(100% / 13);
 }
 
 /* General text */
