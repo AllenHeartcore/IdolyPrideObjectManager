@@ -52,7 +52,7 @@
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    overflow: hidden;
+    overflow-y: scroll;
     border: 2px dotted lightgray;
 }
 
@@ -61,6 +61,13 @@
     display: block;
     max-width: 100%;
     max-height: 30rem;
+    object-fit: contain;
+    object-position: center;
+}
+
+#viewMediaContent audio {
+    display: block;
+    width: 36rem;
     object-fit: contain;
     object-position: center;
 }
