@@ -10,6 +10,7 @@
     let query = {{ query | tojson }};
     let byID = {{ byID | tojson }};
     let ascending = {{ ascending | tojson }};
+    let entriesPerPage = {{ entriesPerPage | tojson }};
 </script>
 
 <div id="loadingSpinner">
@@ -25,8 +26,25 @@
     </div>
 
     <div class="row mt-2">
-        <div class="col-md-9 subtitle">
+        <div class="col-md-6 subtitle">
             <span id="searchResultDigest"></span>
+        </div>
+
+        <div class="col-md-3">
+            <span class="btn-group" role="group">
+                <button id="eppMinus" class="btn btn-outline-primary">
+                    <i class="bi bi-dash-lg"></i>
+                </button>
+                <span
+                    id="eppValue"
+                    class="btn btn-outline-primary fs-5 no-hover"
+                >
+                </span>
+                <button id="eppPlus" class="btn btn-outline-primary">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </span>
+            <span class="text-center mt-1 mx-2">entries per page</span>
         </div>
 
         <div class="col-md-1 align-right">Sort by:</div>

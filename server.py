@@ -80,6 +80,7 @@ def search():
         query=request.args.get("query", ""),
         byID=request.args.get("byID", "true") == "true",
         ascending=request.args.get("ascending", "false") == "true",
+        entriesPerPage=int(request.args.get("entriesPerPage", 12)),
     )
 
 
