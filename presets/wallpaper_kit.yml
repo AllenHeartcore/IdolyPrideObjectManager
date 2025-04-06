@@ -7,22 +7,22 @@ global-kwargs:
 instructions:
     - criterion: "img_general_cidol.*thumb-landscape-large"
       subdir: "cidol-landscape"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "16:9"
 
     - criterion: "img_general_cidol.*full"
       subdir: "cidol-portrait"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "9:16"
 
     - criterion: "img_general_csprt.*full"
       subdir: "csprt"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "16:9"
 
     - criterion: "img_general_meishi_base_story-bg.*full"
       subdir: "bg"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "16:9"
 
     - criterion: "img_general_meishi_base_(?!story-bg).*full"

@@ -17,12 +17,12 @@ instructions:
 
     - criterion: "img_general_cidol.*full"
       subdir: "idol/produce"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "9:16"
 
     - criterion: "img_general_cidol.*thumb-landscape-large"
       subdir: "idol/produce"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "16:9"
 
     - criterion: "img_general_cidol.*thumb-portrait"
@@ -34,12 +34,12 @@ instructions:
 
     - criterion: "img_general_csprt.*full"
       subdir: "support"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "16:9"
 
     - criterion: "img_general_meishi_base_story-bg.*full"
       subdir: "base/commu"
-      image_format: "jpg"
+      image_format: "jpeg"
       image_resize: "16:9"
 
     - criterion: "img_general_meishi_base_common-frame.*full"

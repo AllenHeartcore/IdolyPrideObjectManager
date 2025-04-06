@@ -18,6 +18,7 @@ from .listing import GkmasObjectList
 
 import re
 import json
+import yaml
 import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -302,6 +303,10 @@ class GkmasManifest:
                 If Tuple[int, int], images are resized to the specified exact dimensions.
         """
 
+        if "preset" in kwargs:
+            self.download_preset(kwargs.pop("preset"), nworker)  # ignore other kwargs
+            return
+
         objects = self.search("|".join(criteria))
 
         if not objects:
@@ -309,6 +314,43 @@ class GkmasManifest:
             return
 
         self._do_download(objects, nworker, **kwargs)
+
+    def download_preset(
+        self,
+        preset_filename: str,
+        nworker: int = DEFAULT_DOWNLOAD_NWORKER,
+    ):
+        """
+        [INTERNAL] Downloads by a predefined preset (see examples in presets/).
+        """
+
+        executor = ThreadPoolExecutor(max_workers=nworker)
+        futures = []
+
+        with open(preset_filename, "r") as f:
+            preset = yaml.safe_load(f)
+
+        root = preset.get("root", DEFAULT_DOWNLOAD_PATH)
+        root = root.replace("{revision}", f"v{self.revision._get_canon_repr()}")
+        global_config = preset.get("global-kwargs", {})
+        instructions = preset.get("instructions", [])
+        postprocessing = preset.get("post-processing", "")
+
+        for instr in instructions:
+            criterion = instr.pop("criterion", "")
+            subdir = instr.pop("subdir", "")
+            for obj in self.search(criterion):
+                futures.append(
+                    executor.submit(
+                        obj.download,
+                        path=Path(root) / subdir,
+                        **{**global_config, **instr},
+                    )
+                )
+
+        for future in as_completed(futures):
+            future.result()
+        executor.shutdown()
 
     def download_all_assetbundles(
         self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs
@@ -343,8 +385,8 @@ class GkmasManifest:
         """
         [INTERNAL] Dispatches a list of objects to concurrent download tasks.
         """
-        self.executor = ThreadPoolExecutor(max_workers=nworker)
-        futures = [self.executor.submit(obj.download, **kwargs) for obj in objects]
+        executor = ThreadPoolExecutor(max_workers=nworker)
+        futures = [executor.submit(obj.download, **kwargs) for obj in objects]
         for future in as_completed(futures):
             future.result()
-        self.executor.shutdown()
+        executor.shutdown()
