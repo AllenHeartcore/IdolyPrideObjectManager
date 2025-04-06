@@ -1,0 +1,89 @@
+- dir: "gkmas_namecard_kit_{revision}"
+
+- global-config:
+  categorize: false
+  convert_image: true
+
+- instructions:
+      - criterion: "img_general_icon_contest-rank.*"
+        subdir: "profile"
+
+      - criterion: "img_general_meishi_illust_idol.*"
+        subdir: "idol/full"
+
+      - criterion: "img_general_meishi_illust_sd.*"
+        subdir: "idol/mini"
+        image_ratio: "2:3"
+
+      - criterion: "img_general_cidol.*full.*"
+        subdir: "idol/produce"
+        image_ratio: "9:16"
+        image_format: "jpg"
+
+      - criterion: "img_general_cidol.*thumb-landscape-large.*"
+        subdir: "idol/produce"
+        image_ratio: "16:9"
+        image_format: "jpg"
+
+      - criterion: "img_general_cidol.*thumb-portrait.*"
+        subdir: "idol/produce"
+        image_ratio: "3:4"
+
+      - criterion: "img_general_meishi_illust_sign.*"
+        subdir: "idol/sign"
+
+      - criterion: "img_general_csprt.*full.*"
+        subdir: "support"
+        image_ratio: "16:9"
+        image_format: "jpg"
+
+      - criterion: "img_general_meishi_base_story-bg.*"
+        subdir: "base/commu"
+        image_ratio: "16:9"
+        image_format: "jpg"
+
+      - criterion: "img_general_meishi_base_(?!story-bg).*full.*"
+        subdir: "base"
+        image_ratio: "16:9"
+
+      - criterion: "img_general_achievement_{char}.*"
+        subdir: "achievement/idol/{char}"
+
+      - criterion: "img_general_achievement_char_{char}.*"
+        subdir: "achievement/idol/{char}"
+
+      - criterion: "img_general_achievement_produce.*"
+        subdir: "achievement/produce"
+
+      - criterion: "img_general_achievement_common.*"
+        subdir: "achievement/misc"
+
+      - criterion: "img_general_meishi_illust_music-logo.*"
+        subdir: "parts/logo"
+        image_ratio: "3:2"
+
+      - criterion: "img_general_meishi_illust_pict-icon.*"
+        subdir: "parts/icon"
+
+      - criterion: "img_general_meishi_illust_stamp.*"
+        subdir: "parts/misc"
+
+      - criterion: "img_general_meishi_illust_hatsuboshi-logo.*"
+        subdir: "parts/misc"
+
+      - criterion: "img_general_meishi_illust_event.*"
+        subdir: "parts/event"
+
+      - criterion: "img_general_meishi_illust_highscore.*full.*"
+        subdir: "parts/highscore"
+
+      - criterion: "img_general_skillcard.*"
+        subdir: "produce/skillcard"
+
+      - criterion: "img_general_pitem.*"
+        subdir: "produce/pitem"
+
+      - criterion: "img_general_pdrink.*"
+        subdir: "produce/pdrink"
+
+- postprocessing: "namecard_kit_pp.py"
