@@ -15,18 +15,18 @@ instructions:
       subdir: "idol/mini"
       image_resize: "2:3"
 
-    - criterion: "img_general_cidol.*full"
-      subdir: "idol/produce"
+    - criterion: "img_general_cidol-{char}.*full"
+      subdir: "idol/produce/{char}"
       image_format: "jpeg"
       image_resize: "9:16"
 
-    - criterion: "img_general_cidol.*thumb-landscape-large"
-      subdir: "idol/produce"
+    - criterion: "img_general_cidol-{char}.*thumb-landscape-large"
+      subdir: "idol/produce/{char}"
       image_format: "jpeg"
       image_resize: "16:9"
 
-    - criterion: "img_general_cidol.*thumb-portrait"
-      subdir: "idol/produce"
+    - criterion: "img_general_cidol-{char}.*thumb-portrait"
+      subdir: "idol/produce/{char}"
       image_resize: "3:4"
 
     - criterion: "img_general_meishi_illust_sign.*02-full"
@@ -87,4 +87,4 @@ instructions:
     - criterion: "img_general_pdrink.*"
       subdir: "produce/pdrink"
 
-postprocessing: "namecard_kit_pp.py"
+post-processing: "namecard_kit_pp.py"

@@ -20,6 +20,7 @@ from .listing import GkmasObjectList
 import re
 import json
 import yaml
+import subprocess
 import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -325,23 +326,20 @@ class GkmasManifest:
         [INTERNAL] Downloads by a predefined preset (see examples in presets/).
         """
 
-        # SETUP
-
-        executor = ThreadPoolExecutor(max_workers=nworker)
-        futures = []
+        # READ PRESET
 
         with open(preset_filename, "r") as f:
             preset = yaml.safe_load(f)
 
-        # PARSE PRESET
-
         root = preset.get("root", DEFAULT_DOWNLOAD_PATH)
         root = root.replace("{revision}", f"v{self.revision._get_canon_repr()}")
 
-        global_config = preset.get("global-kwargs", {})
+        global_kwargs = preset.get("global-kwargs", {})
         proto_instrs = preset.get("instructions", [])
 
-        postprocessing = preset.get("post-processing", "")
+        pp_path = preset.get("post-processing", "")
+        if pp_path:
+            pp_path = Path(preset_filename).parent / pp_path
 
         # PARSE INSTRUCTIONS
 
@@ -351,7 +349,7 @@ class GkmasManifest:
 
             criterion = instr.pop("criterion", "")
             subdir = instr.pop("subdir", "")
-            kwargs = {**global_config, **instr}
+            kwargs = {**global_kwargs, **instr}
 
             if "{char}" not in criterion:
                 assert "{char}" not in subdir, "Standalone {char} flag in subdir"
@@ -368,6 +366,9 @@ class GkmasManifest:
 
         # DISPATCH
 
+        executor = ThreadPoolExecutor(max_workers=nworker)
+        futures = []
+
         for criterion, path, kwargs in instrs:
             for obj in self.search(criterion):
                 futures.append(executor.submit(obj.download, path=path, **kwargs))
@@ -375,6 +376,12 @@ class GkmasManifest:
         for future in as_completed(futures):
             future.result()
         executor.shutdown()
+
+        # POST-PROCESSING
+
+        if pp_path:
+            logger.info(f"Running post-processing script '{pp_path}'")
+            subprocess.run(["python", pp_path, root], check=True)
 
     def download_all_assetbundles(
         self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs
