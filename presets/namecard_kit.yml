@@ -15,24 +15,24 @@
         subdir: "idol/mini"
         image_ratio: "2:3"
 
-      - criterion: "img_general_cidol.*full.*"
+      - criterion: "img_general_cidol.*full"
         subdir: "idol/produce"
         image_ratio: "9:16"
         image_format: "jpg"
 
-      - criterion: "img_general_cidol.*thumb-landscape-large.*"
+      - criterion: "img_general_cidol.*thumb-landscape-large"
         subdir: "idol/produce"
         image_ratio: "16:9"
         image_format: "jpg"
 
-      - criterion: "img_general_cidol.*thumb-portrait.*"
+      - criterion: "img_general_cidol.*thumb-portrait"
         subdir: "idol/produce"
         image_ratio: "3:4"
 
       - criterion: "img_general_meishi_illust_sign.*"
         subdir: "idol/sign"
 
-      - criterion: "img_general_csprt.*full.*"
+      - criterion: "img_general_csprt.*full"
         subdir: "support"
         image_ratio: "16:9"
         image_format: "jpg"
@@ -42,7 +42,7 @@
         image_ratio: "16:9"
         image_format: "jpg"
 
-      - criterion: "img_general_meishi_base_(?!story-bg).*full.*"
+      - criterion: "img_general_meishi_base_(?!story-bg).*full"
         subdir: "base"
         image_ratio: "16:9"
 
@@ -74,7 +74,7 @@
       - criterion: "img_general_meishi_illust_event.*"
         subdir: "parts/event"
 
-      - criterion: "img_general_meishi_illust_highscore.*full.*"
+      - criterion: "img_general_meishi_illust_highscore.*full"
         subdir: "parts/highscore"
 
       - criterion: "img_general_skillcard.*"
