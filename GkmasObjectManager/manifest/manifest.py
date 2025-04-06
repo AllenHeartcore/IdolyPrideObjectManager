@@ -260,22 +260,17 @@ class GkmasManifest:
     def search(self, criterion: str):
         """
         Searches the manifest for objects matching the specified criterion.
-        Returns a list of object names.
+        Returns a list of objects.
 
         Args:
             criterion (str): Regex pattern of object names.
         """
 
-        try:
-            return [self[criterion]]
-        except KeyError:
-            pass
-
-        names = []
-        for obj in self:
-            if re.match(criterion, obj.name, flags=re.IGNORECASE):
-                names.append(obj.name)
-        return [self[name] for name in sorted(names)]
+        matches = filter(
+            lambda s: re.match(criterion, s.name, flags=re.IGNORECASE) is not None,
+            [obj for obj in self],
+        )
+        return sorted(matches, key=lambda x: x.name)
         # This will be called by frontend.
         # We instantiate here to make ID's readily available.
 
@@ -307,10 +302,7 @@ class GkmasManifest:
                 If Tuple[int, int], images are resized to the specified exact dimensions.
         """
 
-        objects = []
-
-        for criterion in criteria:
-            objects.extend(self.search(criterion))
+        objects = self.search("|".join(criteria))
 
         if not objects:
             logger.warning("No objects matched the criteria, aborted")
