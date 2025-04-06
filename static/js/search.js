@@ -16,7 +16,7 @@ let tokens = [];
 
 // pagination support
 const PAGE_NAV_CONTEXT_SIZE = 1;
-var entries_per_page = 12;
+var entriesPerPage = 12;
 var currentPage = 1;
 var totalPages = 0;
 
@@ -54,7 +54,7 @@ function appendPaginationButton(text, isEnabled, pageUpdater) {
 }
 
 function updatePagination() {
-    totalPages = Math.ceil(searchEntries.length / entries_per_page);
+    totalPages = Math.ceil(searchEntries.length / entriesPerPage);
     $("#paginationContainer").empty();
 
     // Prev  [1]    2                      ...    N   Next
@@ -126,7 +126,8 @@ function updateCardContainer() {
     params.set("query", $("#searchInput").val().trim());
     params.set("byID", sortState.byID);
     params.set("ascending", sortState.ascending);
-    params.set("entriesPerPage", entries_per_page);
+    params.set("entriesPerPage", entriesPerPage);
+    params.set("currentPage", currentPage);
     window.history.replaceState(
         {},
         "",
@@ -135,8 +136,8 @@ function updateCardContainer() {
 
     $("#searchEntryCardContainer").empty();
 
-    let start = (currentPage - 1) * entries_per_page;
-    let end = Math.min(currentPage * entries_per_page, searchEntries.length);
+    let start = (currentPage - 1) * entriesPerPage;
+    let end = Math.min(currentPage * entriesPerPage, searchEntries.length);
     let pageEntries = searchEntries.slice(start, end);
 
     pageEntries.forEach((entry) => {
@@ -211,14 +212,14 @@ function updateSort() {
 }
 
 function updateEpp() {
-    $("#eppValue").text(entries_per_page);
+    $("#eppValue").text(entriesPerPage);
 
-    if (entries_per_page <= 12) {
+    if (entriesPerPage <= 12) {
         $("#eppMinus").prop("disabled", true);
     } else {
         $("#eppMinus").prop("disabled", false);
     }
-    if (entries_per_page >= 96) {
+    if (entriesPerPage >= 96) {
         $("#eppPlus").prop("disabled", true);
     } else {
         $("#eppPlus").prop("disabled", false);
@@ -249,6 +250,7 @@ function populateSearchpageContainers(queryDisplay) {
 }
 
 $(document).ready(function () {
+    setAccentColorByString(query);
     let queryDisplay = query.trim().replace(/\s+/g, " "); // trimmed, duplicate spaces removed
     $("#searchInput").val(queryDisplay + " "); // allows immediate edit/resubmission
     // search input should be displayed alongside the spinner, before a successful AJAX response
@@ -272,12 +274,12 @@ $(document).ready(function () {
 
     // the following highlights are onetime inits,
     // as info will be passed backwards from here on
-    if (byID) {
+    if (sortState.byID) {
         $("#sortByID").prop("checked", true);
     } else {
         $("#sortByName").prop("checked", true);
     }
-    if (ascending) {
+    if (sortState.ascending) {
         $("#sortAsc").prop("checked", true);
     } else {
         $("#sortDesc").prop("checked", true);
@@ -289,11 +291,11 @@ $(document).ready(function () {
     $("#sortDesc").click(updateSort);
 
     $("#eppMinus").click(() => {
-        entries_per_page = Math.max(entries_per_page - 12, 12);
+        entriesPerPage = Math.max(entriesPerPage - 12, 12);
         updateEpp();
     });
     $("#eppPlus").click(() => {
-        entries_per_page = Math.min(entries_per_page + 12, 96);
+        entriesPerPage = Math.min(entriesPerPage + 12, 96);
         updateEpp();
     });
 });

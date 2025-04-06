@@ -57,11 +57,6 @@ body {
     width: 100% !important;
 }
 
-.no-hover {
-    pointer-events: none;
-    opacity: 1;
-}
-
 .col-md-1-13 {
     flex: 0 0 auto;
     width: calc(100% / 13);

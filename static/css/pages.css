@@ -34,6 +34,13 @@
 
 /* Search */
 
+#eppValue {
+    width: 3rem;
+    text-align: center;
+    pointer-events: none;
+    opacity: 1;
+}
+
 #searchEntryCard {
     cursor: pointer;
     margin: 0.5rem 0;
