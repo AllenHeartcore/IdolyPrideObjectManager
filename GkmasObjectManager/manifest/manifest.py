@@ -120,11 +120,6 @@ class GkmasManifest:
         # could also try self[key]
 
     def __sub__(self, other):
-        """
-        [INTERNAL] Creates a manifest from a differentiation dictionary.
-        The diffdict refers to a dictionary containing differentiated
-        assetbundles and resources, created by listing.GkmasObjectList.diff().
-        """
         return GkmasManifest(
             {  # this is not a standard JSON dict, more like named arguments
                 "revision": self.revision - other.revision,  # handles sanity check
@@ -132,6 +127,20 @@ class GkmasManifest:
                 "resourceList": self.resources - other.resources,
                 "urlFormat": self.urlformat,
                 # always override with the higher revision, in case this ever differs
+            }
+        )
+
+    def __add__(self, other):
+        new_revision = self.revision + other.revision
+        a, b = (
+            (self, other) if new_revision.this == other.revision.this else (other, self)
+        )  # 'b' must be newer; this matters in list addition
+        return GkmasManifest(
+            {
+                "revision": new_revision,
+                "assetBundleList": a.assetbundles + b.assetbundles,
+                "resourceList": a.resources + b.resources,
+                "urlFormat": b.urlformat,
             }
         )
 
