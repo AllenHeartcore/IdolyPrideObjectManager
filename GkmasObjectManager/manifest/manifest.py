@@ -10,6 +10,7 @@ from ..const import (
     CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
     DEFAULT_DOWNLOAD_NWORKER,
+    CHARACTER_ABBREVS,
 )
 
 from .revision import GkmasManifestRevision
@@ -324,29 +325,52 @@ class GkmasManifest:
         [INTERNAL] Downloads by a predefined preset (see examples in presets/).
         """
 
+        # SETUP
+
         executor = ThreadPoolExecutor(max_workers=nworker)
         futures = []
 
         with open(preset_filename, "r") as f:
             preset = yaml.safe_load(f)
 
+        # PARSE PRESET
+
         root = preset.get("root", DEFAULT_DOWNLOAD_PATH)
         root = root.replace("{revision}", f"v{self.revision._get_canon_repr()}")
+
         global_config = preset.get("global-kwargs", {})
-        instructions = preset.get("instructions", [])
+        proto_instrs = preset.get("instructions", [])
+
         postprocessing = preset.get("post-processing", "")
 
-        for instr in instructions:
+        # PARSE INSTRUCTIONS
+
+        instrs = []
+
+        for instr in proto_instrs:
+
             criterion = instr.pop("criterion", "")
             subdir = instr.pop("subdir", "")
-            for obj in self.search(criterion):
-                futures.append(
-                    executor.submit(
-                        obj.download,
-                        path=Path(root) / subdir,
-                        **{**global_config, **instr},
+            kwargs = {**global_config, **instr}
+
+            if "{char}" not in criterion:
+                assert "{char}" not in subdir, "Standalone {char} flag in subdir"
+                instrs.append((criterion, Path(root) / subdir, kwargs))
+            else:
+                for char in CHARACTER_ABBREVS[:12]:  # hardcoded
+                    instrs.append(
+                        (
+                            criterion.replace("{char}", char),
+                            Path(root) / subdir.replace("{char}", char),
+                            kwargs,
+                        )
                     )
-                )
+
+        # DISPATCH
+
+        for criterion, path, kwargs in instrs:
+            for obj in self.search(criterion):
+                futures.append(executor.submit(obj.download, path=path, **kwargs))
 
         for future in as_completed(futures):
             future.result()
