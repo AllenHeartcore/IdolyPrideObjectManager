@@ -191,6 +191,17 @@ function updateSort() {
     currentPage = 1;
     sortState.byID = byID_new;
     sortState.ascending = ascending_new;
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("query", $("#searchInput").val().trim());
+    params.set("byID", byID_new ? "true" : "false");
+    params.set("ascending", ascending_new ? "true" : "false");
+    window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${params}`
+    );
+
     sortSearchEntries();
     updateCardContainer();
 }
@@ -235,6 +246,19 @@ $(document).ready(function () {
             dumpErrorToConsole(...args);
         },
     });
+
+    // the following highlights are onetime inits,
+    // as info will be passed backwards from here on
+    if (byID) {
+        $("#sortByID").prop("checked", true);
+    } else {
+        $("#sortByName").prop("checked", true);
+    }
+    if (ascending) {
+        $("#sortAsc").prop("checked", true);
+    } else {
+        $("#sortDesc").prop("checked", true);
+    }
 
     $("#sortByID").click(updateSort);
     $("#sortByName").click(updateSort);

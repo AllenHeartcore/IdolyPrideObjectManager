@@ -7,7 +7,9 @@
 
 <!-- AJAX Interface -->
 <script>
-    let query = "{{ query }}";
+    let query = {{ query | tojson }};
+    let byID = {{ byID | tojson }};
+    let ascending = {{ ascending | tojson }};
 </script>
 
 <div id="loadingSpinner">
@@ -43,7 +45,6 @@
                     class="btn-check"
                     name="sortByOptions"
                     id="sortByName"
-                    checked
                 />
                 <label class="btn btn-outline-primary" for="sortByName">
                     Name
@@ -58,7 +59,6 @@
                     class="btn-check"
                     name="ascDescOptions"
                     id="sortAsc"
-                    checked
                 />
                 <label class="btn btn-outline-primary" for="sortAsc">
                     <i class="bi bi-sort-up"></i>

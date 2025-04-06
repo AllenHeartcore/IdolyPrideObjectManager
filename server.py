@@ -75,8 +75,12 @@ def home():
 
 @app.route("/search")
 def search():
-    query = request.args.get("query", "")
-    return render_template("search.html", query=query)
+    return render_template(
+        "search.html",
+        query=request.args.get("query", ""),
+        byID=request.args.get("byID", "true") == "true",
+        ascending=request.args.get("ascending", "false") == "true",
+    )
 
 
 @app.route("/view/assetbundle/<id>")
