@@ -3,6 +3,8 @@ import shutil
 import subprocess
 from pathlib import Path
 from argparse import ArgumentParser
+from zipfile import ZipFile
+from tqdm import tqdm
 
 import GkmasObjectManager as gom
 from GkmasObjectManager.log import Logger
@@ -28,6 +30,12 @@ if __name__ == "__main__":
         "-g", "--greedy", action="store_true", help="Search through all adventures"
     )
     parser.add_argument(
+        "-m",
+        "--merge",
+        action="store_true",
+        help="Merge dataset into one audio file (otherwise exported as ZIP)",
+    )
+    parser.add_argument(
         "-c", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
     )
     parser.add_argument(
@@ -42,9 +50,16 @@ if __name__ == "__main__":
     m = gom.fetch()
 
     if args.output == "":
-        args.output = f"sovits_dataset_v{m.revision._get_canon_repr()}_{args.character}{"_greedy" if args.greedy else ""}.{args.format}"
+        args.output = "".join(
+            [
+                f"sovits_dataset_v{m.revision._get_canon_repr()}",
+                f"_{args.character}",
+                "_greedy" if args.greedy else "",
+                f".{args.format}" if args.merge else ".zip",
+            ]
+        )
 
-    if not args.output.endswith(args.format):
+    if args.merge and not args.output.endswith(args.format):
         ext = Path(args.output).suffix[1:]
         logger.warning(
             f"Filename extension '{args.format}' does not match specified '{ext}', overriding"
@@ -100,30 +115,42 @@ if __name__ == "__main__":
     )
 
     logger.info("Making dataset...")
-    with open(os.path.join(args.cache_dir, "filelist.txt"), "w") as fout:
-        for f in os.listdir(args.cache_dir):
-
-            if (
-                f == "filelist.txt"
-                or args.character not in f
-                or (
-                    f.startswith("sud_vo_adv_")
-                    and f.split("_")[-1].split("-")[0] != args.character
-                )
-            ):
-                continue
-                # exclude other characters in adventure voice pack
-                # (hardcoded, can also set unpack_subsongs=False and check ZIP contents here)
-
-            fout.write(f"file '{f}'\n")
+    target_char = []
+    for f in os.listdir(args.cache_dir):
+        if (
+            f == "filelist.txt"
+            or args.character not in f
+            or (
+                f.startswith("sud_vo_adv_")
+                and f.split("_")[-1].split("-")[0] != args.character
+            )
+        ):
+            continue
+            # exclude other characters in adventure voice pack
+            # (hardcoded, can also set unpack_subsongs=False and check ZIP contents here)
+        target_char.append(f)
 
     logger.info("Concatenating samples...")
-    subprocess.run(
-        f'ffmpeg -f concat -safe 0 -i {os.path.join(args.cache_dir, "filelist.txt")} -b:a {args.bitrate}k "{args.output}"',
-        check=True,
-    )
+    if args.merge:
+        with open(os.path.join(args.cache_dir, "filelist.txt"), "w") as fout:
+            for f in target_char:
+                fout.write(f"file '{os.path.join(args.cache_dir, f)}'\n")
+        subprocess.run(
+            f'ffmpeg -f concat -safe 0 -i {os.path.join(args.cache_dir, "filelist.txt")} -b:a {args.bitrate}k "{args.output}"',
+            check=True,
+        )
+        os.remove(os.path.join(args.cache_dir, "filelist.txt"))
+    else:
+        with ZipFile(args.output, "w") as zipf:
+            for f in tqdm(target_char):
+                proc = subprocess.run(
+                    f"ffmpeg -i {os.path.join(args.cache_dir, f)} -f {args.format} -b:a {args.bitrate}k pipe:1",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.DEVNULL,
+                    check=True,
+                )
+                zipf.writestr(Path(f).with_suffix(f".{args.format}").name, proc.stdout)
 
-    os.remove(os.path.join(args.cache_dir, "filelist.txt"))
     if not (cache_active or args.keep_cache):
         logger.info("Purging cache...")
         shutil.rmtree(args.cache_dir)
