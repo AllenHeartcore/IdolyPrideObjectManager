@@ -23,7 +23,7 @@ var totalPages = 0;
 /*  CONTROL FLOW:
     $(document).ready
         -> populateSearchpageContainers
-        -> updateSort, updateEpp
+        -> sortSearchEntries, updateEpp
     updateSort
         -> sortSearchEntries, updatePageState
     updateEpp
@@ -35,8 +35,8 @@ var totalPages = 0;
         -> appendPaginationButton
 
                    US - SSE
-                 /    \
-    [init] - PSC        UPS - RCC - UP - APB
+                      X
+    [init] - PSC ----/  UPS - RCC - UP - APB
                  \    /           \
                    UE               HT
 */
@@ -207,15 +207,16 @@ function updateSort() {
     if (byID_new === sortState.byID && ascending_new === sortState.ascending) {
         return;
     }
-    currentPage = 1;
+
     sortState.byID = byID_new;
     sortState.ascending = ascending_new;
-
     sortSearchEntries();
+
+    currentPage = 1;
     updatePageState();
 }
 
-function updateEpp() {
+function updateEpp(resetPage = true) {
     $("#eppValue").text(entriesPerPage);
 
     if (entriesPerPage <= 12) {
@@ -229,7 +230,9 @@ function updateEpp() {
         $("#eppPlus").prop("disabled", false);
     }
 
-    currentPage = 1; // reset to first page
+    // If new EPP is non-devisible by old EPP,
+    // we're unclear about which page we are currently on.
+    if (resetPage) currentPage = 1;
     updatePageState();
 }
 
@@ -245,8 +248,8 @@ function populateSearchpageContainers(queryDisplay) {
             `Found ${searchEntries.length}` +
                 (searchEntries.length === 1 ? " entry." : " entries.")
         );
-        updateSort();
-        updateEpp();
+        sortSearchEntries();
+        updateEpp((resetPage = false));
     }
 
     $("#loadingSpinner").hide();
