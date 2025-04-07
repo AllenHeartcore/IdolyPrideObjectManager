@@ -23,7 +23,7 @@ if __name__ == "__main__":
     parser.add_argument("character", type=str, help="Character name")
 
     parser.add_argument("-o", "--output", type=str, default="", help="Output filename")
-    parser.add_argument("-f", "--format", type=str, default="wav", help="Output format")
+    parser.add_argument("-f", "--format", type=str, default="mp3", help="Output format")
     parser.add_argument("-b", "--bitrate", type=int, default=128, help="Output bitrate")
 
     parser.add_argument(
@@ -78,12 +78,12 @@ if __name__ == "__main__":
     else:
         os.makedirs(args.cache_dir)
 
-    # ------------------------------ CORE
+    # ------------------------------ DOWNLOAD
 
     target = m.search(f"sud_vo.*{args.character}.*")
     if args.greedy:
         target += m.search(f"sud_vo_adv.*")
-    target = set([f.name for f in target])
+    target = set([f.name for f in target])  # remove duplicates
     if not target:
         logger.warning(f"Found no voice samples for '{args.character}, aborting")
         exit(1)
@@ -93,13 +93,9 @@ if __name__ == "__main__":
         logger.info("Computing cache diff...")
         target -= set(
             [
-                str(
-                    Path(
-                        "_".join(f.split("_")[:-1])
-                        if f.startswith("sud_vo_adv_")
-                        else f
-                    ).with_suffix(".acb")
-                )
+                Path("_".join(f.split("_")[:-1]) if f.startswith("sud_vo_adv_") else f)
+                .with_suffix(".acb")
+                .name
                 for f in os.listdir(args.cache_dir)
             ]
         )
@@ -114,23 +110,25 @@ if __name__ == "__main__":
         unpack_subsongs=True,
     )
 
-    logger.info("Making dataset...")
-    target_char = []
-    for f in os.listdir(args.cache_dir):
+    # ------------------------------ EXPORT
+
+    logger.info("Filtering samples...")
+    target_char = [
+        f
+        for f in os.listdir(args.cache_dir)
         if (
-            f == "filelist.txt"
-            or args.character not in f
-            or (
+            f != "filelist.txt"
+            and args.character in f
+            and not (
                 f.startswith("sud_vo_adv_")
                 and f.split("_")[-1].split("-")[0] != args.character
             )
-        ):
-            continue
             # exclude other characters in adventure voice pack
             # (hardcoded, can also set unpack_subsongs=False and check ZIP contents here)
-        target_char.append(f)
+        )
+    ]
 
-    logger.info("Concatenating samples...")
+    logger.info("Exporting dataset...")
     if args.merge:
         with open(os.path.join(args.cache_dir, "filelist.txt"), "w") as fout:
             for f in target_char:
@@ -150,6 +148,8 @@ if __name__ == "__main__":
                     check=True,
                 )
                 zipf.writestr(Path(f).with_suffix(f".{args.format}").name, proc.stdout)
+
+    # ------------------------------ CLEANUP
 
     if not (cache_active or args.keep_cache):
         logger.info("Purging cache...")
