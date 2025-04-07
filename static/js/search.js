@@ -25,19 +25,20 @@ var totalPages = 0;
         -> populateSearchpageContainers
         -> updateSort, updateEpp
     updateSort
-        -> sortSearchEntries, updateCardContainer
+        -> sortSearchEntries, updatePageState
     updateEpp
-        -> updateCardContainer
-    updateCardContainer
+        -> updatePageState
+    updatePageState
+        -> refreshCardContainer
         -> updatePagination, highlightTokens
     updatePagination
         -> appendPaginationButton
 
                    US - SSE
                  /    \
-    [init] - PSC        UCC - UP - APB
-                 \    /     \
-                   UE         HT
+    [init] - PSC        UPS - RCC - UP - APB
+                 \    /           \
+                   UE               HT
 */
 
 function appendPaginationButton(text, isEnabled, pageUpdater) {
@@ -48,7 +49,7 @@ function appendPaginationButton(text, isEnabled, pageUpdater) {
             .prop("disabled", !isEnabled)
             .click(() => {
                 currentPage = pageUpdater(currentPage);
-                updateCardContainer();
+                refreshCardContainer();
             })
     );
 }
@@ -121,19 +122,7 @@ function highlightTokens(text) {
     return text.replace(regex, '<mark class="bg-warning">$1</mark>');
 }
 
-function updateCardContainer() {
-    const params = new URLSearchParams(window.location.search);
-    params.set("query", $("#searchInput").val().trim());
-    params.set("byID", sortState.byID);
-    params.set("ascending", sortState.ascending);
-    params.set("entriesPerPage", entriesPerPage);
-    params.set("currentPage", currentPage);
-    window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?${params}`
-    );
-
+function refreshCardContainer() {
     $("#searchEntryCardContainer").empty();
 
     let start = (currentPage - 1) * entriesPerPage;
@@ -179,6 +168,21 @@ function updateCardContainer() {
     updatePagination();
 }
 
+function updatePageState() {
+    const params = new URLSearchParams(window.location.search);
+    params.set("query", $("#searchInput").val().trim());
+    params.set("byID", sortState.byID);
+    params.set("ascending", sortState.ascending);
+    params.set("entriesPerPage", entriesPerPage);
+    params.set("currentPage", currentPage);
+    window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${params}`
+    );
+    refreshCardContainer();
+}
+
 function sortSearchEntries() {
     if (sortState.byID) {
         searchEntries.sort((a, b) => {
@@ -208,7 +212,7 @@ function updateSort() {
     sortState.ascending = ascending_new;
 
     sortSearchEntries();
-    updateCardContainer();
+    updatePageState();
 }
 
 function updateEpp() {
@@ -226,7 +230,7 @@ function updateEpp() {
     }
 
     currentPage = 1; // reset to first page
-    updateCardContainer();
+    updatePageState();
 }
 
 function populateSearchpageContainers(queryDisplay) {
