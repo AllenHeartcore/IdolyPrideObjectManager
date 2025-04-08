@@ -59,7 +59,7 @@ if __name__ == "__main__":
         )
 
     args.output = Path(args.output)
-    if args.merge and not args.output.endswith(args.format):
+    if args.merge and not args.output.suffix == f".{args.format}":
         ext = args.output.suffix[1:]
         logger.warning(
             f"Filename extension '{args.format}' does not match specified '{ext}', overriding"
@@ -92,12 +92,13 @@ if __name__ == "__main__":
 
     if cache_active:
         logger.info("Computing cache diff...")
+        cached_names = [f.name for f in args.cache_dir.iterdir()]
         target -= set(
             [
                 Path("_".join(f.split("_")[:-1]) if f.startswith("sud_vo_adv_") else f)
                 .with_suffix(".acb")
                 .name
-                for f in args.cache_dir.iterdir()
+                for f in cached_names
             ]
         )
 
@@ -115,14 +116,14 @@ if __name__ == "__main__":
 
     logger.info("Filtering samples...")
     target_char = [
-        f.name
+        f
         for f in args.cache_dir.iterdir()
         if (
             f != "filelist.txt"
-            and args.character in f
+            and args.character in f.name
             and not (
-                f.startswith("sud_vo_adv_")
-                and f.split("_")[-1].split("-")[0] != args.character
+                f.name.startswith("sud_vo_adv_")
+                and f.name.split("_")[-1].split("-")[0] != args.character
             )
             # exclude other characters in adventure voice pack
             # (hardcoded, can also set unpack_subsongs=False and check ZIP contents here)
@@ -133,8 +134,7 @@ if __name__ == "__main__":
     if args.merge:
         filelist_path = Path(args.cache_dir, "filelist.txt")
         filelist_path.write_text(
-            "".join([f"file '{args.cache_dir / f}'\n" for f in target_char]),
-            encoding="utf-8",
+            "".join([f"file '{f.name.replace("\\", "/")}'\n" for f in target_char])
         )
         subprocess.run(
             f'ffmpeg -f concat -safe 0 -i {filelist_path} -b:a {args.bitrate}k "{args.output}"',
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
                 proc = subprocess.run(
-                    f"ffmpeg -i {args.cache_dir / f} -f {args.format} -b:a {args.bitrate}k pipe:1",
+                    f"ffmpeg -i {f} -f {args.format} -b:a {args.bitrate}k pipe:1",
                     stdout=subprocess.PIPE,
                     stderr=subprocess.DEVNULL,
                     check=True,

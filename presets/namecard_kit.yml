@@ -46,7 +46,7 @@ instructions:
       subdir: "base/frame"
       image_resize: "16:9"
 
-    - criterion: "img_general_meishi_base_(?!(story-bg|common-frame)).*full$"
+    - criterion: "img_general_meishi_base_(?!(story-bg|common-frame)).*full"
       subdir: "base"
       image_resize: "16:9"
 

@@ -268,7 +268,7 @@ class GkmasManifest:
         """
 
         matches = filter(
-            lambda s: re.match(criterion, s.name, flags=re.IGNORECASE) is not None,
+            lambda s: re.fullmatch(criterion, s.name, flags=re.IGNORECASE) is not None,
             list(self),
         )
         return sorted(matches, key=lambda x: x.name)
