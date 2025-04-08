@@ -9,7 +9,6 @@ from ..const import (
     PATH_ARGTYPE,
     CSV_COLUMNS,
     DEFAULT_DOWNLOAD_PATH,
-    DEFAULT_DOWNLOAD_NWORKER,
     CHARACTER_ABBREVS,
 )
 
@@ -20,10 +19,10 @@ from .listing import GkmasObjectList
 import re
 import json
 import yaml
+import asyncio
 import subprocess
 import pandas as pd
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # The logger would better be a global variable in the
@@ -46,7 +45,6 @@ class GkmasManifest:
     Methods:
         download(
             *criteria: str,
-            nworker: int = DEFAULT_DOWNLOAD_NWORKER,
             path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
             convert_image: bool = True,
@@ -271,25 +269,18 @@ class GkmasManifest:
 
         matches = filter(
             lambda s: re.match(criterion, s.name, flags=re.IGNORECASE) is not None,
-            [obj for obj in self],
+            list(self),
         )
         return sorted(matches, key=lambda x: x.name)
         # This will be called by frontend.
         # We instantiate here to make ID's readily available.
 
-    def download(
-        self,
-        *criteria: str,
-        nworker: int = DEFAULT_DOWNLOAD_NWORKER,
-        **kwargs,
-    ):
+    def download(self, *criteria: str, **kwargs):
         """
         Downloads the regex-specified assetbundles/resources to the specified path.
 
         Args:
             *criteria (str): Regex patterns of assetbundle/resource names.
-            nworker (int) = DEFAULT_DOWNLOAD_NWORKER: Number of concurrent download workers.
-                Defaults to multiprocessing.cpu_count().
             path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
                 *WARNING: Behavior is undefined if the path points to an definite file (with extension).*
             categorize (bool) = True: Whether to categorize the downloaded objects into subdirectories.
@@ -306,7 +297,7 @@ class GkmasManifest:
         """
 
         if "preset" in kwargs:
-            self.download_preset(kwargs.pop("preset"), nworker)  # ignore other kwargs
+            self.download_preset(kwargs.pop("preset"))
             return
 
         objects = self.search("|".join(criteria))
@@ -315,13 +306,9 @@ class GkmasManifest:
             logger.warning("No objects matched the criteria, aborted")
             return
 
-        self._do_download(objects, nworker, **kwargs)
+        asyncio.run(self._dispatch(objects, **kwargs))
 
-    def download_preset(
-        self,
-        preset_filename: str,
-        nworker: int = DEFAULT_DOWNLOAD_NWORKER,
-    ):
+    def download_preset(self, preset_filename: str):
         """
         [INTERNAL] Downloads by a predefined preset (see examples in presets/).
         """
@@ -349,75 +336,76 @@ class GkmasManifest:
 
             criterion = instr.pop("criterion", "")
             subdir = instr.pop("subdir", "")
-            kwargs = {**global_kwargs, **instr}
 
             if "{char}" not in criterion:
                 assert "{char}" not in subdir, "Standalone {char} flag in subdir"
-                instrs.append((criterion, Path(root) / subdir, kwargs))
+                instrs.append((criterion, {"path": Path(root) / subdir, **instr}))
             else:
                 for char in CHARACTER_ABBREVS[:12]:  # hardcoded
                     instrs.append(
                         (
                             criterion.replace("{char}", char),
-                            Path(root) / subdir.replace("{char}", char),
-                            kwargs,
+                            {
+                                "path": Path(root) / subdir.replace("{char}", char),
+                                **instr,
+                            },
                         )
                     )
 
         # DISPATCH
 
-        executor = ThreadPoolExecutor(max_workers=nworker)
-        futures = []
-
-        for criterion, path, kwargs in instrs:
-            for obj in self.search(criterion):
-                futures.append(executor.submit(obj.download, path=path, **kwargs))
-
-        for future in as_completed(futures):
-            future.result()
-        executor.shutdown()
-
-        # POST-PROCESSING
+        asyncio.run(
+            self._dispatch(
+                [
+                    (obj, kw)
+                    for criterion, kw in instrs
+                    for obj in self.search(criterion)
+                ],
+                **global_kwargs,
+            )
+        )
 
         if pp_path:
             logger.info(f"Running post-processing script '{pp_path}'")
             subprocess.run(["python", pp_path, root], check=True)
 
-    def download_all_assetbundles(
-        self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs
-    ):
+    def download_all_assetbundles(self, **kwargs):
         """
         Downloads all assetbundles to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [ab for ab in self.assetbundles]
-        self._do_download(objects, nworker, **kwargs)
+        asyncio.run(self._dispatch(list(self.assetbundles), **kwargs))
 
-    def download_all_resources(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
+    def download_all_resources(self, **kwargs):
         """
         Downloads all resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        objects = [res for res in self.resources]
-        self._do_download(objects, nworker, **kwargs)
+        asyncio.run(self._dispatch(list(self.resources), **kwargs))
 
-    def download_all(self, nworker: int = DEFAULT_DOWNLOAD_NWORKER, **kwargs):
+    def download_all(self, **kwargs):
         """
         Downloads all assetbundles and resources to the specified path.
         See download() for a list of keyword arguments.
         """
-        # Instead of calling two separate methods,
-        # this approach ensures all workers are busy at transition.
-        objects = [ab for ab in self.assetbundles]
-        objects.extend([res for res in self.resources])
-        self._do_download(objects, nworker, **kwargs)
+        asyncio.run(self._dispatch(list(self), **kwargs))
 
-    def _do_download(self, objects: list, nworker: int, **kwargs):
+    async def _dispatch(self, obj_kw: list, **kwargs):
         """
-        [INTERNAL] Dispatches a list of objects to concurrent download tasks.
+        [INTERNAL] Dispatches a list of object-kwargs pairs to async download tasks.
         """
-        executor = ThreadPoolExecutor(max_workers=nworker)
-        futures = [executor.submit(obj.download, **kwargs) for obj in objects]
-        for future in as_completed(futures):
-            future.result()
-        executor.shutdown()
+
+        # if obj_kw is a list of objects, append empty kwargs
+        if not isinstance(obj_kw[0], tuple):
+            obj_kw = [(obj, {}) for obj in obj_kw]
+
+        # if kwargs not empty, broadcast to all pairs
+        if kwargs:
+            obj_kw = [(obj, {**kw, **kwargs}) for (obj, kw) in obj_kw]
+
+        await asyncio.gather(
+            *[
+                asyncio.create_task(asyncio.to_thread(obj.download, **kw))
+                for (obj, kw) in obj_kw
+            ]
+        )

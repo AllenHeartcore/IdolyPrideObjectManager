@@ -3,7 +3,6 @@ const.py
 Module-wide constants (macro equivalents).
 """
 
-import multiprocessing
 from pathlib import Path
 from urllib.parse import urljoin
 from typing import Union, Tuple
@@ -58,7 +57,6 @@ CSV_COLUMNS = ["objectName", "md5", "name", "size", "state"]
 
 # manifest download dispatcher
 DEFAULT_DOWNLOAD_PATH = "objects/"
-DEFAULT_DOWNLOAD_NWORKER = multiprocessing.cpu_count()
 
 # object instantiation
 RESOURCE_INFO_FIELDS_HEAD = ["id", "name", "size"]
