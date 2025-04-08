@@ -5,6 +5,7 @@ General-purpose resource downloading.
 
 from ..log import Logger
 from ..const import (
+    md5sum,  # dispreferred, but introduces redundancy otherwise
     PATH_ARGTYPE,
     RESOURCE_INFO_FIELDS,
     GKMAS_VERSION,
@@ -21,7 +22,6 @@ from ..adv import GkmasAdventure
 
 import re
 import requests
-from hashlib import md5
 from pathlib import Path
 from urllib.parse import urljoin
 from typing import Tuple
@@ -212,7 +212,7 @@ class GkmasResource:
         if len(response.content) != self.size:
             logger.error(f"{self._idname} has invalid size")
 
-        if md5(response.content).hexdigest() != self.md5:
+        if md5sum(response.content) != bytes.fromhex(self.md5):
             logger.error(f"{self._idname} has invalid MD5 hash")
 
         return response.content

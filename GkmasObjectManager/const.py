@@ -4,10 +4,22 @@ Module-wide constants (macro equivalents).
 """
 
 import multiprocessing
-from hashlib import md5, sha256
 from pathlib import Path
 from urllib.parse import urljoin
 from typing import Union, Tuple
+from cryptography.hazmat.primitives import hashes
+
+
+def sha256sum(data: bytes) -> bytes:
+    digest = hashes.Hash(hashes.SHA256())
+    digest.update(data)
+    return digest.finalize()
+
+
+def md5sum(data: bytes) -> bytes:
+    digest = hashes.Hash(hashes.MD5())
+    digest.update(data)
+    return digest.finalize()
 
 
 # argument type hints
@@ -32,12 +44,10 @@ GKMAS_API_HEADER = {
 }
 
 # manifest decrypt
-sha256sum = lambda x: sha256(bytes(x, "utf-8")).digest()
-md5sum = lambda x: md5(bytes(x, "utf-8")).digest()
-GKMAS_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd")
-GKMAS_ONLINEPDB_KEY_PC = sha256sum("x5HFaJCJywDyuButLM0f")
-GKMAS_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk")
-GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz")
+GKMAS_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd".encode("utf-8"))
+GKMAS_ONLINEPDB_KEY_PC = sha256sum("x5HFaJCJywDyuButLM0f".encode("utf-8"))
+GKMAS_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk".encode("utf-8"))
+GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
 
 # manifest diff
 OBJLIST_ID_FIELD = "id"

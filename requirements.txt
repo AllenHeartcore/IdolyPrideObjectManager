@@ -4,7 +4,7 @@ flask
 # Manifest:
 # request, decrypt, parse, export
 requests
-pycryptodome
+cryptography
 protobuf
 pandas
 
