@@ -7,7 +7,6 @@ as well as a fallback for unknown media types.
 
 from ..log import Logger
 
-import os
 import base64
 from pathlib import Path
 from typing import Tuple
@@ -102,5 +101,5 @@ class GkmasDummyMedia:
         if mimesubtype == "zip" and kwargs.get("unpack_subsongs", False):
             with ZipFile(path.with_suffix(f".{mimesubtype}")) as z:
                 z.extractall(path.parent)
-            os.remove(path.with_suffix(f".{mimesubtype}"))
+            path.with_suffix(f".{mimesubtype}").unlink()
             logger.success(f"{self.name} unpacked to {path.parent}")

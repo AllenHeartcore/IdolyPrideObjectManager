@@ -339,14 +339,14 @@ class GkmasManifest:
 
             if "{char}" not in criterion:
                 assert "{char}" not in subdir, "Standalone {char} flag in subdir"
-                instrs.append((criterion, {"path": Path(root) / subdir, **instr}))
+                instrs.append((criterion, {"path": Path(root, subdir), **instr}))
             else:
                 for char in CHARACTER_ABBREVS[:12]:  # hardcoded
                     instrs.append(
                         (
                             criterion.replace("{char}", char),
                             {
-                                "path": Path(root) / subdir.replace("{char}", char),
+                                "path": Path(root, subdir.replace("{char}", char)),
                                 **instr,
                             },
                         )

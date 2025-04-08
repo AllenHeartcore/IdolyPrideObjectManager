@@ -7,7 +7,6 @@ and MP3 audio handler for GkmasResource.
 from ..log import Logger
 from .dummy import GkmasDummyMedia
 
-import os
 import platform
 import tempfile
 import subprocess
@@ -95,7 +94,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
                         "-S",  # select subsongs
                         "-1",  # all of them (shell=True forces string args)
                         "-o",
-                        os.path.join(tmp_out, "?n.wav"),  # use internal stream name
+                        Path(tmp_out, "?n.wav"),  # use internal stream name
                         tmp_in.name,
                     ],
                     shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
@@ -104,14 +103,13 @@ class GkmasAWBAudio(GkmasDummyMedia):
                     check=True,
                 )
                 audio = [
-                    (f, AudioSegment.from_file(os.path.join(tmp_out, f)))
-                    for f in os.listdir(tmp_out)
+                    (f.name, AudioSegment.from_file(f)) for f in Path(tmp_out).iterdir()
                 ]
                 success = True
             except Exception as e:
                 exception = e
 
-        os.remove(tmp_in.name)
+        Path(tmp_in.name).unlink()
 
         if not success:
             raise exception  # delay the exception after cleanup
@@ -124,7 +122,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
             with ZipFile(buffer, "w") as zip_file:
                 for f, segment in audio:
                     zip_file.writestr(
-                        str(Path(f).with_suffix(f".{self.converted_format}")),
+                        Path(f).with_suffix(f".{self.converted_format}").name,
                         segment.export(format=self.converted_format).read(),
                     )
             return buffer.getvalue()

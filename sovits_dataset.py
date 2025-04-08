@@ -1,4 +1,3 @@
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -59,24 +58,26 @@ if __name__ == "__main__":
             ]
         )
 
+    args.output = Path(args.output)
     if args.merge and not args.output.endswith(args.format):
-        ext = Path(args.output).suffix[1:]
+        ext = args.output.suffix[1:]
         logger.warning(
             f"Filename extension '{args.format}' does not match specified '{ext}', overriding"
         )
-        args.output = str(Path(args.output).with_suffix(f".{args.format}"))
+        args.output = args.output.with_suffix(f".{args.format}")
 
-    assert not os.path.exists(args.output), f"{args.output} already exists"
-    if os.path.dirname(args.output):
-        os.makedirs(os.path.dirname(args.output), exist_ok=True)
+    assert not args.output.exists(), f"{args.output} already exists"
+    if args.output.parent:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
 
+    args.cache_dir = Path(args.cache_dir)
     cache_active = False
-    if os.path.exists(args.cache_dir):
-        assert os.path.isdir(args.cache_dir), f"{args.cache_dir} is not a directory"
-        if os.listdir(args.cache_dir):
+    if args.cache_dir.exists():
+        assert args.cache_dir.is_dir(), f"{args.cache_dir} is not a directory"
+        if list(args.cache_dir.iterdir()):
             cache_active = True
     else:
-        os.makedirs(args.cache_dir)
+        args.cache_dir.mkdir(parents=True, exist_ok=True)
 
     # ------------------------------ DOWNLOAD
 
@@ -96,7 +97,7 @@ if __name__ == "__main__":
                 Path("_".join(f.split("_")[:-1]) if f.startswith("sud_vo_adv_") else f)
                 .with_suffix(".acb")
                 .name
-                for f in os.listdir(args.cache_dir)
+                for f in args.cache_dir.iterdir()
             ]
         )
 
@@ -114,8 +115,8 @@ if __name__ == "__main__":
 
     logger.info("Filtering samples...")
     target_char = [
-        f
-        for f in os.listdir(args.cache_dir)
+        f.name
+        for f in args.cache_dir.iterdir()
         if (
             f != "filelist.txt"
             and args.character in f
@@ -130,19 +131,21 @@ if __name__ == "__main__":
 
     logger.info("Exporting dataset...")
     if args.merge:
-        with open(os.path.join(args.cache_dir, "filelist.txt"), "w") as fout:
-            for f in target_char:
-                fout.write(f"file '{os.path.join(args.cache_dir, f)}'\n")
+        filelist_path = Path(args.cache_dir, "filelist.txt")
+        filelist_path.write_text(
+            "".join([f"file '{args.cache_dir / f}'\n" for f in target_char]),
+            encoding="utf-8",
+        )
         subprocess.run(
-            f'ffmpeg -f concat -safe 0 -i {os.path.join(args.cache_dir, "filelist.txt")} -b:a {args.bitrate}k "{args.output}"',
+            f'ffmpeg -f concat -safe 0 -i {filelist_path} -b:a {args.bitrate}k "{args.output}"',
             check=True,
         )
-        os.remove(os.path.join(args.cache_dir, "filelist.txt"))
+        filelist_path.unlink()
     else:
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
                 proc = subprocess.run(
-                    f"ffmpeg -i {os.path.join(args.cache_dir, f)} -f {args.format} -b:a {args.bitrate}k pipe:1",
+                    f"ffmpeg -i {args.cache_dir / f} -f {args.format} -b:a {args.bitrate}k pipe:1",
                     stdout=subprocess.PIPE,
                     stderr=subprocess.DEVNULL,
                     check=True,

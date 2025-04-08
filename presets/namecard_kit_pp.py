@@ -1,5 +1,5 @@
-import os
 from sys import argv
+from pathlib import Path
 
 
 cat_instrs = [
@@ -12,9 +12,9 @@ if __name__ == "__main__":
     root = argv[1]
 
     for subdir, cat_func in cat_instrs:
-        parent = os.path.join(root, subdir)
+        parent = Path(root, subdir)
 
-        for f in os.listdir(parent):
-            cat = cat_func(f)
-            os.makedirs(os.path.join(parent, cat), exist_ok=True)
-            os.rename(os.path.join(parent, f), os.path.join(parent, cat, f))
+        for f in parent.iterdir():
+            cat = cat_func(f.name)
+            (parent / cat).mkdir(parents=True, exist_ok=True)
+            f.rename(parent / cat / f.name)
