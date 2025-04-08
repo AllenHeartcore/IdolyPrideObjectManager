@@ -49,7 +49,7 @@ function appendPaginationButton(text, isEnabled, pageUpdater) {
             .prop("disabled", !isEnabled)
             .click(() => {
                 currentPage = pageUpdater(currentPage);
-                refreshCardContainer();
+                updatePageState();
             })
     );
 }

@@ -1,5 +1,8 @@
 name: Update manifest
 
+permissions:
+    contents: write # Required to push changes
+
 on:
     # Runs every three hours, on the hour
     schedule:

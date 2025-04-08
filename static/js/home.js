@@ -73,8 +73,9 @@ $(document).ready(function () {
 
     $("#homeGotoForm").submit(function (event) {
         event.preventDefault();
-        let id = $("#homeGotoInput").val();
-        let type = $("#homeGotoType").val();
+        // sanitize user input, suppress 'DOM text reinterpreted as HTML' in CodeQL
+        let id = encodeURIComponent($("#homeGotoInput").val());
+        let type = encodeURIComponent($("#homeGotoType").val());
         window.location.href = `/view/${type}/${id}`;
     });
 
