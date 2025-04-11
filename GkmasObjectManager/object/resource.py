@@ -25,6 +25,7 @@ import requests
 from pathlib import Path
 from urllib.parse import urljoin
 from typing import Tuple
+from email.utils import parsedate_to_datetime
 
 
 logger = Logger()
@@ -80,6 +81,10 @@ class GkmasResource:
         # so this *internal* variable has a leading underscore.
         self._caption = None
 
+        # Modification time, to be overwritten by _download_bytes()
+        # (if available; checked before passing to os.utime())
+        self._mtime = None
+
     def __repr__(self):
         return f"<GkmasResource {self._idname}>"
 
@@ -96,17 +101,18 @@ class GkmasResource:
         if self._media is None:
             data = self._download_bytes()
             if self.name.startswith("img_") and self.name.endswith(".png"):
-                self._media = GkmasImage(self._idname, data)
+                media_class = GkmasImage
             elif self.name.startswith("sud_") and self.name.endswith(".mp3"):
-                self._media = GkmasAudio(self._idname, data)
+                media_class = GkmasAudio
             elif self.name.startswith("sud_"):
-                self._media = GkmasAWBAudio(self._idname, data)
+                media_class = GkmasAWBAudio
             elif self.name.startswith("mov_"):
-                self._media = GkmasUSMVideo(self._idname, data)
+                media_class = GkmasUSMVideo
             elif self.name.startswith("adv_"):
-                self._media = GkmasAdventure(self._idname, data)
+                media_class = GkmasAdventure
             else:
-                self._media = GkmasDummyMedia(self._idname, data)
+                media_class = GkmasDummyMedia
+            self._media = media_class(self._idname, data, self._mtime)
 
         return self._media
 
@@ -214,5 +220,9 @@ class GkmasResource:
 
         if md5sum(response.content) != bytes.fromhex(self.md5):
             logger.error(f"{self._idname} has invalid MD5 hash")
+
+        mtime = response.headers.get("Last-Modified")
+        if mtime:
+            self._mtime = parsedate_to_datetime(mtime).timestamp()
 
         return response.content

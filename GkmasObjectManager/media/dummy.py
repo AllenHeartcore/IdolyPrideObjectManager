@@ -7,9 +7,10 @@ as well as a fallback for unknown media types.
 
 from ..log import Logger
 
+import os
 import base64
 from pathlib import Path
-from typing import Tuple
+from typing import Union, Tuple
 
 from zipfile import ZipFile
 
@@ -20,8 +21,9 @@ logger = Logger()
 class GkmasDummyMedia:
     """Unrecognized media handler, also the fallback for conversion plugins."""
 
-    def __init__(self, name: str, raw: bytes):
+    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
         self.name = name  # only for logging
+        self.mtime = mtime  # last modified time (to be applied after download)
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
@@ -90,16 +92,20 @@ class GkmasDummyMedia:
 
     def _export_raw(self, path: Path):
         path.write_bytes(self.raw)
+        if self.mtime:
+            os.utime(path, (self.mtime, self.mtime))
         logger.success(f"{self.name} downloaded")
 
     def _export_converted(self, path: Path, **kwargs):
         data, mimetype = self.get_data(**kwargs)
         mimesubtype = mimetype.split("/")[1]
         path.with_suffix(f".{mimesubtype}").write_bytes(data)
+        if self.mtime:
+            os.utime(path.with_suffix(f".{mimesubtype}"), (self.mtime, self.mtime))
         logger.success(f"{self.name} downloaded and converted to {mimesubtype.upper()}")
 
         if mimesubtype == "zip" and kwargs.get("unpack_subsongs", False):
             with ZipFile(path.with_suffix(f".{mimesubtype}")) as z:
-                z.extractall(path.parent)
+                z.extractall(path.parent)  # keeps mtime of files
             path.with_suffix(f".{mimesubtype}").unlink()
             logger.success(f"{self.name} unpacked to {path.parent}")

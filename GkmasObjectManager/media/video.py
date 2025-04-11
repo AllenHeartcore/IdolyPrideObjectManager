@@ -7,6 +7,7 @@ from ..log import Logger
 from .dummy import GkmasDummyMedia
 
 from pathlib import Path
+from typing import Union
 
 import ffmpeg
 
@@ -17,8 +18,8 @@ logger = Logger()
 class GkmasUSMVideo(GkmasDummyMedia):
     """Conversion plugin for USM videos."""
 
-    def __init__(self, name: str, raw: bytes):
-        super().__init__(name, raw)
+    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+        super().__init__(name, raw, mtime)
         self.mimetype = "video"
         self.converted_format = "mp4"
 
