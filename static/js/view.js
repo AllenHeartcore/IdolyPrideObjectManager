@@ -1,5 +1,6 @@
 function displayMedia() {
-    getMediaBlobURL(type, info.id).then(({ url, mimetype }) => {
+    getMediaBlobURL(type, info.id).then(({ url, mimetype, mtime }) => {
+        $("#uploadTime").text(mtime);
         $("#loadingSpinnerMedia").hide();
         $("#viewMediaContent").show();
         let container = $("#viewMediaContent");

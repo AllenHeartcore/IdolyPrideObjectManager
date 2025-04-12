@@ -45,8 +45,11 @@ def api_search():
 
 @app.route("/api/assetbundle/<id>/bytestream")
 def api_assetbundle_bytestream(id):
-    bytestream, mimetype = _get_manifest().assetbundles[int(id)].get_data()
-    return Response(bytestream, mimetype=mimetype)
+    obj = _get_manifest().assetbundles[int(id)]
+    bytestream, mimetype = obj.get_data()
+    return Response(
+        bytestream, mimetype=mimetype, headers={"Last-Modified": obj._mtime}
+    )
 
 
 @app.route("/api/assetbundle/<id>/caption")
@@ -56,8 +59,11 @@ def api_assetbundle_caption(id):
 
 @app.route("/api/resource/<id>/bytestream")
 def api_resource_bytestream(id):
-    bytestream, mimetype = _get_manifest().resources[int(id)].get_data()
-    return Response(bytestream, mimetype=mimetype)
+    obj = _get_manifest().resources[int(id)]
+    bytestream, mimetype = obj.get_data()
+    return Response(
+        bytestream, mimetype=mimetype, headers={"Last-Modified": obj._mtime}
+    )
 
 
 @app.route("/api/resource/<id>/caption")
