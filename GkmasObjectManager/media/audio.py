@@ -12,7 +12,6 @@ import tempfile
 import subprocess
 from io import BytesIO
 from pathlib import Path
-from typing import Union
 
 import UnityPy
 from pydub import AudioSegment
@@ -26,7 +25,7 @@ logger = Logger()
 class GkmasAudio(GkmasDummyMedia):
     """Handler for audio of common formats recognized by pydub."""
 
-    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+    def __init__(self, name: str, raw: bytes, mtime: str = ""):
         super().__init__(name, raw, mtime)
         self.mimetype = "audio"
         self.raw_format = name.split(".")[-1][:-1]
@@ -39,7 +38,7 @@ class GkmasAudio(GkmasDummyMedia):
 class GkmasUnityAudio(GkmasAudio):
     """Conversion plugin for Unity audio."""
 
-    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+    def __init__(self, name: str, raw: bytes, mtime: str = ""):
         super().__init__(name, raw, mtime)
         self.raw_format = None  # don't override
         self.converted_format = "wav"
@@ -57,7 +56,7 @@ class GkmasUnityAudio(GkmasAudio):
 class GkmasAWBAudio(GkmasDummyMedia):
     """Conversion plugin for AWB audio."""
 
-    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+    def __init__(self, name: str, raw: bytes, mtime: str = ""):
         super().__init__(name, raw, mtime)
         self.mimetype = "audio"
         self.converted_format = "wav"

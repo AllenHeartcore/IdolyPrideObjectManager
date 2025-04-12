@@ -23,7 +23,7 @@ logger = Logger()
 class GkmasImage(GkmasDummyMedia):
     """Handler for images of common formats recognized by PIL."""
 
-    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+    def __init__(self, name: str, raw: bytes, mtime: str = ""):
         super().__init__(name, raw, mtime)
         self.mimetype = "image"
         self.raw_format = name.split(".")[-1][:-1]
@@ -113,7 +113,7 @@ class GkmasImage(GkmasDummyMedia):
 class GkmasUnityImage(GkmasImage):
     """Conversion plugin for Unity images."""
 
-    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+    def __init__(self, name: str, raw: bytes, mtime: str = ""):
         super().__init__(name, raw, mtime)
         self.raw_format = None  # don't override
         self.converted_format = "png"

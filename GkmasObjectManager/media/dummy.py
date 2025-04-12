@@ -10,9 +10,10 @@ from ..log import Logger
 import os
 import base64
 from pathlib import Path
-from typing import Union, Tuple
+from typing import Tuple
 
 from zipfile import ZipFile
+from email.utils import parsedate_to_datetime
 
 
 logger = Logger()
@@ -21,9 +22,9 @@ logger = Logger()
 class GkmasDummyMedia:
     """Unrecognized media handler, also the fallback for conversion plugins."""
 
-    def __init__(self, name: str, raw: bytes, mtime: Union[None, int, float] = None):
+    def __init__(self, name: str, raw: bytes, mtime: str = ""):
         self.name = name  # only for logging
-        self.mtime = mtime  # last modified time (to be applied after download)
+        self.mtime = parsedate_to_datetime(mtime).timestamp() if mtime else None
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
@@ -106,6 +107,8 @@ class GkmasDummyMedia:
 
         if mimesubtype == "zip" and kwargs.get("unpack_subsongs", False):
             with ZipFile(path.with_suffix(f".{mimesubtype}")) as z:
-                z.extractall(path.parent)  # keeps mtime of files
+                z.extractall(path.parent)  # surprisingly, doesn't keep mtime's
+                for file in z.namelist():
+                    os.utime(path.parent / file, (self.mtime, self.mtime))
             path.with_suffix(f".{mimesubtype}").unlink()
             logger.success(f"{self.name} unpacked to {path.parent}")

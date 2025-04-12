@@ -25,7 +25,6 @@ import requests
 from pathlib import Path
 from urllib.parse import urljoin
 from typing import Tuple
-from email.utils import parsedate_to_datetime
 
 
 logger = Logger()
@@ -83,7 +82,7 @@ class GkmasResource:
 
         # Modification time, to be overwritten by _download_bytes()
         # (if available; checked before passing to os.utime())
-        self._mtime = None
+        self._mtime = ""
 
     def __repr__(self):
         return f"<GkmasResource {self._idname}>"
@@ -221,8 +220,6 @@ class GkmasResource:
         if md5sum(response.content) != bytes.fromhex(self.md5):
             logger.error(f"{self._idname} has invalid MD5 hash")
 
-        mtime = response.headers.get("Last-Modified")
-        if mtime:
-            self._mtime = parsedate_to_datetime(mtime).timestamp()
+        self._mtime = response.headers.get("Last-Modified", "")
 
         return response.content
