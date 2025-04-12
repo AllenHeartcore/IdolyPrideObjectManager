@@ -1,6 +1,8 @@
 import GkmasObjectManager as gom
 
 from flask import Flask, render_template, request, jsonify, Response
+from email.utils import parsedate_to_datetime
+from datetime import datetime, timezone, timedelta
 
 
 # Bookkeeping
@@ -15,6 +17,12 @@ def _get_manifest():
     if m is None:
         m = gom.fetch()
     return m
+
+
+def _sanitize_mtime(mtime):
+    mtime = parsedate_to_datetime(mtime)
+    mtime = mtime.astimezone(timezone(timedelta(hours=9)))  # Japan Standard Time
+    return mtime.strftime("%Y-%m-%d %H:%M:%S")
 
 
 # API endpoints
@@ -48,7 +56,9 @@ def api_assetbundle_bytestream(id):
     obj = _get_manifest().assetbundles[int(id)]
     bytestream, mimetype = obj.get_data()
     return Response(
-        bytestream, mimetype=mimetype, headers={"Last-Modified": obj._mtime}
+        bytestream,
+        mimetype=mimetype,
+        headers={"Last-Modified": _sanitize_mtime(obj._mtime)},
     )
 
 
@@ -62,7 +72,9 @@ def api_resource_bytestream(id):
     obj = _get_manifest().resources[int(id)]
     bytestream, mimetype = obj.get_data()
     return Response(
-        bytestream, mimetype=mimetype, headers={"Last-Modified": obj._mtime}
+        bytestream,
+        mimetype=mimetype,
+        headers={"Last-Modified": _sanitize_mtime(obj._mtime)},
     )
 
 
