@@ -128,7 +128,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
                     zip_file.writestr(
                         ZipInfo(
                             Path(f).with_suffix(f".{self.converted_format}").name,
-                            date_time=dt.timetuple()[:6],
+                            date_time=dt.timetuple(),
                         ),
                         segment.export(format=self.converted_format).read(),
                     )

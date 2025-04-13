@@ -85,18 +85,20 @@ if __name__ == "__main__":
 
     parser.add_argument("character", type=str, help="Character name")
 
+    # output options
     parser.add_argument("-o", "--output", type=str, default="", help="Output filename")
     parser.add_argument("-f", "--format", type=str, default="wav", help="Output format")
     parser.add_argument("-b", "--bitrate", type=int, default=128, help="Output bitrate")
-
-    parser.add_argument(
-        "-g", "--greedy", action="store_true", help="Search through all adventures"
-    )
     parser.add_argument(
         "-m",
         "--merge",
         action="store_true",
         help="Merge dataset into one audio file (otherwise exported as ZIP)",
+    )
+
+    # caching options
+    parser.add_argument(
+        "-g", "--greedy", action="store_true", help="Search through all adventures"
     )
     parser.add_argument(
         "-c", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
@@ -120,7 +122,7 @@ if __name__ == "__main__":
         )
 
     args.output = Path(args.output)
-    if args.merge and not args.output.suffix == f".{args.format}":
+    if args.merge and args.output.suffix != f".{args.format}":
         ext = args.output.suffix[1:]
         logger.warning(
             f"Filename extension '{args.format}' does not match specified '{ext}', overriding"
@@ -140,6 +142,7 @@ if __name__ == "__main__":
     if args.greedy:
         target += m.search(f"sud_vo_adv.*")
     target = set([f.name for f in target])  # remove duplicates
+
     if not target:
         logger.warning(f"Found no voice samples for '{args.character}, aborting")
         exit(1)
@@ -155,14 +158,12 @@ if __name__ == "__main__":
         f
         for f in args.cache_dir.iterdir()
         if (
-            f != "filelist.txt"
-            and args.character in f.name
+            args.character in f.name
             and not (
                 f.name.startswith("sud_vo_adv_")
                 and f.name.split("_")[-1].split("-")[0] != args.character
             )
-            # exclude other characters in adventure voice pack
-            # (hardcoded, can also set unpack_subsongs=False and check ZIP contents here)
+            # exclude other characters in target character's personal story
         )
     ]
 
@@ -180,11 +181,10 @@ if __name__ == "__main__":
     else:
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
-                dt = datetime.fromtimestamp(Path(f).stat().st_mtime)
                 zipf.writestr(
                     ZipInfo(
-                        Path(f).with_suffix(f".{args.format}").name,
-                        date_time=dt.timetuple()[:6],
+                        f.with_suffix(f".{args.format}").name,
+                        datetime.fromtimestamp(f.stat().st_mtime).timetuple(),
                     ),
                     sud_ch.read(f.name),
                 )
