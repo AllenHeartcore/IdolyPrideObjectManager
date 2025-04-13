@@ -300,6 +300,12 @@ class GkmasManifest:
             self.download_preset(kwargs.pop("preset"))
             return
 
+        if not criteria:
+            logger.warning(
+                "No criteria specified; download everything with download_all() instead"
+            )
+            return
+
         objects = self.search("|".join(criteria))
 
         if not objects:
