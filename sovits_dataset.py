@@ -21,12 +21,9 @@ class CacheHandler:
     def __init__(self, cwd: Path, args=None):
         self.cwd = cwd
         self.args = args
-        self.active = False
 
         if self.cwd.exists():
             assert self.cwd.is_dir(), f"{self.cwd} is not a directory"
-            if list(self.cwd.iterdir()):
-                self.active = True
         else:
             self.cwd.mkdir(parents=True, exist_ok=True)
 
@@ -35,8 +32,7 @@ class CacheHandler:
 
     def cache(self, target: list[str]):
         target = set(target)  # remove duplicates
-        if self.active:
-            target -= set(map(self._rectify_filename, self.cwd.iterdir()))
+        target -= set(map(self._rectify_filename, self.cwd.iterdir()))
         m.download(
             *sorted(list(target)),  # sort for logging
             path=self.cwd,
@@ -50,8 +46,6 @@ class CacheHandler:
         return (self.cwd / filename).read_bytes()
 
     def purge(self):
-        if self.args.keep_cache or self.active:
-            return
         for f in tqdm(self.cwd.iterdir()):
             f.unlink()
         shutil.rmtree(self.cwd)
@@ -108,7 +102,7 @@ if __name__ == "__main__":
         "-c", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
     )
     parser.add_argument(
-        "-k", "--keep-cache", action="store_true", help="Skip cache cleanup"
+        "-k", "--purge-cache", action="store_true", help="Clear cache after use"
     )
 
     args = parser.parse_args()
@@ -197,7 +191,8 @@ if __name__ == "__main__":
 
     # ------------------------------ CLEANUP
 
-    logger.info("Purging cache...")
-    sud_ch.purge()
+    if args.purge_cache:
+        logger.info("Purging cache...")
+        sud_ch.purge()
 
     logger.success(f"Dataset ready at '{args.output}'")
