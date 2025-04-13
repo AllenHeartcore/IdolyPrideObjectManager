@@ -2,7 +2,9 @@ import shutil
 import subprocess
 from pathlib import Path
 from argparse import ArgumentParser
-from zipfile import ZipFile
+
+from zipfile import ZipFile, ZipInfo
+from datetime import datetime
 from tqdm import tqdm
 
 import GkmasObjectManager as gom
@@ -22,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument("character", type=str, help="Character name")
 
     parser.add_argument("-o", "--output", type=str, default="", help="Output filename")
-    parser.add_argument("-f", "--format", type=str, default="mp3", help="Output format")
+    parser.add_argument("-f", "--format", type=str, default="wav", help="Output format")
     parser.add_argument("-b", "--bitrate", type=int, default=128, help="Output bitrate")
 
     parser.add_argument(
@@ -144,13 +146,24 @@ if __name__ == "__main__":
     else:
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
-                proc = subprocess.run(
-                    f"ffmpeg -i {f} -f {args.format} -b:a {args.bitrate}k pipe:1",
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.DEVNULL,
-                    check=True,
+                dt = datetime.fromtimestamp(Path(f).stat().st_mtime)
+                content = (
+                    Path(f).read_bytes()
+                    if args.format == "wav"
+                    else subprocess.run(
+                        f"ffmpeg -i {f} -f {args.format} -b:a {args.bitrate}k pipe:1",
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.DEVNULL,
+                        check=True,
+                    ).stdout
                 )
-                zipf.writestr(Path(f).with_suffix(f".{args.format}").name, proc.stdout)
+                zipf.writestr(
+                    ZipInfo(
+                        Path(f).with_suffix(f".{args.format}").name,
+                        date_time=dt.timetuple()[:6],
+                    ),
+                    content,
+                )
 
     # ------------------------------ CLEANUP
 
