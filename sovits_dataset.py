@@ -1,5 +1,7 @@
 import shutil
 import subprocess
+import tempfile
+
 from pathlib import Path
 from argparse import ArgumentParser
 
@@ -45,8 +47,11 @@ class CacheHandler:
     def read(self, filename: str) -> bytes:
         return (self.cwd / filename).read_bytes()
 
+    def read_multiple(self, filenames: list[str]) -> bytes:
+        raise NotImplementedError("To be overridden in subclass")
+
     def purge(self):
-        for f in tqdm(self.cwd.iterdir()):
+        for f in tqdm(list(self.cwd.iterdir())):
             f.unlink()
         shutil.rmtree(self.cwd)
 
@@ -73,6 +78,19 @@ class SudCacheHandler(CacheHandler):
                 check=True,
             ).stdout
         )
+
+    def read_multiple(self, filenames: list[str]) -> bytes:
+        # SIDE EFFECT: Output directly written to args.output, as piped output can be corrupted
+        with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as filelist:
+            filelist.write(
+                "".join([f"file '{self.cwd / f}'\n" for f in filenames]).encode()
+            )
+            filelist.flush()
+        subprocess.run(
+            f"ffmpeg -f concat -safe 0 -i {filelist.name} -f {self.args.format} -b:a {self.args.bitrate}k {self.args.output}",
+            check=True,
+        )
+        Path(filelist.name).unlink()
 
 
 if __name__ == "__main__":
@@ -104,7 +122,7 @@ if __name__ == "__main__":
         "-c", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
     )
     parser.add_argument(
-        "-k", "--purge-cache", action="store_true", help="Clear cache after use"
+        "-p", "--purge-cache", action="store_true", help="Clear cache after use"
     )
 
     args = parser.parse_args()
@@ -154,30 +172,21 @@ if __name__ == "__main__":
     # ------------------------------ EXPORT
 
     logger.info("Filtering samples...")
-    target_char = [
-        f
-        for f in args.cache_dir.iterdir()
-        if (
+    target_char = filter(
+        lambda f: (
             args.character in f.name
             and not (
                 f.name.startswith("sud_vo_adv_")
                 and f.name.split("_")[-1].split("-")[0] != args.character
             )
             # exclude other characters in target character's personal story
-        )
-    ]
+        ),
+        args.cache_dir.iterdir(),
+    )
 
     logger.info("Exporting dataset...")
     if args.merge:
-        filelist_path = args.cache_dir / "filelist.txt"
-        filelist_path.write_text(
-            "".join([f"file '{f.name.replace("\\", "/")}'\n" for f in target_char])
-        )
-        subprocess.run(
-            f'ffmpeg -f concat -safe 0 -i {filelist_path} -b:a {args.bitrate}k "{args.output}"',
-            check=True,
-        )
-        filelist_path.unlink()
+        sud_ch.read_multiple([f.name for f in target_char])
     else:
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
