@@ -1,3 +1,4 @@
+import json
 import shutil
 import subprocess
 import tempfile
@@ -93,6 +94,48 @@ class SudCacheHandler(CacheHandler):
         Path(filelist.name).unlink()
 
 
+class AdvCacheHandler(CacheHandler):
+
+    def __init__(self, cwd: Path, args=None):
+        super().__init__(cwd, args)
+        self._caption_map = {}
+        self._caption_map_ready = False
+
+    def _rectify_filename(self, p: Path) -> str:
+        return p.with_suffix(".json").name
+
+    def _update_caption_map(self, commands):
+        for cmd1, cmd2 in zip(commands, commands[1:]):
+            if cmd1["cmd"] == "voice" and cmd2["cmd"] == "message":
+                self._caption_map[cmd1["voice"]] = cmd2["text"]
+
+    def _build_caption_map(self):
+        if self._caption_map_ready:
+            return
+        for f in tqdm(self.cwd.iterdir()):
+            assert f.suffix == ".json", f"Non-JSON file cached in {self.cwd}"
+            self._update_caption_map(json.loads(f.read_text(encoding="utf-8")))
+        self._caption_map_ready = True
+
+    def cache(self, target: list[str]):
+        # this can be inefficient; but building _caption_map
+        # on the fly requires real-time access to resource._media,
+        # whose interface is wrapped in the download() dispatcher
+        self._caption_map_ready = False
+        super().cache(target)
+
+    def read(self, filename: str) -> bytes:
+        self._build_caption_map()
+        return self._caption_map[filename]
+
+    def read_multiple(self, filenames: list[str]) -> bytes:
+        captions = [self.read(f) for f in filenames]
+        if self.args.merge:
+            return "".join(captions).encode()
+        else:
+            return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)]).encode()
+
+
 if __name__ == "__main__":
 
     # ------------------------------ SETUP
@@ -107,6 +150,7 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", type=str, default="", help="Output filename")
     parser.add_argument("-f", "--format", type=str, default="wav", help="Output format")
     parser.add_argument("-b", "--bitrate", type=int, default=128, help="Output bitrate")
+    parser.add_argument("-c", "--caption", action="store_true", help="Include captions")
     parser.add_argument(
         "-m",
         "--merge",
@@ -119,7 +163,7 @@ if __name__ == "__main__":
         "-g", "--greedy", action="store_true", help="Search through all adventures"
     )
     parser.add_argument(
-        "-c", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
+        "-d", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
     )
     parser.add_argument(
         "-p", "--purge-cache", action="store_true", help="Clear cache after use"
@@ -152,22 +196,30 @@ if __name__ == "__main__":
         args.output.parent.mkdir(parents=True, exist_ok=True)
 
     args.cache_dir = Path(args.cache_dir)
-    sud_ch = SudCacheHandler(cwd=args.cache_dir, args=args)
+    sud_ch = SudCacheHandler(cwd=args.cache_dir / "sud", args=args)
+    adv_ch = AdvCacheHandler(cwd=args.cache_dir / "adv", args=args)
 
     # ------------------------------ DOWNLOAD
 
-    target = m.search(f"sud_vo.*{args.character}.*")
-    if args.greedy:
-        target += m.search(f"sud_vo_adv.*")
-    target = set([f.name for f in target])  # remove duplicates
+    target_sud = m.search(f"sud_vo_adv.*{'' if args.greedy else args.character}.*")
+    if args.caption:
+        target_sud += m.search(f"sud_vo.*{args.character}.*")
+    target_sud = set([f.name for f in target_sud])  # remove duplicates
 
-    if not target:
+    if not target_sud:
         logger.warning(f"Found no voice samples for '{args.character}, aborting")
         exit(1)
-    logger.success(f"Found {len(target)} voice samples for '{args.character}'")
+    logger.success(f"Found {len(target_sud)} voice samples for '{args.character}'")
+
+    if args.caption:
+        target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
+        target_adv = set([f.name for f in target_adv])
+        logger.success(
+            f"Found {len(target_adv)} caption samples for '{args.character}'"
+        )
 
     logger.info("Caching samples...")
-    sud_ch.cache(target)
+    sud_ch.cache(target_sud)
 
     # ------------------------------ EXPORT
 
