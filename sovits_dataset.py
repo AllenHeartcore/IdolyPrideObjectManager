@@ -47,6 +47,7 @@ class CacheHandler:
         )
 
     def read(self, filename: str) -> bytes:
+        # TO BE OVERRIDDEN IN SUBCLASS
         return (self.cwd / filename).read_bytes()
 
     def export_multiple(self, filenames: list[str], path: Path = None):
@@ -130,15 +131,16 @@ class AdvCacheHandler(CacheHandler):
         self._build_caption_map()
         return self._caption_map.get(filename, "")
 
-    def export_multiple(self, filenames: list[str], path: Path = None):
+    def read_multiple(self, filenames: list[str]) -> str:
         captions = [self.read(f) for f in filenames]
-        path = path or self.args.output.with_suffix(".txt")
         if self.args.merge:
-            path.write_text("\n".join(captions))
+            return "\n".join(captions)
         else:
-            path.write_text(
-                "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
-            )
+            return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
+
+    def export_multiple(self, filenames: list[str], path: Path = None):
+        path = path or self.args.output.with_suffix(".txt")
+        path.write_text(self.read_multiple(filenames))
 
 
 if __name__ == "__main__":
@@ -200,7 +202,7 @@ if __name__ == "__main__":
     if args.output.parent:
         args.output.parent.mkdir(parents=True, exist_ok=True)
 
-    args.cache_dir = Path(args.cache_dir)
+    args.cache_dir = Path(args.cache_dir).resolve()  # record absolute path in filelist
     sud_ch = SudCacheHandler(cwd=args.cache_dir / "sud", args=args)
     if args.caption:
         adv_ch = AdvCacheHandler(cwd=args.cache_dir / "adv", args=args)
