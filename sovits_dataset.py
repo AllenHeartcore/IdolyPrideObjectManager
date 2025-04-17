@@ -240,30 +240,31 @@ if __name__ == "__main__":
     # ------------------------------ EXPORT
 
     logger.info("Filtering samples...")
-    target_char = filter(
-        lambda f: (
-            args.character in f.name
-            and not (
-                f.name.startswith("sud_vo_adv_")
-                and f.name.split("_")[-1].split("-")[0] != args.character
-            )
-            # exclude other characters in target character's personal story
-        ),
-        sud_ch.cwd.iterdir(),
-    )
-    target_char = list(target_char)  # to avoid generator expression issues
+    target_export = list(
+        filter(
+            lambda f: (
+                args.character in f.name
+                and not (
+                    f.name.startswith("sud_vo_adv_")
+                    and f.name.split("_")[-1].split("-")[0] != args.character
+                )
+                # exclude other characters in target character's personal story
+            ),
+            sud_ch.cwd.iterdir(),
+        )
+    )  # convert to list to avoid generator expression issues
 
     logger.info("Exporting dataset...")
     if args.merge:
-        sud_ch.export_multiple([f.name for f in target_char])
-        adv_ch.export_multiple([f.name for f in target_char])
+        sud_ch.export_multiple([f.name for f in target_export])
+        adv_ch.export_multiple([f.name for f in target_export])
     else:
         with ZipFile(args.output, "w") as zipf:
             zipf.writestr(
                 ZipInfo("captions.txt"),
-                adv_ch.read_multiple([f.name for f in target_char]),
+                adv_ch.read_multiple([f.name for f in target_export]),
             )
-            for f in tqdm(target_char):
+            for f in tqdm(target_export):
                 zipf.writestr(
                     ZipInfo(
                         f.with_suffix(f".{args.format}").name,
