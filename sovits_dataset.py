@@ -33,8 +33,7 @@ class CacheHandler:
     def _rectify_filename(self, p: Path) -> str:
         return p.name
 
-    def cache(self, target: list[str]):
-        target = set(target)  # remove duplicates
+    def cache(self, target: set[str]):
         target -= set(map(self._rectify_filename, self.cwd.iterdir()))
         m.download(
             *sorted(list(target)),  # sort for logging
@@ -81,7 +80,7 @@ class SudCacheHandler(CacheHandler):
         )
 
     def read_multiple(self, filenames: list[str]) -> bytes:
-        # SIDE EFFECT: Output directly written to args.output, as piped output can be corrupted
+        # SIDE EFFECT: Output directly written to args.output, as piped output can have invalid headers
         with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as filelist:
             filelist.write(
                 "".join([f"file '{self.cwd / f}'\n" for f in filenames]).encode()
@@ -126,14 +125,16 @@ class AdvCacheHandler(CacheHandler):
 
     def read(self, filename: str) -> bytes:
         self._build_caption_map()
-        return self._caption_map[filename]
+        return self._caption_map.get(filename, "").encode()
 
     def read_multiple(self, filenames: list[str]) -> bytes:
         captions = [self.read(f) for f in filenames]
         if self.args.merge:
-            return "".join(captions).encode()
+            return b"".join(captions)
         else:
-            return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)]).encode()
+            return b"".join(
+                [f"{f.encode()},{c}\n" for f, c in zip(filenames, captions)]
+            )
 
 
 if __name__ == "__main__":
@@ -197,29 +198,30 @@ if __name__ == "__main__":
 
     args.cache_dir = Path(args.cache_dir)
     sud_ch = SudCacheHandler(cwd=args.cache_dir / "sud", args=args)
-    adv_ch = AdvCacheHandler(cwd=args.cache_dir / "adv", args=args)
+    if args.caption:
+        adv_ch = AdvCacheHandler(cwd=args.cache_dir / "adv", args=args)
 
     # ------------------------------ DOWNLOAD
 
     target_sud = m.search(f"sud_vo_adv.*{'' if args.greedy else args.character}.*")
-    if args.caption:
+    if not args.caption:
         target_sud += m.search(f"sud_vo.*{args.character}.*")
+        # 'general' and 'system' voice samples don't have captions
     target_sud = set([f.name for f in target_sud])  # remove duplicates
 
     if not target_sud:
-        logger.warning(f"Found no voice samples for '{args.character}, aborting")
+        logger.warning(f"Found no voice samples for '{args.character}', aborting")
         exit(1)
     logger.success(f"Found {len(target_sud)} voice samples for '{args.character}'")
 
     if args.caption:
         target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
         target_adv = set([f.name for f in target_adv])
-        logger.success(
-            f"Found {len(target_adv)} caption samples for '{args.character}'"
-        )
 
     logger.info("Caching samples...")
     sud_ch.cache(target_sud)
+    if args.caption:
+        adv_ch.cache(target_adv)
 
     # ------------------------------ EXPORT
 
