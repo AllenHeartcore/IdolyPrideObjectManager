@@ -55,7 +55,7 @@ class CacheHandler:
         raise NotImplementedError("To be overridden in subclass")
 
     def purge(self):
-        for f in tqdm(list(self.cwd.iterdir())):
+        for f in tqdm(list(self.cwd.iterdir()), desc="Purging cache"):
             f.unlink()
         shutil.rmtree(self.cwd)
 
@@ -102,6 +102,7 @@ class AdvCacheHandler(CacheHandler):
         super().__init__(cwd, args)
         self._caption_map = {}
         self._caption_map_ready = False
+        self.active = args.caption
 
     def _rectify_filename(self, p: Path) -> str:
         return p.with_suffix(".txt").name
@@ -120,7 +121,7 @@ class AdvCacheHandler(CacheHandler):
     def _build_caption_map(self):
         if self._caption_map_ready:
             return
-        for f in tqdm(self.cwd.iterdir()):
+        for f in tqdm(list(self.cwd.iterdir()), desc="Building caption map"):
             assert f.suffix == ".json", f"Non-JSON file cached in {self.cwd}"
             self._update_caption_map(json.loads(f.read_text(encoding="utf-8")))
         self._caption_map_ready = True
@@ -129,6 +130,8 @@ class AdvCacheHandler(CacheHandler):
         # this can be inefficient; but building _caption_map
         # on the fly requires real-time access to resource._media,
         # whose interface is wrapped in the download() dispatcher
+        if not self.active:
+            return
         self._caption_map_ready = False
         super().cache(target)
 
@@ -149,6 +152,8 @@ class AdvCacheHandler(CacheHandler):
             return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
 
     def export_multiple(self, filenames: list[str], path: Path = None):
+        if not self.active:
+            return
         path = path or self.args.output.with_suffix(".txt")
         path.write_text(self.read_multiple(filenames), encoding="utf-8")
 
@@ -214,11 +219,11 @@ if __name__ == "__main__":
 
     args.cache_dir = Path(args.cache_dir).resolve()  # record absolute path in filelist
     sud_ch = SudCacheHandler(cwd=args.cache_dir / "sud", args=args)
-    if args.caption:
-        adv_ch = AdvCacheHandler(cwd=args.cache_dir / "adv", args=args)
+    adv_ch = AdvCacheHandler(cwd=args.cache_dir / "adv", args=args)
 
     # ------------------------------ DOWNLOAD
 
+    target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
     target_sud = m.search(f"sud_vo_adv.*{'' if args.greedy else args.character}.*")
     if not args.caption:
         target_sud += m.search(f"sud_vo.*{args.character}.*")
@@ -229,13 +234,9 @@ if __name__ == "__main__":
         exit(1)
     logger.success(f"Found {len(target_sud)} voice samples for '{args.character}'")
 
-    if args.caption:
-        target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
-
     logger.info("Caching samples...")
     sud_ch.cache(target_sud)
-    if args.caption:
-        adv_ch.cache(target_adv)
+    adv_ch.cache(target_adv)
 
     # ------------------------------ EXPORT
 
@@ -260,11 +261,12 @@ if __name__ == "__main__":
         adv_ch.export_multiple([f.name for f in target_export])
     else:
         with ZipFile(args.output, "w") as zipf:
-            zipf.writestr(
-                ZipInfo("captions.txt"),
-                adv_ch.read_multiple([f.name for f in target_export]),
-            )
-            for f in tqdm(target_export):
+            if args.caption:
+                zipf.writestr(
+                    ZipInfo("captions.txt"),
+                    adv_ch.read_multiple([f.name for f in target_export]),
+                )
+            for f in tqdm(target_export, desc="Writing ZIP"):
                 zipf.writestr(
                     ZipInfo(
                         f.with_suffix(f".{args.format}").name,
@@ -276,7 +278,7 @@ if __name__ == "__main__":
     # ------------------------------ CLEANUP
 
     if args.purge_cache:
-        logger.info("Purging cache...")
         sud_ch.purge()
+        adv_ch.purge()
 
     logger.success(f"Dataset ready at '{args.output}'")
