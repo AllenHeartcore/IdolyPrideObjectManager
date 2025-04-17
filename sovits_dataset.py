@@ -123,18 +123,18 @@ class AdvCacheHandler(CacheHandler):
         self._caption_map_ready = False
         super().cache(target)
 
-    def read(self, filename: str) -> bytes:
+    # By returning str instead of bytes, we can avoid double encoding
+    # but have also broken inheritance consistency with CacheHandler
+    def read(self, filename: str) -> str:
         self._build_caption_map()
-        return self._caption_map.get(filename, "").encode()
+        return self._caption_map.get(filename, "")
 
-    def read_multiple(self, filenames: list[str]) -> bytes:
+    def read_multiple(self, filenames: list[str]) -> str:
         captions = [self.read(f) for f in filenames]
         if self.args.merge:
-            return b"".join(captions)
+            return "".join(captions)
         else:
-            return b"".join(
-                [f"{f.encode()},{c}\n" for f, c in zip(filenames, captions)]
-            )
+            return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
 
 
 if __name__ == "__main__":
@@ -207,7 +207,6 @@ if __name__ == "__main__":
     if not args.caption:
         target_sud += m.search(f"sud_vo.*{args.character}.*")
         # 'general' and 'system' voice samples don't have captions
-    target_sud = set([f.name for f in target_sud])  # remove duplicates
 
     if not target_sud:
         logger.warning(f"Found no voice samples for '{args.character}', aborting")
@@ -216,12 +215,13 @@ if __name__ == "__main__":
 
     if args.caption:
         target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
-        target_adv = set([f.name for f in target_adv])
 
     logger.info("Caching samples...")
-    sud_ch.cache(target_sud)
+    sud_ch.cache(set([f.name for f in target_sud]))  # remove duplicates
     if args.caption:
-        adv_ch.cache(target_adv)
+        adv_ch.cache(set([f.name for f in target_adv]))
+        # could have moved this symmetry to CacheHandler,
+        # but passing a *set* of *GkmasResource's* is super unintuitive
 
     # ------------------------------ EXPORT
 
@@ -235,12 +235,15 @@ if __name__ == "__main__":
             )
             # exclude other characters in target character's personal story
         ),
-        args.cache_dir.iterdir(),
+        sud_ch.cwd.iterdir(),
     )
 
     logger.info("Exporting dataset...")
     if args.merge:
         sud_ch.read_multiple([f.name for f in target_char])
+        Path(args.output).with_suffix(".txt").write_text(
+            adv_ch.read_multiple([f.name for f in target_adv])
+        )
     else:
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
