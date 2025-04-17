@@ -12,6 +12,7 @@ from tqdm import tqdm
 
 import GkmasObjectManager as gom
 from GkmasObjectManager.log import Logger
+from GkmasObjectManager.object import GkmasResource
 
 
 logger = Logger()
@@ -33,7 +34,8 @@ class CacheHandler:
     def _rectify_filename(self, p: Path) -> str:
         return p.name
 
-    def cache(self, target: set[str]):
+    def cache(self, target: list[GkmasResource]):
+        target = set([t.name for t in target])  # remove duplicates
         target -= set(map(self._rectify_filename, self.cwd.iterdir()))
         m.download(
             *sorted(list(target)),  # sort for logging
@@ -217,11 +219,9 @@ if __name__ == "__main__":
         target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
 
     logger.info("Caching samples...")
-    sud_ch.cache(set([f.name for f in target_sud]))  # remove duplicates
+    sud_ch.cache(target_sud)
     if args.caption:
-        adv_ch.cache(set([f.name for f in target_adv]))
-        # could have moved this symmetry to CacheHandler,
-        # but passing a *set* of *GkmasResource's* is super unintuitive
+        adv_ch.cache(target_adv)
 
     # ------------------------------ EXPORT
 
