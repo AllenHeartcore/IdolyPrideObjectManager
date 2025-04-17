@@ -1,3 +1,4 @@
+import re
 import json
 import shutil
 import subprocess
@@ -103,12 +104,18 @@ class AdvCacheHandler(CacheHandler):
         self._caption_map_ready = False
 
     def _rectify_filename(self, p: Path) -> str:
-        return p.with_suffix(".json").name
+        return p.with_suffix(".txt").name
 
     def _update_caption_map(self, commands):
+        commands = sorted(
+            filter(lambda cmd: cmd["cmd"] in ["message", "voice"], commands),
+            key=lambda cmd: cmd["clip"]["_startTime"],
+        )  # m- and v- commands don't necessarily go together in raw data
         for cmd1, cmd2 in zip(commands, commands[1:]):
             if cmd1["cmd"] == "voice" and cmd2["cmd"] == "message":
                 self._caption_map[cmd1["voice"]] = cmd2["text"]
+            elif cmd1["cmd"] == "message" and cmd2["cmd"] == "voice":
+                self._caption_map[cmd2["voice"]] = cmd1["text"]
 
     def _build_caption_map(self):
         if self._caption_map_ready:
@@ -118,7 +125,7 @@ class AdvCacheHandler(CacheHandler):
             self._update_caption_map(json.loads(f.read_text(encoding="utf-8")))
         self._caption_map_ready = True
 
-    def cache(self, target: list[str]):
+    def cache(self, target: list[GkmasResource]):
         # this can be inefficient; but building _caption_map
         # on the fly requires real-time access to resource._media,
         # whose interface is wrapped in the download() dispatcher
@@ -129,7 +136,10 @@ class AdvCacheHandler(CacheHandler):
     # but have also broken inheritance consistency with CacheHandler
     def read(self, filename: str) -> str:
         self._build_caption_map()
-        return self._caption_map.get(filename, "")
+        caption = self._caption_map.get(filename.split(".")[0], "")
+        # this is a bit insecure since it assumes no dot in filename,
+        # but converting to Path here creates additional overhead
+        return re.escape(caption)
 
     def read_multiple(self, filenames: list[str]) -> str:
         captions = [self.read(f) for f in filenames]
@@ -140,7 +150,7 @@ class AdvCacheHandler(CacheHandler):
 
     def export_multiple(self, filenames: list[str], path: Path = None):
         path = path or self.args.output.with_suffix(".txt")
-        path.write_text(self.read_multiple(filenames))
+        path.write_text(self.read_multiple(filenames), encoding="utf-8")
 
 
 if __name__ == "__main__":
@@ -241,6 +251,7 @@ if __name__ == "__main__":
         ),
         sud_ch.cwd.iterdir(),
     )
+    target_char = list(target_char)  # to avoid generator expression issues
 
     logger.info("Exporting dataset...")
     if args.merge:
@@ -248,6 +259,10 @@ if __name__ == "__main__":
         adv_ch.export_multiple([f.name for f in target_char])
     else:
         with ZipFile(args.output, "w") as zipf:
+            zipf.writestr(
+                ZipInfo("captions.txt"),
+                adv_ch.read_multiple([f.name for f in target_char]),
+            )
             for f in tqdm(target_char):
                 zipf.writestr(
                     ZipInfo(
