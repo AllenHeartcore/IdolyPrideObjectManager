@@ -49,7 +49,7 @@ class CacheHandler:
     def read(self, filename: str) -> bytes:
         return (self.cwd / filename).read_bytes()
 
-    def read_multiple(self, filenames: list[str]) -> bytes:
+    def export_multiple(self, filenames: list[str], path: Path = None):
         raise NotImplementedError("To be overridden in subclass")
 
     def purge(self):
@@ -81,15 +81,14 @@ class SudCacheHandler(CacheHandler):
             ).stdout
         )
 
-    def read_multiple(self, filenames: list[str]) -> bytes:
-        # SIDE EFFECT: Output directly written to args.output, as piped output can have invalid headers
+    def export_multiple(self, filenames: list[str], path: Path = None):
         with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as filelist:
             filelist.write(
                 "".join([f"file '{self.cwd / f}'\n" for f in filenames]).encode()
             )
             filelist.flush()
         subprocess.run(
-            f"ffmpeg -f concat -safe 0 -i {filelist.name} -f {self.args.format} -b:a {self.args.bitrate}k {self.args.output}",
+            f"ffmpeg -f concat -safe 0 -i {filelist.name} -f {self.args.format} -b:a {self.args.bitrate}k {path or self.args.output}",
             check=True,
         )
         Path(filelist.name).unlink()
@@ -131,12 +130,15 @@ class AdvCacheHandler(CacheHandler):
         self._build_caption_map()
         return self._caption_map.get(filename, "")
 
-    def read_multiple(self, filenames: list[str]) -> str:
+    def export_multiple(self, filenames: list[str], path: Path = None):
         captions = [self.read(f) for f in filenames]
+        path = path or self.args.output.with_suffix(".txt")
         if self.args.merge:
-            return "".join(captions)
+            path.write_text("\n".join(captions))
         else:
-            return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
+            path.write_text(
+                "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
+            )
 
 
 if __name__ == "__main__":
@@ -240,10 +242,8 @@ if __name__ == "__main__":
 
     logger.info("Exporting dataset...")
     if args.merge:
-        sud_ch.read_multiple([f.name for f in target_char])
-        Path(args.output).with_suffix(".txt").write_text(
-            adv_ch.read_multiple([f.name for f in target_adv])
-        )
+        sud_ch.export_multiple([f.name for f in target_char])
+        adv_ch.export_multiple([f.name for f in target_char])
     else:
         with ZipFile(args.output, "w") as zipf:
             for f in tqdm(target_char):
