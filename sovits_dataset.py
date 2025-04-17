@@ -47,11 +47,11 @@ class CacheHandler:
             unpack_subsongs=True,
         )
 
-    def read(self, filename: str) -> bytes:
+    def read(self, filename: Path) -> bytes:
         # TO BE OVERRIDDEN IN SUBCLASS
         return (self.cwd / filename).read_bytes()
 
-    def export_multiple(self, filenames: list[str], path: Path = None):
+    def export_multiple(self, filenames: list[Path], path: Path = None):
         raise NotImplementedError("To be overridden in subclass")
 
     def purge(self):
@@ -71,7 +71,7 @@ class SudCacheHandler(CacheHandler):
             f = "_".join(f.split("_")[:-1])
         return Path(f).with_suffix(".acb").name
 
-    def read(self, filename: str) -> bytes:
+    def read(self, filename: Path) -> bytes:
         return (
             (self.cwd / filename).read_bytes()
             if self.args.format == "wav"
@@ -83,11 +83,11 @@ class SudCacheHandler(CacheHandler):
             ).stdout
         )
 
-    def export_multiple(self, filenames: list[str], path: Path = None):
+    def export_multiple(self, filenames: list[Path], path: Path = None):
         with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as filelist:
             filelist.write(
                 "".join([f"file '{self.cwd / f}'\n" for f in filenames]).encode()
-            )
+            )  # retain 'self.cwd /' for compatibility with relative paths
             filelist.flush()
         subprocess.run(
             f"ffmpeg -f concat -safe 0 -i {filelist.name} -f {self.args.format} -b:a {self.args.bitrate}k {path or self.args.output}",
@@ -137,21 +137,18 @@ class AdvCacheHandler(CacheHandler):
 
     # By returning str instead of bytes, we can avoid double encoding
     # but have also broken inheritance consistency with CacheHandler
-    def read(self, filename: str) -> str:
+    def read(self, filename: Path) -> str:
         self._build_caption_map()
-        caption = self._caption_map.get(filename.split(".")[0], "")
-        # this is a bit insecure since it assumes no dot in filename,
-        # but converting to Path here creates additional overhead
-        return re.escape(caption)
+        return re.escape(self._caption_map.get(filename.stem, ""))
 
-    def read_multiple(self, filenames: list[str]) -> str:
+    def read_multiple(self, filenames: list[Path]) -> str:
         captions = [self.read(f) for f in filenames]
         if self.args.merge:
             return "\n".join(captions)
         else:
-            return "".join([f"{f},{c}\n" for f, c in zip(filenames, captions)])
+            return "".join([f"{f.name},{c}\n" for f, c in zip(filenames, captions)])
 
-    def export_multiple(self, filenames: list[str], path: Path = None):
+    def export_multiple(self, filenames: list[Path], path: Path = None):
         if not self.active:
             return
         path = path or self.args.output.with_suffix(".txt")
@@ -257,14 +254,14 @@ if __name__ == "__main__":
 
     logger.info("Exporting dataset...")
     if args.merge:
-        sud_ch.export_multiple([f.name for f in target_export])
-        adv_ch.export_multiple([f.name for f in target_export])
+        sud_ch.export_multiple(target_export)
+        adv_ch.export_multiple(target_export)
     else:
         with ZipFile(args.output, "w") as zipf:
             if args.caption:
                 zipf.writestr(
                     ZipInfo("captions.txt"),
-                    adv_ch.read_multiple([f.name for f in target_export]),
+                    adv_ch.read_multiple(target_export),
                 )
             for f in tqdm(target_export, desc="Writing ZIP"):
                 zipf.writestr(
@@ -272,7 +269,7 @@ if __name__ == "__main__":
                         f.with_suffix(f".{args.format}").name,
                         datetime.fromtimestamp(f.stat().st_mtime).timetuple(),
                     ),
-                    sud_ch.read(f.name),
+                    sud_ch.read(f),
                 )
 
     # ------------------------------ CLEANUP
