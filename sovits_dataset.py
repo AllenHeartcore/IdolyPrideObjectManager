@@ -84,9 +84,9 @@ class SudCacheHandler(CacheHandler):
         )
 
     def export_multiple(self, filenames: list[Path], path: Path = None):
-        with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as filelist:
+        with tempfile.NamedTemporaryFile(delete=False) as filelist:
             filelist.write(
-                "".join([f"file '{self.cwd / f}'\n" for f in filenames]).encode()
+                "".join([f"file '{self.cwd / f}'\n" for f in filenames])
             )  # retain 'self.cwd /' for compatibility with relative paths
             filelist.flush()
         subprocess.run(
@@ -113,9 +113,7 @@ class AdvCacheHandler(CacheHandler):
             key=lambda cmd: cmd["clip"]["_startTime"],
         )  # m- and v- commands don't necessarily go together in raw data
         for cmd1, cmd2 in zip(commands, commands[1:]):
-            if cmd1["cmd"] == "voice" and cmd2["cmd"] == "message":
-                self._caption_map[cmd1["voice"]] = cmd2["text"]
-            elif cmd1["cmd"] == "message" and cmd2["cmd"] == "voice":
+            if cmd1["cmd"] == "message" and cmd2["cmd"] == "voice":
                 self._caption_map[cmd2["voice"]] = cmd1["text"]
 
     def _build_caption_map(self):
@@ -139,20 +137,23 @@ class AdvCacheHandler(CacheHandler):
     # but have also broken inheritance consistency with CacheHandler
     def read(self, filename: Path) -> str:
         self._build_caption_map()
-        return re.escape(self._caption_map.get(filename.stem, ""))
+        caption = self._caption_map.get(filename.stem, "")
+        caption = re.sub(r"<r\=[^>]*>.*</r>", "", caption)
+        for pattern in [r"<em\=>", r"</em>", r"\\n"]:
+            caption = re.sub(pattern, "", caption)
+        return caption
 
-    def read_multiple(self, filenames: list[Path]) -> str:
+    def read_multiple(self, filenames: list[Path]) -> list:
         captions = [self.read(f) for f in filenames]
-        if self.args.merge:
-            return "\n".join(captions)
-        else:
-            return "".join([f"{f.name},{c}\n" for f, c in zip(filenames, captions)])
+        if not self.args.merge:
+            captions = [f"{f.name},{c}" for f, c in zip(filenames, captions)]
+        return [f"{c}\n" for c in captions]
 
     def export_multiple(self, filenames: list[Path], path: Path = None):
         if not self.active:
             return
         path = path or self.args.output.with_suffix(".txt")
-        path.write_text(self.read_multiple(filenames), encoding="utf-8")
+        path.write_text("".join(self.read_multiple(filenames)), encoding="utf-8")
 
 
 if __name__ == "__main__":
@@ -206,7 +207,7 @@ if __name__ == "__main__":
     if args.merge and args.output.suffix != f".{args.format}":
         ext = args.output.suffix[1:]
         logger.warning(
-            f"Filename extension '{args.format}' does not match specified '{ext}', overriding"
+            f"Filename extension '{ext}' does not match specified '{args.format}', overriding"
         )
         args.output = args.output.with_suffix(f".{args.format}")
 
@@ -257,13 +258,21 @@ if __name__ == "__main__":
         sud_ch.export_multiple(target_export)
         adv_ch.export_multiple(target_export)
     else:
+        samples, captions = zip(
+            *[
+                (f, c)
+                for f, c in zip(target_export, adv_ch.read_multiple(target_export))
+                if c.strip()
+            ]  # filter out samples with empty captions
+        )
+        samples, captions = list(samples), list(captions)
         with ZipFile(args.output, "w") as zipf:
             if args.caption:
                 zipf.writestr(
                     ZipInfo("captions.txt"),
-                    adv_ch.read_multiple(target_export),
+                    "".join(captions),
                 )
-            for f in tqdm(target_export, desc="Writing ZIP"):
+            for f in tqdm(samples, desc="Writing ZIP"):
                 zipf.writestr(
                     ZipInfo(
                         f.with_suffix(f".{args.format}").name,
