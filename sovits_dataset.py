@@ -136,6 +136,8 @@ class AdvCacheHandler(CacheHandler):
     # By returning str instead of bytes, we can avoid double encoding
     # but have also broken inheritance consistency with CacheHandler
     def read(self, filename: Path) -> str:
+        if not filename.stem.startswith("sud_vo_adv_"):
+            return ""  # hardcoded to ignore backchannel utterances
         self._build_caption_map()
         caption = self._caption_map.get(filename.stem, "")
         caption = re.sub(r"<r\=[^>]*>.*</r>", "", caption)
@@ -144,10 +146,7 @@ class AdvCacheHandler(CacheHandler):
         return caption
 
     def read_multiple(self, filenames: list[Path]) -> list:
-        captions = [self.read(f) for f in filenames]
-        if not self.args.merge:
-            captions = [f"{f.name},{c}" for f, c in zip(filenames, captions)]
-        return [f"{c}\n" for c in captions]
+        return [f"{self.read(f)}\n" for f in filenames]
 
     def export_multiple(self, filenames: list[Path], path: Path = None):
         if not self.active:
@@ -270,7 +269,7 @@ if __name__ == "__main__":
             if args.caption:
                 zipf.writestr(
                     ZipInfo("captions.txt"),
-                    "".join(captions),
+                    "".join([f"{f.name},{c}" for f, c in zip(samples, captions)]),
                 )
             for f in tqdm(samples, desc="Writing ZIP"):
                 zipf.writestr(
