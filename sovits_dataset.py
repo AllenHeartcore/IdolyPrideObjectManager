@@ -238,7 +238,7 @@ if __name__ == "__main__":
     # ------------------------------ EXPORT
 
     logger.info("Filtering samples...")
-    target_export = list(
+    samples = list(
         filter(
             lambda f: (
                 args.character in f.name
@@ -252,18 +252,21 @@ if __name__ == "__main__":
         )
     )  # convert to list to avoid generator expression issues
 
-    logger.info("Exporting dataset...")
-    if args.merge:
-        sud_ch.export_multiple(target_export)
-        adv_ch.export_multiple(target_export)
-    else:
+    captions = []  # suppress 'using var before assignment' warning
+    if args.caption:
         samples, captions = zip(
             *[
                 (f, c)
-                for f, c in zip(target_export, adv_ch.read_multiple(target_export))
+                for f, c in zip(samples, adv_ch.read_multiple(samples))
                 if c.strip()
-            ]  # filter out samples with empty captions
-        )
+            ]
+        )  # filter out samples with empty captions
+
+    logger.info("Exporting dataset...")
+    if args.merge:
+        sud_ch.export_multiple(samples)
+        adv_ch.export_multiple(samples)  # calls read_multiple(), kept for uniformity
+    else:
         samples, captions = list(samples), list(captions)
         with ZipFile(args.output, "w") as zipf:
             if args.caption:
