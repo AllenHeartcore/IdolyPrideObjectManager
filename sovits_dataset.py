@@ -86,7 +86,7 @@ class SudCacheHandler(CacheHandler):
     def export_multiple(self, filenames: list[Path], path: Path = None):
         with tempfile.NamedTemporaryFile(delete=False) as filelist:
             filelist.write(
-                "".join([f"file '{self.cwd / f}'\n" for f in filenames])
+                "".join([f"file '{self.cwd / f}'\n" for f in filenames]).encode()
             )  # retain 'self.cwd /' for compatibility with relative paths
             filelist.flush()
         subprocess.run(
@@ -114,7 +114,7 @@ class AdvCacheHandler(CacheHandler):
         )  # m- and v- commands don't necessarily go together in raw data
         for cmd1, cmd2 in zip(commands, commands[1:]):
             if cmd1["cmd"] == "message" and cmd2["cmd"] == "voice":
-                self._caption_map[cmd2["voice"]] = cmd1["text"]
+                self._caption_map[cmd2["voice"]] = cmd1.get("text", "")
 
     def _build_caption_map(self):
         if self._caption_map_ready:
@@ -139,10 +139,9 @@ class AdvCacheHandler(CacheHandler):
         if not filename.stem.startswith("sud_vo_adv_"):
             return ""  # hardcoded to ignore backchannel utterances
         self._build_caption_map()
-        caption = self._caption_map.get(filename.stem, "")
-        caption = re.sub(r"<r\=[^>]*>.*</r>", "", caption)
-        for pattern in [r"<em\=>", r"</em>", r"\\n"]:
-            caption = re.sub(pattern, "", caption)
+        caption = self._caption_map.get(filename.stem, "").replace(r"\\n", "")
+        caption = re.sub(r"<r\=[^>]*>.*</r>", "", caption)  # remove superscript
+        caption = re.sub(r"<[^<>]*>", "", caption)  # remove all tags (incl. emphasis)
         return caption
 
     def read_multiple(self, filenames: list[Path]) -> list:
