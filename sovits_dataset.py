@@ -139,7 +139,7 @@ class AdvCacheHandler(CacheHandler):
         if not filename.stem.startswith("sud_vo_adv_"):
             return ""  # hardcoded to ignore backchannel utterances
         self._build_caption_map()
-        caption = self._caption_map.get(filename.stem, "").replace(r"\\n", "")
+        caption = self._caption_map.get(filename.stem, "").replace(r"\n", "")
         caption = re.sub(r"<r\=[^>]*>.*</r>", "", caption)  # remove superscript
         caption = re.sub(r"<[^<>]*>", "", caption)  # remove all tags (incl. emphasis)
         return caption
@@ -197,6 +197,7 @@ if __name__ == "__main__":
                 f"sovits_dataset_v{m.revision._get_canon_repr()}",
                 f"_{args.character}",
                 "_greedy" if args.greedy else "",
+                "_captioned" if args.caption else "",
                 f".{args.format}" if args.merge else ".zip",
             ]
         )
@@ -251,7 +252,7 @@ if __name__ == "__main__":
         )
     )  # convert to list to avoid generator expression issues
 
-    captions = []  # suppress 'using var before assignment' warning
+    captions = []  # suppress 'using var before assignment' warning in zipf.writestr()
     if args.caption:
         samples, captions = zip(
             *[
@@ -260,13 +261,13 @@ if __name__ == "__main__":
                 if c.strip()
             ]
         )  # filter out samples with empty captions
+        samples, captions = list(samples), list(captions)
 
     logger.info("Exporting dataset...")
     if args.merge:
         sud_ch.export_multiple(samples)
         adv_ch.export_multiple(samples)  # calls read_multiple(), kept for uniformity
     else:
-        samples, captions = list(samples), list(captions)
         with ZipFile(args.output, "w") as zipf:
             if args.caption:
                 zipf.writestr(
