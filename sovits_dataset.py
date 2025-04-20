@@ -150,7 +150,10 @@ class AdvCacheHandler(CacheHandler):
             return ""  # hardcoded to ignore backchannel utterances
         self._build_caption_map()
         caption = self._caption_map.get(filename.stem, "").replace(r"\n", "")
-        caption = re.sub(r"<r\=[^>]*>.*</r>", "", caption)  # remove superscript
+
+        # Superscripts look like "<r\\=AAA>BBB</r>", where BBB
+        # is pronounced as AAA. We keep the pronunciation here.
+        caption = re.sub(r"<r\\=([^>]+)>.*</r>", r"\1", caption)
         caption = re.sub(r"<[^<>]*>", "", caption)  # remove all tags (incl. emphasis)
         return caption
 
@@ -280,11 +283,9 @@ if __name__ == "__main__":
     else:
         with ZipFile(args.output, "w") as zipf:
             if args.caption:
-                zipf.writestr(
-                    ZipInfo("captions.csv"),
-                    "sample,caption\n"
-                    "".join([f"{f.name},{c}" for f, c in zip(samples, captions)]),
-                )
+                content = "sample,caption\n"
+                content += "".join([f"{f.name},{c}" for f, c in zip(samples, captions)])
+                zipf.writestr(ZipInfo("captions.csv"), content)
             for f in tqdm(samples, desc="Writing ZIP"):
                 zipf.writestr(
                     ZipInfo(
