@@ -76,7 +76,11 @@ class SudCacheHandler(CacheHandler):
             (self.cwd / filename).read_bytes()
             if self.args.format == "wav"
             else subprocess.run(
-                f"ffmpeg -i {self.cwd / filename} -f {self.args.format} -b:a {self.args.bitrate}k pipe:1",
+                "ffmpeg"
+                f" -i {self.cwd / filename}"
+                f" -f {self.args.format}"
+                f" -b:a {self.args.bitrate}k"
+                " pipe:1",
                 stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
                 check=True,
@@ -90,7 +94,13 @@ class SudCacheHandler(CacheHandler):
             )  # retain 'self.cwd /' for compatibility with relative paths
             filelist.flush()
         subprocess.run(
-            f"ffmpeg -f concat -safe 0 -i {filelist.name} -f {self.args.format} -b:a {self.args.bitrate}k {path or self.args.output}",
+            "ffmpeg"
+            " -f concat -safe 0"
+            f" -i {filelist.name}"
+            f" -f {self.args.format}"
+            f" -b:a {self.args.bitrate}k"
+            f" {path or self.args.output}"
+            " -loglevel warning -stats",  # suppress config info, show progress
             check=True,
         )
         Path(filelist.name).unlink()
@@ -271,7 +281,8 @@ if __name__ == "__main__":
         with ZipFile(args.output, "w") as zipf:
             if args.caption:
                 zipf.writestr(
-                    ZipInfo("captions.txt"),
+                    ZipInfo("captions.csv"),
+                    "sample,caption\n"
                     "".join([f"{f.name},{c}" for f, c in zip(samples, captions)]),
                 )
             for f in tqdm(samples, desc="Writing ZIP"):
