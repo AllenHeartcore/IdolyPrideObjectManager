@@ -80,9 +80,9 @@ class SudCacheHandler(CacheHandler):
                 f" -i {self.cwd / filename}"
                 f" -f {self.args.format}"
                 f" -b:a {self.args.bitrate}k"
+                " -loglevel fatal"
                 " pipe:1",
                 stdout=subprocess.PIPE,
-                stderr=subprocess.DEVNULL,
                 check=True,
             ).stdout
         )
@@ -100,7 +100,7 @@ class SudCacheHandler(CacheHandler):
             f" -f {self.args.format}"
             f" -b:a {self.args.bitrate}k"
             f" {path or self.args.output}"
-            " -loglevel warning -stats",  # suppress config info, show progress
+            " -loglevel fatal -stats",  # suppress config info, show progress
             check=True,
         )
         Path(filelist.name).unlink()
@@ -204,6 +204,7 @@ if __name__ == "__main__":
 
     # ------------------------------ SANITY CHECKS
 
+    args.format = args.format.lower()
     if args.output == "":
         args.output = "".join(
             [
