@@ -1,5 +1,6 @@
 rich
 flask
+PyYAML
 
 # Manifest:
 # request, decrypt, parse, export
@@ -14,7 +15,3 @@ UnityPy
 pillow
 pydub
 ffmpeg-python
-
-# GPT captioning engine
-PyYAML
-openai
