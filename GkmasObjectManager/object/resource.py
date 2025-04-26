@@ -16,7 +16,7 @@ from ..const import (
 
 from ..media import GkmasDummyMedia
 from ..media.image import GkmasImage
-from ..media.audio import GkmasAudio, GkmasAWBAudio
+from ..media.audio import GkmasAudio, GkmasAWBAudio, GkmasACBAudio
 from ..media.video import GkmasUSMVideo
 from ..adv import GkmasAdventure
 
@@ -95,12 +95,14 @@ class GkmasResource:
 
         if self._media is None:
             data = self._download_bytes()
-            if self.name.startswith("img_") and self.name.endswith(".png"):
+            if self.name.startswith("img_"):
                 media_class = GkmasImage
-            elif self.name.startswith("sud_") and self.name.endswith(".mp3"):
-                media_class = GkmasAudio
-            elif self.name.startswith("sud_"):
+            elif self.name.startswith("sud_") and self.name.endswith(".awb"):
                 media_class = GkmasAWBAudio
+            elif self.name.startswith("sud_") and self.name.endswith(".acb"):
+                media_class = GkmasACBAudio
+            elif self.name.startswith("sud_"):
+                media_class = GkmasAudio
             elif self.name.startswith("mov_"):
                 media_class = GkmasUSMVideo
             elif self.name.startswith("adv_"):
