@@ -8,17 +8,17 @@ from ..const import (
     md5sum,  # dispreferred, but introduces redundancy otherwise
     PATH_ARGTYPE,
     RESOURCE_INFO_FIELDS,
-    GKMAS_VERSION,
+    PRIDE_VERSION,
     DEFAULT_DOWNLOAD_PATH,
-    GKMAS_OBJECT_SERVER,
+    PRIDE_OBJECT_SERVER,
     CHARACTER_ABBREVS,
 )
 
-from ..media import GkmasDummyMedia
-from ..media.image import GkmasImage
-from ..media.audio import GkmasAudio, GkmasAWBAudio, GkmasACBAudio
-from ..media.video import GkmasUSMVideo
-from ..adv import GkmasAdventure
+from ..media import PrideDummyMedia
+from ..media.image import PrideImage
+from ..media.audio import PrideAudio, PrideAWBAudio, PrideACBAudio
+from ..media.video import PrideUSMVideo
+from ..adv import PrideAdventure
 
 import re
 import requests
@@ -30,7 +30,7 @@ from typing import Tuple
 logger = Logger()
 
 
-class GkmasResource:
+class PrideResource:
     """
     A general-purpose binary resource, presumably multimedia instead of an assetbundle.
 
@@ -54,7 +54,7 @@ class GkmasResource:
     def __init__(self, info: dict):
         """
         Initializes a resource with the given information.
-        Usually called from GkmasManifest.
+        Usually called from PrideManifest.
 
         Args:
             info (dict): An info dictionary, extracted from protobuf.
@@ -65,7 +65,7 @@ class GkmasResource:
             if field != "uploadVersionId":
                 setattr(self, field, info[field])
             else:
-                setattr(self, field, info.get(field, GKMAS_VERSION))
+                setattr(self, field, info.get(field, PRIDE_VERSION))
                 # this might be missing in older manifests
 
         # 'self.state' unused, but retained for compatibility
@@ -81,7 +81,7 @@ class GkmasResource:
         self._mtime = ""
 
     def __repr__(self):
-        return f"<GkmasResource {self._idname}>"
+        return f"<PrideResource {self._idname}>"
 
     def _get_canon_repr(self):
         # this format retains the order of fields
@@ -96,19 +96,19 @@ class GkmasResource:
         if self._media is None:
             data = self._download_bytes()
             if self.name.startswith("img_"):
-                media_class = GkmasImage
+                media_class = PrideImage
             elif self.name.startswith("sud_") and self.name.endswith(".awb"):
-                media_class = GkmasAWBAudio
+                media_class = PrideAWBAudio
             elif self.name.startswith("sud_") and self.name.endswith(".acb"):
-                media_class = GkmasACBAudio
+                media_class = PrideACBAudio
             elif self.name.startswith("sud_"):
-                media_class = GkmasAudio
+                media_class = PrideAudio
             elif self.name.startswith("mov_"):
-                media_class = GkmasUSMVideo
+                media_class = PrideUSMVideo
             elif self.name.startswith("adv_"):
-                media_class = GkmasAdventure
+                media_class = PrideAdventure
             else:
-                media_class = GkmasDummyMedia
+                media_class = PrideDummyMedia
             self._media = media_class(self._idname, data, self._mtime)
 
         return self._media
@@ -190,7 +190,7 @@ class GkmasResource:
         on HTTP status code, size, and MD5 hash. Returns the resource as raw bytes.
         """
 
-        url = urljoin(GKMAS_OBJECT_SERVER, self.objectName)
+        url = urljoin(PRIDE_OBJECT_SERVER, self.objectName)
         response = requests.get(url)
 
         # We're being strict here by aborting the download process

@@ -1,10 +1,10 @@
 """
 media/video.py
-USM video conversion plugin for GkmasResource.
+USM video conversion plugin for PrideResource.
 """
 
 from ..log import Logger
-from .dummy import GkmasDummyMedia
+from .dummy import PrideDummyMedia
 
 from pathlib import Path
 
@@ -14,7 +14,7 @@ import ffmpeg
 logger = Logger()
 
 
-class GkmasUSMVideo(GkmasDummyMedia):
+class PrideUSMVideo(PrideDummyMedia):
     """Conversion plugin for USM videos."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):

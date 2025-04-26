@@ -1,12 +1,12 @@
 """
 revision.py
-Version control for GkmasManifest.
+Version control for PrideManifest.
 """
 
 
-class GkmasManifestRevision:
+class PrideManifestRevision:
     """
-    A GKMAS manifest revision, useful for version control at creating/applying diffs.
+    A PRIDE manifest revision, useful for version control at creating/applying diffs.
 
     Attributes:
         this (int): The revision number of this manifest,
@@ -26,7 +26,7 @@ class GkmasManifestRevision:
         self.base = base
 
     def __repr__(self):
-        return f"<GkmasManifestRevision {self}>"
+        return f"<PrideManifestRevision {self}>"
 
     def __str__(self):
         if self.base == 0:
@@ -76,12 +76,12 @@ class GkmasManifestRevision:
             assert (
                 self.base < other.base
             ), "'Base' revision of subtrahend (other) must be newer."
-            return GkmasManifestRevision(other.base, self.base)
+            return PrideManifestRevision(other.base, self.base)
         else:
             assert (
                 self.this > other.this
             ), "'This' revision of minuend (self) must be newer."
-            return GkmasManifestRevision(self.this, other.this)
+            return PrideManifestRevision(self.this, other.this)
 
     def __add__(self, other):
         """
@@ -94,4 +94,4 @@ class GkmasManifestRevision:
         ), "Cannot add revisions with identical 'this' revision."
         a, b = (self, other) if self.this < other.this else (other, self)
         assert a.this == b.base, "Revisions not comparable."
-        return GkmasManifestRevision(b.this, a.base)
+        return PrideManifestRevision(b.this, a.base)

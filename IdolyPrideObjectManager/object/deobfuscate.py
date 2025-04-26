@@ -1,12 +1,12 @@
 """
 obfuscate.py
-[INTERNAL] GkmasAssetBundle deobfuscator.
+[INTERNAL] PrideAssetBundle deobfuscator.
 """
 
 
-class GkmasAssetBundleDeobfuscator:
+class PrideAssetBundleDeobfuscator:
     """
-    Assetbundle deobfuscator for GKMAS.
+    Assetbundle deobfuscator for PRIDE.
     Algorithm courtesy of github.com/MalitsPlus.
     ('maskString' is refactored to 'key' and 'maskBytes' to 'mask'.)
 

@@ -1,20 +1,20 @@
 """
 adv/adventure.py
-Adventure (story script) plugin for GkmasResource.
+Adventure (story script) plugin for PrideResource.
 """
 
 from ..log import Logger
-from ..media import GkmasDummyMedia
-from .parser import GkadvCommandParser
+from ..media import PrideDummyMedia
+from .parser import PradvCommandParser
 
 import json
 
 
 logger = Logger()
-parser = GkadvCommandParser()
+parser = PradvCommandParser()
 
 
-class GkmasAdventure(GkmasDummyMedia):
+class PrideAdventure(PrideDummyMedia):
     """Handler for adventure story scripts."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):
@@ -27,7 +27,7 @@ class GkmasAdventure(GkmasDummyMedia):
         ]
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
-        # only for compatibility with GkmasResource
+        # only for compatibility with PrideResource
         return bytes(
             json.dumps(
                 self.commands,

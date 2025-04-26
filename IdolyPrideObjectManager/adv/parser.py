@@ -8,7 +8,7 @@ import json
 
 
 # more like a collection of functions than a class
-class GkadvCommandParser:
+class PradvCommandParser:
 
     def _parse_structure(self, string: str) -> dict:
         # assumes NO [] around the string,

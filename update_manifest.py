@@ -4,7 +4,7 @@ Script to fetch latest manifest and diff from server,
 compatible with 'Update Manifest' workflow.
 """
 
-import GkmasObjectManager as gom
+import IdolyPrideObjectManager as ipom
 
 import sys
 from pathlib import Path
@@ -13,7 +13,7 @@ from pathlib import Path
 def do_update(dir: str, pc: bool = False) -> bool:
 
     dir = Path(dir)
-    m_remote = gom.fetch(pc=pc)
+    m_remote = ipom.fetch(pc=pc)
     rev_remote = m_remote.revision._get_canon_repr()
     rev_local = int((dir / "LATEST_REVISION").read_text())
 
@@ -27,7 +27,7 @@ def do_update(dir: str, pc: bool = False) -> bool:
 
     m_remote.export(dir / "v0000.json")
     for i in range(1, rev_remote):
-        gom.fetch(i, pc=pc).export(dir / f"v{i:04}.json")
+        ipom.fetch(i, pc=pc).export(dir / f"v{i:04}.json")
 
     return True
 

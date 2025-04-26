@@ -26,27 +26,27 @@ PATH_ARGTYPE = Union[str, Path]
 IMAGE_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
 
 # manifest request
-GKMAS_APPID = 400
-GKMAS_VERSION = 205000
-GKMAS_VERSION_PC = 705000
-GKMAS_API_SERVER = f"https://api.asset.game-gakuen-idolmaster.jp/"
-GKMAS_API_URL = urljoin(
-    GKMAS_API_SERVER, f"v2/pub/a/{GKMAS_APPID}/v/{GKMAS_VERSION}/list/"
+PRIDE_APPID = 400
+PRIDE_VERSION = 205000
+PRIDE_VERSION_PC = 705000
+PRIDE_API_SERVER = f"https://api.asset.game-gakuen-idolmaster.jp/"
+PRIDE_API_URL = urljoin(
+    PRIDE_API_SERVER, f"v2/pub/a/{PRIDE_APPID}/v/{PRIDE_VERSION}/list/"
 )
-GKMAS_API_URL_PC = urljoin(
-    GKMAS_API_SERVER, f"v2/pub/a/{GKMAS_APPID}/v/{GKMAS_VERSION_PC}/list/"
+PRIDE_API_URL_PC = urljoin(
+    PRIDE_API_SERVER, f"v2/pub/a/{PRIDE_APPID}/v/{PRIDE_VERSION_PC}/list/"
 )
-GKMAS_API_KEY = "0jv0wsohnnsigttbfigushbtl3a8m7l5"
-GKMAS_API_HEADER = {
-    "Accept": f"application/x-protobuf,x-octo-app/{GKMAS_APPID}",
-    "X-OCTO-KEY": GKMAS_API_KEY,
+PRIDE_API_KEY = "0jv0wsohnnsigttbfigushbtl3a8m7l5"
+PRIDE_API_HEADER = {
+    "Accept": f"application/x-protobuf,x-octo-app/{PRIDE_APPID}",
+    "X-OCTO-KEY": PRIDE_API_KEY,
 }
 
 # manifest decrypt
-GKMAS_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd".encode("utf-8"))
-GKMAS_ONLINEPDB_KEY_PC = sha256sum("x5HFaJCJywDyuButLM0f".encode("utf-8"))
-GKMAS_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk".encode("utf-8"))
-GKMAS_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
+PRIDE_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd".encode("utf-8"))
+PRIDE_ONLINEPDB_KEY_PC = sha256sum("x5HFaJCJywDyuButLM0f".encode("utf-8"))
+PRIDE_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk".encode("utf-8"))
+PRIDE_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
 
 # manifest diff
 OBJLIST_ID_FIELD = "id"
@@ -64,7 +64,7 @@ RESOURCE_INFO_FIELDS_TAIL = ["state", "md5", "objectName", "uploadVersionId"]
 RESOURCE_INFO_FIELDS = RESOURCE_INFO_FIELDS_HEAD + RESOURCE_INFO_FIELDS_TAIL
 
 # object download
-GKMAS_OBJECT_SERVER = "https://object.asset.game-gakuen-idolmaster.jp/"
+PRIDE_OBJECT_SERVER = "https://object.asset.game-gakuen-idolmaster.jp/"
 CHARACTER_ABBREVS = [
     "hski",  # Hanami SaKI
     "ttmr",  # Tsukimura TeMaRi
@@ -93,5 +93,5 @@ CHARACTER_ABBREVS = [
 ]
 
 # object deobfuscate
-GKMAS_UNITY_VERSION = "2022.3.21f1"
+PRIDE_UNITY_VERSION = "2022.3.21f1"
 UNITY_SIGNATURE = b"UnityFS"

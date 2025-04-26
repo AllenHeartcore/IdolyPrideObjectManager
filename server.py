@@ -1,4 +1,4 @@
-import GkmasObjectManager as gom
+import IdolyPrideObjectManager as ipom
 
 from flask import Flask, render_template, request, jsonify, Response
 from email.utils import parsedate_to_datetime
@@ -15,7 +15,7 @@ m = None
 def _get_manifest():
     global m
     if m is None:
-        m = gom.fetch()
+        m = ipom.fetch()
     return m
 
 
@@ -41,7 +41,7 @@ def api_search():
             {
                 "id": obj.id,
                 "name": obj.name,
-                "type": type(obj).__name__[5:],  # valid names start with "Gkmas"
+                "type": type(obj).__name__[5:],  # valid names start with "Pride"
             }
             for obj in _get_manifest().search(
                 "".join(f"(?=.*{word})" for word in query.split())

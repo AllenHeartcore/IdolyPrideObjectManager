@@ -1,13 +1,13 @@
 """
-GkmasObjectManager
+IdolyPrideObjectManager
 ==================
-Written by Ziyuan Chen (https://github.com/AllenHeartcore/gkmasToolkit_core).
+Written by Ziyuan Chen (https://github.com/AllenHeartcore/IdolyPrideObjectManager).
 Refactored from Kishida Natsumi (https://github.com/kishidanatsumi/gkmasToolkit),
-which in turn was adapted from Vibbit (https://github.com/MalitsPlus/HoshimiToolkit).
+which in turn was adapted from Vibbit (https://github.com/MalitsPlus/SolisClient).
 
 This module defines an object-oriented interface for interacting with object databases
 (hereafter referred to as "manifests", usually named "octocacheevai")
-in the mobile game Gakuen Idolm@ster (https://gakuen.idolmaster-official.jp/).
+in the mobile game [Idoly Pride](https://idolypride.jp/).
 
 Features
 --------
@@ -18,16 +18,16 @@ Features
 Example Usage
 -------------
 ```python
-from GkmasObjectManager import GkmasManifest
-manifest = GkmasManifest("EncryptedCache/octocacheevai")
+from IdolyPrideObjectManager import PrideManifest
+manifest = PrideManifest("EncryptedCache/octocacheevai")
 manifest.export('DecryptedCache/')
 manifest.download('adv.*ttmr.*', 'sud_vo.*fktn.*', 'mdl.*hski.*')
 
-manifest_old = GkmasManifest("EncryptedCache/octocacheevai_old")
+manifest_old = PrideManifest("EncryptedCache/octocacheevai_old")
 mdiff = manifest - manifest_old
 mdiff.export('DecryptedCache/diff/')
 ```
 """
 
-from .manifest import GkmasManifest, fetch, load
-from .object import GkmasAssetBundle, GkmasResource
+from .manifest import PrideManifest, fetch, load
+from .object import PrideAssetBundle, PrideResource

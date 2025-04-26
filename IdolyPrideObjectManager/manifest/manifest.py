@@ -3,7 +3,7 @@ manifest.py
 Manifest decryption, exporting, and object downloading.
 """
 
-from ..object import GkmasAssetBundle, GkmasResource
+from ..object import PrideAssetBundle, PrideResource
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
@@ -12,9 +12,9 @@ from ..const import (
     CHARACTER_ABBREVS,
 )
 
-from .revision import GkmasManifestRevision
+from .revision import PrideManifestRevision
 from .octodb_pb2 import dict2pdbytes
-from .listing import GkmasObjectList
+from .listing import PrideObjectList
 
 import re
 import json
@@ -30,17 +30,17 @@ from pathlib import Path
 logger = Logger()
 
 
-class GkmasManifest:
+class PrideManifest:
     """
-    A GKMAS manifest, containing info about assetbundles and resources.
+    A PRIDE manifest, containing info about assetbundles and resources.
 
     Attributes:
-        revision (GkmasManifestRevision): Manifest revision this-diff-base (see revision.py).
-        assetbundles (GkmasObjectList): List of assetbundle *info dictionaries*.
-        resources (GkmasObjectList): List of resource *info dictionaries*.
+        revision (PrideManifestRevision): Manifest revision this-diff-base (see revision.py).
+        assetbundles (PrideObjectList): List of assetbundle *info dictionaries*.
+        resources (PrideObjectList): List of resource *info dictionaries*.
         urlformat (str): URL format for downloading assetbundles/resources.
             Solely for faithful reconstruction of the manifest.
-    *Documentation for GkmasObjectList can be found in listing.py.*
+    *Documentation for PrideObjectList can be found in listing.py.*
 
     Methods:
         download(
@@ -80,14 +80,14 @@ class GkmasManifest:
             revision = (revision[0], base_revision)  # proceed anyway
 
         try:  # instantiate from JSON
-            self.revision = GkmasManifestRevision(*revision)
-            self.assetbundles = GkmasObjectList(
+            self.revision = PrideManifestRevision(*revision)
+            self.assetbundles = PrideObjectList(
                 jdict.get("assetBundleList", []),  # might be empty in recent diffs
-                GkmasAssetBundle,
+                PrideAssetBundle,
             )
-            self.resources = GkmasObjectList(
+            self.resources = PrideObjectList(
                 jdict.get("resourceList", []),  # same as above ^
-                GkmasResource,
+                PrideResource,
             )
         except TypeError:  # instantiate from diff, skip type conversion
             self.revision = jdict["revision"]
@@ -98,7 +98,7 @@ class GkmasManifest:
         # 'jdict' is then discarded and losslessly reconstructed at export
 
     def __repr__(self):
-        return f"<GkmasManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
+        return f"<PrideManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
 
     def __getitem__(self, key: str):
         try:
@@ -121,7 +121,7 @@ class GkmasManifest:
         # could also try self[key]
 
     def __sub__(self, other):
-        return GkmasManifest(
+        return PrideManifest(
             {  # this is not a standard JSON dict, more like named arguments
                 "revision": self.revision - other.revision,  # handles sanity check
                 "assetBundleList": self.assetbundles - other.assetbundles,
@@ -136,7 +136,7 @@ class GkmasManifest:
         a, b = (
             (self, other) if new_revision.this == other.revision.this else (other, self)
         )  # 'b' must be newer; this matters in list addition
-        return GkmasManifest(
+        return PrideManifest(
             {
                 "revision": new_revision,
                 "assetBundleList": a.assetbundles + b.assetbundles,
@@ -241,7 +241,7 @@ class GkmasManifest:
         if path.suffix != ".csv":
             logger.warning("Attempting to write CSV into a non-.csv file")
 
-        # [RESOLVED] Forced list conversion is necessary since GkmasObjectList overrides __iter__,
+        # [RESOLVED] Forced list conversion is necessary since PrideObjectList overrides __iter__,
         # which handles integer keys (index by ID) and messes up with standard modules
         # like pandas that rely on self[0] as a "sample" object from the list.
         dfa = pd.DataFrame(self.assetbundles._get_canon_repr(), columns=CSV_COLUMNS)

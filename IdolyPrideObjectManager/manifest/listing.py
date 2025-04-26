@@ -12,18 +12,18 @@ from ..const import (
 from typing import Union
 
 
-class GkmasObjectList:
+class PrideObjectList:
     """
     A list of assetbundle/resource metadata, optimized for indexing and comparison.
     Implemented as listing utility wrappers around a list of dictionaries.
 
     Methods:
-        __sub__(other: GkmasObjectList) -> GkmasObjectList:
+        __sub__(other: PrideObjectList) -> PrideObjectList:
             Subtracts another object list from this one.
             Returns the list of elements unique to 'self'.
-        rip_field(targets: list) -> GkmasObjectList:
+        rip_field(targets: list) -> PrideObjectList:
             Removes selected fields from all dictionaries.
-        diff(other: GkmasObjectList, ignored_fields: list) -> GkmasObjectList:
+        diff(other: PrideObjectList, ignored_fields: list) -> PrideObjectList:
             Compares two object lists while ignoring selected fields,
             but **retains all fields** in the reconstructed output.
     """
@@ -38,7 +38,7 @@ class GkmasObjectList:
         # 'self._*_idx' are int/str -> int lookup tables
 
     def __repr__(self):
-        return f"<GkmasObjectList of {len(self.infos)} {self.base_class.__name__}'s>"
+        return f"<PrideObjectList of {len(self.infos)} {self.base_class.__name__}'s>"
 
     def __getitem__(self, key: Union[int, str]) -> object:
 
@@ -65,7 +65,7 @@ class GkmasObjectList:
         return key in self._name_idx
         # 'if <numerical ID> in self' is nonsensical
 
-    def __sub__(self, other: "GkmasObjectList") -> "GkmasObjectList":
+    def __sub__(self, other: "PrideObjectList") -> "PrideObjectList":
         assert self.base_class == other.base_class
         canon_reprs = []
         for entry in self:
@@ -78,14 +78,14 @@ class GkmasObjectList:
             else:
                 if this_repr != other_repr:
                     canon_reprs.append(this_repr)
-        return GkmasObjectList(canon_reprs, self.base_class)
+        return PrideObjectList(canon_reprs, self.base_class)
 
-    def __add__(self, other: "GkmasObjectList") -> "GkmasObjectList":
+    def __add__(self, other: "PrideObjectList") -> "PrideObjectList":
         # 'other' is assumed to be newer, since revision is not accessible here
         assert self.base_class == other.base_class
         mapped = {entry["id"]: entry for entry in self._get_canon_repr()}
         mapped.update({entry["id"]: entry for entry in other._get_canon_repr()})  # hack
-        return GkmasObjectList(list(mapped.values()), self.base_class)
+        return PrideObjectList(list(mapped.values()), self.base_class)
 
     def _get_canon_repr(self):
         """

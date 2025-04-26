@@ -1,12 +1,12 @@
 """
 media/image.py
-Unity image conversion plugin for GkmasAssetBundle,
-and PNG image handler for GkmasResource.
+Unity image conversion plugin for PrideAssetBundle,
+and PNG image handler for PrideResource.
 """
 
 from ..log import Logger
 from ..const import IMAGE_RESIZE_ARGTYPE
-from .dummy import GkmasDummyMedia
+from .dummy import PrideDummyMedia
 
 from io import BytesIO
 from pathlib import Path
@@ -19,7 +19,7 @@ from PIL import Image
 logger = Logger()
 
 
-class GkmasImage(GkmasDummyMedia):
+class PrideImage(PrideDummyMedia):
     """Handler for images of common formats recognized by PIL."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):
@@ -106,7 +106,7 @@ class GkmasImage(GkmasDummyMedia):
         return round(w_new), round(h_new)
 
 
-class GkmasUnityImage(GkmasImage):
+class PrideUnityImage(PrideImage):
     """Conversion plugin for Unity images."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):

@@ -1,6 +1,6 @@
 """
 crypt.py
-[INTERNAL] GkmasManifest decryptor.
+[INTERNAL] PrideManifest decryptor.
 """
 
 from cryptography.hazmat.primitives.ciphers import Cipher

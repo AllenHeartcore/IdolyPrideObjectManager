@@ -1,11 +1,11 @@
 """
 media/audio.py
-AWB/ACB audio conversion plugin for GkmasResource,
-and MP3 audio handler for GkmasResource.
+AWB/ACB audio conversion plugin for PrideResource,
+and MP3 audio handler for PrideResource.
 """
 
 from ..log import Logger
-from .dummy import GkmasDummyMedia
+from .dummy import PrideDummyMedia
 
 import platform
 import tempfile
@@ -22,7 +22,7 @@ from datetime import datetime
 logger = Logger()
 
 
-class GkmasAudio(GkmasDummyMedia):
+class PrideAudio(PrideDummyMedia):
     """Handler for audio of common formats recognized by pydub."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):
@@ -35,7 +35,7 @@ class GkmasAudio(GkmasDummyMedia):
         return audio.export(format=self.converted_format).read()
 
 
-class GkmasUnityAudio(GkmasAudio):
+class PrideUnityAudio(PrideAudio):
     """Conversion plugin for Unity audio."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):
@@ -53,7 +53,7 @@ class GkmasUnityAudio(GkmasAudio):
         # UnityPy is decompressing AudioClip into clean PCM bytes for us
 
 
-class GkmasAWBAudio(GkmasDummyMedia):
+class PrideAWBAudio(PrideDummyMedia):
     """Conversion plugin for AWB audio."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):
@@ -71,7 +71,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         # uses pydub in vastly different ways,
-        # thus this class is not inherited from GkmasAudio
+        # thus this class is not inherited from PrideAudio
 
         audio = None
         success = False
@@ -136,7 +136,7 @@ class GkmasAWBAudio(GkmasDummyMedia):
             return buffer.getvalue()
 
 
-class GkmasACBAudio(GkmasAWBAudio):
+class PrideACBAudio(PrideAWBAudio):
     """Conversion plugin for ACB audio archive."""
 
     def _make_vgmstream_args(self, tmp_in: str, tmp_out: str, suffix: str) -> list:

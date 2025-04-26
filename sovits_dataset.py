@@ -11,14 +11,14 @@ from zipfile import ZipFile, ZipInfo
 from datetime import datetime
 from tqdm import tqdm
 
-import GkmasObjectManager as gom
-from GkmasObjectManager.log import Logger
-from GkmasObjectManager.object import GkmasResource
+import IdolyPrideObjectManager as ipom
+from IdolyPrideObjectManager.log import Logger
+from IdolyPrideObjectManager.object import PrideResource
 
 
 logger = Logger()
 logger.info("Fetching manifest...")
-m = gom.fetch()
+m = ipom.fetch()
 
 
 class CacheHandler:
@@ -35,7 +35,7 @@ class CacheHandler:
     def _rectify_filename(self, p: Path) -> str:
         return p.name
 
-    def cache(self, target: list[GkmasResource]):
+    def cache(self, target: list[PrideResource]):
         target = set([t.name for t in target])  # remove duplicates
         target -= set(map(self._rectify_filename, self.cwd.iterdir()))
         m.download(
@@ -134,7 +134,7 @@ class AdvCacheHandler(CacheHandler):
             self._update_caption_map(json.loads(f.read_text(encoding="utf-8")))
         self._caption_map_ready = True
 
-    def cache(self, target: list[GkmasResource]):
+    def cache(self, target: list[PrideResource]):
         # this can be inefficient; but building _caption_map
         # on the fly requires real-time access to resource._media,
         # whose interface is wrapped in the download() dispatcher

@@ -48,7 +48,7 @@ function populateHomepageContainers(data) {
 function reportHomepageError() {
     $("#loadingSpinner").hide();
     $("#homeMetadata").html(`
-        GkmasManifest cannot be fetched. <br>
+        PrideManifest cannot be fetched. <br>
         Check Internet connection. <br>
         Refresh to retry.
     `);

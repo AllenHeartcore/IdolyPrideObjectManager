@@ -19,7 +19,7 @@ from email.utils import parsedate_to_datetime
 logger = Logger()
 
 
-class GkmasDummyMedia:
+class PrideDummyMedia:
     """Unrecognized media handler, also the fallback for conversion plugins."""
 
     def __init__(self, name: str, raw: bytes, mtime: str = ""):
@@ -55,7 +55,7 @@ class GkmasDummyMedia:
 
         if self.converted is None:
             self.converted = self._convert(self.raw, **kwargs)
-            # the only place where **kwargs are used is image_resize in GkmasImage
+            # the only place where **kwargs are used is image_resize in PrideImage
 
         return self.converted, (
             "application/zip"
