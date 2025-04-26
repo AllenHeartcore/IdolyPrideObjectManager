@@ -28,13 +28,9 @@ IMAGE_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
 # manifest request
 PRIDE_APPID = 400
 PRIDE_VERSION = 205000
-PRIDE_VERSION_PC = 705000
 PRIDE_API_SERVER = f"https://api.asset.game-gakuen-idolmaster.jp/"
 PRIDE_API_URL = urljoin(
     PRIDE_API_SERVER, f"v2/pub/a/{PRIDE_APPID}/v/{PRIDE_VERSION}/list/"
-)
-PRIDE_API_URL_PC = urljoin(
-    PRIDE_API_SERVER, f"v2/pub/a/{PRIDE_APPID}/v/{PRIDE_VERSION_PC}/list/"
 )
 PRIDE_API_KEY = "0jv0wsohnnsigttbfigushbtl3a8m7l5"
 PRIDE_API_HEADER = {
@@ -44,7 +40,6 @@ PRIDE_API_HEADER = {
 
 # manifest decrypt
 PRIDE_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd".encode("utf-8"))
-PRIDE_ONLINEPDB_KEY_PC = sha256sum("x5HFaJCJywDyuButLM0f".encode("utf-8"))
 PRIDE_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk".encode("utf-8"))
 PRIDE_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
 

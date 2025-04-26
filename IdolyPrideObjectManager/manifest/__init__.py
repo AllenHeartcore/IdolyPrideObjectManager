@@ -1,10 +1,8 @@
 from ..const import (
     PATH_ARGTYPE,
     PRIDE_API_URL,
-    PRIDE_API_URL_PC,
     PRIDE_API_HEADER,
     PRIDE_ONLINEPDB_KEY,
-    PRIDE_ONLINEPDB_KEY_PC,
     PRIDE_OCTOCACHE_KEY,
     PRIDE_OCTOCACHE_IV,
 )
@@ -19,7 +17,7 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 
-def fetch(base_revision: int = 0, pc: bool = False) -> PrideManifest:
+def fetch(base_revision: int = 0) -> PrideManifest:
     """
     Requests an online manifest by the specified revision.
     Algorithm courtesy of github.com/DreamGallery/HatsuboshiToolkit
@@ -28,14 +26,10 @@ def fetch(base_revision: int = 0, pc: bool = False) -> PrideManifest:
         base_revision (int): The "base" revision number of the manifest.
             This API return the *difference* between the specified base
             revision and the latest. Defaults to 0 (standalone latest).
-        pc (bool): Whether to use the PC manifest API.
-            Defaults to False (mobile).
     """
-    url = urljoin(PRIDE_API_URL_PC if pc else PRIDE_API_URL, str(base_revision))
+    url = urljoin(PRIDE_API_URL, str(base_revision))
     enc = requests.get(url, headers=PRIDE_API_HEADER).content
-    dec = AESCBCDecryptor(
-        PRIDE_ONLINEPDB_KEY_PC if pc else PRIDE_ONLINEPDB_KEY, enc[:16]
-    ).process(enc[16:])
+    dec = AESCBCDecryptor(PRIDE_ONLINEPDB_KEY, enc[:16]).process(enc[16:])
     return PrideManifest(pdbytes2dict(dec), base_revision=base_revision)
 
 
