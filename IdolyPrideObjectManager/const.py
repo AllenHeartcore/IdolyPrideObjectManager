@@ -55,30 +55,40 @@ DEFAULT_DOWNLOAD_PATH = "objects/"
 
 # object download
 CHARACTER_ABBREVS = [
-    "hski",  # Hanami SaKI
-    "ttmr",  # Tsukimura TeMaRi
-    "fktn",  # Fujita KoToNe
-    "amao",  # Arimura MAO
-    "kllj",  # Katsuragi LiLJa
-    "kcna",  # Kuramoto ChiNA
-    "ssmk",  # Shiun SuMiKa
-    "shro",  # Shinosawa HiRO
-    "hrnm",  # Himesaki RiNaMi
-    "hume",  # Hanami UME
-    "hmsz",  # Hataya MiSuZu
-    "jsna",  # Juo SeNA
-    "atbm",  # Amaya TsuBaMe
-    "jkno",  # Juo KuNiO
-    "nasr",  # Neo ASaRi
-    "trvo",  # VOcal TRainer
-    "trda",  # DAnce TRainer
-    "trvi",  # VIsual TRainer
-    "krnh",  # Kayo RiNHa
-    "andk",  # Aoi NaDeshiKo
-    "sson",  # Shirakusa ShiON
-    "sgka",  # Shirakusa GekKA
-    "ktko",  # Kuroi TaKaO
-    "cmmn",  # (CoMMoN)
+    "mna",  # nagase MaNA
+    # Tsuki no tempest
+    "ktn",  # nagase KoToNo
+    "ngs",  # ibuki NaGiSa
+    "ski",  # shiraishi SaKI
+    "suz",  # narumiya SUZu
+    "mei",  # hayasaka MEI
+    # Sunny peace
+    "skr",  # kawasaki SaKuRa
+    "szk",  # hyodo ShiZuKu
+    "chs",  # shiraishi CHiSa
+    "rei",  # ichinose REI
+    "hrk",  # saeki HaRuKo
+    # TRINITYAiLE
+    "rui",  # tendo RUI
+    "yu",  # suzumura YU
+    "smr",  # okuyama SuMiRe
+    # LizNoir
+    "rio",  # kanzaki RIO
+    "aoi",  # igawa AOI
+    "ai",  # komiyama AI
+    "kkr",  # akazaki KoKoRo
+    # IIIX
+    "kor",  # yamada "fran"ziska KaORi
+    "kan",  # kojima "KANa"
+    "mhk",  # takeda "MiHo"Ko
+    # (Collab)
+    "mku",  # hatsune MiKU
+    "ymk",  # Yuki MiKu
+    "chk",  # takami CHiKa
+    "rik",  # sakurauchi RIKo
+    "yo",  # watanabe YOu
+    "cca",  # hoto CoCoA
+    "chn",  # kafu CHiNo
 ]
 
 # object deobfuscate

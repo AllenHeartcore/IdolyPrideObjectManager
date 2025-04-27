@@ -57,11 +57,6 @@ body {
     width: 100% !important;
 }
 
-.col-md-1-13 {
-    flex: 0 0 auto;
-    width: calc(100% / 13);
-}
-
 /* General text */
 
 .text-size-150 * {
