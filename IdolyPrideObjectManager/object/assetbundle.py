@@ -83,7 +83,7 @@ class PrideAssetBundle(PrideResource):
                 media_class = PrideUnityAudio
             else:
                 media_class = PrideDummyMedia
-            self._media = media_class(self._idname, data, self._mtime)
+            self._media = media_class(self._idname, data, int(self.generation))
 
         return self._media
 

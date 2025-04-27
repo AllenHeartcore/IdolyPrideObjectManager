@@ -17,7 +17,7 @@ parser = PradvCommandParser()
 class PrideAdventure(PrideDummyMedia):
     """Handler for adventure story scripts."""
 
-    def __init__(self, name: str, raw: bytes, mtime: str = ""):
+    def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.mimetype = "text"
         self.converted_format = "json"

@@ -17,7 +17,7 @@ logger = Logger()
 class PrideUSMVideo(PrideDummyMedia):
     """Conversion plugin for USM videos."""
 
-    def __init__(self, name: str, raw: bytes, mtime: str = ""):
+    def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.mimetype = "video"
         self.converted_format = "mp4"

@@ -23,7 +23,7 @@ function populateHomepageContainers(data) {
 
     // Place images in the correct order since Promise's are async
     latestSamples.forEach((item, index) => {
-        getMediaBlobURL("AssetBundle", item.id).then(({ url, mimetype, _ }) => {
+        getMediaBlobURL("AssetBundle", item.id).then(({ url, mimetype }) => {
             if (!mimetype.startsWith("image/")) {
                 console.log(
                     `Expected an image mimetype for asset ${item.id}, but got ${mimetype}`

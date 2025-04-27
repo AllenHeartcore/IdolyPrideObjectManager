@@ -64,12 +64,10 @@ function getMediaBlobURL(type, id) {
             xhrFields: { responseType: "arraybuffer" },
             success: function (data, status, request) {
                 const mimetype = request.getResponseHeader("Content-Type");
-                const mtime = request.getResponseHeader("Last-Modified");
                 blob = new Blob([data], { type: mimetype });
                 resolve({
                     url: URL.createObjectURL(blob),
                     mimetype: mimetype,
-                    mtime: mtime.replace(/ GMT.*/, ""),
                 });
             },
             error: function (...args) {
@@ -80,7 +78,6 @@ function getMediaBlobURL(type, id) {
                 reject({
                     url: URL.createObjectURL(blob),
                     mimetype: "text/plain",
-                    mtime: "Unknown",
                 });
             },
         });

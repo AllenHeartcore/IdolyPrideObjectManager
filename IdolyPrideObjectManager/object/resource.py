@@ -79,10 +79,6 @@ class PrideResource:
         # Not set at initialization, since downloading bytes is a prerequisite.
         self._media = None
 
-        # Modification time, to be overwritten by _download_bytes()
-        # (if available; checked before passing to os.utime())
-        self._mtime = ""
-
     def __repr__(self):
         return f"<PrideResource {self._idname}>"
 
@@ -112,7 +108,7 @@ class PrideResource:
                 media_class = PrideAdventure
             else:
                 media_class = PrideDummyMedia
-            self._media = media_class(self._idname, data, self._mtime)
+            self._media = media_class(self._idname, data, int(self.generation))
 
         return self._media
 
@@ -210,7 +206,5 @@ class PrideResource:
 
         if md5sum(response.content) != bytes.fromhex(self.md5):
             logger.error(f"{self._idname} has invalid MD5 hash")
-
-        self._mtime = response.headers.get("Last-Modified", "")
 
         return response.content

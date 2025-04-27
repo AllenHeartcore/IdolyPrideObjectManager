@@ -25,7 +25,7 @@ logger = Logger()
 class PrideAudio(PrideDummyMedia):
     """Handler for audio of common formats recognized by pydub."""
 
-    def __init__(self, name: str, raw: bytes, mtime: str = ""):
+    def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.mimetype = "audio"
         self.raw_format = name.split(".")[-1][:-1]
@@ -38,7 +38,7 @@ class PrideAudio(PrideDummyMedia):
 class PrideUnityAudio(PrideAudio):
     """Conversion plugin for Unity audio."""
 
-    def __init__(self, name: str, raw: bytes, mtime: str = ""):
+    def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.raw_format = None  # don't override
         self.converted_format = "wav"
@@ -56,7 +56,7 @@ class PrideUnityAudio(PrideAudio):
 class PrideAWBAudio(PrideDummyMedia):
     """Conversion plugin for AWB audio."""
 
-    def __init__(self, name: str, raw: bytes, mtime: str = ""):
+    def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.mimetype = "audio"
         self.converted_format = "wav"

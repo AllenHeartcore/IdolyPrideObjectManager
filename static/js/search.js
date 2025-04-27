@@ -134,17 +134,15 @@ function refreshCardContainer() {
             .addClass("card shadow-at-hover")
             .attr("id", "searchEntryCard");
         if (entry.name.startsWith("img_")) {
-            getMediaBlobURL(entry.type, entry.id).then(
-                ({ url, mimetype, _ }) => {
-                    card.prepend(
-                        $("<img>")
-                            .addClass("card-img-top")
-                            .attr("id", "searchEntryCardImage")
-                            .attr("src", url)
-                            .attr("alt", entry.name)
-                    );
-                }
-            );
+            getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
+                card.prepend(
+                    $("<img>")
+                        .addClass("card-img-top")
+                        .attr("id", "searchEntryCardImage")
+                        .attr("src", url)
+                        .attr("alt", entry.name)
+                );
+            });
         }
         card.append(
             $("<div>")

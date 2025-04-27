@@ -1,8 +1,7 @@
 import IdolyPrideObjectManager as ipom
 
 from flask import Flask, render_template, request, jsonify, Response
-from email.utils import parsedate_to_datetime
-from datetime import timezone, timedelta
+from datetime import datetime, timezone, timedelta
 
 
 # Bookkeeping
@@ -19,8 +18,8 @@ def _get_manifest():
     return m
 
 
-def _sanitize_mtime(mtime):
-    mtime = parsedate_to_datetime(mtime)
+def _sanitize_mtime(mtime: int) -> str:
+    mtime = datetime.fromtimestamp(mtime / 1e6)
     mtime = mtime.astimezone(timezone(timedelta(hours=9)))  # Japan Standard Time
     return mtime.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -55,22 +54,14 @@ def api_search():
 def api_assetbundle_bytestream(id):
     obj = _get_manifest().assetbundles[int(id)]
     bytestream, mimetype = obj.get_data()
-    return Response(
-        bytestream,
-        mimetype=mimetype,
-        headers={"Last-Modified": _sanitize_mtime(obj._mtime)},
-    )
+    return Response(bytestream, mimetype=mimetype)
 
 
 @app.route("/api/resource/<id>/bytestream")
 def api_resource_bytestream(id):
     obj = _get_manifest().resources[int(id)]
     bytestream, mimetype = obj.get_data()
-    return Response(
-        bytestream,
-        mimetype=mimetype,
-        headers={"Last-Modified": _sanitize_mtime(obj._mtime)},
-    )
+    return Response(bytestream, mimetype=mimetype)
 
 
 # Frontend routes
@@ -103,6 +94,8 @@ def view_assetbundle(id):
 
     info = obj._get_canon_repr()
     info["raw_url"] = obj._url
+    info["mtime"] = _sanitize_mtime(int(obj.generation))
+
     if "dependencies" in info:
         info["dependencies"] = [
             {
@@ -111,6 +104,7 @@ def view_assetbundle(id):
             }
             for dep in info["dependencies"]
         ]
+
     return render_template("view.html", info=info, type="AssetBundle")
 
 
@@ -124,6 +118,8 @@ def view_resource(id):
 
     info = obj._get_canon_repr()
     info["raw_url"] = obj._url
+    info["mtime"] = _sanitize_mtime(int(obj.generation))
+
     return render_template("view.html", info=info, type="Resource")
 
 

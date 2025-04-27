@@ -13,7 +13,6 @@ from pathlib import Path
 from typing import Tuple
 
 from zipfile import ZipFile
-from email.utils import parsedate_to_datetime
 
 
 logger = Logger()
@@ -22,9 +21,9 @@ logger = Logger()
 class PrideDummyMedia:
     """Unrecognized media handler, also the fallback for conversion plugins."""
 
-    def __init__(self, name: str, raw: bytes, mtime: str = ""):
+    def __init__(self, name: str, raw: bytes, mtime: int):
         self.name = name  # only for logging
-        self.mtime = parsedate_to_datetime(mtime).timestamp() if mtime else None
+        self.mtime = mtime / 1e6 if mtime else None
         self.raw = raw  # raw binary data (we don't want to reencode known formats)
         self.converted = None  # converted binary data (if applicable)
 
