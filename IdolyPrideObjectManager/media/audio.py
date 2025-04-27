@@ -45,14 +45,14 @@ class PrideUnityAudio(PrideAudio):
 
         audioclips = [
             obj.read()
-            for obj in (env.objects + list(env.container.values()))
+            for obj in (list(env.container.values()) + env.objects)
             if obj.type.name == "AudioClip"
         ]
 
         # Remove duplicates, since obj.samples will incur the largest overhead,
         # and we want to avoid running the decoding algorithm multiple times
-        # if a clip appears in both env.objects and env.container;
-        # Also this respects the order of env.objects first.
+        # if a clip appears in both env.container and env.objects;
+        # Also this respects the order of env.container first.
         audioclips = {obj.name: obj for obj in audioclips}
 
         audio = {}

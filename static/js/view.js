@@ -36,7 +36,7 @@ function displayMedia() {
                         let col1 = $("<div>").addClass("col-2 align-left fs-5");
                         let col2 = $("<div>").addClass("col-9");
 
-                        let alias = filename.split(".")[0].split("_").pop();
+                        let alias = filename.split(".")[0].split("-").pop();
                         col1.text(alias);
 
                         zip.files[filename].async("blob").then((fblob) => {
