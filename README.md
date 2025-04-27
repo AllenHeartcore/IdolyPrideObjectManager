@@ -31,12 +31,9 @@ m_old = ipom.load("octocacheevai")
 m_diff = m - m_old
 m_diff.export("manifest_diff.json")
 
-m.download(
-    "img.*cidol.*full.*", "img.*csprt.*full.*",  # character & support cards
-    image_format="JPEG", image_resize="16:9"
-)
-m.download("sud.*inst.*.awb", audio_format="WAV")  # instrumental songs
-m.download("mov.*cidol.*loop.usm", video_format="MP4")  # animated character cards
+m.download("img_card_full_1.*", image_format="JPEG", image_resize="16:9")  # character cards
+m.download("sud_music_short.*inst", audio_format="WAV")  # instrumental songs
+m.download("mov_card_full.*1080p.mp4")  # animated character cards
 ```
 
 

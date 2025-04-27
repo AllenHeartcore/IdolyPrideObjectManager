@@ -21,7 +21,7 @@ Example Usage
 from IdolyPrideObjectManager import PrideManifest
 manifest = PrideManifest("EncryptedCache/octocacheevai")
 manifest.export('DecryptedCache/')
-manifest.download('adv.*ttmr.*', 'sud_vo.*fktn.*', 'mdl.*hski.*')
+manifest.download('adv.*mna.*', 'sud_vo.*ktn.*', 'mdl.*skr.*')
 
 manifest_old = PrideManifest("EncryptedCache/octocacheevai_old")
 mdiff = manifest - manifest_old

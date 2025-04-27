@@ -18,10 +18,10 @@ const SUBTYPE_ALIAS = {
     "img deco": "Decoration",
     "img ui diary": "Diary",
     "img acc": "Skillcard",
-    "sud music": "Tracks",
-    "sud vo": "Voice",
+    "sud music short": "Songs",
     "sud bgm": "BGM",
-    "mov gacha": "Animation",
+    "mov card 1080p": "Animation",
+    "mov mv 1080p": "MV",
 };
 
 const CHARACTER_ALIAS = {
