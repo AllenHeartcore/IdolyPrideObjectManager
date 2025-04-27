@@ -7,10 +7,7 @@ from ..log import Logger
 from ..const import (
     md5sum,  # dispreferred, but introduces redundancy otherwise
     PATH_ARGTYPE,
-    RESOURCE_INFO_FIELDS,
-    PRIDE_VERSION,
     DEFAULT_DOWNLOAD_PATH,
-    PRIDE_OBJECT_SERVER,
     CHARACTER_ABBREVS,
 )
 
@@ -51,25 +48,23 @@ class PrideResource:
             Downloads the resource to the specified path.
     """
 
-    def __init__(self, info: dict):
+    def __init__(self, info: dict, url_template: str):
         """
         Initializes a resource with the given information.
         Usually called from PrideManifest.
 
         Args:
             info (dict): An info dictionary, extracted from protobuf.
-                Must contain the following keys: id, name, objectName, size, md5, state.
+            url_template (str): URL template for downloading the resource.
+                {o} will be replaced with self.objectName.
         """
 
-        for field in RESOURCE_INFO_FIELDS:
-            if field != "uploadVersionId":
-                setattr(self, field, info[field])
-            else:
-                setattr(self, field, info.get(field, PRIDE_VERSION))
-                # this might be missing in older manifests
+        self._fields = list(info.keys())
+        for field in self._fields:
+            setattr(self, field, info[field])
 
-        # 'self.state' unused, but retained for compatibility
         self._idname = f"RS[{self.id:05}] '{self.name}'"
+        self._url = url_template.format(o=self.objectName)
 
         # 'self._media' holds a class from media/ that implements
         # format-specific extraction, if applicable.
@@ -85,7 +80,7 @@ class PrideResource:
 
     def _get_canon_repr(self):
         # this format retains the order of fields
-        return {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS}
+        return {field: getattr(self, field) for field in self._fields}
 
     def _get_media(self):
         """
@@ -190,8 +185,7 @@ class PrideResource:
         on HTTP status code, size, and MD5 hash. Returns the resource as raw bytes.
         """
 
-        url = urljoin(PRIDE_OBJECT_SERVER, self.objectName)
-        response = requests.get(url)
+        response = requests.get(self._url)
 
         # We're being strict here by aborting the download process
         # if any of the sanity checks fail, in order to avoid corrupted output.

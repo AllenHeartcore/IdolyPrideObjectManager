@@ -4,11 +4,6 @@ listing.py
 optimized for indexing and comparison.
 """
 
-from ..const import (
-    OBJLIST_ID_FIELD,
-    OBJLIST_NAME_FIELD,
-)
-
 from typing import Union
 
 
@@ -28,13 +23,16 @@ class PrideObjectList:
             but **retains all fields** in the reconstructed output.
     """
 
-    def __init__(self, infos: list, base_class: object):
-        infos.sort(key=lambda x: x[OBJLIST_ID_FIELD])
+    def __init__(self, infos: list, base_class: object, url_template: str):
+        infos.sort(key=lambda x: x["id"])
+
         self.infos = infos
         self.base_class = base_class
+        self.url_template = url_template
+
         self._objects = [None] * len(infos)
-        self._id_idx = {info[OBJLIST_ID_FIELD]: i for i, info in enumerate(infos)}
-        self._name_idx = {info[OBJLIST_NAME_FIELD]: i for i, info in enumerate(infos)}
+        self._id_idx = {info["id"]: i for i, info in enumerate(infos)}
+        self._name_idx = {info["name"]: i for i, info in enumerate(infos)}
         # 'self._*_idx' are int/str -> int lookup tables
 
     def __repr__(self):
@@ -50,13 +48,13 @@ class PrideObjectList:
             raise TypeError  # just in case, should never reach here
 
         if self._objects[idx] is None:
-            self._objects[idx] = self.base_class(self.infos[idx])
+            self._objects[idx] = self.base_class(self.infos[idx], self.url_template)
 
         return self._objects[idx]
 
     def __iter__(self):
         for info in self.infos:
-            yield self.base_class(info)
+            yield self.base_class(info, self.url_template)
 
     def __len__(self):
         return len(self.infos)

@@ -2,7 +2,7 @@ import IdolyPrideObjectManager as ipom
 
 from flask import Flask, render_template, request, jsonify, Response
 from email.utils import parsedate_to_datetime
-from datetime import datetime, timezone, timedelta
+from datetime import timezone, timedelta
 
 
 # Bookkeeping
@@ -102,6 +102,7 @@ def view_assetbundle(id):
         return render_template("404.html"), 404
 
     info = obj._get_canon_repr()
+    info["raw_url"] = obj._url
     if "dependencies" in info:
         info["dependencies"] = [
             {
@@ -122,6 +123,7 @@ def view_resource(id):
         return render_template("404.html"), 404
 
     info = obj._get_canon_repr()
+    info["raw_url"] = obj._url
     return render_template("view.html", info=info, type="Resource")
 
 

@@ -84,10 +84,12 @@ class PrideManifest:
             self.assetbundles = PrideObjectList(
                 jdict.get("assetBundleList", []),  # might be empty in recent diffs
                 PrideAssetBundle,
+                jdict["urlFormat"],
             )
             self.resources = PrideObjectList(
                 jdict.get("resourceList", []),  # same as above ^
                 PrideResource,
+                jdict["urlFormat"],
             )
         except TypeError:  # instantiate from diff, skip type conversion
             self.revision = jdict["revision"]

@@ -43,23 +43,13 @@ PRIDE_ONLINEPDB_KEY = sha256sum("eSquJySjayO5OLLVgdTd".encode("utf-8"))
 PRIDE_OCTOCACHE_KEY = md5sum("1nuv9td1bw1udefk".encode("utf-8"))
 PRIDE_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
 
-# manifest diff
-OBJLIST_ID_FIELD = "id"
-OBJLIST_NAME_FIELD = "name"
-
 # manifest export
 CSV_COLUMNS = ["objectName", "md5", "name", "size", "state"]
 
 # manifest download dispatcher
 DEFAULT_DOWNLOAD_PATH = "objects/"
 
-# object instantiation
-RESOURCE_INFO_FIELDS_HEAD = ["id", "name", "size"]
-RESOURCE_INFO_FIELDS_TAIL = ["state", "md5", "objectName", "uploadVersionId"]
-RESOURCE_INFO_FIELDS = RESOURCE_INFO_FIELDS_HEAD + RESOURCE_INFO_FIELDS_TAIL
-
 # object download
-PRIDE_OBJECT_SERVER = "https://object.asset.game-gakuen-idolmaster.jp/"
 CHARACTER_ABBREVS = [
     "hski",  # Hanami SaKI
     "ttmr",  # Tsukimura TeMaRi

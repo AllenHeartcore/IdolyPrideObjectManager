@@ -6,9 +6,6 @@ Unity asset bundle downloading, deobfuscation, and media extraction.
 from ..log import Logger
 from ..const import (
     PATH_ARGTYPE,
-    RESOURCE_INFO_FIELDS_HEAD,
-    RESOURCE_INFO_FIELDS_TAIL,
-    DEFAULT_DOWNLOAD_PATH,
     UNITY_SIGNATURE,
 )
 
@@ -46,31 +43,22 @@ class PrideAssetBundle(PrideResource):
             Also extracts a single image from each bundle with type 'img'.
     """
 
-    def __init__(self, info: dict):
+    def __init__(self, info: dict, url_template: str):
         """
         Initializes an assetbundle with the given information.
         Usually called from PrideManifest.
 
         Args:
             info (dict): An info dictionary, extracted from protobuf.
-                Must contain the following keys: id, name, objectName, size, md5, state, crc.
+            url_template (str): URL template for downloading the assetbundle.
+                {o} will be replaced with self.objectName.
         """
 
-        super().__init__(info)
-        self.crc = info["crc"]  # unused (for now)
-        self.dependencies = info.get("dependencies", [])
+        super().__init__(info, url_template)
         self._idname = f"AB[{self.id:05}] '{self.name}'"
 
     def __repr__(self):
         return f"<PrideAssetBundle {self._idname}>"
-
-    def _get_canon_repr(self):
-        ret = {field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_HEAD}
-        ret["crc"] = self.crc
-        if self.dependencies:
-            ret["dependencies"] = self.dependencies  # for ordering
-        ret.update({field: getattr(self, field) for field in RESOURCE_INFO_FIELDS_TAIL})
-        return ret
 
     def _get_media(self):
         """
