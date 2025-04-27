@@ -14,7 +14,7 @@ from ..const import (
 from ..media import PrideDummyMedia
 from ..media.image import PrideImage
 from ..media.audio import PrideAudio, PrideAWBAudio, PrideACBAudio
-from ..media.video import PrideUSMVideo
+from ..media.video import PrideVideo
 from ..adv import PrideAdventure
 
 import re
@@ -103,7 +103,7 @@ class PrideResource:
             elif self.name.startswith("sud_"):
                 media_class = PrideAudio
             elif self.name.startswith("mov_"):
-                media_class = PrideUSMVideo
+                media_class = PrideVideo
             elif self.name.startswith("adv_"):
                 media_class = PrideAdventure
             else:

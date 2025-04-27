@@ -1,6 +1,6 @@
 """
 media/video.py
-USM video conversion plugin for PrideResource.
+MP4 video handler for PrideResource.
 """
 
 from ..log import Logger
@@ -14,13 +14,13 @@ import ffmpeg
 logger = Logger()
 
 
-class PrideUSMVideo(PrideDummyMedia):
-    """Conversion plugin for USM videos."""
+class PrideVideo(PrideDummyMedia):
+    """Handler for videos of common formats recognized by FFmpeg."""
 
     def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.mimetype = "video"
-        self.converted_format = "mp4"
+        self.raw_format = "mp4"
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
 
@@ -28,7 +28,6 @@ class PrideUSMVideo(PrideDummyMedia):
         stream_out = ffmpeg.output(
             stream_in,
             "pipe:1",
-            vcodec="libx264",
             preset="ultrafast",
             format=self.converted_format,
             movflags="frag_keyframe+empty_moov",
