@@ -9,6 +9,7 @@ from .dummy import PrideDummyMedia
 from pathlib import Path
 
 import ffmpeg
+import UnityPy
 
 
 logger = Logger()
@@ -20,7 +21,7 @@ class PrideVideo(PrideDummyMedia):
     def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.mimetype = "video"
-        self.raw_format = "mp4"
+        self.raw_format = name.split(".")[-1][:-1]
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
 
@@ -40,3 +41,19 @@ class PrideVideo(PrideDummyMedia):
             capture_stdout=True,
             capture_stderr=True,
         )[0]
+
+
+class PrideUnityVideo(PrideVideo):
+    """Conversion plugin for Unity video."""
+
+    def __init__(self, name: str, raw: bytes, mtime: int):
+        super().__init__(name, raw, mtime)
+        self.raw_format = None  # don't override
+        self.converted_format = "mp4"
+
+    def _convert(self, raw: bytes, **kwargs) -> bytes:
+        env = UnityPy.load(raw)
+        values = list(env.container.values())
+        assert len(values) == 1, f"{self.name} contains {len(values)} video clips."
+        data = values[0].read().m_VideoData.tobytes()
+        return data if self.converted_format == "mp4" else super()._convert(data)

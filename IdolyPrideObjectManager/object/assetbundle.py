@@ -14,6 +14,7 @@ from .deobfuscate import PrideAssetBundleDeobfuscator
 from ..media import PrideDummyMedia
 from ..media.image import PrideUnityImage
 from ..media.audio import PrideUnityAudio
+from ..media.video import PrideUnityVideo
 
 from pathlib import Path
 
@@ -83,6 +84,8 @@ class PrideAssetBundle(PrideResource):
                 media_class = PrideUnityImage
             elif self.name.startswith("sud_"):
                 media_class = PrideUnityAudio
+            elif self.name.startswith("mov_") or self.name.startswith("adv_"):
+                media_class = PrideUnityVideo
             else:
                 media_class = PrideDummyMedia
             self._media = media_class(self._idname, data, int(self.generation))
