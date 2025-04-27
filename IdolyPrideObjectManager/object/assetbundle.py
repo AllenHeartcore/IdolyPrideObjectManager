@@ -77,7 +77,9 @@ class PrideAssetBundle(PrideResource):
 
         if self._media is None:
             data = self._download_bytes()
-            if self.name.startswith("img_"):
+            if self.name.startswith("img_") and "." not in self.name:
+                media_class = PrideUnityImage
+            elif self.name.startswith("spi_") and "." not in self.name:
                 media_class = PrideUnityImage
             elif self.name.startswith("sud_"):
                 media_class = PrideUnityAudio

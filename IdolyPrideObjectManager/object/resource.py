@@ -12,8 +12,6 @@ from ..const import (
 )
 
 from ..media import PrideDummyMedia
-from ..media.image import PrideImage
-from ..media.audio import PrideAudio, PrideAWBAudio, PrideACBAudio
 from ..media.video import PrideVideo
 from ..adv import PrideAdventure
 
@@ -94,15 +92,7 @@ class PrideResource:
 
         if self._media is None:
             data = self._download_bytes()
-            if self.name.startswith("img_"):
-                media_class = PrideImage
-            elif self.name.startswith("sud_") and self.name.endswith(".awb"):
-                media_class = PrideAWBAudio
-            elif self.name.startswith("sud_") and self.name.endswith(".acb"):
-                media_class = PrideACBAudio
-            elif self.name.startswith("sud_"):
-                media_class = PrideAudio
-            elif self.name.startswith("mov_"):
+            if self.name.startswith("mov_"):
                 media_class = PrideVideo
             elif self.name.startswith("adv_"):
                 media_class = PrideAdventure

@@ -78,12 +78,9 @@ class PrideDummyMedia:
         if self.mimetype and kwargs.get(f"convert_{self.mimetype}", True):
             try:
                 self._export_converted(path, **kwargs)
-            except Exception as e:
-                logger.warning(
-                    f"{self.name} failed to convert, fallback to rawdump; exception to follow"
-                )
+            except Exception:
+                logger.warning(f"{self.name} failed to convert, fallback to rawdump")
                 self._export_raw(path)
-                raise e
         else:
             self._export_raw(path)
 

@@ -1,15 +1,12 @@
 """
 media/audio.py
-AWB/ACB audio conversion plugin for PrideResource,
+Unity audio conversion plugin for PrideAssetBundle,
 and MP3 audio handler for PrideResource.
 """
 
 from ..log import Logger
 from .dummy import PrideDummyMedia
 
-import platform
-import tempfile
-import subprocess
 from io import BytesIO
 from pathlib import Path
 
@@ -45,106 +42,46 @@ class PrideUnityAudio(PrideAudio):
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         env = UnityPy.load(raw)
-        values = list(env.container.values())
-        assert len(values) == 1, f"{self.name} contains {len(values)} audio clips."
-        samples = values[0].read().samples
-        sample = list(samples.values())[0]
-        return sample if self.converted_format == "wav" else super()._convert(sample)
-        # UnityPy is decompressing AudioClip into clean PCM bytes for us
 
-
-class PrideAWBAudio(PrideDummyMedia):
-    """Conversion plugin for AWB audio."""
-
-    def __init__(self, name: str, raw: bytes, mtime: int):
-        super().__init__(name, raw, mtime)
-        self.mimetype = "audio"
-        self.converted_format = "wav"
-
-    def _make_vgmstream_args(self, tmp_in: str, tmp_out: str, suffix: str) -> list:
-        return [
-            Path(__file__).parent / f"vgmstream/vgmstream-{suffix}",
-            "-o",
-            Path(tmp_out, "converted.wav"),  # name can be anything except '?n' wildcard
-            tmp_in,
+        audioclips = [
+            obj.read()
+            for obj in (env.objects + list(env.container.values()))
+            if obj.type.name == "AudioClip"
         ]
 
-    def _convert(self, raw: bytes, **kwargs) -> bytes:
-        # uses pydub in vastly different ways,
-        # thus this class is not inherited from PrideAudio
+        # Remove duplicates, since obj.samples will incur the largest overhead,
+        # and we want to avoid running the decoding algorithm multiple times
+        # if a clip appears in both env.objects and env.container;
+        # Also this respects the order of env.objects first.
+        audioclips = {obj.name: obj for obj in audioclips}
 
-        audio = None
-        success = False
-        exception = None
-        input_ext = self.name.split(".")[-1][:-1]
+        audio = {}
+        for audioclip in audioclips.values():  # .samples comes with name already
+            audio.update(audioclip.samples)  # yeah this 'samples' is a dict... bruh
 
-        # vgmstream doesn't like delete=True
-        with tempfile.NamedTemporaryFile(
-            suffix=f".{input_ext}", delete=False
-        ) as tmp_in, tempfile.TemporaryDirectory() as tmp_out:
+        if not audio:
+            raise ValueError("No AudioClip found in assetbundle")
 
-            tmp_in.write(raw)
-            tmp_in.flush()
-
-            system_name = platform.system()
-            if system_name == "Windows":
-                exe_suffix = "win"
-            elif system_name == "Linux":
-                exe_suffix = "linux"
-            elif system_name == "Darwin":
-                exe_suffix = "mac"
-            else:
-                raise OSError(f"Unsupported system: {system_name}")
-
-            try:
-                subprocess.run(
-                    self._make_vgmstream_args(tmp_in.name, tmp_out, exe_suffix),
-                    shell=True,  # Otherwise, gets [WinError 193] 'invalid Win32 application'
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,  # suppresses console output
-                    check=True,
-                )
-                audio = [
-                    (f.name, AudioSegment.from_file(f)) for f in Path(tmp_out).iterdir()
-                ]
-                success = True
-            except Exception as e:
-                exception = e
-
-        Path(tmp_in.name).unlink()
-
-        if not success:
-            raise exception  # delay the exception after cleanup
+        if self.converted_format != "wav":
+            audio = {
+                name: super()._convert(samples) for (name, samples) in audio.items()
+            }
 
         if len(audio) == 1:
-            return audio[0][1].export(format=self.converted_format).read()
-            # discard stream name and follow filename
+            return list(audio.values())[0]
+            # discard clip name and follow assetbundle's filename
 
         with BytesIO() as buffer:
             with ZipFile(buffer, "w") as zip_file:
                 dt = (
                     datetime.fromtimestamp(self.mtime) if self.mtime else datetime.now()
                 )
-                for f, segment in audio:
+                for name, samples in audio.items():
                     zip_file.writestr(
                         ZipInfo(
-                            Path(f).with_suffix(f".{self.converted_format}").name,
+                            Path(name).with_suffix(f".{self.converted_format}").name,
                             date_time=dt.timetuple(),
                         ),
-                        segment.export(format=self.converted_format).read(),
+                        samples,
                     )
             return buffer.getvalue()
-
-
-class PrideACBAudio(PrideAWBAudio):
-    """Conversion plugin for ACB audio archive."""
-
-    def _make_vgmstream_args(self, tmp_in: str, tmp_out: str, suffix: str) -> list:
-        return [
-            Path(__file__).parent / f"vgmstream/vgmstream-{suffix}",
-            "-S",  # select subsongs
-            "-1",  # all of them (this is a number; shell=True forces string args)
-            "-o",
-            Path(tmp_out, "?n.wav"),  # use internal stream name
-            tmp_in,
-        ]

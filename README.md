@@ -15,7 +15,7 @@ Request API & decryption algorithms borrowed from [HatsuboshiToolkit](https://gi
 - Fetch, decrypt, deserialize, and export manifest as ProtoDB, JSON, or CSV
 - Differentiate between manifest revisions
 - Download and deobfuscate assetbundles and resources in parallel
-- Media conversion plugins for Texture2D, AudioClip audio, and AWB audio
+- Media conversion plugins for Texture2D and AudioClip audio
 
 
 
@@ -49,7 +49,6 @@ m.download("mov_card_full.*1080p.mp4")  # animated character cards
       - `media.dummy.PrideDummyMedia` - Base class for media conversion plugins
       - `media.image.PrideImage` - PNG image handling
       - `media.audio.PrideAudio` - MP3 audio handling
-      - `media.audio.PrideAWBAudio` - ACB/AWB audio conversion
       - `media.video.PrideVideo` - MP4 video handling
     - `object.deobfuscate.PrideAssetBundleDeobfuscator`
     - `object.assetbundle.PrideAssetBundle` - Unity object
