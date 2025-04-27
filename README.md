@@ -1,7 +1,7 @@
 # IdolyPrideObjectManager
 
 An OOP interface for interacting with object databases
-in the mobile game [Idoly Pride](https://idolypride.jp/).
+in the mobile game [IDOLY PRIDE](https://idolypride.jp/).
 
 Designed with ❤ by [Ziyuan "Heartcore" Chen](https://allenheartcore.github.io/). <br>
 Refactored from [gkmasToolkit](https://github.com/kishidanatsumi/gkmasToolkit) by Kishida Natsumi, <br>

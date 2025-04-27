@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 cat_instrs = [
-    ("produce/skillcard", lambda s: s.split("_")[-2]),
+    ("story-thumb", lambda s: s.split("_")[3]),
 ]
 
 

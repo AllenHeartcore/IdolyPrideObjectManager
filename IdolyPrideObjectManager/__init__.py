@@ -7,7 +7,7 @@ which in turn was adapted from Vibbit (https://github.com/MalitsPlus/SolisClient
 
 This module defines an object-oriented interface for interacting with object databases
 (hereafter referred to as "manifests", usually named "octocacheevai")
-in the mobile game [Idoly Pride](https://idolypride.jp/).
+in the mobile game [IDOLY PRIDE](https://idolypride.jp/).
 
 Features
 --------
