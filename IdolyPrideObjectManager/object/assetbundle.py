@@ -51,11 +51,20 @@ class PrideAssetBundle(PrideResource):
         Args:
             info (dict): An info dictionary, extracted from protobuf.
             url_template (str): URL template for downloading the assetbundle.
-                {o} will be replaced with self.objectName.
+                {o} will be replaced with self.objectName,
+                {g} with self.generation,
+                {v} with self.uploadVersionId,
+                and {type} with 'assetbundle'.
         """
 
         super().__init__(info, url_template)
         self._idname = f"AB[{self.id:05}] '{self.name}'"
+        self._url = url_template.format(
+            o=self.objectName,
+            g=self.generation,
+            v=self.uploadVersionId,
+            type="assetbundle",
+        )
 
     def __repr__(self):
         return f"<PrideAssetBundle {self._idname}>"

@@ -56,7 +56,10 @@ class PrideResource:
         Args:
             info (dict): An info dictionary, extracted from protobuf.
             url_template (str): URL template for downloading the resource.
-                {o} will be replaced with self.objectName.
+                {o} will be replaced with self.objectName,
+                {g} with self.generation,
+                {v} with self.uploadVersionId,
+                and {type} with 'resources'.
         """
 
         self._fields = list(info.keys())
@@ -64,7 +67,12 @@ class PrideResource:
             setattr(self, field, info[field])
 
         self._idname = f"RS[{self.id:05}] '{self.name}'"
-        self._url = url_template.format(o=self.objectName)
+        self._url = url_template.format(
+            o=self.objectName,
+            g=self.generation,
+            v=self.uploadVersionId,
+            type="resources",
+        )
 
         # 'self._media' holds a class from media/ that implements
         # format-specific extraction, if applicable.

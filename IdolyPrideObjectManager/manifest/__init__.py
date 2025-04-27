@@ -3,6 +3,7 @@ from ..const import (
     PRIDE_API_URL,
     PRIDE_API_HEADER,
     PRIDE_ONLINEPDB_KEY,
+    PRIDE_ONLINEPDB_IV,
     PRIDE_OCTOCACHE_KEY,
     PRIDE_OCTOCACHE_IV,
 )
@@ -29,8 +30,8 @@ def fetch(base_revision: int = 0) -> PrideManifest:
     """
     url = urljoin(PRIDE_API_URL, str(base_revision))
     enc = requests.get(url, headers=PRIDE_API_HEADER).content
-    dec = AESCBCDecryptor(PRIDE_ONLINEPDB_KEY, enc[:16]).process(enc[16:])
-    return PrideManifest(pdbytes2dict(dec), base_revision=base_revision)
+    dec = AESCBCDecryptor(PRIDE_ONLINEPDB_KEY, PRIDE_ONLINEPDB_IV).process(enc)
+    return PrideManifest(pdbytes2dict(dec[16:]), base_revision=base_revision)
 
 
 def load(src: PATH_ARGTYPE, base_revision: int = 0) -> PrideManifest:
