@@ -74,7 +74,14 @@ function handleUnsupportedMedia(url) {
         $("#downloadConvertedMedia")
             .text("Deobfuscated AssetBundle")
             .attr("href", url)
-            .attr("download", info.name.replace(/\.[^/.]+$/, "") + ".unity3d")
+            .attr(
+                "download",
+                info.name.replace(
+                    /^(.*?)(\.[^\.]+)?$/,
+                    (match, stem, ext) => (ext ? match : stem + ".unity3d")
+                    // only append .unity3d if no extension is present
+                )
+            )
             .removeClass("disabled");
     } else {
         $("#downloadConvertedMedia")

@@ -90,9 +90,12 @@ class PrideAssetBundle(PrideResource):
     def _download_path(self, path: PATH_ARGTYPE, categorize: bool) -> Path:
         """
         [INTERNAL] Refines the download path based on user input.
-        Inherited from PrideResource, but imposes a '.unity3d' suffix.
+        Inherited from PrideResource, but imposes a '.unity3d' suffix if no suffix is present.
         """
-        return super()._download_path(path, categorize).with_suffix(".unity3d")
+        p = super()._download_path(path, categorize)
+        if p.suffix == "":
+            return p.with_suffix(".unity3d")
+        return p
 
     def _download_bytes(self) -> bytes:
         """

@@ -247,7 +247,7 @@ class PrideManifest:
         # which handles integer keys (index by ID) and messes up with standard modules
         # like pandas that rely on self[0] as a "sample" object from the list.
         dfa = pd.DataFrame(self.assetbundles._get_canon_repr(), columns=CSV_COLUMNS)
-        dfa["name"] = dfa["name"].apply(lambda x: x + ".unity3d")
+        dfa["name"] = dfa["name"].apply(lambda x: x if "." in x else x + ".unity3d")
         dfr = pd.DataFrame(self.resources._get_canon_repr(), columns=CSV_COLUMNS)
         df = pd.concat([dfa, dfr], ignore_index=True)
         df.sort_values("name", inplace=True)
