@@ -1,6 +1,6 @@
 {
     "revision": [
-        516,
+        518,
         359
     ],
     "assetBundleList": [
@@ -28693,6 +28693,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 43634,
+            "name": "mdl_shw_goods_figure-17-000",
+            "size": 2819495,
+            "crc": 146357091,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "10e0d7b1c93529b87836c87a9f2cd1f2",
+            "objectName": "G3fXzj",
+            "generation": "1749042298118786",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 43638,
             "name": "img_banner_l_news-25-0525-01",
             "size": 35710,
@@ -30065,6 +30079,17 @@
             "md5": "1c683db5eedcb75031ae3d3000d021ce",
             "objectName": "XJHsQZ",
             "generation": "1748014018496416",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43866,
+            "name": "img_toy_thumb_figure-17-000",
+            "size": 8950,
+            "crc": 3946097922,
+            "state": "UPDATE",
+            "md5": "4b427eb8b87010abde74af1330849b6f",
+            "objectName": "VYo4iM",
+            "generation": "1748014018511140",
             "uploadVersionId": 202050
         },
         {
@@ -31494,11 +31519,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 204638,
+            "size": 204700,
             "state": "UPDATE",
-            "md5": "67fbf06b72a552df16d4a6f98b3db2ea",
+            "md5": "c5aff1b00a0c0ebcdd1a770f7a0368df",
             "objectName": "iVKnyF",
-            "generation": "1749235796108637",
+            "generation": "1749539788205159",
             "uploadVersionId": 202050
         },
         {
