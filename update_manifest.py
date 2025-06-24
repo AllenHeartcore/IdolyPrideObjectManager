@@ -15,7 +15,7 @@ def do_update(path: str) -> bool:
 
     path = Path(path)
     m_remote = ipom.fetch()
-    rev_remote = m_remote.revision._get_canon_repr()
+    rev_remote = m_remote.revision.canon_repr
     rev_local = int((path / "LATEST_REVISION").read_text())
 
     if rev_remote == rev_local:
@@ -26,9 +26,9 @@ def do_update(path: str) -> bool:
     # this number is used to construct commit message in workflow.
     (path / "LATEST_REVISION").write_text(str(rev_remote))
 
-    m_remote.export(path / "v0000.json")
+    m_remote.export(path / "v0000.json", force_overwrite=True)
     for i in range(1, rev_remote):
-        ipom.fetch(i).export(path / f"v{i:04}.json")
+        ipom.fetch(i).export(path / f"v{i:04}.json", force_overwrite=True)
 
     return True
 

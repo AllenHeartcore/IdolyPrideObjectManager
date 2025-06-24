@@ -3,6 +3,8 @@ revision.py
 Version control for PrideManifest.
 """
 
+from typing import Union
+
 
 class PrideManifestRevision:
     """
@@ -18,6 +20,9 @@ class PrideManifestRevision:
             while base > 0 indicates a diff to be applied to the base manifest.
     """
 
+    this: int
+    base: int
+
     def __init__(self, this: int, base: int = 0):
         assert this > 0, "'this' revision number must be positive."
         assert base >= 0, "'base' revision number must be non-negative."
@@ -25,16 +30,17 @@ class PrideManifestRevision:
         self.this = this
         self.base = base
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<PrideManifestRevision {self}>"
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.base == 0:
             return f"v{self.this}"
         else:
             return f"v{self.this}-diff-v{self.base}"
 
-    def _get_canon_repr(self):
+    @property
+    def canon_repr(self) -> Union[int, tuple[int, int]]:
         """
         [INTERNAL] Returns the "canonical" representation of the revision,
         either as an integer or a tuple. Used in manifest export.
@@ -44,16 +50,16 @@ class PrideManifestRevision:
         else:
             return (self.this, self.base)
 
-    def __eq__(self, other):
+    def __eq__(self, other: "PrideManifestRevision") -> bool:
         return self.this == other.this and self.base == other.base
 
-    def __ne__(self, other):
+    def __ne__(self, other: "PrideManifestRevision") -> bool:
         return not self.__eq__(other)
 
     # No comparison magic methods; things are starting to get ambiguous at this point.
     # We are primarily concerned with the *difference* between revisions.
 
-    def __sub__(self, other):
+    def __sub__(self, other: "PrideManifestRevision") -> "PrideManifestRevision":
         """
         Returns the difference between two revisions.
         Cases where base = 0 is regarded as the "empty base" and processed at instantiation.
@@ -83,7 +89,7 @@ class PrideManifestRevision:
             ), "'This' revision of minuend (self) must be newer."
             return PrideManifestRevision(self.this, other.this)
 
-    def __add__(self, other):
+    def __add__(self, other: "PrideManifestRevision") -> "PrideManifestRevision":
         """
         Returns the sum of two revisions.
         Requires self.this == other.base to be valid.

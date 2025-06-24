@@ -3,30 +3,38 @@ adv/adventure.py
 Adventure (story script) plugin for PrideResource.
 """
 
-from ..log import Logger
-from ..media import PrideDummyMedia
-from .parser import PradvCommandParser
-
 import json
 
+from ..media import PrideDummyMedia
+from ..utils import make_caption_map
+from .parser import PradvCommandParser
 
-logger = Logger()
 parser = PradvCommandParser()
 
 
 class PrideAdventure(PrideDummyMedia):
     """Handler for adventure story scripts."""
 
-    def __init__(self, name: str, raw: bytes, mtime: int):
-        super().__init__(name, raw, mtime)
+    _commands: list[dict] = []
+
+    def _init_mimetype(self):
         self.mimetype = "text"
-        self.converted_format = "json"
+        self.default_converted_format = "json"
 
-        self.commands = [
-            parser.process(line) for line in raw.decode("utf-8").splitlines()
-        ]
+    @property
+    def commands(self) -> list[dict]:
+        if not self._commands:
+            self._commands = [
+                parser.process(line) for line in self.raw.decode("utf-8").splitlines()
+            ]
+        return self._commands
 
-    def _convert(self, raw: bytes, **kwargs) -> bytes:
+    @property
+    def caption_map(self) -> dict[str, str]:
+        """For voice archive captioning in frontend only."""
+        return make_caption_map(self.commands)
+
+    def _convert(self, raw: bytes) -> bytes:
         # only for compatibility with PrideResource
         return bytes(
             json.dumps(

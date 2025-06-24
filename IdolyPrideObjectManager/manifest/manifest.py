@@ -3,27 +3,27 @@ manifest.py
 Manifest decryption, exporting, and object downloading.
 """
 
-from ..object import PrideAssetBundle, PrideResource
-from ..log import Logger
-from ..const import (
-    PATH_ARGTYPE,
-    CSV_COLUMNS,
-    DEFAULT_DOWNLOAD_PATH,
-    CHARACTER_ABBREVS,
-)
-
-from .revision import PrideManifestRevision
-from .octodb_pb2 import dict2pdbytes
-from .listing import PrideObjectList
-
-import re
-import json
-import yaml
 import asyncio
+import json
+import re
 import subprocess
-import pandas as pd
 from pathlib import Path
+from typing import Tuple, Union
 
+import pandas as pd
+import yaml
+from google.protobuf.json_format import ParseError
+from rich.progress import BarColumn, Progress, TextColumn
+
+from ..const import CHARACTER_ABBREVS, CSV_COLUMNS, DEFAULT_DOWNLOAD_PATH, PathArgtype
+from ..object import PrideAssetBundle, PrideResource
+from ..rich import Logger
+from ..utils import nocache
+from .listing import PrideObjectList
+from .octodb_pb2 import dict2pdbytes
+from .revision import PrideManifestRevision
+
+ObjectClass = Union[PrideAssetBundle, PrideResource]
 
 # The logger would better be a global variable in the
 # modular __init__.py, but Python won't allow me to
@@ -39,22 +39,30 @@ class PrideManifest:
         assetbundles (PrideObjectList): List of assetbundle *info dictionaries*.
         resources (PrideObjectList): List of resource *info dictionaries*.
         urlformat (str): URL format for downloading assetbundles/resources.
-            Solely for faithful reconstruction of the manifest.
-    *Documentation for PrideObjectList can be found in listing.py.*
 
     Methods:
+        export(path: Union[str, Path]) -> None:
+            Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+        search(criterion: str) -> list:
+            Searches the manifest for objects with names *fully* matching the specified criterion.
         download(
             *criteria: str,
             path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
-            convert_image: bool = True,
-            image_format: str = "png",
-            image_resize: Union[None, str, Tuple[int, int]] = None,
+            **kwargs,
         ) -> None:
             Downloads the regex-specified assetbundles/resources to the specified path.
-        export(path: Union[str, Path]) -> None:
-            Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+        download_preset(preset_filename: str) -> None:
+            Downloads by a predefined preset (see examples in presets/).
+        download_all_assetbundles(**kwargs) -> None
+        download_all_resources(**kwargs) -> None
+        download_all(**kwargs) -> None
     """
+
+    revision: PrideManifestRevision
+    assetbundles: PrideObjectList
+    resources: PrideObjectList
+    urlformat: str
 
     def __init__(self, jdict: dict, base_revision: int = 0):
         """
@@ -62,8 +70,8 @@ class PrideManifest:
 
         Args:
             jdict (dict): JSON-serialized dictionary extracted from protobuf.
-                Must contain 'revision', 'assetBundleList', 'resourceList',
-                and 'urlFormat' keys.
+                Must contain 'revision' and 'urlFormat' fields.
+                May contain 'assetBundleList' and 'resourceList'.
             base_revision (int) = 0: The revision number of the base manifest.
                 Manually specified when loading a diff, at which case
                 a warning of conflict is raised if jdict['revision'] is already a tuple.
@@ -75,7 +83,7 @@ class PrideManifest:
         if base_revision != 0:  # leave negative base handling to the Revision class
             if base_revision != revision[1] != 0:  # equivalent to a 2-AND
                 logger.warning(
-                    f"Overriding detected base revision v{revision[1]} with specified revision v{base_revision}."
+                    f"Overriding detected base revision v{revision[1]} with specified v{base_revision}."
                 )
             revision = (revision[0], base_revision)  # proceed anyway
 
@@ -99,10 +107,10 @@ class PrideManifest:
         self.urlformat = jdict["urlFormat"]
         # 'jdict' is then discarded and losslessly reconstructed at export
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<PrideManifest revision {self.revision} with {len(self.assetbundles)} assetbundles and {len(self.resources)} resources>"
 
-    def __getitem__(self, key: str):
+    def __getitem__(self, key: str) -> ObjectClass:
         try:
             return self.assetbundles[key]
         except KeyError:
@@ -115,14 +123,14 @@ class PrideManifest:
         for res in self.resources:
             yield res
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.assetbundles) + len(self.resources)
 
-    def __contains__(self, key: str):
+    def __contains__(self, key: str) -> bool:
         return key in self.assetbundles or key in self.resources
         # could also try self[key]
 
-    def __sub__(self, other):
+    def __sub__(self, other: "PrideManifest") -> "PrideManifest":
         return PrideManifest(
             {  # this is not a standard JSON dict, more like named arguments
                 "revision": self.revision - other.revision,  # handles sanity check
@@ -133,7 +141,7 @@ class PrideManifest:
             }
         )
 
-    def __add__(self, other):
+    def __add__(self, other: "PrideManifest") -> "PrideManifest":
         new_revision = self.revision + other.revision
         a, b = (
             (self, other) if new_revision.this == other.revision.this else (other, self)
@@ -147,20 +155,26 @@ class PrideManifest:
             }
         )
 
-    def _get_canon_repr(self):
+    @property
+    def canon_repr(self) -> dict:
         """
         [INTERNAL] Returns the JSON-compatible "canonical" representation of the manifest.
         """
         return {
-            "revision": self.revision._get_canon_repr(),
-            "assetBundleList": self.assetbundles._get_canon_repr(),
-            "resourceList": self.resources._get_canon_repr(),
+            "revision": self.revision.canon_repr,
+            "assetBundleList": self.assetbundles.canon_repr,
+            "resourceList": self.resources.canon_repr,
             "urlFormat": self.urlformat,
         }
 
     # ------------ EXPORT ------------ #
 
-    def export(self, path: PATH_ARGTYPE, format: str = "infer"):
+    def export(
+        self,
+        path: PathArgtype,
+        format: str = "infer",
+        force_overwrite: bool = False,
+    ):
         """
         Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
         This is a dispatcher method.
@@ -173,9 +187,14 @@ class PrideManifest:
                 a warning is issued if the extension is not .pdb.)
             format (str) = 'infer': The format to export.
                 Should be one of 'pdb', 'json', 'csv', or 'infer'.
+            force_overwrite (bool) = False: Whether to overwrite the file if it already exists.
+                Meant for exclusive use by update_manifest watcher.
         """
 
         path = Path(path)
+        if path.exists() and not force_overwrite:
+            logger.warning(f"{path} already exists, aborting")
+            return
 
         if format == "infer":
             if path.suffix == ".pdb":
@@ -208,7 +227,7 @@ class PrideManifest:
         if path.suffix != ".pdb":
             logger.warning("Attempting to write ProtoDB into a non-.pdb file")
 
-        jdict = self._get_canon_repr()
+        jdict = self.canon_repr
         if isinstance(jdict["revision"], tuple):
             logger.warning("Exporting a diff manifest as ProtoDB, base revision lost")
             jdict["revision"] = jdict["revision"][0]
@@ -216,7 +235,7 @@ class PrideManifest:
         try:
             path.write_bytes(dict2pdbytes(jdict))
             logger.success(f"ProtoDB has been written into {path}")
-        except:
+        except ParseError:
             logger.error(f"Failed to write ProtoDB into {path}")
 
     def _export_json(self, path: Path):
@@ -228,9 +247,9 @@ class PrideManifest:
             logger.warning("Attempting to write JSON into a non-.json file")
 
         try:
-            path.write_text(json.dumps(self._get_canon_repr(), indent=4))
+            path.write_text(json.dumps(self.canon_repr, indent=4))
             logger.success(f"JSON has been written into {path}")
-        except:
+        except TypeError:  # non-JSON-serializable object in dict
             logger.error(f"Failed to write JSON into {path}")
 
     def _export_csv(self, path: Path):
@@ -246,9 +265,11 @@ class PrideManifest:
         # [RESOLVED] Forced list conversion is necessary since PrideObjectList overrides __iter__,
         # which handles integer keys (index by ID) and messes up with standard modules
         # like pandas that rely on self[0] as a "sample" object from the list.
-        dfa = pd.DataFrame(self.assetbundles._get_canon_repr(), columns=CSV_COLUMNS)
-        dfa["name"] = dfa["name"].apply(lambda x: x if "." in x else x + ".unity3d")
-        dfr = pd.DataFrame(self.resources._get_canon_repr(), columns=CSV_COLUMNS)
+        dfa = pd.DataFrame(self.assetbundles.canon_repr, columns=CSV_COLUMNS)
+        dfa["name"] = dfa["name"].apply(
+            lambda x: x if "." in x else x + ".unity3d"
+        )  # stripped in canon
+        dfr = pd.DataFrame(self.resources.canon_repr, columns=CSV_COLUMNS)
         df = pd.concat([dfa, dfr], ignore_index=True)
         df.sort_values("name", inplace=True)
 
@@ -260,7 +281,12 @@ class PrideManifest:
 
     # ----------- DOWNLOAD ----------- #
 
-    def search(self, criterion: str):
+    def search(
+        self,
+        criterion: str,
+        by_name: bool = True,
+        ascending: bool = True,
+    ) -> list[ObjectClass]:
         """
         Searches the manifest for objects matching the specified criterion.
         Returns a list of objects.
@@ -269,14 +295,18 @@ class PrideManifest:
             criterion (str): Regex pattern of object names.
         """
 
+        # This will be called by frontend; we instantiate here to make ID's visible.
         matches = filter(
             lambda s: re.match(criterion, s.name, flags=re.IGNORECASE) is not None,
             list(self),
         )
-        return sorted(matches, key=lambda x: x.name)
-        # This will be called by frontend.
-        # We instantiate here to make ID's readily available.
+        return sorted(
+            matches,
+            key=lambda x: x.name if by_name else x.id,
+            reverse=not ascending,
+        )
 
+    @nocache
     def download(self, *criteria: str, **kwargs):
         """
         Downloads the regex-specified assetbundles/resources to the specified path.
@@ -285,17 +315,8 @@ class PrideManifest:
             *criteria (str): Regex patterns of assetbundle/resource names.
             path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
                 *WARNING: Behavior is undefined if the path points to an definite file (with extension).*
-            categorize (bool) = True: Whether to categorize the downloaded objects into subdirectories.
+            categorize (bool) = True: Whether to categorize downloaded objects into subdirectories.
                 If False, all objects are downloaded to the specified 'path' in a flat structure.
-            convert_image (bool) = True: Whether to extract images from assetbundles of type 'img'.
-                If False, 'img_.*\\.unity3d' are downloaded as is.
-            image_format (str) = 'png': Image format for extraction. Case-insensitive.
-                Effective only when 'convert_image' is True. Format must support RGBA mode.
-                Valid options are checked by PIL.Image.save() and are not enumerated.
-            image_resize (Union[None, str, Tuple[int, int]]) = None: Image resizing argument.
-                If None, images are downloaded as is.
-                If str, string must contain exactly one ':' and images are resized to the specified ratio.
-                If Tuple[int, int], images are resized to the specified exact dimensions.
         """
 
         if "preset" in kwargs:
@@ -316,6 +337,7 @@ class PrideManifest:
 
         asyncio.run(self._dispatch(objects, **kwargs))
 
+    @nocache
     def download_preset(self, preset_filename: str):
         """
         [INTERNAL] Downloads by a predefined preset (see examples in presets/).
@@ -323,11 +345,11 @@ class PrideManifest:
 
         # READ PRESET
 
-        with open(preset_filename, "r") as f:
+        with open(preset_filename, "r", encoding="utf-8") as f:
             preset = yaml.safe_load(f)
 
         root = preset.get("root", DEFAULT_DOWNLOAD_PATH)
-        root = root.replace("{revision}", f"v{self.revision._get_canon_repr()}")
+        root = root.replace("{revision}", f"v{self.revision.canon_repr}")
 
         global_kwargs = preset.get("global-kwargs", {})
         proto_instrs = preset.get("instructions", [])
@@ -377,6 +399,7 @@ class PrideManifest:
             logger.info(f"Running post-processing script '{pp_path}'")
             subprocess.run(["python", pp_path, root], check=True)
 
+    @nocache
     def download_all_assetbundles(self, **kwargs):
         """
         Downloads all assetbundles to the specified path.
@@ -384,6 +407,7 @@ class PrideManifest:
         """
         asyncio.run(self._dispatch(list(self.assetbundles), **kwargs))
 
+    @nocache
     def download_all_resources(self, **kwargs):
         """
         Downloads all resources to the specified path.
@@ -391,6 +415,7 @@ class PrideManifest:
         """
         asyncio.run(self._dispatch(list(self.resources), **kwargs))
 
+    @nocache
     def download_all(self, **kwargs):
         """
         Downloads all assetbundles and resources to the specified path.
@@ -398,22 +423,38 @@ class PrideManifest:
         """
         asyncio.run(self._dispatch(list(self), **kwargs))
 
-    async def _dispatch(self, obj_kw: list, **kwargs):
+    async def _dispatch(
+        self,
+        obj_kw: list[Union[ObjectClass, Tuple[ObjectClass, dict]]],
+        **kwargs,
+    ):
         """
         [INTERNAL] Dispatches a list of object-kwargs pairs to async download tasks.
         """
 
-        # if obj_kw is a list of objects, append empty kwargs
+        # if "obj_kw" is a list of objects, append empty kwargs
         if not isinstance(obj_kw[0], tuple):
             obj_kw = [(obj, {}) for obj in obj_kw]
 
-        # if kwargs not empty, broadcast to all pairs
-        if kwargs:
-            obj_kw = [(obj, {**kw, **kwargs}) for (obj, kw) in obj_kw]
-
-        await asyncio.gather(
-            *[
-                asyncio.create_task(asyncio.to_thread(obj.download, **kw))
-                for (obj, kw) in obj_kw
-            ]
+        progress = Progress(
+            TextColumn("{task.description}"),
+            BarColumn(),
+            TextColumn("{task.completed}/{task.total}"),
         )
+
+        tasks = [
+            asyncio.create_task(
+                asyncio.to_thread(
+                    obj.download,
+                    progress=progress,
+                    task_id=progress.add_task(obj._idname, visible=False),
+                    **kw,
+                    **kwargs,  # if not empty, broadcast to all tasks
+                )
+            )
+            for obj, kw in obj_kw
+        ]
+
+        progress.start()
+        await asyncio.gather(*tasks)
+        progress.stop()
