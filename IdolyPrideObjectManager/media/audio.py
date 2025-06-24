@@ -4,30 +4,25 @@ Unity audio conversion plugin for PrideAssetBundle,
 and MP3 audio handler for PrideResource.
 """
 
-from ..log import Logger
-from .dummy import PrideDummyMedia
-
+from datetime import datetime
 from io import BytesIO
 from pathlib import Path
+from zipfile import ZipFile, ZipInfo
 
 import UnityPy
 from pydub import AudioSegment
-from zipfile import ZipFile, ZipInfo
-from datetime import datetime
 
-
-logger = Logger()
+from .dummy import PrideDummyMedia
 
 
 class PrideAudio(PrideDummyMedia):
     """Handler for audio of common formats recognized by pydub."""
 
-    def __init__(self, name: str, raw: bytes, mtime: int):
-        super().__init__(name, raw, mtime)
+    def _init_mimetype(self):
         self.mimetype = "audio"
-        self.raw_format = name.split(".")[-1][:-1]
+        self.raw_format = self.ext
 
-    def _convert(self, raw: bytes, **kwargs) -> bytes:
+    def _convert(self, raw: bytes) -> bytes:
         audio = AudioSegment.from_file(BytesIO(raw))
         return audio.export(format=self.converted_format).read()
 
@@ -35,12 +30,11 @@ class PrideAudio(PrideDummyMedia):
 class PrideUnityAudio(PrideAudio):
     """Conversion plugin for Unity audio."""
 
-    def __init__(self, name: str, raw: bytes, mtime: int):
-        super().__init__(name, raw, mtime)
-        self.raw_format = None  # don't override
-        self.converted_format = "wav"
+    def _init_mimetype(self):
+        self.mimetype = "audio"
+        self.default_converted_format = "wav"
 
-    def _convert(self, raw: bytes, **kwargs) -> bytes:
+    def _convert(self, raw: bytes) -> bytes:
         env = UnityPy.load(raw)
 
         audioclips = [

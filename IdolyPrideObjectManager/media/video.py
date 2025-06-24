@@ -3,44 +3,41 @@ media/video.py
 MP4 video handler for PrideResource.
 """
 
-from ..log import Logger
-from .dummy import PrideDummyMedia
+import subprocess
 
-from pathlib import Path
-
-import ffmpeg
 import UnityPy
 
-
-logger = Logger()
+from .dummy import PrideDummyMedia
 
 
 class PrideVideo(PrideDummyMedia):
     """Handler for videos of common formats recognized by FFmpeg."""
 
-    def __init__(self, name: str, raw: bytes, mtime: int):
-        super().__init__(name, raw, mtime)
+    def _init_mimetype(self):
         self.mimetype = "video"
-        self.raw_format = name.split(".")[-1][:-1]
+        self.raw_format = self.ext
 
-    def _convert(self, raw: bytes, **kwargs) -> bytes:
+    def _convert(self, raw: bytes) -> bytes:
 
-        stream_in = ffmpeg.input("pipe:0")
-        stream_out = ffmpeg.output(
-            stream_in,
-            "pipe:1",
-            preset="ultrafast",
-            format=self.converted_format,
-            movflags="frag_keyframe+empty_moov",
-            # otherwise libx264 reports 'muxer does not support non seekable output'
-        )
-
-        return ffmpeg.run(
-            stream_out,
+        return subprocess.run(
+            [
+                "ffmpeg",
+                "-i",
+                "pipe:0",  # input bytestream
+                "-f",
+                self.converted_format,
+                "-preset",
+                "ultrafast",
+                "-movflags",
+                "frag_keyframe+empty_moov",
+                # otherwise libx264 reports 'muxer does not support non seekable output'
+                "pipe:1",  # output bytestream
+            ],
             input=raw,
-            capture_stdout=True,
-            capture_stderr=True,
-        )[0]
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,  # disposed
+            check=True,
+        ).stdout
 
 
 class PrideUnityVideo(PrideVideo):
@@ -49,7 +46,7 @@ class PrideUnityVideo(PrideVideo):
     def __init__(self, name: str, raw: bytes, mtime: int):
         super().__init__(name, raw, mtime)
         self.raw_format = None  # don't override
-        self.converted_format = "mp4"
+        self.default_converted_format = "mp4"
 
     def _convert(self, raw: bytes, **kwargs) -> bytes:
         env = UnityPy.load(raw)

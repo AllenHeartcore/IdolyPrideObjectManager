@@ -4,25 +4,18 @@ Module-wide constants (macro equivalents).
 """
 
 from pathlib import Path
+from typing import Union
 from urllib.parse import urljoin
-from typing import Union, Tuple
-from cryptography.hazmat.primitives import hashes
 
-
-def md5sum(data: bytes) -> bytes:
-    digest = hashes.Hash(hashes.MD5())
-    digest.update(data)
-    return digest.finalize()
-
+from .utils import md5sum
 
 # argument type hints
-PATH_ARGTYPE = Union[str, Path]
-IMAGE_RESIZE_ARGTYPE = Union[None, str, Tuple[int, int]]
+PathArgtype = Union[str, Path]
 
 # manifest request
 PRIDE_APPID = 212
 PRIDE_VERSION = 205051
-PRIDE_API_SERVER = f"https://api.octo-cloud.com/"
+PRIDE_API_SERVER = "https://api.octo-cloud.com/"
 PRIDE_API_URL = urljoin(
     PRIDE_API_SERVER, f"v2/pub/a/{PRIDE_APPID}/v/{PRIDE_VERSION}/list/"
 )
@@ -94,3 +87,6 @@ CHARACTER_ABBREVS = [
 # object deobfuscate
 PRIDE_UNITY_VERSION = "2022.3.21f1"
 UNITY_SIGNATURE = b"UnityFS"
+
+# adventure captioning
+DEFAULT_USERNAME = "マネージャー"

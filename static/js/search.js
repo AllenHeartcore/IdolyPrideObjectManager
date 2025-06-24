@@ -123,6 +123,7 @@ function highlightTokens(text) {
 }
 
 function refreshCardContainer() {
+    $("html, body").animate({ scrollTop: 0 }, "fast");
     $("#searchEntryCardContainer").empty();
 
     let start = (currentPage - 1) * entriesPerPage;
@@ -134,15 +135,32 @@ function refreshCardContainer() {
             .addClass("card shadow-at-hover")
             .attr("id", "searchEntryCard");
         if (entry.name.startsWith("img_")) {
-            getMediaBlobURL(entry.type, entry.id).then(({ url, mimetype }) => {
-                card.prepend(
-                    $("<img>")
-                        .addClass("card-img-top")
-                        .attr("id", "searchEntryCardImage")
-                        .attr("src", url)
-                        .attr("alt", entry.name)
-                );
-            });
+            let mediaContainer = $("<div>")
+                .addClass("media-container media-container-search")
+                .append(
+                    $("<div>")
+                        .addClass("prog-container")
+                        .append(
+                            $("<div>")
+                                .addClass("prog-bar-container")
+                                .append($("<div>").addClass("prog-bar"))
+                        )
+                )
+                .append($("<div>").addClass("hide-by-default media-content"));
+            card.prepend(mediaContainer);
+            progressedMediaDriver(
+                entry.type,
+                entry.id,
+                mediaContainer,
+                (media, url, mimetype, mtime) => {
+                    media.append(
+                        $("<img>")
+                            .addClass("card-img-top media-content-search")
+                            .attr("src", url)
+                            .attr("alt", entry.name)
+                    );
+                }
+            );
         }
         card.append(
             $("<div>")
@@ -158,7 +176,7 @@ function refreshCardContainer() {
         );
         let anchor = $("<a>")
             .attr("href", `/view/${entry.type.toLowerCase()}/${entry.id}`)
-            .addClass("anchor-no-decoration")
+            .addClass("text-decoration-none text-reset")
             .append(card);
         $("#searchEntryCardContainer").append(
             $("<div>").addClass("col-md-3").append(anchor)

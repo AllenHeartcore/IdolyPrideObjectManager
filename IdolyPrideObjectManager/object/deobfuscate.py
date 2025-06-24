@@ -21,6 +21,11 @@ class PrideAssetBundleDeobfuscator:
             Deobfuscates the given obfuscated bytes into plaintext.
     """
 
+    offset: int
+    stream_pos: int
+    header_len: int
+    mask: bytes
+
     def __init__(
         self,
         key: str,
@@ -41,9 +46,10 @@ class PrideAssetBundleDeobfuscator:
         self.offset = offset
         self.stream_pos = stream_pos
         self.header_len = header_len
-        self.mask = self._make_mask(key)
+        self.mask = self._make_mask(key.replace(".unity3d", ""))
 
-    def _make_mask(self, key: str) -> bytes:
+    @staticmethod
+    def _make_mask(key: str) -> bytes:
         """
         [INTERNAL] Generates an obfuscation mask from the given key.
         """

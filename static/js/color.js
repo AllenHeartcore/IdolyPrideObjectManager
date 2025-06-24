@@ -70,6 +70,11 @@ function findAccentColorKey(str) {
 }
 
 function setAccentColorByKey(key) {
+    if (!ACCENT_COLORS[key]) {
+        console.warn(`Invalid accent color key: ${key}`);
+        return;
+    }
+
     let accent = ACCENT_COLORS[key];
     let hsl = rgb2hsl(...hex2rgb(accent));
 

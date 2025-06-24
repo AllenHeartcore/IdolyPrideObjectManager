@@ -13,9 +13,9 @@ Request API & decryption algorithms borrowed from [HatsuboshiToolkit](https://gi
 ## Features
 
 - Fetch, decrypt, deserialize, and export manifest as ProtoDB, JSON, or CSV
-- Differentiate between manifest revisions
+- Differentiate between / add (apply patch to) manifest revisions
 - Download and deobfuscate assetbundles and resources in parallel
-- Media conversion plugins for Texture2D and AudioClip audio
+- Media conversion plugins for Texture2D, AudioClip audio, and VideoClip video
 
 
 
@@ -34,6 +34,15 @@ m_diff.export("manifest_diff.json")
 m.download("img_card_full_1.*", image_format="JPEG", image_resize="16:9")  # character cards
 m.download("sud_music_short.*inst", audio_format="WAV")  # instrumental songs
 m.download("mov_card_full.*1080p.mp4")  # animated character cards
+m.download(
+    "sud_vo_adv_main.*",
+    path="mainstory_voicelines",
+    categorize=False,  # merge subtypes into one directory
+    audio_format="mp3",  # applies to all subsongs
+    unpack_subsongs=True,  # unpack ZIP to output directory
+)
+
+m.download_preset("presets/wallpaper_kit.yml")
 ```
 
 
@@ -50,8 +59,11 @@ m.download("mov_card_full.*1080p.mp4")  # animated character cards
       - `media.image.PrideImage` - PNG image handling
       - `media.audio.PrideAudio` - MP3 audio handling
       - `media.video.PrideVideo` - MP4 video handling
+      - `adv.adventure.PrideAdventure` - Story script handling
+        - `adv.parser.PradvCommandParser` - Story script parsing
     - `object.deobfuscate.PrideAssetBundleDeobfuscator`
     - `object.assetbundle.PrideAssetBundle` - Unity object
       - `media.dummy.PrideDummyMedia`
-      - `media.image.PrideUnityImage` - Texture2D image handling
-      - `media.audio.PrideUnityAudio` - AudioClip audio handling
+      - `media.image.PrideUnityImage` - Texture2D image conversion
+      - `media.audio.PrideUnityAudio` - AudioClip audio conversion
+      - `media.video.PrideUnityVideo` - VideoClip video conversion
