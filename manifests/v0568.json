@@ -1,0 +1,83 @@
+{
+    "revision": [
+        571,
+        568
+    ],
+    "assetBundleList": [
+        {
+            "id": 32886,
+            "name": "mdl_shw_goods_figure-01-000",
+            "size": 2559390,
+            "crc": 1554726073,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "01d1c3d090dc8d4335199554564a56a4",
+            "objectName": "UhBXCW",
+            "generation": "1752046014187919",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43604,
+            "name": "env_adv_2d_prowrestlingring-00-noon",
+            "size": 893309,
+            "crc": 2134874505,
+            "dependencies": [
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "9e38537bbb9bdcf9677fa4cb50fb7436",
+            "objectName": "1eqXxp",
+            "generation": "1747646542982608",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45557,
+            "name": "img_dokan_free_login-pack-01-changed",
+            "size": 280858,
+            "crc": 2034635728,
+            "state": "UPDATE",
+            "md5": "39adc502f6bd189519eca22d76dd2723",
+            "objectName": "KxxKLn",
+            "generation": "1752639313230813",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45558,
+            "name": "img_dokan_free_login-pack-02-changed",
+            "size": 325160,
+            "crc": 1350745295,
+            "state": "UPDATE",
+            "md5": "e7c826f05e402e945b0c0627de3c8868",
+            "objectName": "KqoBkH",
+            "generation": "1752639313213033",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45591,
+            "name": "img_shop_item_thumb_shop-pack-25-0718-04",
+            "size": 18755,
+            "crc": 1351109624,
+            "state": "UPDATE",
+            "md5": "0eb4a1ba6040d8e8dddd79c52b79a36e",
+            "objectName": "vBKMeM",
+            "generation": "1752646092436679",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 209721,
+            "state": "UPDATE",
+            "md5": "ae0ae629e4eb22e25d6211c389349396",
+            "objectName": "iVKnyF",
+            "generation": "1752629022013995",
+            "uploadVersionId": 202050
+        }
+    ],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
