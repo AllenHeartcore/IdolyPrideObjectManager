@@ -1,6 +1,6 @@
 {
     "revision": [
-        576,
+        578,
         427
     ],
     "assetBundleList": [
@@ -8,11 +8,11 @@
             "id": 77,
             "name": "actor-shader",
             "size": 4203983,
-            "crc": 4164161636,
+            "crc": 3865979339,
             "state": "UPDATE",
-            "md5": "0c7d9c54ecf85e43c73bf6122e1bf0b4",
+            "md5": "5d332eb1bfa9b87ddd158ba2a82c2ec3",
             "objectName": "tygZ4K",
-            "generation": "1744877074659439",
+            "generation": "1753149703396852",
             "uploadVersionId": 202050
         },
         {
@@ -2762,6 +2762,34 @@
             "md5": "f0109324577434decbd4604a300e3824",
             "objectName": "33HtG1",
             "generation": "1743675912390990",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 41565,
+            "name": "mdl_chr_mhk-fest-02_body",
+            "size": 8333011,
+            "crc": 3738530202,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "04313ca4ae9545e7b37c830128d44a93",
+            "objectName": "Zeh2jd",
+            "generation": "1752747078853946",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 41566,
+            "name": "mdl_chr_mhk-fest-02_hair",
+            "size": 5556512,
+            "crc": 4128314452,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "30bae776c2147397c7d0aab38ada0311",
+            "objectName": "cBO7Ax",
+            "generation": "1753149618017043",
             "uploadVersionId": 202050
         },
         {
@@ -6554,6 +6582,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 42351,
+            "name": "mdl_chr_kan-fest-02_hair",
+            "size": 5513778,
+            "crc": 1053982502,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "f08cae26f5c78832f6256e40aa480cf4",
+            "objectName": "cWtVO9",
+            "generation": "1753149687500533",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 42352,
             "name": "img_toy_thumb_chracrylicsd-04-203",
             "size": 13609,
@@ -6587,6 +6629,34 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 42355,
+            "name": "mdl_chr_kor-fest-02_hair",
+            "size": 5306852,
+            "crc": 923983530,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "69d8da239544e0ffe08b69faa0083489",
+            "objectName": "aluu7e",
+            "generation": "1753149674456471",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 42356,
+            "name": "mdl_chr_kan-fest-02_body",
+            "size": 8625342,
+            "crc": 3495864717,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "4f131381c6e2b1c10c7f1296f4d41cf6",
+            "objectName": "oiWDF5",
+            "generation": "1753149652394040",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 42357,
             "name": "img_toy_thumb_chracrylicbord-04-204",
             "size": 19226,
@@ -6595,6 +6665,20 @@
             "md5": "f4f90a3d48f8daada6f088741fcb2916",
             "objectName": "jX10Vq",
             "generation": "1743771006860379",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 42358,
+            "name": "mdl_chr_kor-fest-02_body",
+            "size": 8496544,
+            "crc": 3598068644,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "14e19af1027dd9110e4e6eded536e32f",
+            "objectName": "otbTjY",
+            "generation": "1753149642953982",
             "uploadVersionId": 202050
         },
         {
@@ -20975,6 +21059,50 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 44214,
+            "name": "sud_vo_adv_event_2508_01_02",
+            "size": 2745434,
+            "crc": 2229425136,
+            "state": "UPDATE",
+            "md5": "e4264954f6b3a96b5d9ddd927b05bb29",
+            "objectName": "RkJhqC",
+            "generation": "1750746110849909",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44215,
+            "name": "sud_vo_adv_event_2508_01_05",
+            "size": 3519681,
+            "crc": 486947208,
+            "state": "UPDATE",
+            "md5": "f5fd6c54f3bffeae6163d33f113adec1",
+            "objectName": "5hikvn",
+            "generation": "1752665950986528",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44216,
+            "name": "sud_vo_adv_event_2508_01_03",
+            "size": 3012262,
+            "crc": 2274633481,
+            "state": "UPDATE",
+            "md5": "52e21d7c3d599fef51ede533e8c7b920",
+            "objectName": "H38rN9",
+            "generation": "1750746110608415",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44217,
+            "name": "sud_vo_adv_event_2508_01_01",
+            "size": 2129971,
+            "crc": 3135476718,
+            "state": "UPDATE",
+            "md5": "8afb00c2d37124ec69ad137aa32b51a5",
+            "objectName": "ZjjEvg",
+            "generation": "1750746110608266",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 44219,
             "name": "img_icon_skill_sk-skr-05-fest-03-1",
             "size": 5200,
@@ -20983,6 +21111,17 @@
             "md5": "38281a3ceed84f00bf39535d10260b46",
             "objectName": "RceRlZ",
             "generation": "1749061719402000",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44220,
+            "name": "sud_vo_adv_event_2508_01_04",
+            "size": 3566107,
+            "crc": 3987271010,
+            "state": "UPDATE",
+            "md5": "1cfa3c2f40f0eb83accb7011a9c235aa",
+            "objectName": "MwcocU",
+            "generation": "1750746110849777",
             "uploadVersionId": 202050
         },
         {
@@ -27236,6 +27375,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 45048,
+            "name": "sud_se_adv_sewing-01",
+            "size": 1165822,
+            "crc": 4217873630,
+            "state": "UPDATE",
+            "md5": "6f863a8f0f9f4c2bda5ad087033dd424",
+            "objectName": "XiAg4C",
+            "generation": "1751000522904473",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 45050,
             "name": "sud_bgm_adv_event_2507_02_01_movie-01",
             "size": 647482,
@@ -29412,6 +29562,116 @@
             "objectName": "NCTnJ6",
             "generation": "1752862756449840",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 45699,
+            "name": "img_deco_thumb_gift-25-0723-01",
+            "size": 12538,
+            "crc": 3467382741,
+            "state": "UPDATE",
+            "md5": "04ecef421388c1cdfdaa60b390b7dc89",
+            "objectName": "o84xYS",
+            "generation": "1753248105328560",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45700,
+            "name": "img_deco_full_gift-25-0723-01",
+            "size": 85281,
+            "crc": 1509459638,
+            "state": "UPDATE",
+            "md5": "71a14ad01c9470107a72247c6b96fbec",
+            "objectName": "qYl3XR",
+            "generation": "1753248105423799",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45701,
+            "name": "img_banner_l_ex-story-25-0725-01",
+            "size": 97324,
+            "crc": 898857279,
+            "state": "UPDATE",
+            "md5": "fa432377c170695d1ebc175e56c92715",
+            "objectName": "m479EI",
+            "generation": "1753248105425378",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45702,
+            "name": "img_dokan_free_ex-story-25-0725",
+            "size": 389341,
+            "crc": 2719908680,
+            "state": "UPDATE",
+            "md5": "00bd12f8ec97086839c07fe49dec4003",
+            "objectName": "CnQqKN",
+            "generation": "1753248105329274",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45751,
+            "name": "img_story_thumb_event_2508_01_01",
+            "size": 230771,
+            "crc": 748995347,
+            "state": "UPDATE",
+            "md5": "9e175f7451aa4838a6304d5750acc920",
+            "objectName": "TjYda1",
+            "generation": "1753323300266607",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45755,
+            "name": "img_story_thumb_event_2508_01_04",
+            "size": 220397,
+            "crc": 2224318540,
+            "state": "UPDATE",
+            "md5": "bd2306429771e8a9af1591e61a937b73",
+            "objectName": "d4x1JT",
+            "generation": "1753323300254124",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45767,
+            "name": "img_story_thumb_event_2508_01_03",
+            "size": 232616,
+            "crc": 1309674877,
+            "state": "UPDATE",
+            "md5": "bad16f029b6bc00dbd461cad5bcd5de1",
+            "objectName": "xxknm3",
+            "generation": "1753323300375600",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45770,
+            "name": "img_story_thumb_event_2508_01_05",
+            "size": 230068,
+            "crc": 779717947,
+            "state": "UPDATE",
+            "md5": "d74338de2ebcbd7e32d10f5181a98f07",
+            "objectName": "GwVBZ6",
+            "generation": "1753323300016315",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45784,
+            "name": "img_story_thumb_event_2508_01_02",
+            "size": 222365,
+            "crc": 2577410338,
+            "state": "UPDATE",
+            "md5": "416a0dfaf1770fb5a14ee0b2b34f2b7f",
+            "objectName": "v3VDOF",
+            "generation": "1753323300258394",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45787,
+            "name": "img_story_ex_episode_event_2508_01_02",
+            "size": 30777,
+            "crc": 3758773025,
+            "state": "UPDATE",
+            "md5": "da362689164e4bc6b3e5aacd113b6756",
+            "objectName": "hQD4BB",
+            "generation": "1753333995904625",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
@@ -29428,11 +29688,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 209974,
+            "size": 210164,
             "state": "UPDATE",
-            "md5": "4782daeb7330837a5bb30809e458a375",
+            "md5": "c657b2d45a153e42f525d70baf73bfff",
             "objectName": "iVKnyF",
-            "generation": "1752864623049181",
+            "generation": "1753296605599832",
             "uploadVersionId": 202050
         },
         {
