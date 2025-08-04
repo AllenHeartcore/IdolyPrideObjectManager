@@ -1,6 +1,6 @@
 {
     "revision": [
-        596,
+        598,
         593
     ],
     "assetBundleList": [
@@ -291,6 +291,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 45806,
+            "name": "img_photo_full_phot-prm-5-134",
+            "size": 228518,
+            "crc": 4294053100,
+            "state": "UPDATE",
+            "md5": "b0fdb462136a654a0b6ca6b1f7b51d06",
+            "objectName": "WFDBxV",
+            "generation": "1754277125296124",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 45819,
             "name": "sud_bgm_gacha_dokan_gacha-birt-25-0803",
             "size": 302881,
@@ -302,6 +313,17 @@
             "uploadVersionId": 202050
         }
     ],
-    "resourceList": [],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 211012,
+            "state": "UPDATE",
+            "md5": "3c79b45d5e57b4014f57ca1658f3551c",
+            "objectName": "iVKnyF",
+            "generation": "1754074188795037",
+            "uploadVersionId": 202050
+        }
+    ],
     "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
 }
