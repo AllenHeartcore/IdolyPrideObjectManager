@@ -1,0 +1,46 @@
+{
+    "revision": [
+        611,
+        609
+    ],
+    "assetBundleList": [
+        {
+            "id": 43459,
+            "name": "mdl_chr_szk-angl-00_body",
+            "size": 9334077,
+            "crc": 1079925324,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "c0324afe2cabdfad5c18fead79fdef97",
+            "objectName": "Um02S1",
+            "generation": "1755159017725354",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43792,
+            "name": "sud_bgm_adv_szk-01",
+            "size": 2035085,
+            "crc": 1701788624,
+            "state": "UPDATE",
+            "md5": "23f718e8f154070e7873599893429ca3",
+            "objectName": "6UiOgn",
+            "generation": "1747805427694902",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45416,
+            "name": "sud_bgm_adv_fan-01",
+            "size": 2192111,
+            "crc": 2010623411,
+            "state": "UPDATE",
+            "md5": "114b52cb5700577e4809769fe8ff31d6",
+            "objectName": "kXN2UD",
+            "generation": "1752137470775226",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}

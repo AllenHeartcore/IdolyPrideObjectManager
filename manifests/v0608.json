@@ -1,0 +1,101 @@
+{
+    "revision": [
+        611,
+        608
+    ],
+    "assetBundleList": [
+        {
+            "id": 43459,
+            "name": "mdl_chr_szk-angl-00_body",
+            "size": 9334077,
+            "crc": 1079925324,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "c0324afe2cabdfad5c18fead79fdef97",
+            "objectName": "Um02S1",
+            "generation": "1755159017725354",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43792,
+            "name": "sud_bgm_adv_szk-01",
+            "size": 2035085,
+            "crc": 1701788624,
+            "state": "UPDATE",
+            "md5": "23f718e8f154070e7873599893429ca3",
+            "objectName": "6UiOgn",
+            "generation": "1747805427694902",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44568,
+            "name": "sud_vo_adv_card_szk_11_01",
+            "size": 2246643,
+            "crc": 845762991,
+            "state": "UPDATE",
+            "md5": "7945f885502c5a958c05dcb6f35f33b7",
+            "objectName": "xkbv2p",
+            "generation": "1750739981291437",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44573,
+            "name": "sud_vo_adv_card_szk_11_03",
+            "size": 2118773,
+            "crc": 2252113753,
+            "state": "UPDATE",
+            "md5": "4d2d1dad5d0e0661b3105d551deb7a5d",
+            "objectName": "9FStiB",
+            "generation": "1750739981176176",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44579,
+            "name": "sud_vo_adv_card_szk_11_02",
+            "size": 2263424,
+            "crc": 1503061850,
+            "state": "UPDATE",
+            "md5": "ac9c1a7a0c205a368e855b9782ab8904",
+            "objectName": "rzRVkE",
+            "generation": "1750739981464522",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45416,
+            "name": "sud_bgm_adv_fan-01",
+            "size": 2192111,
+            "crc": 2010623411,
+            "state": "UPDATE",
+            "md5": "114b52cb5700577e4809769fe8ff31d6",
+            "objectName": "kXN2UD",
+            "generation": "1752137470775226",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46452,
+            "name": "sud_bgm_gacha_dokan_lm-set-bloom-25-0815",
+            "size": 318680,
+            "crc": 794962848,
+            "state": "UPDATE",
+            "md5": "9412ee7cb9bfc489fe1f7a2e8f6e5e02",
+            "objectName": "xZgzMC",
+            "generation": "1754450609156214",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46453,
+            "name": "mov_gacha_dokan_lm-set-bloom-25-0815",
+            "size": 1408896,
+            "crc": 4026948370,
+            "state": "UPDATE",
+            "md5": "0c1eb0d1708e053666194388331fd34a",
+            "objectName": "bYcugx",
+            "generation": "1754450609100551",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
