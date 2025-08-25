@@ -1,0 +1,47 @@
+{
+    "revision": [
+        623,
+        621
+    ],
+    "assetBundleList": [
+        {
+            "id": 352,
+            "name": "t_evm_chr-eye_cub_spclit_general-00",
+            "size": 33570,
+            "crc": 1012760909,
+            "state": "UPDATE",
+            "md5": "711a2a0533596acee92dcd842fa64979",
+            "objectName": "hIcRfw",
+            "generation": "1753149663341159",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 40287,
+            "name": "env_adv_2d_korroom-00-noon",
+            "size": 883194,
+            "crc": 1806208217,
+            "dependencies": [
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "1391353e5f3ef78331a76cdac1f12b4f",
+            "objectName": "U6eW4o",
+            "generation": "1753149653213911",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46664,
+            "name": "img_dokan_free_rev-step-rockon-25-0831",
+            "size": 258287,
+            "crc": 3374431822,
+            "state": "UPDATE",
+            "md5": "808bd4bd6998052ccd4bbdd385c6ec07",
+            "objectName": "wfurQ3",
+            "generation": "1756122300770613",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}

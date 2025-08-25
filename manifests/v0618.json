@@ -1,0 +1,179 @@
+{
+    "revision": [
+        623,
+        618
+    ],
+    "assetBundleList": [
+        {
+            "id": 352,
+            "name": "t_evm_chr-eye_cub_spclit_general-00",
+            "size": 33570,
+            "crc": 1012760909,
+            "state": "UPDATE",
+            "md5": "711a2a0533596acee92dcd842fa64979",
+            "objectName": "hIcRfw",
+            "generation": "1753149663341159",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 40287,
+            "name": "env_adv_2d_korroom-00-noon",
+            "size": 883194,
+            "crc": 1806208217,
+            "dependencies": [
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "1391353e5f3ef78331a76cdac1f12b4f",
+            "objectName": "U6eW4o",
+            "generation": "1753149653213911",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 42847,
+            "name": "sud_vo_adv_hbd_05_rio017",
+            "size": 24007,
+            "crc": 1360884111,
+            "state": "UPDATE",
+            "md5": "2641182c953972aecb7279a51c8a5817",
+            "objectName": "MA8FWS",
+            "generation": "1745292689386005",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43939,
+            "name": "sud_vo_adv_hbd_05_koh003",
+            "size": 34822,
+            "crc": 2863175603,
+            "state": "UPDATE",
+            "md5": "7ebdefd8d16b1df000425359885da4d7",
+            "objectName": "v8xSTV",
+            "generation": "1748409195213832",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44164,
+            "name": "sud_vo_adv_card_mku_02_01",
+            "size": 2263474,
+            "crc": 1138187203,
+            "state": "UPDATE",
+            "md5": "f269d4e417b0a713cf28d6f3c64afb31",
+            "objectName": "2QDxlD",
+            "generation": "1749208194518254",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44555,
+            "name": "sud_se_adv_sand-shovel-02",
+            "size": 1970064,
+            "crc": 3007479627,
+            "state": "UPDATE",
+            "md5": "1fabf776c4bed8997da89ba2d2a98371",
+            "objectName": "5BN8gb",
+            "generation": "1749752447329995",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44561,
+            "name": "sud_se_adv_sand-shovel-01",
+            "size": 117758,
+            "crc": 1932031423,
+            "state": "UPDATE",
+            "md5": "e19a067144b314451931e7effdae3f05",
+            "objectName": "QAAiMr",
+            "generation": "1749752447676944",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46239,
+            "name": "fgd_2d_adv_banner_play",
+            "size": 12700,
+            "crc": 1696802898,
+            "state": "UPDATE",
+            "md5": "99c0a3ee833817f2c1ccb2ecf9650a3a",
+            "objectName": "ZFY9cM",
+            "generation": "1753849742171787",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46248,
+            "name": "sud_se_adv_bird-01",
+            "size": 9353762,
+            "crc": 3028216077,
+            "state": "UPDATE",
+            "md5": "abeb47af49dbb9c3cdc542aa53fff329",
+            "objectName": "6km9TX",
+            "generation": "1753855380275956",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46249,
+            "name": "img_gacha_appeal_lm-set-bloom-25-0826",
+            "size": 54593,
+            "crc": 883239987,
+            "state": "UPDATE",
+            "md5": "7ac7bd9b451b8db39f39b9e2e3452d73",
+            "objectName": "fsw9wT",
+            "generation": "1756116258047447",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46456,
+            "name": "sud_bgm_gacha_dokan_gacha-birt-25-0828",
+            "size": 313657,
+            "crc": 2304687390,
+            "state": "UPDATE",
+            "md5": "e542fdfef0b9137ad471aff90360b2fb",
+            "objectName": "BRpIHT",
+            "generation": "1754450608995386",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46458,
+            "name": "mov_gacha_dokan_gacha-birt-25-0828",
+            "size": 2052496,
+            "crc": 941399591,
+            "state": "UPDATE",
+            "md5": "72b612a1ba230745b4bc6348a6f489b0",
+            "objectName": "ZeAH1P",
+            "generation": "1754450609333891",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46664,
+            "name": "img_dokan_free_rev-step-rockon-25-0831",
+            "size": 258287,
+            "crc": 3374431822,
+            "state": "UPDATE",
+            "md5": "808bd4bd6998052ccd4bbdd385c6ec07",
+            "objectName": "wfurQ3",
+            "generation": "1756122300770613",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46687,
+            "name": "mov_gacha_dokan_lm-set-bloom-25-0826",
+            "size": 4760048,
+            "crc": 518075877,
+            "state": "UPDATE",
+            "md5": "6f569f579f5c34aefb43de60fe9ba9e4",
+            "objectName": "4VVqPT",
+            "generation": "1755677950099605",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 3830,
+            "name": "mov_ui_panorama_music_clb-011.mp4",
+            "size": 5885079,
+            "state": "UPDATE",
+            "md5": "9266399602e5433f11570a22df7ad1c0",
+            "objectName": "6IWE2O",
+            "generation": "1756102590784176",
+            "uploadVersionId": 202050
+        }
+    ],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}

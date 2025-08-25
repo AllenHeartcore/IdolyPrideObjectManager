@@ -1,0 +1,102 @@
+{
+    "revision": [
+        623,
+        620
+    ],
+    "assetBundleList": [
+        {
+            "id": 352,
+            "name": "t_evm_chr-eye_cub_spclit_general-00",
+            "size": 33570,
+            "crc": 1012760909,
+            "state": "UPDATE",
+            "md5": "711a2a0533596acee92dcd842fa64979",
+            "objectName": "hIcRfw",
+            "generation": "1753149663341159",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 40287,
+            "name": "env_adv_2d_korroom-00-noon",
+            "size": 883194,
+            "crc": 1806208217,
+            "dependencies": [
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "1391353e5f3ef78331a76cdac1f12b4f",
+            "objectName": "U6eW4o",
+            "generation": "1753149653213911",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44164,
+            "name": "sud_vo_adv_card_mku_02_01",
+            "size": 2263474,
+            "crc": 1138187203,
+            "state": "UPDATE",
+            "md5": "f269d4e417b0a713cf28d6f3c64afb31",
+            "objectName": "2QDxlD",
+            "generation": "1749208194518254",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44555,
+            "name": "sud_se_adv_sand-shovel-02",
+            "size": 1970064,
+            "crc": 3007479627,
+            "state": "UPDATE",
+            "md5": "1fabf776c4bed8997da89ba2d2a98371",
+            "objectName": "5BN8gb",
+            "generation": "1749752447329995",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 44561,
+            "name": "sud_se_adv_sand-shovel-01",
+            "size": 117758,
+            "crc": 1932031423,
+            "state": "UPDATE",
+            "md5": "e19a067144b314451931e7effdae3f05",
+            "objectName": "QAAiMr",
+            "generation": "1749752447676944",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46248,
+            "name": "sud_se_adv_bird-01",
+            "size": 9353762,
+            "crc": 3028216077,
+            "state": "UPDATE",
+            "md5": "abeb47af49dbb9c3cdc542aa53fff329",
+            "objectName": "6km9TX",
+            "generation": "1753855380275956",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46664,
+            "name": "img_dokan_free_rev-step-rockon-25-0831",
+            "size": 258287,
+            "crc": 3374431822,
+            "state": "UPDATE",
+            "md5": "808bd4bd6998052ccd4bbdd385c6ec07",
+            "objectName": "wfurQ3",
+            "generation": "1756122300770613",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46687,
+            "name": "mov_gacha_dokan_lm-set-bloom-25-0826",
+            "size": 4760048,
+            "crc": 518075877,
+            "state": "UPDATE",
+            "md5": "6f569f579f5c34aefb43de60fe9ba9e4",
+            "objectName": "4VVqPT",
+            "generation": "1755677950099605",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
