@@ -1,6 +1,6 @@
 {
     "revision": [
-        628,
+        630,
         489
     ],
     "assetBundleList": [
@@ -68,6 +68,20 @@
             "md5": "a783be06b8e98129dc9a6a4b687626fc",
             "objectName": "EmRqxS",
             "generation": "1748409195186116",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 3041,
+            "name": "mdl_chr_hrk-chia-00_body",
+            "size": 7697549,
+            "crc": 3109823575,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "a2ce898a043b5954a219411a80b46797",
+            "objectName": "xPI7ox",
+            "generation": "1756096371353780",
             "uploadVersionId": 202050
         },
         {
@@ -194,6 +208,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 11616,
+            "name": "mdl_chr_rei-chia-00_body",
+            "size": 7673531,
+            "crc": 1794097500,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "d05137b36e7bedd7a684dbb10933398d",
+            "objectName": "cFyLY4",
+            "generation": "1756096371355252",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 12178,
             "name": "spi_sd_chr_cos_kan-idol-03.skl",
             "size": 21258,
@@ -224,6 +252,20 @@
             "md5": "81db9310972735a583279b0c99891be2",
             "objectName": "iIEKqC",
             "generation": "1748259175840071",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 16554,
+            "name": "mdl_chr_chs-chia-00_body",
+            "size": 7656793,
+            "crc": 1932142788,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "37258e630f3b72c7a4ea14d4784379af",
+            "objectName": "zJhyac",
+            "generation": "1756096371083690",
             "uploadVersionId": 202050
         },
         {
@@ -272,6 +314,20 @@
             "md5": "7ac57eb35dd3f571055877f9d3e0a092",
             "objectName": "wQnfxv",
             "generation": "1749542821886200",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 19622,
+            "name": "mdl_chr_szk-chia-00_body",
+            "size": 7663895,
+            "crc": 4280537316,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "3629944e21f05b0d3552566c721914a9",
+            "objectName": "SVZTnw",
+            "generation": "1756096371300206",
             "uploadVersionId": 202050
         },
         {
@@ -357,6 +413,20 @@
             "md5": "faeb9430a7ce9809e778c4241491bbf5",
             "objectName": "0BUHVK",
             "generation": "1749542821626925",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 27669,
+            "name": "mdl_chr_skr-chia-00_body",
+            "size": 7668153,
+            "crc": 2793608290,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "1d13fbba0d38710417f483cb1f9a3fa8",
+            "objectName": "tYJDZL",
+            "generation": "1756096371028844",
             "uploadVersionId": 202050
         },
         {
@@ -32938,11 +33008,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 213357,
+            "size": 213699,
             "state": "UPDATE",
-            "md5": "a425ae9cf5b062f05d1c6d1dd6930913",
+            "md5": "1171c714aedb26d421d35e428f90fb21",
             "objectName": "iVKnyF",
-            "generation": "1756797948324411",
+            "generation": "1756891508336148",
             "uploadVersionId": 202050
         },
         {
