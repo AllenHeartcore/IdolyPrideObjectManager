@@ -1,6 +1,6 @@
 {
     "revision": [
-        641,
+        643,
         280
     ],
     "assetBundleList": [
@@ -2878,6 +2878,20 @@
             "md5": "d65a8822b7d13b428820dc5607db55ea",
             "objectName": "QnndiK",
             "generation": "1752137471067652",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 32871,
+            "name": "mdl_shw_goods_figure-04-000",
+            "size": 2508481,
+            "crc": 785716673,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "5874055048c7465b234cc7961065ee8d",
+            "objectName": "wRXMX7",
+            "generation": "1758510758478082",
             "uploadVersionId": 202050
         },
         {
@@ -84194,6 +84208,127 @@
             "objectName": "WwstBM",
             "generation": "1758008505195036",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 47140,
+            "name": "img_banner_s_gacha-rev-step-rockon-25-0923",
+            "size": 41064,
+            "crc": 2301903657,
+            "state": "UPDATE",
+            "md5": "16e206c3b9fdd6ef6dc3b47ffd74d803",
+            "objectName": "by8kmO",
+            "generation": "1757669189824487",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47144,
+            "name": "img_gacha_screen_rev-step-rockon-25-0923-1st",
+            "size": 596517,
+            "crc": 2609652010,
+            "state": "UPDATE",
+            "md5": "3cd5487ed467d8988f819db5d38955d3",
+            "objectName": "E38Eyn",
+            "generation": "1757669189843983",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47147,
+            "name": "img_gacha_button_rev-step-rockon-25-0923-2nd",
+            "size": 76653,
+            "crc": 1534069331,
+            "state": "UPDATE",
+            "md5": "edd570db27ce3bb08e71eb5317247300",
+            "objectName": "foLleu",
+            "generation": "1757669189853348",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47150,
+            "name": "img_gacha_screen_rev-step-rockon-25-0923-2nd",
+            "size": 573317,
+            "crc": 2296160294,
+            "state": "UPDATE",
+            "md5": "befa29e5857e530eda97a2c212fff086",
+            "objectName": "NpkdDk",
+            "generation": "1757669189944444",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47155,
+            "name": "img_gacha_button_rev-step-rockon-25-0923-1st",
+            "size": 76318,
+            "crc": 3482550538,
+            "state": "UPDATE",
+            "md5": "a420d785a8d660b7c4d1145f99fb939d",
+            "objectName": "8dBeug",
+            "generation": "1757669189724842",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47159,
+            "name": "img_dokan_free_rev-step-rockon-25-0923",
+            "size": 298160,
+            "crc": 1311745243,
+            "state": "UPDATE",
+            "md5": "eeac0f376b45b99b306f6b4298bcdc3b",
+            "objectName": "G6jIBB",
+            "generation": "1757669189709851",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47160,
+            "name": "img_banner_l_gacha-rev-step-rockon-25-0923",
+            "size": 88322,
+            "crc": 1988920989,
+            "state": "UPDATE",
+            "md5": "468d280f1e26ca8f9602bb794c88904f",
+            "objectName": "dt6cMS",
+            "generation": "1757669189874677",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47239,
+            "name": "img_banner_l_gacha-premium-25-0924",
+            "size": 109368,
+            "crc": 32618744,
+            "state": "UPDATE",
+            "md5": "a81b8e713394dd527667750a7c7cc293",
+            "objectName": "siI6d5",
+            "generation": "1758001393076076",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47245,
+            "name": "img_dokan_free_gacha-premium-25-0924",
+            "size": 316724,
+            "crc": 175072818,
+            "state": "UPDATE",
+            "md5": "793077a6a6fb61fc4f099ef504fc1b5a",
+            "objectName": "Drw13M",
+            "generation": "1758001393152484",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47250,
+            "name": "img_banner_s_gacha-premium-25-0924",
+            "size": 47164,
+            "crc": 3380849497,
+            "state": "UPDATE",
+            "md5": "260ab20813d54154d2b6d7e04fd0439a",
+            "objectName": "FOXK49",
+            "generation": "1758001393152522",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47270,
+            "name": "img_toy_thumb_figure-04-000",
+            "size": 9833,
+            "crc": 2627370656,
+            "state": "UPDATE",
+            "md5": "fe9e3579bdc600d33dd423f94d0ed36a",
+            "objectName": "Ce7PRT",
+            "generation": "1758001392991567",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
@@ -84260,11 +84395,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 214963,
+            "size": 215412,
             "state": "UPDATE",
-            "md5": "978b9d73bbd28f4cac03f1b1a27575f8",
+            "md5": "dbd4dd2954ebf340616c0b56f815fb26",
             "objectName": "iVKnyF",
-            "generation": "1758030409578592",
+            "generation": "1758504855232734",
             "uploadVersionId": 202050
         },
         {
