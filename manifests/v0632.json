@@ -1,6 +1,6 @@
 {
     "revision": [
-        643,
+        646,
         632
     ],
     "assetBundleList": [
@@ -51,15 +51,15 @@
         {
             "id": 32871,
             "name": "mdl_shw_goods_figure-04-000",
-            "size": 2508481,
-            "crc": 785716673,
+            "size": 2508444,
+            "crc": 2779993962,
             "dependencies": [
                 360
             ],
             "state": "UPDATE",
-            "md5": "5874055048c7465b234cc7961065ee8d",
+            "md5": "b3aa816e93e34b0606cb1a670b5422d7",
             "objectName": "wRXMX7",
-            "generation": "1758510758478082",
+            "generation": "1758540668523471",
             "uploadVersionId": 202050
         },
         {
@@ -1050,17 +1050,39 @@
             "objectName": "Ce7PRT",
             "generation": "1758001392991567",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 47317,
+            "name": "img_banner_l_news-25-0926-01",
+            "size": 34986,
+            "crc": 3507847124,
+            "state": "UPDATE",
+            "md5": "b3830e06c6a087c777af0ee38b74ac4f",
+            "objectName": "me9SMG",
+            "generation": "1758132735144026",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47318,
+            "name": "img_dokan_free_broadcast-25-0926-01",
+            "size": 65925,
+            "crc": 3203587908,
+            "state": "UPDATE",
+            "md5": "e1cae953dad051c5715a2a4becf5d360",
+            "objectName": "3eo9gT",
+            "generation": "1758132735224222",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 215412,
+            "size": 215946,
             "state": "UPDATE",
-            "md5": "dbd4dd2954ebf340616c0b56f815fb26",
+            "md5": "a4e48d9719c6185728acbcaae80f5ea3",
             "objectName": "iVKnyF",
-            "generation": "1758504855232734",
+            "generation": "1758682094019485",
             "uploadVersionId": 202050
         },
         {
