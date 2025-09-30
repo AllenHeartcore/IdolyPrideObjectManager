@@ -1,6 +1,6 @@
 {
     "revision": [
-        659,
+        660,
         656
     ],
     "assetBundleList": [
@@ -390,6 +390,27 @@
             "uploadVersionId": 202050
         }
     ],
-    "resourceList": [],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 216265,
+            "state": "UPDATE",
+            "md5": "640954d4ee8e3da33446f142b33b9eb5",
+            "objectName": "iVKnyF",
+            "generation": "1759139330519937",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4332,
+            "name": "adv_bond_rio_01_06.txt",
+            "size": 192197,
+            "state": "UPDATE",
+            "md5": "6ca449393a86ff970657dc0a9f350899",
+            "objectName": "fB2cio",
+            "generation": "1759129137083851",
+            "uploadVersionId": 202050
+        }
+    ],
     "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
 }
