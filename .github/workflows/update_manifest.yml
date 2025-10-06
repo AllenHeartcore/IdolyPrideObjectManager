@@ -19,21 +19,12 @@ jobs:
               uses: actions/checkout@v4
               with:
                   ref: "refs/heads/manifest-update"
-                  fetch-depth: 0
+                  fetch-depth: 1
 
-            - name: Set up Python 3.12 (with pip cache)
+            - name: Set up Python 3.12
               uses: actions/setup-python@v5
               with:
                   python-version: "3.12" # 'pyaudioop' removed in 3.13
-                  cache: "pip"
-
-            - name: Cache pip dependencies
-              uses: actions/cache@v4
-              with:
-                  path: ~/.cache/pip
-                  key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pip-
 
             - name: Install dependencies
               run: |
