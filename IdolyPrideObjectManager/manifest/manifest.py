@@ -3,22 +3,15 @@ manifest.py
 Manifest decryption, exporting, and object downloading.
 """
 
-import asyncio
 import json
-import re
-import subprocess
 from pathlib import Path
-from typing import Tuple, Union
+from typing import Union
 
-import pandas as pd
-import yaml
 from google.protobuf.json_format import ParseError
-from rich.progress import BarColumn, Progress, TextColumn
 
-from ..const import CHARACTER_ABBREVS, CSV_COLUMNS, DEFAULT_DOWNLOAD_PATH, PathArgtype
+from ..const import PathArgtype
 from ..object import PrideAssetBundle, PrideResource
 from ..rich import Logger
-from ..utils import nocache
 from .listing import PrideObjectList
 from .octodb_pb2 import dict2pdbytes
 from .revision import PrideManifestRevision
@@ -42,7 +35,7 @@ class PrideManifest:
 
     Methods:
         export(path: Union[str, Path]) -> None:
-            Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+            Exports the manifest as ProtoDB and/or JSON to the specified path.
         search(criterion: str) -> list:
             Searches the manifest for objects with names *fully* matching the specified criterion.
         download(
@@ -176,17 +169,17 @@ class PrideManifest:
         force_overwrite: bool = False,
     ):
         """
-        Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+        Exports the manifest as ProtoDB and/or JSON to the specified path.
         This is a dispatcher method.
 
         Args:
             path (Union[str, Path]): A file path.
                 The format is determined by the extension if 'format' is 'infer'.
-                (All extensions other than .json and .csv are inferred
+                (All extensions other than .json are inferred
                 as raw binary and therefore exported as ProtoDB, but
                 a warning is issued if the extension is not .pdb.)
             format (str) = 'infer': The format to export.
-                Should be one of 'pdb', 'json', 'csv', or 'infer'.
+                Should be one of 'pdb', 'json', or 'infer'.
             force_overwrite (bool) = False: Whether to overwrite the file if it already exists.
                 Meant for exclusive use by update_manifest watcher.
         """
@@ -201,8 +194,6 @@ class PrideManifest:
                 format = "pdb"
             elif path.suffix == ".json":
                 format = "json"
-            elif path.suffix == ".csv":
-                format = "csv"
             else:
                 logger.warning("Unrecognized file extension, defaulting to ProtoDB")
                 format = "pdb"
@@ -211,8 +202,6 @@ class PrideManifest:
             self._export_pdb(path)
         elif format == "json":
             self._export_json(path)
-        elif format == "csv":
-            self._export_csv(path)
         else:
             logger.warning(f"Unrecognized format '{format}', aborted")
             # Could also be logger.error, but let's fail gracefully.
@@ -251,210 +240,3 @@ class PrideManifest:
             logger.success(f"JSON has been written into {path}")
         except TypeError:  # non-JSON-serializable object in dict
             logger.error(f"Failed to write JSON into {path}")
-
-    def _export_csv(self, path: Path):
-        """
-        [INTERNAL] Writes CSV-serialized data into the specified path.
-        Assetbundles and resources are concatenated into a single table and sorted by name.
-        Assetbundles can be distinguished by their '.unity3d' suffix.
-        """
-
-        if path.suffix != ".csv":
-            logger.warning("Attempting to write CSV into a non-.csv file")
-
-        # [RESOLVED] Forced list conversion is necessary since PrideObjectList overrides __iter__,
-        # which handles integer keys (index by ID) and messes up with standard modules
-        # like pandas that rely on self[0] as a "sample" object from the list.
-        dfa = pd.DataFrame(self.assetbundles.canon_repr, columns=CSV_COLUMNS)
-        dfa["name"] = dfa["name"].apply(
-            lambda x: x if "." in x else x + ".unity3d"
-        )  # stripped in canon
-        dfr = pd.DataFrame(self.resources.canon_repr, columns=CSV_COLUMNS)
-        df = pd.concat([dfa, dfr], ignore_index=True)
-        df.sort_values("name", inplace=True)
-
-        try:
-            df.to_csv(path, index=False)
-            logger.success(f"CSV has been written into {path}")
-        except:
-            logger.error(f"Failed to write CSV into {path}")
-
-    # ----------- DOWNLOAD ----------- #
-
-    def search(
-        self,
-        criterion: str,
-        by_name: bool = True,
-        ascending: bool = True,
-    ) -> list[ObjectClass]:
-        """
-        Searches the manifest for objects matching the specified criterion.
-        Returns a list of objects.
-
-        Args:
-            criterion (str): Regex pattern of object names.
-        """
-
-        # This will be called by frontend; we instantiate here to make ID's visible.
-        matches = filter(
-            lambda s: re.match(criterion, s.name, flags=re.IGNORECASE) is not None,
-            list(self),
-        )
-        return sorted(
-            matches,
-            key=lambda x: x.name if by_name else x.id,
-            reverse=not ascending,
-        )
-
-    @nocache
-    def download(self, *criteria: str, **kwargs):
-        """
-        Downloads the regex-specified assetbundles/resources to the specified path.
-
-        Args:
-            *criteria (str): Regex patterns of assetbundle/resource names.
-            path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
-                *WARNING: Behavior is undefined if the path points to an definite file (with extension).*
-            categorize (bool) = True: Whether to categorize downloaded objects into subdirectories.
-                If False, all objects are downloaded to the specified 'path' in a flat structure.
-        """
-
-        if "preset" in kwargs:
-            self.download_preset(kwargs.pop("preset"))
-            return
-
-        if not criteria:
-            logger.warning(
-                "No criteria specified; download everything with download_all() instead"
-            )
-            return
-
-        objects = self.search("|".join(criteria))
-
-        if not objects:
-            logger.warning("No objects matched the criteria, aborted")
-            return
-
-        asyncio.run(self._dispatch(objects, **kwargs))
-
-    @nocache
-    def download_preset(self, preset_filename: str):
-        """
-        [INTERNAL] Downloads by a predefined preset (see examples in presets/).
-        """
-
-        # READ PRESET
-
-        with open(preset_filename, "r", encoding="utf-8") as f:
-            preset = yaml.safe_load(f)
-
-        root = preset.get("root", DEFAULT_DOWNLOAD_PATH)
-        root = root.replace("{revision}", f"v{self.revision.canon_repr}")
-
-        global_kwargs = preset.get("global-kwargs", {})
-        proto_instrs = preset.get("instructions", [])
-
-        pp_path = preset.get("post-processing", "")
-        if pp_path:
-            pp_path = Path(preset_filename).parent / pp_path
-
-        # PARSE INSTRUCTIONS
-
-        instrs = []
-
-        for instr in proto_instrs:
-
-            criterion = instr.pop("criterion", "")
-            subdir = instr.pop("subdir", "")
-
-            if "{char}" not in criterion:
-                assert "{char}" not in subdir, "Standalone {char} flag in subdir"
-                instrs.append((criterion, {"path": Path(root, subdir), **instr}))
-            else:
-                for char in CHARACTER_ABBREVS[:12]:  # hardcoded
-                    instrs.append(
-                        (
-                            criterion.replace("{char}", char),
-                            {
-                                "path": Path(root, subdir.replace("{char}", char)),
-                                **instr,
-                            },
-                        )
-                    )
-
-        # DISPATCH
-
-        asyncio.run(
-            self._dispatch(
-                [
-                    (obj, kw)
-                    for criterion, kw in instrs
-                    for obj in self.search(criterion)
-                ],
-                **global_kwargs,
-            )
-        )
-
-        if pp_path:
-            logger.info(f"Running post-processing script '{pp_path}'")
-            subprocess.run(["python", pp_path, root], check=True)
-
-    @nocache
-    def download_all_assetbundles(self, **kwargs):
-        """
-        Downloads all assetbundles to the specified path.
-        See download() for a list of keyword arguments.
-        """
-        asyncio.run(self._dispatch(list(self.assetbundles), **kwargs))
-
-    @nocache
-    def download_all_resources(self, **kwargs):
-        """
-        Downloads all resources to the specified path.
-        See download() for a list of keyword arguments.
-        """
-        asyncio.run(self._dispatch(list(self.resources), **kwargs))
-
-    @nocache
-    def download_all(self, **kwargs):
-        """
-        Downloads all assetbundles and resources to the specified path.
-        See download() for a list of keyword arguments.
-        """
-        asyncio.run(self._dispatch(list(self), **kwargs))
-
-    async def _dispatch(
-        self,
-        obj_kw: list[Union[ObjectClass, Tuple[ObjectClass, dict]]],
-        **kwargs,
-    ):
-        """
-        [INTERNAL] Dispatches a list of object-kwargs pairs to async download tasks.
-        """
-
-        # if "obj_kw" is a list of objects, append empty kwargs
-        if not isinstance(obj_kw[0], tuple):
-            obj_kw = [(obj, {}) for obj in obj_kw]
-
-        progress = Progress(
-            TextColumn("{task.description}"),
-            BarColumn(),
-            TextColumn("{task.completed}/{task.total}"),
-        )
-
-        tasks = [
-            asyncio.create_task(
-                asyncio.to_thread(
-                    obj.download,
-                    progress=progress,
-                    task_id=progress.add_task(obj._idname, visible=False),
-                    **kw,
-                    **kwargs,  # if not empty, broadcast to all tasks
-                )
-            )
-            for obj, kw in obj_kw
-        ]
-
-        progress.start()
-        await asyncio.gather(*tasks)
-        progress.stop()

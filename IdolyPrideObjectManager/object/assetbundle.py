@@ -3,13 +3,6 @@ assetbundle.py
 Unity asset bundle downloading, deobfuscation, and media extraction.
 """
 
-from ..const import UNITY_SIGNATURE
-from ..media import PrideDummyMedia
-from ..media.audio import PrideUnityAudio
-from ..media.image import PrideUnityImage
-from ..media.video import PrideUnityVideo
-from ..rich import ProgressReporter
-from .deobfuscate import PrideAssetBundleDeobfuscator
 from .resource import PrideResource
 
 
@@ -55,8 +48,6 @@ class PrideAssetBundle(PrideResource):
             v=self.uploadVersionId,
             type="assetbundle",
         )
-        self._reporter = ProgressReporter(title=self._idname, total=self.size)
-        # need to re-instantiate since self._idname has changed
 
     def __repr__(self) -> str:
         return f"<PrideAssetBundle {self._idname}>"
@@ -66,38 +57,3 @@ class PrideAssetBundle(PrideResource):
         canon = super().canon_repr
         canon["name"] = canon["name"].replace(".unity3d", "")
         return canon
-
-    @property
-    def _media_class(self) -> type:
-        if self.name.startswith("img_"):
-            return PrideUnityImage
-        elif self.name.startswith("spi_"):
-            return PrideUnityImage
-        elif self.name.startswith("sud_"):
-            return PrideUnityAudio
-        elif self.name.startswith("mov_") or self.name.startswith("adv_"):
-            return PrideUnityVideo
-        else:
-            return PrideDummyMedia
-
-    def _download_bytes(self) -> dict:
-        """
-        [INTERNAL] Downloads, and optionally deobfuscates, the assetbundle as raw bytes.
-        Sanity checks are implemented in parent class PrideResource.
-        """
-
-        data = super()._download_bytes()
-        _bytes, _mtime = data["bytes"], data["mtime"]
-
-        if not _bytes.startswith(UNITY_SIGNATURE):
-            self._reporter.update("Deobfuscating")
-            _bytes = PrideAssetBundleDeobfuscator(self.name).process(_bytes)
-            if not _bytes.startswith(UNITY_SIGNATURE):
-                self._reporter.warning("Downloaded but LEFT OBFUSCATED")
-                # Unexpected things may happen...
-                # So unlike _download_bytes(), here we don't raise an error and abort.
-
-        return {
-            "bytes": _bytes,
-            "mtime": _mtime,
-        }
