@@ -1,6 +1,6 @@
 {
     "revision": [
-        673,
+        675,
         498
     ],
     "assetBundleList": [
@@ -28096,24 +28096,24 @@
         {
             "id": 45990,
             "name": "tln_live_unit-012-360",
-            "size": 2321686,
-            "crc": 83458331,
+            "size": 2321689,
+            "crc": 1366688147,
             "dependencies": [
-                45670,
                 45657,
                 45686,
-                45674,
                 45658,
                 161,
                 162,
                 47046,
                 163,
-                45660
+                45670,
+                45660,
+                45674
             ],
             "state": "UPDATE",
-            "md5": "9f76bad68c0e081f07f54dde0407e275",
+            "md5": "5ec044dbdf0e16939fa33f8ef7a2243e",
             "objectName": "Hqp7gw",
-            "generation": "1758540668356564",
+            "generation": "1760672926759025",
             "uploadVersionId": 202050
         },
         {
@@ -42101,11 +42101,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 219335,
+            "size": 219897,
             "state": "UPDATE",
-            "md5": "7b6d2e9307e045978ac29861254bf991",
+            "md5": "a7b980324308d5a33734f36875f84203",
             "objectName": "iVKnyF",
-            "generation": "1760554455912257",
+            "generation": "1760663968084045",
             "uploadVersionId": 202050
         },
         {
