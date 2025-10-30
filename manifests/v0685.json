@@ -1,0 +1,65 @@
+{
+    "revision": [
+        686,
+        685
+    ],
+    "assetBundleList": [
+        {
+            "id": 9451,
+            "name": "mot_live_chr_cmn_tri-002_00_in",
+            "size": 5154176,
+            "crc": 1880126944,
+            "state": "UPDATE",
+            "md5": "dc2263bd5089f57c2188daca22f5517e",
+            "objectName": "sVYA8J",
+            "generation": "1752634025519221",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 11790,
+            "name": "mot_live_chr_cmn_tri-002_02_in",
+            "size": 5061352,
+            "crc": 71414823,
+            "state": "UPDATE",
+            "md5": "d3e03db60aa870c14c6064363726178a",
+            "objectName": "GjMf45",
+            "generation": "1752634025712969",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 24803,
+            "name": "mot_live_chr_cmn_tri-002_01_in",
+            "size": 5149690,
+            "crc": 252091277,
+            "state": "UPDATE",
+            "md5": "fe172a1b4ab1df0fdb0c1fde410d959f",
+            "objectName": "mo7oVf",
+            "generation": "1752634022478218",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 24805,
+            "name": "tln_live_tri-002",
+            "size": 1820047,
+            "crc": 851332214,
+            "dependencies": [
+                3094,
+                161,
+                163,
+                24803,
+                11790,
+                24804,
+                24802,
+                9451,
+                162
+            ],
+            "state": "UPDATE",
+            "md5": "a2d290f9b778c19405c2a04a197337d2",
+            "objectName": "zEDupP",
+            "generation": "1753149686771924",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}

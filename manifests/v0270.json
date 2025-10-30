@@ -1,6 +1,6 @@
 {
     "revision": [
-        684,
+        686,
         270
     ],
     "assetBundleList": [
@@ -655,12 +655,12 @@
         {
             "id": 9451,
             "name": "mot_live_chr_cmn_tri-002_00_in",
-            "size": 5154388,
-            "crc": 3760212597,
+            "size": 5154176,
+            "crc": 1880126944,
             "state": "UPDATE",
-            "md5": "ab2f4708c4477bde77a43e1884cac2d0",
+            "md5": "dc2263bd5089f57c2188daca22f5517e",
             "objectName": "sVYA8J",
-            "generation": "1740993947172861",
+            "generation": "1752634025519221",
             "uploadVersionId": 202050
         },
         {
@@ -819,12 +819,12 @@
         {
             "id": 11790,
             "name": "mot_live_chr_cmn_tri-002_02_in",
-            "size": 5062069,
-            "crc": 2264525001,
+            "size": 5061352,
+            "crc": 71414823,
             "state": "UPDATE",
-            "md5": "cf8570f0bc5e0e8dbd2dba721e7713b8",
+            "md5": "d3e03db60aa870c14c6064363726178a",
             "objectName": "GjMf45",
-            "generation": "1740993947280406",
+            "generation": "1752634025712969",
             "uploadVersionId": 202050
         },
         {
@@ -1645,34 +1645,34 @@
         {
             "id": 24803,
             "name": "mot_live_chr_cmn_tri-002_01_in",
-            "size": 5149381,
-            "crc": 2641635649,
+            "size": 5149690,
+            "crc": 252091277,
             "state": "UPDATE",
-            "md5": "8ccbcec21b2cd850342f3ad1bc92e279",
+            "md5": "fe172a1b4ab1df0fdb0c1fde410d959f",
             "objectName": "mo7oVf",
-            "generation": "1740993947488434",
+            "generation": "1752634022478218",
             "uploadVersionId": 202050
         },
         {
             "id": 24805,
             "name": "tln_live_tri-002",
-            "size": 1819995,
-            "crc": 2355649236,
+            "size": 1820047,
+            "crc": 851332214,
             "dependencies": [
-                11790,
-                24804,
                 3094,
                 161,
+                163,
+                24803,
+                11790,
+                24804,
                 24802,
                 9451,
-                24803,
-                163,
                 162
             ],
             "state": "UPDATE",
-            "md5": "6fff5ef8db43764b8862b615e7103fcb",
+            "md5": "a2d290f9b778c19405c2a04a197337d2",
             "objectName": "zEDupP",
-            "generation": "1741070426059178",
+            "generation": "1753149686771924",
             "uploadVersionId": 202050
         },
         {
@@ -98537,11 +98537,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 220958,
+            "size": 221186,
             "state": "UPDATE",
-            "md5": "1b81ec3496125f206c325617b056b603",
+            "md5": "144b4f72f783c58f304512e01782bc79",
             "objectName": "iVKnyF",
-            "generation": "1761331785925620",
+            "generation": "1761763790508010",
             "uploadVersionId": 202050
         },
         {
