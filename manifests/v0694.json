@@ -1,0 +1,49 @@
+{
+    "revision": [
+        696,
+        694
+    ],
+    "assetBundleList": [
+        {
+            "id": 45305,
+            "name": "mdl_chr_yu-ster-00_body",
+            "size": 8728597,
+            "crc": 1059290366,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "ba29b249469f36c72d8da9a47293da51",
+            "objectName": "wjOt16",
+            "generation": "1761713688337186",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45693,
+            "name": "mdl_chr_rui-ster-00_body",
+            "size": 8978166,
+            "crc": 1325976383,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "49d89c529ae8ea42f8c3c078cbfb6f55",
+            "objectName": "klH1Za",
+            "generation": "1761713688414761",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 221437,
+            "state": "UPDATE",
+            "md5": "d840e31d5ef362bbff75ff5960b4f6b7",
+            "objectName": "iVKnyF",
+            "generation": "1762368585599067",
+            "uploadVersionId": 202050
+        }
+    ],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
