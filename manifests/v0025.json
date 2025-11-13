@@ -1,6 +1,6 @@
 {
     "revision": [
-        700,
+        702,
         25
     ],
     "assetBundleList": [
@@ -30490,6 +30490,20 @@
             "md5": "f98b6c80cb6f5c2437feb40123c3f93b",
             "objectName": "j43nRl",
             "generation": "1711343329516652",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 26057,
+            "name": "mdl_chr_szk-ggyt-00_body",
+            "size": 7309517,
+            "crc": 4119247388,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "369bad3cf2301ea4b41752004206535f",
+            "objectName": "krLSfs",
+            "generation": "1753149700888666",
             "uploadVersionId": 202050
         },
         {
@@ -208438,11 +208452,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 221615,
+            "size": 221885,
             "state": "UPDATE",
-            "md5": "ddffefde536feb5e14d2289572fd3c8e",
+            "md5": "ac33530373420ffefed940c6802f56c6",
             "objectName": "iVKnyF",
-            "generation": "1762510890142981",
+            "generation": "1763006583091586",
             "uploadVersionId": 202050
         },
         {
