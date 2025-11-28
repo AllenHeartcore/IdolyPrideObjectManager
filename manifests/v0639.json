@@ -1,6 +1,6 @@
 {
     "revision": [
-        722,
+        727,
         639
     ],
     "assetBundleList": [
@@ -698,6 +698,107 @@
             "md5": "073cabb6a77bfe15d4dcf0fef49b1d93",
             "objectName": "o7NpxY",
             "generation": "1750158464129128",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43013,
+            "name": "mot_live_chr_cmn_unit-010-360_03_in",
+            "size": 5237806,
+            "crc": 3129961081,
+            "state": "UPDATE",
+            "md5": "e59331a003e0cdde8898c4c0f0206840",
+            "objectName": "lGBqtk",
+            "generation": "1762853587840180",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43015,
+            "name": "mot_live_chr_cmn_unit-010-360_02_in",
+            "size": 5205172,
+            "crc": 1699694758,
+            "state": "UPDATE",
+            "md5": "e8f88b719eb84cb7ac32fc7e7c237219",
+            "objectName": "W2q0VQ",
+            "generation": "1762853587794688",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43016,
+            "name": "mot_live_chr_cmn_unit-010-360_04_in",
+            "size": 5109139,
+            "crc": 3724569443,
+            "state": "UPDATE",
+            "md5": "33c3f32d2d52543dfcda3d2751a4fe1b",
+            "objectName": "7Imljk",
+            "generation": "1760672926773914",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43017,
+            "name": "mot_live_unit-010-360_in_layout",
+            "size": 7239,
+            "crc": 3046708281,
+            "state": "UPDATE",
+            "md5": "7090ed57704f941cf7a5c54c43280f71",
+            "objectName": "8m0wki",
+            "generation": "1759325455590292",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43018,
+            "name": "mot_live_chr_cmn_unit-010-360_00_in",
+            "size": 5124284,
+            "crc": 2225051051,
+            "state": "UPDATE",
+            "md5": "7b36e97376c5adbe068d0dd03f2f4439",
+            "objectName": "OxuTTF",
+            "generation": "1760672926779773",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43019,
+            "name": "mot_live_chr_cmn_unit-010-360_01_in",
+            "size": 2795284,
+            "crc": 3402035539,
+            "state": "UPDATE",
+            "md5": "5a12758c7b94e269673ff42069a07d9b",
+            "objectName": "P6mExN",
+            "generation": "1760672926759509",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43020,
+            "name": "tln_live_unit-010-360",
+            "size": 2541431,
+            "crc": 3660802775,
+            "dependencies": [
+                41750,
+                163,
+                43017,
+                43019,
+                43015,
+                43013,
+                43016,
+                161,
+                162,
+                47686,
+                43018
+            ],
+            "state": "UPDATE",
+            "md5": "69af2b3460e317fe3b25fc4403c9d8d2",
+            "objectName": "JAloND",
+            "generation": "1763610188130635",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43021,
+            "name": "mot_live_unit-010-360_in_cam",
+            "size": 235187,
+            "crc": 538684590,
+            "state": "UPDATE",
+            "md5": "0ed930d17c451884c7f8948ff0da7c4f",
+            "objectName": "16T771",
+            "generation": "1762853587555799",
             "uploadVersionId": 202050
         },
         {
@@ -19220,6 +19321,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 48799,
+            "name": "img_banner_l_music-unit-010-25-1130",
+            "size": 112514,
+            "crc": 4242610539,
+            "state": "UPDATE",
+            "md5": "3795d927cb7ea3cfe20900b915c91ce8",
+            "objectName": "i59aRF",
+            "generation": "1762348991255394",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 48803,
             "name": "env_photo_studio-03-001-noon",
             "size": 32592809,
@@ -19234,6 +19346,17 @@
             "md5": "957185b29f717d814c91a93f9c7cc265",
             "objectName": "tLoQGW",
             "generation": "1763441786415862",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 48808,
+            "name": "img_banner_s_music-unit-010-25-1130",
+            "size": 46400,
+            "crc": 2131807322,
+            "state": "UPDATE",
+            "md5": "35ae8657d1d6805bfcfb31b825543055",
+            "objectName": "EfOg09",
+            "generation": "1762348991254023",
             "uploadVersionId": 202050
         },
         {
@@ -20022,17 +20145,31 @@
             "objectName": "MwzyFR",
             "generation": "1763726176898515",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 49323,
+            "name": "sud_music_bgm_unit-010-360-inst",
+            "size": 2008,
+            "crc": 2702990897,
+            "dependencies": [
+                41766
+            ],
+            "state": "UPDATE",
+            "md5": "020dbcc5872cedff93ed80a281c8aa62",
+            "objectName": "dGMmvN",
+            "generation": "1764216201659036",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 224953,
+            "size": 226164,
             "state": "UPDATE",
-            "md5": "784c8f83bd05c84487a0be2a3415671e",
+            "md5": "adbd85b10655c09c1a7d8dbd1746c16e",
             "objectName": "iVKnyF",
-            "generation": "1764073547234096",
+            "generation": "1764269393350898",
             "uploadVersionId": 202050
         },
         {
@@ -20043,6 +20180,26 @@
             "md5": "5252add044e722b222c57375baecd426",
             "objectName": "tB06Wv",
             "generation": "1763603196775108",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4036,
+            "name": "mov_ui_panorama_music_unit-010.mp4",
+            "size": 6131658,
+            "state": "UPDATE",
+            "md5": "ca178379c61744d15d846025929fb962",
+            "objectName": "TwwdxA",
+            "generation": "1764073588237995",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4037,
+            "name": "mov_ui_panorama_music_unit-010_1080p.mp4",
+            "size": 12909977,
+            "state": "UPDATE",
+            "md5": "7ebd81ecf817fe4ed0e0318c3a7a3f83",
+            "objectName": "T11n3g",
+            "generation": "1748372223379245",
             "uploadVersionId": 202050
         },
         {
