@@ -13,6 +13,7 @@ import requests
 from ..adv import PrideAdventure
 from ..const import CHARACTER_ABBREVS, DEFAULT_DOWNLOAD_PATH, PathArgtype
 from ..media import PrideDummyMedia
+from ..media.text import PrideUnityText
 from ..media.video import PrideVideo
 from ..rich import ProgressReporter
 from ..utils import md5sum
@@ -108,7 +109,7 @@ class PrideResource:
 
         if self._media is None:
             self._media = self._media_class(
-                self.name.split(".")[-1],  # use extension as raw format
+                self.name.split(".")[-2 if self._media_class == PrideUnityText else -1],
                 self._download_bytes,
                 self._reporter,
             )
@@ -166,12 +167,15 @@ class PrideResource:
         """
 
         path = Path(path)
+        segs = self.name.split(".")
+        name = ".".join(segs[:-1]) if len(segs) > 2 else self.name
+        # handle double extension in text assets
 
         if path.suffix == "":  # is directory
             if categorize:
-                path = path / self._determine_subdir(self.name) / self.name
+                path = path / self._determine_subdir(name) / name
             else:
-                path = path / self.name
+                path = path / name
 
         path.parent.mkdir(parents=True, exist_ok=True)
         return path

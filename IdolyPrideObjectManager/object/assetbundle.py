@@ -7,6 +7,7 @@ from ..const import UNITY_SIGNATURE
 from ..media import PrideDummyMedia
 from ..media.audio import PrideUnityAudio
 from ..media.image import PrideUnityImage
+from ..media.text import PrideUnityText
 from ..media.video import PrideUnityVideo
 from ..rich import ProgressReporter
 from .deobfuscate import PrideAssetBundleDeobfuscator
@@ -72,6 +73,8 @@ class PrideAssetBundle(PrideResource):
         if self.name.startswith("img_"):
             return PrideUnityImage
         elif self.name.startswith("spi_"):
+            if self.name.endswith('.skl.unity3d') or self.name.endswith('.atlas.unity3d'):
+                return PrideUnityText
             return PrideUnityImage
         elif self.name.startswith("sud_"):
             return PrideUnityAudio
