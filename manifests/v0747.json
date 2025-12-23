@@ -1,0 +1,147 @@
+{
+    "revision": [
+        750,
+        747
+    ],
+    "assetBundleList": [
+        {
+            "id": 47667,
+            "name": "mot_live_chr_cmn_moon-010-360_00_in",
+            "size": 5999195,
+            "crc": 2837354996,
+            "state": "UPDATE",
+            "md5": "ffa67aba1cb1603ed9d992a74d013c27",
+            "objectName": "NPyaTl",
+            "generation": "1765854656323944",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47670,
+            "name": "mot_live_chr_cmn_moon-010-360_02_in",
+            "size": 5803152,
+            "crc": 3965192583,
+            "state": "UPDATE",
+            "md5": "f45559ec701cc441e4dda99bb74e38ad",
+            "objectName": "VGFrRU",
+            "generation": "1765854656414170",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47671,
+            "name": "mot_live_chr_cmn_moon-010-360_03_in",
+            "size": 5640185,
+            "crc": 2487193006,
+            "state": "UPDATE",
+            "md5": "238c73a7b5e57be6a2854162f5beb3d8",
+            "objectName": "vzv8U4",
+            "generation": "1764860874510981",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47672,
+            "name": "mot_live_chr_cmn_moon-010-360_04_in",
+            "size": 5980142,
+            "crc": 3846130101,
+            "state": "UPDATE",
+            "md5": "a75dbcb73d9bbcf485365d790a5b1556",
+            "objectName": "JRYPvM",
+            "generation": "1764860874415644",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47673,
+            "name": "mot_live_moon-010-360_in_layout",
+            "size": 7245,
+            "crc": 3613349297,
+            "state": "UPDATE",
+            "md5": "ac274c1a1f326a3a5440edd383971733",
+            "objectName": "lBMDhy",
+            "generation": "1759496072771827",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47674,
+            "name": "mot_live_chr_cmn_moon-010-360_01_in",
+            "size": 5651351,
+            "crc": 472865030,
+            "state": "UPDATE",
+            "md5": "20ca4b35e0e160e795f725e52aa8a114",
+            "objectName": "ns3Lyd",
+            "generation": "1764860874425853",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47675,
+            "name": "tln_live_moon-010-360",
+            "size": 2316054,
+            "crc": 3175559244,
+            "dependencies": [
+                47674,
+                47672,
+                47673,
+                47669,
+                47671,
+                161,
+                162,
+                48832,
+                163,
+                47667,
+                47670
+            ],
+            "state": "UPDATE",
+            "md5": "bf09d13b1331e46c1c62d36c94c88f20",
+            "objectName": "DJLkcG",
+            "generation": "1765854656094275",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 48832,
+            "name": "eff_cav_mov_moon-010-360",
+            "size": 7700304,
+            "crc": 1358554200,
+            "state": "UPDATE",
+            "md5": "8c5671ebb66dbed8d3b551cf17f642c7",
+            "objectName": "vDLc9K",
+            "generation": "1762480714242161",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49510,
+            "name": "sud_music_select_moon-010",
+            "size": 2005,
+            "crc": 3908355806,
+            "dependencies": [
+                47669
+            ],
+            "state": "UPDATE",
+            "md5": "3caa1385c9a2b725bf6a36343fb93dc5",
+            "objectName": "c05ypo",
+            "generation": "1765139312610347",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49718,
+            "name": "img_banner_l_photo-expression25-1224",
+            "size": 108734,
+            "crc": 3179436012,
+            "state": "UPDATE",
+            "md5": "d3723840d7880e32f525513732c464f8",
+            "objectName": "AXgYrs",
+            "generation": "1765519416535996",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 4640,
+            "name": "mov_ui_panorama_music_moon-010.mp4",
+            "size": 6067934,
+            "state": "UPDATE",
+            "md5": "13a66737a23801d8529d9e06e4691bd2",
+            "objectName": "7uwZUR",
+            "generation": "1766372013863930",
+            "uploadVersionId": 202050
+        }
+    ],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
