@@ -1,6 +1,6 @@
 {
     "revision": [
-        784,
+        788,
         650
     ],
     "assetBundleList": [
@@ -26783,6 +26783,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49720,
+            "name": "sud_se_adv_newrecord-02",
+            "size": 226063,
+            "crc": 605105313,
+            "state": "UPDATE",
+            "md5": "a96cb7a2b1e2e76478447805811e84fb",
+            "objectName": "3NX43M",
+            "generation": "1765510564398652",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49724,
             "name": "img_gacha_screen_gacha-dream-25-1224-02",
             "size": 815631,
@@ -31679,6 +31690,39 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50312,
+            "name": "img_banner_s_gacha-rev-step-rockon-26-0120",
+            "size": 41109,
+            "crc": 2990348921,
+            "state": "UPDATE",
+            "md5": "61cdbde31574f3afdb91ee4036063c58",
+            "objectName": "kkoe8R",
+            "generation": "1767609612044767",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50313,
+            "name": "img_dokan_free_rev-step-rockon-26-0120",
+            "size": 280682,
+            "crc": 385131969,
+            "state": "UPDATE",
+            "md5": "9136c5560b0a23d6023cf81f6ebdfb54",
+            "objectName": "AT2uMI",
+            "generation": "1767609612184127",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50314,
+            "name": "img_gacha_screen_rev-step-rockon-26-0120-2nd",
+            "size": 597410,
+            "crc": 3243557607,
+            "state": "UPDATE",
+            "md5": "69da16bc176db1e561bd2a72dc1480fc",
+            "objectName": "Cldw5C",
+            "generation": "1767609612447056",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50315,
             "name": "img_gacha_screen_gacha-pickup-01-26-0112",
             "size": 917589,
@@ -31687,6 +31731,50 @@
             "md5": "a20ce338da029d8fa2f7657fbc66ba84",
             "objectName": "kdGHBO",
             "generation": "1767609612250303",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50316,
+            "name": "img_gacha_button_rev-step-rockon-26-0120-1st",
+            "size": 78353,
+            "crc": 2459788626,
+            "state": "UPDATE",
+            "md5": "a4b04e448b6f64fb9e994199571f44fa",
+            "objectName": "7sMQSk",
+            "generation": "1767609612044505",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50317,
+            "name": "img_gacha_screen_rev-step-rockon-26-0120-1st",
+            "size": 593116,
+            "crc": 413658905,
+            "state": "UPDATE",
+            "md5": "b63f676ff480c6ae05fbb9505e2db7c5",
+            "objectName": "6j7Xaj",
+            "generation": "1767609612281841",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50318,
+            "name": "img_gacha_button_rev-step-rockon-26-0120-2nd",
+            "size": 75300,
+            "crc": 3739208450,
+            "state": "UPDATE",
+            "md5": "3cb592b19a4c7e0a81afab95939e776b",
+            "objectName": "zWzQlb",
+            "generation": "1767609611973693",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50319,
+            "name": "img_banner_l_gacha-rev-step-rockon-26-0120",
+            "size": 88027,
+            "crc": 3898696644,
+            "state": "UPDATE",
+            "md5": "71bd588297da65679c476358370f95dd",
+            "objectName": "GgoMi6",
+            "generation": "1767609612027924",
             "uploadVersionId": 202050
         },
         {
@@ -31956,12 +32044,12 @@
         {
             "id": 50414,
             "name": "img_gacha_appeal_pick-set-bloom-26-0115",
-            "size": 48034,
-            "crc": 1751626469,
+            "size": 47635,
+            "crc": 2236453069,
             "state": "UPDATE",
-            "md5": "8258efd3e463450dcb9247b4d60a7baf",
+            "md5": "c70e3cd90f570953d8d02dee678f002a",
             "objectName": "hSHK6O",
-            "generation": "1767768918335208",
+            "generation": "1768792179098015",
             "uploadVersionId": 202050
         },
         {
@@ -32134,17 +32222,50 @@
             "objectName": "51FZ09",
             "generation": "1767932671922062",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 50498,
+            "name": "img_banner_l_gacha-premium-26-0124",
+            "size": 114432,
+            "crc": 3537037967,
+            "state": "UPDATE",
+            "md5": "5641abfac9d496b3568ef6119d3c1c5d",
+            "objectName": "JRNFVX",
+            "generation": "1768476889983993",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50499,
+            "name": "img_dokan_free_gacha-premium-26-0124",
+            "size": 334277,
+            "crc": 3165657778,
+            "state": "UPDATE",
+            "md5": "378fab4b045cea0de78ee7b2934ff074",
+            "objectName": "zvP01n",
+            "generation": "1768476890077170",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50500,
+            "name": "img_banner_s_gacha-premium-26-0124",
+            "size": 47236,
+            "crc": 1009073210,
+            "state": "UPDATE",
+            "md5": "bfd47ddd814371a64a0d7a927f815be3",
+            "objectName": "IbRGql",
+            "generation": "1768476889944854",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 230279,
+            "size": 230923,
             "state": "UPDATE",
-            "md5": "c96d7358c99400d6931543cb4561d92f",
+            "md5": "225ddf45d36c3e65cdb7f771bc189ea8",
             "objectName": "iVKnyF",
-            "generation": "1768354738166303",
+            "generation": "1768621787113441",
             "uploadVersionId": 202050
         },
         {
