@@ -1,6 +1,6 @@
 {
     "revision": [
-        801,
+        807,
         585
     ],
     "assetBundleList": [
@@ -6535,6 +6535,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 45468,
+            "name": "img_hair_thumb_ai-hair-23",
+            "size": 10274,
+            "crc": 3192966751,
+            "state": "UPDATE",
+            "md5": "02607637ed4752df009ea4e16b4a090a",
+            "objectName": "DcIzc6",
+            "generation": "1752517456576756",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 45469,
             "name": "img_hair_thumb_ski-hair-23",
             "size": 10283,
@@ -6554,6 +6565,17 @@
             "md5": "570a5d16d12d184528cc45ed87d1ed76",
             "objectName": "uWWQBC",
             "generation": "1752517456607175",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45475,
+            "name": "img_hair_thumb_ai-hair-22",
+            "size": 13672,
+            "crc": 642918057,
+            "state": "UPDATE",
+            "md5": "06f4d3e4f5d87a0563c98b5735c8eaf7",
+            "objectName": "GRox9n",
+            "generation": "1752517456613181",
             "uploadVersionId": 202050
         },
         {
@@ -8396,6 +8418,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 45887,
+            "name": "sud_vo_adv_card_ai_53_02",
+            "size": 1068402,
+            "crc": 3741016558,
+            "state": "UPDATE",
+            "md5": "87dfc7a0b3e74c2fc30db655b87ddf5b",
+            "objectName": "Xqoq6E",
+            "generation": "1759922983294848",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 45888,
             "name": "sud_vo_adv_hbd_05_szk023",
             "size": 28506,
@@ -8426,6 +8459,17 @@
             "md5": "383f5e02abd1a08f7358c797e654733d",
             "objectName": "gWwGVe",
             "generation": "1753425744178143",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45891,
+            "name": "sud_vo_adv_card_ai_53_03",
+            "size": 1134487,
+            "crc": 2339004386,
+            "state": "UPDATE",
+            "md5": "5bfe735a22f25c416ff6503fa5f441a5",
+            "objectName": "BtB6wI",
+            "generation": "1765273389706896",
             "uploadVersionId": 202050
         },
         {
@@ -8580,6 +8624,17 @@
             "md5": "d77b0829f483c164280c188c10ffee9b",
             "objectName": "vCwk4e",
             "generation": "1753425743861110",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 45907,
+            "name": "sud_vo_adv_card_ai_53_01",
+            "size": 1183825,
+            "crc": 193835343,
+            "state": "UPDATE",
+            "md5": "c32553e3cc42fbf8fe2c6d1e98a0694f",
+            "objectName": "r2vUmp",
+            "generation": "1753425744265088",
             "uploadVersionId": 202050
         },
         {
@@ -38922,6 +38977,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49395,
+            "name": "mdl_chr_ai-hair-21_hair",
+            "size": 5165028,
+            "crc": 2488118699,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "1ad278bc18837c0ee87b32acbb57544e",
+            "objectName": "lCLmrX",
+            "generation": "1765343611711975",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49397,
             "name": "img_card_full_1_mei-05-vlnt-00",
             "size": 774945,
@@ -38941,6 +39010,28 @@
             "md5": "f43d05c2971b32ad287df1704e714d46",
             "objectName": "sYL8XC",
             "generation": "1764750497745251",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49401,
+            "name": "img_card_full_1_ai-05-birt-02",
+            "size": 882078,
+            "crc": 774288491,
+            "state": "UPDATE",
+            "md5": "15c3223bb3801b2bc0570ce7c984f93d",
+            "objectName": "bYXau8",
+            "generation": "1764750497137330",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49402,
+            "name": "img_hair_thumb_ai-hair-20",
+            "size": 14750,
+            "crc": 1598009303,
+            "state": "UPDATE",
+            "md5": "ba00a18975e67fb6d0d165bc23a0ffa8",
+            "objectName": "WxNDkk",
+            "generation": "1764756749360206",
             "uploadVersionId": 202050
         },
         {
@@ -40115,6 +40206,61 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49542,
+            "name": "sud_vo_adv_hbd_06_ai008",
+            "size": 31878,
+            "crc": 1574874441,
+            "state": "UPDATE",
+            "md5": "daaf239bfdeb47021b2365b18daa1a64",
+            "objectName": "SxLJVQ",
+            "generation": "1765175052095127",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49543,
+            "name": "sud_vo_adv_hbd_06_ai021",
+            "size": 30707,
+            "crc": 2546270168,
+            "state": "UPDATE",
+            "md5": "68798297e9c7a9ca5a544404ab246a98",
+            "objectName": "zqmXY4",
+            "generation": "1765175052129315",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49544,
+            "name": "sud_vo_adv_hbd_06_ai009",
+            "size": 36196,
+            "crc": 3629484433,
+            "state": "UPDATE",
+            "md5": "7ea311277f2e2a389e1c0b49aa82e923",
+            "objectName": "xivBWE",
+            "generation": "1765175052144152",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49545,
+            "name": "sud_vo_adv_hbd_06_ai014",
+            "size": 41611,
+            "crc": 1620799281,
+            "state": "UPDATE",
+            "md5": "a8a91195911cbc7e49e4331462e3774c",
+            "objectName": "D9KlQR",
+            "generation": "1765175052121284",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49546,
+            "name": "sud_vo_adv_hbd_06_ai010",
+            "size": 32145,
+            "crc": 950354472,
+            "state": "UPDATE",
+            "md5": "f458f3ca15eafec47cff9079a61c3e79",
+            "objectName": "X8rEkW",
+            "generation": "1765175052116419",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49547,
             "name": "sud_vo_cmn_szk-05-link-00_evolution-02",
             "size": 15580,
@@ -40123,6 +40269,28 @@
             "md5": "44f752fb24dde28d6df3d952e66cf3f2",
             "objectName": "RQwh5Z",
             "generation": "1765175052111566",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49548,
+            "name": "sud_vo_adv_hbd_06_ai018",
+            "size": 34912,
+            "crc": 2274961128,
+            "state": "UPDATE",
+            "md5": "0f39bdfa57dc1718e99a7911ee687807",
+            "objectName": "kyFonZ",
+            "generation": "1765175052135380",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49549,
+            "name": "sud_vo_adv_hbd_06_ai002",
+            "size": 29521,
+            "crc": 2147918381,
+            "state": "UPDATE",
+            "md5": "fe51be27511cbb0187d7d5c78ab4c3a9",
+            "objectName": "D51OaG",
+            "generation": "1765175052083916",
             "uploadVersionId": 202050
         },
         {
@@ -40137,6 +40305,28 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49551,
+            "name": "sud_vo_adv_hbd_06_ai001",
+            "size": 29604,
+            "crc": 1606192287,
+            "state": "UPDATE",
+            "md5": "510631dc1a7e02e5bfc7b611373fb080",
+            "objectName": "OfeezZ",
+            "generation": "1765175052132795",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49552,
+            "name": "sud_vo_adv_hbd_06_ai019",
+            "size": 41500,
+            "crc": 2873097293,
+            "state": "UPDATE",
+            "md5": "b0f763b499ec72fd0969185fe7f4fbe0",
+            "objectName": "rJ0IMx",
+            "generation": "1765175052084516",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49553,
             "name": "sud_vo_home_szk-05-link-00_cos-b-02",
             "size": 57782,
@@ -40145,6 +40335,17 @@
             "md5": "dd659ea3256f919ca07c17142bb15737",
             "objectName": "ygVsx7",
             "generation": "1765175052173414",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49554,
+            "name": "sud_vo_adv_hbd_06_ai006",
+            "size": 42858,
+            "crc": 1810605050,
+            "state": "UPDATE",
+            "md5": "9f6ea5e4ec947460884c313e3b213fe8",
+            "objectName": "anjuSU",
+            "generation": "1765175052135962",
             "uploadVersionId": 202050
         },
         {
@@ -40159,6 +40360,61 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49556,
+            "name": "sud_vo_adv_hbd_06_ai017",
+            "size": 39239,
+            "crc": 1771699117,
+            "state": "UPDATE",
+            "md5": "fa06e2afbbe09ae68432276cdfca87ce",
+            "objectName": "Bhp3U9",
+            "generation": "1765175052142526",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49557,
+            "name": "sud_vo_adv_hbd_06_ai013",
+            "size": 38951,
+            "crc": 1674078368,
+            "state": "UPDATE",
+            "md5": "6082135300bebb8babc297340402e326",
+            "objectName": "fZcmBH",
+            "generation": "1765175052139081",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49558,
+            "name": "sud_vo_adv_hbd_06_ai020",
+            "size": 43805,
+            "crc": 195551799,
+            "state": "UPDATE",
+            "md5": "f646d13102b67b28791e31cf43a3203c",
+            "objectName": "JvLdGx",
+            "generation": "1765175052251364",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49559,
+            "name": "sud_vo_adv_hbd_06_ai015",
+            "size": 32652,
+            "crc": 239253674,
+            "state": "UPDATE",
+            "md5": "88388a150d275ca63978c4b5d99360e5",
+            "objectName": "qw3ZEZ",
+            "generation": "1765175052097735",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49560,
+            "name": "sud_vo_adv_hbd_06_ai003",
+            "size": 48208,
+            "crc": 26490643,
+            "state": "UPDATE",
+            "md5": "c140ebcab6de301013a6d5fcbd67396b",
+            "objectName": "jzMbyu",
+            "generation": "1765175052099085",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49561,
             "name": "sud_vo_cmn_szk-05-link-00_b_gacha-get",
             "size": 30445,
@@ -40167,6 +40423,72 @@
             "md5": "f391d6e631d5573437ae5697ac2fa565",
             "objectName": "8qI72B",
             "generation": "1765175052125352",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49562,
+            "name": "sud_vo_adv_hbd_06_ai011",
+            "size": 28729,
+            "crc": 1369171155,
+            "state": "UPDATE",
+            "md5": "13e3a643d8c90e326aad305a266ba702",
+            "objectName": "UXiFwy",
+            "generation": "1765175052080974",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49563,
+            "name": "sud_vo_adv_hbd_06_ai004",
+            "size": 34318,
+            "crc": 2944482733,
+            "state": "UPDATE",
+            "md5": "a6428470e6a5399d25ada7b746c40fde",
+            "objectName": "nqXezJ",
+            "generation": "1765175052128470",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49564,
+            "name": "sud_vo_adv_hbd_06_ai005",
+            "size": 33292,
+            "crc": 2174837132,
+            "state": "UPDATE",
+            "md5": "0f0a6714d423f6c83988184d50e5c014",
+            "objectName": "g0ldQZ",
+            "generation": "1765175052224697",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49565,
+            "name": "sud_vo_adv_hbd_06_ai012",
+            "size": 36003,
+            "crc": 933206998,
+            "state": "UPDATE",
+            "md5": "012e8edba035b0c808efb1840fcbe0f7",
+            "objectName": "TMz8nz",
+            "generation": "1765175052098099",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49566,
+            "name": "sud_vo_adv_hbd_06_ai016",
+            "size": 15533,
+            "crc": 3206105038,
+            "state": "UPDATE",
+            "md5": "7f2bf2609fa1e16ef55736e79b39a541",
+            "objectName": "K2jDwv",
+            "generation": "1765175052221706",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49567,
+            "name": "sud_vo_adv_hbd_06_ai007",
+            "size": 30102,
+            "crc": 610075061,
+            "state": "UPDATE",
+            "md5": "4b2074c9485ce0e6165d57f1928d94ec",
+            "objectName": "AQrboa",
+            "generation": "1765175052102035",
             "uploadVersionId": 202050
         },
         {
@@ -40778,6 +41100,34 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49656,
+            "name": "mdl_chr_ai-hair-22_hair",
+            "size": 5625210,
+            "crc": 2288020034,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "4ccad529f8b0b0f1efedce4578c31afd",
+            "objectName": "XTKtoZ",
+            "generation": "1765885951169310",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49659,
+            "name": "mdl_chr_ai-hair-20_hair",
+            "size": 5059475,
+            "crc": 3402593424,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "07770851aaec5474b8ec535191ef2d2b",
+            "objectName": "zcmoRP",
+            "generation": "1765885951174527",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49660,
             "name": "sud_vo_live_yu-05-prem-00_skill-a",
             "size": 9996,
@@ -40819,6 +41169,20 @@
             "md5": "26afef4b9b50a1346e8bcffb14456797",
             "objectName": "3IUt7m",
             "generation": "1765432796577498",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49664,
+            "name": "mdl_chr_ai-hair-23_hair",
+            "size": 5278406,
+            "crc": 1321592339,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "98854120297e6318929f63cabf93b9d2",
+            "objectName": "1IDcgw",
+            "generation": "1765885953981030",
             "uploadVersionId": 202050
         },
         {
@@ -46499,6 +46863,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50293,
+            "name": "mov_gacha_dokan_gacha-birt-26-0209",
+            "size": 1745328,
+            "crc": 3788105169,
+            "state": "UPDATE",
+            "md5": "af804f400c31abf53a2640a59be543e6",
+            "objectName": "bZSovl",
+            "generation": "1766744426580297",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50294,
             "name": "spi_sd_chr_cos_ktn-vlnt-00",
             "size": 505313,
@@ -46540,6 +46915,17 @@
             "md5": "0bc9524612aeadd47ef36be154beb715",
             "objectName": "OMAOYI",
             "generation": "1767422593903541",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50301,
+            "name": "sud_bgm_gacha_dokan_gacha-birt-26-0209",
+            "size": 307586,
+            "crc": 1632780910,
+            "state": "UPDATE",
+            "md5": "d86944c3bda2a31b40ba4a2bbaba6852",
+            "objectName": "PtMZp1",
+            "generation": "1767422593911604",
             "uploadVersionId": 202050
         },
         {
@@ -49098,6 +49484,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50626,
+            "name": "sud_vo_cmn_ai-05-birt-02_unit-in",
+            "size": 13701,
+            "crc": 2531695926,
+            "state": "UPDATE",
+            "md5": "8b6a723f863d67df569f421fbc7c9d9a",
+            "objectName": "Yrr4rC",
+            "generation": "1768995042922649",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50628,
             "name": "img_banner_l_shop-pack-26-0128",
             "size": 73955,
@@ -49106,6 +49503,28 @@
             "md5": "4cba765816361b83412b73d186492406",
             "objectName": "WPyFeu",
             "generation": "1769000694308233",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50629,
+            "name": "sud_vo_phone_tel-hbd-ai-26-0209",
+            "size": 370483,
+            "crc": 2250812623,
+            "state": "UPDATE",
+            "md5": "4650cc4735c33a3ce756518754e4caa9",
+            "objectName": "LEIYbf",
+            "generation": "1768995043040651",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50637,
+            "name": "sud_vo_cmn_ai-05-birt-02_gacha-get",
+            "size": 23009,
+            "crc": 1496695213,
+            "state": "UPDATE",
+            "md5": "c98f1f84ab9f7bc8a5816e2886b898c7",
+            "objectName": "TTb3gZ",
+            "generation": "1768995042844192",
             "uploadVersionId": 202050
         },
         {
@@ -49153,6 +49572,28 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50653,
+            "name": "sud_vo_live_ai-05-birt-02_skill-sp",
+            "size": 12872,
+            "crc": 2296586638,
+            "state": "UPDATE",
+            "md5": "2fcbf5fb37fe6ab83ca2f964452f77bd",
+            "objectName": "xbxkDO",
+            "generation": "1768995042839296",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50656,
+            "name": "sud_vo_live_ai-05-birt-02_skill-a",
+            "size": 10764,
+            "crc": 3662542438,
+            "state": "UPDATE",
+            "md5": "0e5ac61f49da15e7d1867566f430ed0c",
+            "objectName": "OkkMHl",
+            "generation": "1768995042850235",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50659,
             "name": "img_shop_item_thumb_shop-pack-26-0128-04",
             "size": 17552,
@@ -49194,6 +49635,123 @@
             "md5": "2f3b553087a5e4c726c75153a2d27ae0",
             "objectName": "ridpgh",
             "generation": "1769083213502311",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50669,
+            "name": "mdl_shw_goods_nameplate-12-501",
+            "size": 177888,
+            "crc": 241609460,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "1bc400b94b8f1d9d2a847b04caf01058",
+            "objectName": "69jk6U",
+            "generation": "1769083213432291",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50670,
+            "name": "spi_sd_chr_hair_ai-hair-20",
+            "size": 364423,
+            "crc": 433573709,
+            "state": "UPDATE",
+            "md5": "b5e14284bb75e6edff7e6a3a3afe1f2f",
+            "objectName": "cw7015",
+            "generation": "1770088504970271",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50672,
+            "name": "spi_sd_chr_hair_ai-hair-20.atlas",
+            "size": 2833,
+            "crc": 1280935662,
+            "state": "UPDATE",
+            "md5": "6ef0a3aa18d4e26f981be264607c48f4",
+            "objectName": "4rgyjJ",
+            "generation": "1769140032262160",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50674,
+            "name": "mdl_shw_goods_chracrylicbord-12-205",
+            "size": 311471,
+            "crc": 900906353,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "4095af2d09a76dbedf26f10c133a9d53",
+            "objectName": "5thars",
+            "generation": "1769083213482348",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50675,
+            "name": "mdl_shw_goods_bigbuttonbadge-12-501",
+            "size": 540390,
+            "crc": 111465983,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "34344185b4d8780d82b75276ca7a1a1d",
+            "objectName": "m6ZWFn",
+            "generation": "1769083213578450",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50676,
+            "name": "mdl_shw_goods_chracrylicsd-12-205",
+            "size": 146819,
+            "crc": 2940592859,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "9a9d76adc74a8076266d62986cc77b6b",
+            "objectName": "KNyO49",
+            "generation": "1769083213422725",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50677,
+            "name": "mdl_shw_goods_tapestry-12-501",
+            "size": 848030,
+            "crc": 1973897099,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "8bcf8eee2133fbaf8769f0a7ec5185b9",
+            "objectName": "vodXVE",
+            "generation": "1769083213600870",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50678,
+            "name": "spi_sd_chr_hair_ai-hair-20.skl",
+            "size": 21274,
+            "crc": 2024289377,
+            "state": "UPDATE",
+            "md5": "fb8ec38695496486ab962ac0c54632d6",
+            "objectName": "85RNIs",
+            "generation": "1769140032367597",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50680,
+            "name": "mdl_shw_goods_buttonbadge-12-205",
+            "size": 167636,
+            "crc": 4294761899,
+            "dependencies": [
+                360
+            ],
+            "state": "UPDATE",
+            "md5": "acc789c4afd74ffe6e65911ba266e343",
+            "objectName": "q985YJ",
+            "generation": "1769083213466132",
             "uploadVersionId": 202050
         },
         {
@@ -49263,6 +49821,83 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50707,
+            "name": "img_toy_thumb_chracrylicbord-12-205",
+            "size": 19259,
+            "crc": 4005848957,
+            "state": "UPDATE",
+            "md5": "4d5a102f83c8b7db0c93d577d0526901",
+            "objectName": "9ozTHm",
+            "generation": "1769165267461768",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50708,
+            "name": "img_toy_thumb_buttonbadge-12-205",
+            "size": 25645,
+            "crc": 2611210291,
+            "state": "UPDATE",
+            "md5": "d406d2da884b75ab16111c26be3c723a",
+            "objectName": "WCoILf",
+            "generation": "1769165267491261",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50710,
+            "name": "img_card_thumb_1_ai-05-birt-02",
+            "size": 31258,
+            "crc": 4190544937,
+            "state": "UPDATE",
+            "md5": "760448d4df441941de18e6e595f94ac6",
+            "objectName": "Sp0bl2",
+            "generation": "1769165267749414",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50711,
+            "name": "img_toy_thumb_tapestry-12-501",
+            "size": 22496,
+            "crc": 4194775739,
+            "state": "UPDATE",
+            "md5": "aa47545342047568d7e94ef40729010c",
+            "objectName": "kRqjbH",
+            "generation": "1769165267518948",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50716,
+            "name": "img_toy_thumb_chracrylicsd-12-205",
+            "size": 11962,
+            "crc": 1473864178,
+            "state": "UPDATE",
+            "md5": "7e5f05eb271a980c01fe1dbeae3dd761",
+            "objectName": "gSDo3G",
+            "generation": "1769165267531071",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50727,
+            "name": "img_card_upper_1_ai-05-birt-02",
+            "size": 59833,
+            "crc": 3821443125,
+            "state": "UPDATE",
+            "md5": "56992a7ac49a340f20bd4b52ea7c4b4f",
+            "objectName": "CBy3Cl",
+            "generation": "1769165267582301",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50731,
+            "name": "img_card_rect_1_ai-05-birt-02",
+            "size": 60840,
+            "crc": 1308235872,
+            "state": "UPDATE",
+            "md5": "b4c116b47d628c3dad57100acfde6c04",
+            "objectName": "Ybvhjt",
+            "generation": "1769165267512503",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50738,
             "name": "sud_bgm_general_gacha-lm-set-bloom-26-0128",
             "size": 2023,
@@ -49274,6 +49909,303 @@
             "md5": "067aaa218d3c711ea3cdbb77f4f7b70e",
             "objectName": "EBHI3J",
             "generation": "1769171453392761",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50766,
+            "name": "img_shop_item_thumb_special-shop-pack-26-0209-01",
+            "size": 24442,
+            "crc": 563012647,
+            "state": "UPDATE",
+            "md5": "cb02d47988126f7cc4cde8b2c76669ba",
+            "objectName": "QX0wrR",
+            "generation": "1769501079592894",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50767,
+            "name": "img_deco_thumb_shop-pack-26-0209",
+            "size": 14261,
+            "crc": 4116548721,
+            "state": "UPDATE",
+            "md5": "211da52e9c2df36d661e3a5d6f14df82",
+            "objectName": "YOsgcR",
+            "generation": "1769501079462225",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50768,
+            "name": "img_shop_item_thumb_shop-pack-26-0209-02",
+            "size": 22582,
+            "crc": 4024390744,
+            "state": "UPDATE",
+            "md5": "e8e65776c0ed1ec89d9110e95f4e1b1a",
+            "objectName": "8h9LCo",
+            "generation": "1769501079631352",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50769,
+            "name": "img_shop_item_thumb_shop-pack-26-0209-01",
+            "size": 19319,
+            "crc": 1366930973,
+            "state": "UPDATE",
+            "md5": "bc4657dd7b8038366597dd97bc0ccac4",
+            "objectName": "GS8c8t",
+            "generation": "1769501079595376",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50770,
+            "name": "img_banner_l_gacha-rev-birthday-26-0209",
+            "size": 113388,
+            "crc": 176771313,
+            "state": "UPDATE",
+            "md5": "de6fa82f13e3178c0070213d104e11b0",
+            "objectName": "4ojDSn",
+            "generation": "1769501079525643",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50771,
+            "name": "img_dokan_free_special-shop-pack-26-0209",
+            "size": 268755,
+            "crc": 1842809274,
+            "state": "UPDATE",
+            "md5": "f6cf49425425f687f8dad92a9b7bad02",
+            "objectName": "vhGQVg",
+            "generation": "1769501079590392",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50772,
+            "name": "img_ui_emb_birthday_ai-05",
+            "size": 24246,
+            "crc": 3717830333,
+            "state": "UPDATE",
+            "md5": "8606a5310735028c430098c48fe298d7",
+            "objectName": "86Gn5j",
+            "generation": "1769501079481933",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50773,
+            "name": "img_banner_l_gacha-fixed-26-0209",
+            "size": 112133,
+            "crc": 1217120012,
+            "state": "UPDATE",
+            "md5": "a821924ab37ea1638a290f75c41fe1fc",
+            "objectName": "L8yzKe",
+            "generation": "1769501079522748",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50774,
+            "name": "img_shop_thumb_shop-pack-26-0209",
+            "size": 91152,
+            "crc": 1355284659,
+            "state": "UPDATE",
+            "md5": "e6d3f1789de166d77ab0b3cd8c29cfb0",
+            "objectName": "704xzD",
+            "generation": "1769501079569808",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50775,
+            "name": "img_gacha_button_rev-birthday-26-0209",
+            "size": 88463,
+            "crc": 2063280959,
+            "state": "UPDATE",
+            "md5": "7bd178f781aa9d236896e2d9fb20d5bc",
+            "objectName": "Mp06BG",
+            "generation": "1769501079665070",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50776,
+            "name": "img_gacha_button_fixed-26-0209",
+            "size": 97178,
+            "crc": 106843834,
+            "state": "UPDATE",
+            "md5": "2aad158f1c582808b2be14344fecd636",
+            "objectName": "yxJshd",
+            "generation": "1769501079530762",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50777,
+            "name": "img_gacha_button_birthday-26-0209",
+            "size": 91673,
+            "crc": 2527123911,
+            "state": "UPDATE",
+            "md5": "15632750bbd325bb5f92dc4322c6a286",
+            "objectName": "gXfkoQ",
+            "generation": "1769501079588410",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50778,
+            "name": "img_banner_l_shop-pack-26-0209",
+            "size": 75105,
+            "crc": 3494690401,
+            "state": "UPDATE",
+            "md5": "ee21f29f124a44e34e7c311fed2efb86",
+            "objectName": "xwCeM8",
+            "generation": "1769501079768558",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50779,
+            "name": "img_shop_item_thumb_shop-pack-26-0209-04",
+            "size": 17623,
+            "crc": 2675513082,
+            "state": "UPDATE",
+            "md5": "d62f540fad26474893188460ba294dd1",
+            "objectName": "EvUFqO",
+            "generation": "1769501079595875",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50780,
+            "name": "img_banner_l_gacha-birthday-26-0209",
+            "size": 116999,
+            "crc": 2254812018,
+            "state": "UPDATE",
+            "md5": "8e93835de4d4e619359e9159a73571d6",
+            "objectName": "dUPUgC",
+            "generation": "1769501079718703",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50781,
+            "name": "img_banner_s_gacha-rev-birthday-26-0209",
+            "size": 47217,
+            "crc": 2003215179,
+            "state": "UPDATE",
+            "md5": "6d9c1b2dae54a3a23afaac34843b6c2b",
+            "objectName": "5czrrK",
+            "generation": "1769501079642656",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50782,
+            "name": "img_deco_full_shop-pack-26-0209",
+            "size": 258530,
+            "crc": 3835508111,
+            "state": "UPDATE",
+            "md5": "c2ebb389205d147e8d0b2a88a974656a",
+            "objectName": "YDJbmT",
+            "generation": "1769501079609979",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50783,
+            "name": "img_shop_item_thumb_shop-pack-26-0209-03",
+            "size": 22163,
+            "crc": 2387428475,
+            "state": "UPDATE",
+            "md5": "d6db6fd8788040bea088bcec3c215cf2",
+            "objectName": "gl68bu",
+            "generation": "1769501079669706",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50784,
+            "name": "img_shop_thumb_shop-special-pack-26-0209",
+            "size": 93545,
+            "crc": 1588210991,
+            "state": "UPDATE",
+            "md5": "90a8d4265c20e011c9bf0b6ba2c034a7",
+            "objectName": "32r2Ru",
+            "generation": "1769501079649424",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50785,
+            "name": "img_banner_s_gacha-birthday-26-0209",
+            "size": 48071,
+            "crc": 3910852665,
+            "state": "UPDATE",
+            "md5": "b6a5dbb47d5d38a52b3469762e845af4",
+            "objectName": "3ewWlZ",
+            "generation": "1769501079649483",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50786,
+            "name": "img_banner_l_shop-special-shop-pack-26-0209",
+            "size": 85497,
+            "crc": 1595483158,
+            "state": "UPDATE",
+            "md5": "f45e001e37d0e809a92f64e7efc171e3",
+            "objectName": "QoZHxg",
+            "generation": "1769501079640647",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50787,
+            "name": "img_banner_s_gacha-fixed-26-0209",
+            "size": 45787,
+            "crc": 2141075411,
+            "state": "UPDATE",
+            "md5": "e9cb08e9469f51feb77446bbf8c027f3",
+            "objectName": "hFADjn",
+            "generation": "1769501079458774",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50788,
+            "name": "img_toy_thumb_nameplate-12-501",
+            "size": 11057,
+            "crc": 2477992152,
+            "state": "UPDATE",
+            "md5": "255e3e8f017abc042205703c22d1766b",
+            "objectName": "Yo0PoQ",
+            "generation": "1769507537439063",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50789,
+            "name": "img_toy_thumb_bigbuttonbadge-12-501",
+            "size": 25211,
+            "crc": 4056800613,
+            "state": "UPDATE",
+            "md5": "21a05a4471586d0258e43c3d44b7efe9",
+            "objectName": "Q0pAJw",
+            "generation": "1769507537348650",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50790,
+            "name": "img_story_thumb_card_ai_53_02",
+            "size": 232665,
+            "crc": 3354991277,
+            "state": "UPDATE",
+            "md5": "a3facd30cafc87b54e127659332751e8",
+            "objectName": "QW9ToK",
+            "generation": "1769507537458399",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50791,
+            "name": "img_story_thumb_card_ai_53_03",
+            "size": 217475,
+            "crc": 3545167602,
+            "state": "UPDATE",
+            "md5": "dce8d26d337119b79c2bf8ea4728ae19",
+            "objectName": "2nll5s",
+            "generation": "1769507537574793",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50792,
+            "name": "img_icon_skill_sk-ai-05-birt-02-1",
+            "size": 4362,
+            "crc": 1990930319,
+            "state": "UPDATE",
+            "md5": "338b928b7bd2e827bfbcb8d4172fccb6",
+            "objectName": "2Qph64",
+            "generation": "1769507537329769",
             "uploadVersionId": 202050
         },
         {
@@ -49310,6 +50242,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50805,
+            "name": "img_story_thumb_card_ai_53_01",
+            "size": 217583,
+            "crc": 3555872003,
+            "state": "UPDATE",
+            "md5": "a79df7d379f74655af00957c8e5f0299",
+            "objectName": "ioMm0E",
+            "generation": "1769507537470791",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50806,
             "name": "img_banner_l_gacha-pickup-01-26-0201",
             "size": 108687,
@@ -49329,6 +50272,83 @@
             "md5": "0b4cb08c7b7e6dc90185bfbfd9546de9",
             "objectName": "Iu4ULy",
             "generation": "1769507537596345",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50810,
+            "name": "img_hair_thumb_ai-hair-21",
+            "size": 7616,
+            "crc": 845166770,
+            "state": "UPDATE",
+            "md5": "a82adfea7ef9321c22ed1b078fd583dc",
+            "objectName": "W2ksIK",
+            "generation": "1769591337672133",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50832,
+            "name": "img_gacha_screen_birthday_26-0209",
+            "size": 860469,
+            "crc": 3144574677,
+            "state": "UPDATE",
+            "md5": "c792a95addc2fbdad8fcdb495d465ec8",
+            "objectName": "mLSgQq",
+            "generation": "1769762663367893",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50839,
+            "name": "img_group_icon_liz",
+            "size": 9618,
+            "crc": 4110199266,
+            "state": "UPDATE",
+            "md5": "8cad7a013ad1ac9e6d16ed3e297759d8",
+            "objectName": "nHsHfU",
+            "generation": "1769774524767409",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50844,
+            "name": "img_group_icon_thrx",
+            "size": 4071,
+            "crc": 2603459879,
+            "state": "UPDATE",
+            "md5": "f430904fe392f657b0fa45e7d1c9912d",
+            "objectName": "l9Tz9g",
+            "generation": "1769774524775475",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50846,
+            "name": "img_group_icon_moon",
+            "size": 7879,
+            "crc": 3841215583,
+            "state": "UPDATE",
+            "md5": "6860ded1cd238778b8505ffcba55c4eb",
+            "objectName": "oCqbq8",
+            "generation": "1769774524812914",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50859,
+            "name": "img_group_icon_tri",
+            "size": 5996,
+            "crc": 819738933,
+            "state": "UPDATE",
+            "md5": "7b766d05ffbfad6d54bad73c864dea9a",
+            "objectName": "ttJFnJ",
+            "generation": "1769774524799827",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50864,
+            "name": "img_group_icon_sun",
+            "size": 6668,
+            "crc": 294966843,
+            "state": "UPDATE",
+            "md5": "e10669890844d00f5e9832aa005fdeaa",
+            "objectName": "xS8XS4",
+            "generation": "1769774524749214",
             "uploadVersionId": 202050
         }
     ],
@@ -49376,11 +50396,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 231403,
+            "size": 232315,
             "state": "UPDATE",
-            "md5": "65c93f61d108e6963bfaba579c031e3b",
+            "md5": "9c87a6abe7e2bce4bd41f252b843af5a",
             "objectName": "iVKnyF",
-            "generation": "1769539785524561",
+            "generation": "1770181610067909",
             "uploadVersionId": 202050
         },
         {
@@ -49926,21 +50946,21 @@
         {
             "id": 4195,
             "name": "adv_card_kkr_13_02.txt",
-            "size": 382405,
+            "size": 384885,
             "state": "UPDATE",
-            "md5": "7fef87a3674dcd46b94c07b08b80e08e",
+            "md5": "8ee0250706022c536ce7105315185696",
             "objectName": "032Xyo",
-            "generation": "1753700382623889",
+            "generation": "1770189796817368",
             "uploadVersionId": 202050
         },
         {
             "id": 4196,
             "name": "adv_card_kkr_13_03.txt",
-            "size": 307129,
+            "size": 309928,
             "state": "UPDATE",
-            "md5": "bc47f1ac6177765d7720b9d9e1ba4437",
+            "md5": "f79ace4852b650d31258a0a97da21f80",
             "objectName": "eIP9Lh",
-            "generation": "1753700382439798",
+            "generation": "1770026916983363",
             "uploadVersionId": 202050
         },
         {
@@ -52768,9 +53788,9 @@
             "name": "adv_main_04_07_05.txt",
             "size": 836142,
             "state": "UPDATE",
-            "md5": "6c4ee493b68e2e89bbd58eb0ff3cd17c",
+            "md5": "a4c79d41d915315a5f645603d56f05fd",
             "objectName": "PdVSP8",
-            "generation": "1764668127309337",
+            "generation": "1770181610126755",
             "uploadVersionId": 202050
         },
         {
@@ -53494,6 +54514,36 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4589,
+            "name": "adv_hbd_06_ai_01.txt",
+            "size": 62198,
+            "state": "UPDATE",
+            "md5": "385e6cd334374a0cbc4b24a25483b81b",
+            "objectName": "pxt2Az",
+            "generation": "1768813604344186",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4590,
+            "name": "adv_card_ai_53_01.txt",
+            "size": 240074,
+            "state": "UPDATE",
+            "md5": "d38091c90dff8b10e0442f1efe7b061a",
+            "objectName": "lmsMNr",
+            "generation": "1768813604411045",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4591,
+            "name": "adv_card_ai_53_01_short.txt",
+            "size": 42838,
+            "state": "UPDATE",
+            "md5": "d53b343383e42ac83417b3f8780784af",
+            "objectName": "WKKgjN",
+            "generation": "1764787791422920",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4592,
             "name": "adv_campaign_2025_1224.txt",
             "size": 1189,
@@ -53551,6 +54601,16 @@
             "md5": "33832be97a0cdf589953ad2a90749b13",
             "objectName": "ZTFHT7",
             "generation": "1764874228504774",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4600,
+            "name": "adv_card_ai_53_02.txt",
+            "size": 258329,
+            "state": "UPDATE",
+            "md5": "b08735bdc94f5fc3ddccf8dcbcae598f",
+            "objectName": "yRQ1O8",
+            "generation": "1769412277558853",
             "uploadVersionId": 202050
         },
         {
@@ -53711,6 +54771,36 @@
             "md5": "f6ed6515ed421c4be7368314521e9a76",
             "objectName": "f49hd7",
             "generation": "1765219835641038",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4621,
+            "name": "adv_hbd_06_ai_02.txt",
+            "size": 62193,
+            "state": "UPDATE",
+            "md5": "90e8b1c95a416f8a4d1b5d302096ace7",
+            "objectName": "0CLpSr",
+            "generation": "1765329081974229",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4622,
+            "name": "adv_hbd_06_ai_03.txt",
+            "size": 60811,
+            "state": "UPDATE",
+            "md5": "51f6167b1cad2b59b2aca6714ad06381",
+            "objectName": "7n8mHr",
+            "generation": "1765329081932470",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4623,
+            "name": "adv_card_ai_53_03.txt",
+            "size": 213757,
+            "state": "UPDATE",
+            "md5": "176762822ff387b7cb9683810579717b",
+            "objectName": "EWfZvv",
+            "generation": "1768813604414586",
             "uploadVersionId": 202050
         },
         {
@@ -53984,6 +55074,16 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4664,
+            "name": "mov_card_full_ai-05-birt-02_1080p.mp4",
+            "size": 2603647,
+            "state": "UPDATE",
+            "md5": "dc8d0ad70cfead9dca7d5f12cc7e0aed",
+            "objectName": "Jojj9e",
+            "generation": "1766721054474986",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4665,
             "name": "mov_card_full_mhk-05-birt-02.mp4",
             "size": 1261131,
@@ -53991,6 +55091,16 @@
             "md5": "f22cb898e2d9ee1c194e03df16f36aea",
             "objectName": "KLtnJr",
             "generation": "1766721054414125",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4666,
+            "name": "mov_card_full_ai-05-birt-02.mp4",
+            "size": 1292458,
+            "state": "UPDATE",
+            "md5": "6d2986f70d529b1c5df96503e49d9580",
+            "objectName": "tVN0qL",
+            "generation": "1766721054425052",
             "uploadVersionId": 202050
         },
         {
@@ -54031,6 +55141,16 @@
             "md5": "98293cea6deda63e2a7c9f11d4ec666b",
             "objectName": "wnr2f7",
             "generation": "1766999000147813",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4673,
+            "name": "adv_gacha_2026_0209.txt",
+            "size": 1444,
+            "state": "UPDATE",
+            "md5": "f5962c835ce67b359db0a08a109bd45a",
+            "objectName": "wkT2No",
+            "generation": "1767669633488043",
             "uploadVersionId": 202050
         },
         {
@@ -54181,6 +55301,26 @@
             "md5": "31a09c27b7cfc00a6fcc8415cdae003c",
             "objectName": "v14dRk",
             "generation": "1768979573073649",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4719,
+            "name": "mov_gacha_gacha_birt-26-0209.mp4",
+            "size": 2296806,
+            "state": "UPDATE",
+            "md5": "9f28dcbd01f24f70e47934f66e2f3f38",
+            "objectName": "0PuIcb",
+            "generation": "1769712629414448",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4720,
+            "name": "mov_gacha_gacha_birt-26-0209_1080p.mp4",
+            "size": 4541967,
+            "state": "UPDATE",
+            "md5": "04f080bbb6bc946fdd2f0dd698a4267b",
+            "objectName": "1PF9Ca",
+            "generation": "1769712629429794",
             "uploadVersionId": 202050
         }
     ],
