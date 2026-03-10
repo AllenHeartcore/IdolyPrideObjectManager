@@ -1,6 +1,6 @@
 {
     "revision": [
-        851,
+        854,
         502
     ],
     "assetBundleList": [
@@ -60891,6 +60891,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 49591,
+            "name": "scl_photo_garden-02-001",
+            "size": 7316,
+            "crc": 4277437641,
+            "state": "UPDATE",
+            "md5": "0180ccb2cd3cc13bb2f04dd73652e458",
+            "objectName": "2KXb44",
+            "generation": "1772558933346220",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 49593,
             "name": "img_banner_l_gacha-dream-25-1224-01",
             "size": 86651,
@@ -72886,6 +72897,39 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50931,
+            "name": "scl_photo_bedrock-00-000",
+            "size": 5875,
+            "crc": 1790945713,
+            "state": "UPDATE",
+            "md5": "4eeec7cec5f732ab90e5773b1e494b9d",
+            "objectName": "1hRkmC",
+            "generation": "1772558931628367",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50932,
+            "name": "scl_photo_lesson-00-000",
+            "size": 7533,
+            "crc": 484541662,
+            "state": "UPDATE",
+            "md5": "81811b20ffdc9abc6ed5851c00461d5f",
+            "objectName": "H469aN",
+            "generation": "1773038951382341",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50933,
+            "name": "scl_photo_themepark-00-000",
+            "size": 5791,
+            "crc": 1284017085,
+            "state": "UPDATE",
+            "md5": "ca13674a49dd344ef31715642961c931",
+            "objectName": "dGAM84",
+            "generation": "1772558931630441",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50934,
             "name": "sud_vo_home_mna-05-msic-00_talk-01-02",
             "size": 5223,
@@ -77611,6 +77655,72 @@
             "objectName": "RwNB8o",
             "generation": "1772710749402639",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 52205,
+            "name": "img_expr_thumb_lesson-02",
+            "size": 115700,
+            "crc": 3901240071,
+            "state": "UPDATE",
+            "md5": "a694aa6ed40aca6860642fb4b3591c6a",
+            "objectName": "jAgeF5",
+            "generation": "1772880732310483",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52209,
+            "name": "img_expr_thumb_bedrock-00-03",
+            "size": 118936,
+            "crc": 249613438,
+            "state": "UPDATE",
+            "md5": "0d557a9706eb2814dfb6396c456a6aac",
+            "objectName": "o8CjlO",
+            "generation": "1772880732316738",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52211,
+            "name": "img_expr_thumb_themepark-03",
+            "size": 118967,
+            "crc": 760174463,
+            "state": "UPDATE",
+            "md5": "ece4d4c11c67fdc75be0321c25d57406",
+            "objectName": "TZT9cz",
+            "generation": "1772880732302219",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52213,
+            "name": "img_expr_thumb_lesson-03",
+            "size": 115186,
+            "crc": 3827070224,
+            "state": "UPDATE",
+            "md5": "8d7974dbc865e27b6c3cfdcf1b46ff7e",
+            "objectName": "X65swf",
+            "generation": "1772880732321518",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52217,
+            "name": "img_expr_thumb_bedrock-00-01",
+            "size": 116801,
+            "crc": 3541496579,
+            "state": "UPDATE",
+            "md5": "9eadffc1ac0a941722a023376325496d",
+            "objectName": "b4iZsz",
+            "generation": "1772880732321276",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52232,
+            "name": "img_expr_thumb_themepark-02",
+            "size": 118524,
+            "crc": 2169661439,
+            "state": "UPDATE",
+            "md5": "f9ffdbf6ca431030e1e2228bbd288f70",
+            "objectName": "lmfgeh",
+            "generation": "1773046129343175",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
@@ -77667,11 +77777,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 237144,
+            "size": 237163,
             "state": "UPDATE",
-            "md5": "af44204ce54934deb5f3c4076fbb69b7",
+            "md5": "02ee2214dcc4c57d529eaf5d66ff35d3",
             "objectName": "iVKnyF",
-            "generation": "1772822992275317",
+            "generation": "1773047187503222",
             "uploadVersionId": 202050
         },
         {
