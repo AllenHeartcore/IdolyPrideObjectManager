@@ -1,6 +1,6 @@
 {
     "revision": [
-        863,
+        867,
         519
     ],
     "assetBundleList": [
@@ -368,6 +368,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 13305,
+            "name": "mot_photo_chr_cmn_pattern-050-2-a_lp",
+            "size": 3110598,
+            "crc": 3891485385,
+            "state": "UPDATE",
+            "md5": "b8af7ea6e7a4419bb97fb09bf7be760a",
+            "objectName": "7wXZX1",
+            "generation": "1753149644913058",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 13786,
             "name": "mot_live_chr_cmn_spskill-hsm-002-high_in",
             "size": 283069,
@@ -482,6 +493,28 @@
             "md5": "3629944e21f05b0d3552566c721914a9",
             "objectName": "SVZTnw",
             "generation": "1756096371300206",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 19849,
+            "name": "mot_photo_chr_cmn_pattern-048-a_lp",
+            "size": 3047144,
+            "crc": 4118322338,
+            "state": "UPDATE",
+            "md5": "0e607ed57eef58bc062933fb409fa2d0",
+            "objectName": "7SwAx0",
+            "generation": "1753149682336503",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 19850,
+            "name": "mot_photo_chr_cmn_pattern-049-1-a_lp",
+            "size": 2830095,
+            "crc": 3141960517,
+            "state": "UPDATE",
+            "md5": "30ae4e3569b661c64ed6aabbacff73fd",
+            "objectName": "IcuXeb",
+            "generation": "1753149616134195",
             "uploadVersionId": 202050
         },
         {
@@ -64411,12 +64444,12 @@
         {
             "id": 50262,
             "name": "sud_vo_adv_love_2603_04_01",
-            "size": 3094888,
-            "crc": 3177202456,
+            "size": 3173363,
+            "crc": 2826493331,
             "state": "UPDATE",
-            "md5": "2606fadb336f25829406a44a70867cb8",
+            "md5": "54393cd71bddb2a5a16d838f96529bff",
             "objectName": "D0zatG",
-            "generation": "1766744426749303",
+            "generation": "1773921509900577",
             "uploadVersionId": 202050
         },
         {
@@ -74569,6 +74602,28 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51703,
+            "name": "img_dokan_free_gacha-premium-26-0324",
+            "size": 313828,
+            "crc": 2329726709,
+            "state": "UPDATE",
+            "md5": "51e6609bf76321532802ebb8ea3a34bd",
+            "objectName": "lxmXq7",
+            "generation": "1772106890344706",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51704,
+            "name": "img_banner_s_gacha-premium-26-0324",
+            "size": 47290,
+            "crc": 1330750332,
+            "state": "UPDATE",
+            "md5": "39c2a6700ada513a284a43f920a3eb5e",
+            "objectName": "OpM5M4",
+            "generation": "1772106890266350",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51705,
             "name": "spi_sd_chr_cos_rio-date-00.skl",
             "size": 26996,
@@ -74833,6 +74888,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51736,
+            "name": "img_dokan_free_broadcast-26-0325-01",
+            "size": 62910,
+            "crc": 3461432602,
+            "state": "UPDATE",
+            "md5": "0ec9ea89ab1a7fd1bb4a2fdfdf107174",
+            "objectName": "HPx6Iu",
+            "generation": "1772106890278474",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51738,
             "name": "img_shop_item_thumb_shop-pack-26-0308-04",
             "size": 17039,
@@ -74874,6 +74940,17 @@
             "md5": "71e46f1a5a2145ebd26a516c3f4c1ca0",
             "objectName": "3KJsZJ",
             "generation": "1772106890312059",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51742,
+            "name": "img_banner_l_news-26-0325-01",
+            "size": 36070,
+            "crc": 3619290094,
+            "state": "UPDATE",
+            "md5": "b4a1895a5ccd60f1802826c2523157fb",
+            "objectName": "vK8tsg",
+            "generation": "1772106890283028",
             "uploadVersionId": 202050
         },
         {
@@ -76831,6 +76908,26 @@
             "objectName": "PZJuUe",
             "generation": "1773407190352795",
             "uploadVersionId": 202050
+        },
+        {
+            "id": 52682,
+            "name": "env_photo_themepark-00-000-night",
+            "size": 76197393,
+            "crc": 3140626686,
+            "dependencies": [
+                360,
+                870,
+                19849,
+                19850,
+                13305,
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "57ad10720de374e47f4c5b10706e50d6",
+            "objectName": "2zuMC1",
+            "generation": "1773823049620676",
+            "uploadVersionId": 202050
         }
     ],
     "resourceList": [
@@ -76889,9 +76986,9 @@
             "name": "story-character-relations.json",
             "size": 238798,
             "state": "UPDATE",
-            "md5": "5de760b2d00b2800e6c0dbf27f900652",
+            "md5": "af96cfc65c9a89075e1f58de1ca32ce4",
             "objectName": "iVKnyF",
-            "generation": "1773800268594453",
+            "generation": "1773884138013599",
             "uploadVersionId": 202050
         },
         {
@@ -83587,11 +83684,11 @@
         {
             "id": 4713,
             "name": "adv_love_2603_04_01.txt",
-            "size": 452132,
+            "size": 452673,
             "state": "UPDATE",
-            "md5": "7814bf0193a3d4759788054f9fa0da67",
+            "md5": "f0359910c97e9ad0522e6052494fc51f",
             "objectName": "0NYDbI",
-            "generation": "1773389494389567",
+            "generation": "1773924698972313",
             "uploadVersionId": 202050
         },
         {
