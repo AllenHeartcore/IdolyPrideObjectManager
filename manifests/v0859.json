@@ -1,6 +1,6 @@
 {
     "revision": [
-        861,
+        863,
         859
     ],
     "assetBundleList": [
@@ -185,6 +185,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51682,
+            "name": "img_banner_l_gacha-premium-26-0324",
+            "size": 112708,
+            "crc": 2815963422,
+            "state": "UPDATE",
+            "md5": "2f0c02538ba7a7ed6546e5d676cce248",
+            "objectName": "4Nr0wm",
+            "generation": "1772106890312030",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51713,
             "name": "mov_gacha_dokan_pick-set-bloom-26-0318",
             "size": 1040912,
@@ -262,6 +273,17 @@
             "uploadVersionId": 202050
         }
     ],
-    "resourceList": [],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 238798,
+            "state": "UPDATE",
+            "md5": "5de760b2d00b2800e6c0dbf27f900652",
+            "objectName": "iVKnyF",
+            "generation": "1773800268594453",
+            "uploadVersionId": 202050
+        }
+    ],
     "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
 }
