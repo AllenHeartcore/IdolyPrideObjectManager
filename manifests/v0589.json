@@ -1,6 +1,6 @@
 {
     "revision": [
-        880,
+        882,
         589
     ],
     "assetBundleList": [
@@ -1526,6 +1526,20 @@
             "md5": "27ca49d1a6a1192aeedabf6d3ead7e69",
             "objectName": "OA1kAS",
             "generation": "1755159017677236",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 41505,
+            "name": "mdl_chr_mei-anni-01_body",
+            "size": 9325067,
+            "crc": 388535966,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "493ae3bafaae81ed10dda70d438add3b",
+            "objectName": "lMsqW5",
+            "generation": "1774839801308378",
             "uploadVersionId": 202050
         },
         {
@@ -62926,11 +62940,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 240633,
+            "size": 240671,
             "state": "UPDATE",
-            "md5": "aeedf88c21850dbb4c7107006bbaf8e5",
+            "md5": "18eaac381b2586d3c383f02b21c2f32b",
             "objectName": "iVKnyF",
-            "generation": "1774551022444971",
+            "generation": "1774849603329230",
             "uploadVersionId": 202050
         },
         {
