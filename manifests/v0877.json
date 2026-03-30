@@ -1,10 +1,54 @@
 {
     "revision": [
-        878,
+        880,
         877
     ],
-    "assetBundleList": [],
+    "assetBundleList": [
+        {
+            "id": 49591,
+            "name": "scl_photo_garden-02-001",
+            "size": 7333,
+            "crc": 2978735722,
+            "state": "UPDATE",
+            "md5": "ef59417cfd255b79b1c4f5f18ce962ab",
+            "objectName": "2KXb44",
+            "generation": "1774498579531954",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50931,
+            "name": "scl_photo_bedrock-00-000",
+            "size": 5882,
+            "crc": 229254899,
+            "state": "UPDATE",
+            "md5": "cd5e0257a59ba75310887479a2c972c8",
+            "objectName": "1hRkmC",
+            "generation": "1774498579546592",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 50933,
+            "name": "scl_photo_themepark-00-000",
+            "size": 5797,
+            "crc": 1499441756,
+            "state": "UPDATE",
+            "md5": "00efbf4079350284a96593af02b28ec2",
+            "objectName": "dGAM84",
+            "generation": "1774498579490765",
+            "uploadVersionId": 202050
+        }
+    ],
     "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 240633,
+            "state": "UPDATE",
+            "md5": "aeedf88c21850dbb4c7107006bbaf8e5",
+            "objectName": "iVKnyF",
+            "generation": "1774551022444971",
+            "uploadVersionId": 202050
+        },
         {
             "id": 4886,
             "name": "mov_gacha_gacha_fes-26-0327_1080p.mp4",
