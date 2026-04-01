@@ -109,5 +109,8 @@ class PrideUnityImage(PrideImage):
         env = UnityPy.load(raw)
         values = list(env.container.values())
         if len(values) != 1:
-            self.reporter.error(f"Contains {len(values)} images, expected 1.")
-        return super()._img2bytes(values[0].read().image)
+            self.reporter.warning(
+                f"Contains {len(values)} images, using the largest one."
+            )
+        img_obj = max(values, key=lambda v: v.read().m_CompleteImageSize)
+        return super()._img2bytes(img_obj.read().image)
