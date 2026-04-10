@@ -1,6 +1,6 @@
 {
     "revision": [
-        911,
+        913,
         103
     ],
     "assetBundleList": [
@@ -1938,6 +1938,23 @@
             "md5": "02467d2d5617c7f6768c3f8a67ff9cfe",
             "objectName": "OwIY8N",
             "generation": "1731070716594485",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 15746,
+            "name": "env_adv_3d_coast-00-000-noon",
+            "size": 30789436,
+            "crc": 3192920275,
+            "dependencies": [
+                360,
+                3048,
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "44122d5c82d0ba552ed8cf8fea31a09c",
+            "objectName": "ej17zP",
+            "generation": "1753149678745713",
             "uploadVersionId": 202050
         },
         {
@@ -183006,11 +183023,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 243666,
+            "size": 243775,
             "state": "UPDATE",
-            "md5": "16c5c12fc12721a5580724dddbd7c4f1",
+            "md5": "607fe2febfe6f578ffd037af2d6c0776",
             "objectName": "iVKnyF",
-            "generation": "1775674193171527",
+            "generation": "1775760595675574",
             "uploadVersionId": 202050
         },
         {
