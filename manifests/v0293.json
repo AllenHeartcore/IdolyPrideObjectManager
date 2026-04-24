@@ -1,6 +1,6 @@
 {
     "revision": [
-        916,
+        918,
         293
     ],
     "assetBundleList": [
@@ -135325,6 +135325,28 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 53412,
+            "name": "img_banner_l_news-26-0426-01",
+            "size": 34782,
+            "crc": 3043257568,
+            "state": "UPDATE",
+            "md5": "301d476044bbbce511da98388be87277",
+            "objectName": "Nd5ekW",
+            "generation": "1776775748482624",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53413,
+            "name": "img_dokan_free_broadcast-26-0426-01",
+            "size": 56607,
+            "crc": 3888392900,
+            "state": "UPDATE",
+            "md5": "c8cece0b1b46fe6f989c27dd30a27418",
+            "objectName": "gNfgpk",
+            "generation": "1776775748481888",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 53423,
             "name": "img_gacha_screen_pick-set-bloom-26-0417",
             "size": 869356,
@@ -135333,6 +135355,48 @@
             "md5": "82d710c4dda932cc819e0a7a9e8e172e",
             "objectName": "EpVQP7",
             "generation": "1776145550045612",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53461,
+            "name": "env_photo_themepark-00-001-night",
+            "size": 76200214,
+            "crc": 1990644354,
+            "dependencies": [
+                19849,
+                19850,
+                13305,
+                351,
+                352,
+                360,
+                870
+            ],
+            "state": "UPDATE",
+            "md5": "c9875ec6f6460614313ad341ca01c267",
+            "objectName": "nNNoRE",
+            "generation": "1776432735377527",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53475,
+            "name": "eff_cav_mov_liz-005-360",
+            "size": 6400672,
+            "crc": 1854821241,
+            "state": "UPDATE",
+            "md5": "38af06ec1aae7f1dadb7e11312d516aa",
+            "objectName": "juXMbK",
+            "generation": "1776251086412512",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53490,
+            "name": "img_icon_skill-normal_add-effect-value-tension-up",
+            "size": 3744,
+            "crc": 921400865,
+            "state": "UPDATE",
+            "md5": "fd019bb2792d775c86f85adce9f94c46",
+            "objectName": "7XCuCj",
+            "generation": "1776257195789456",
             "uploadVersionId": 202050
         }
     ],
@@ -135400,11 +135464,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 245168,
+            "size": 246569,
             "state": "UPDATE",
-            "md5": "be1bab6aff9710abd99199154a1aa06c",
+            "md5": "f6f4ded56d274ba832cfbfe08516bc46",
             "objectName": "iVKnyF",
-            "generation": "1776192603704007",
+            "generation": "1776907240756242",
             "uploadVersionId": 202050
         },
         {
