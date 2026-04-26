@@ -1,0 +1,109 @@
+{
+    "revision": [
+        925,
+        922
+    ],
+    "assetBundleList": [
+        {
+            "id": 47566,
+            "name": "mdl_chr_kkr-hair-40_hair",
+            "size": 5031155,
+            "crc": 4192765377,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "f9d05e993e9c48ed1aa6aba7c2fc2956",
+            "objectName": "HZDQLr",
+            "generation": "1765273389934677",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47752,
+            "name": "mdl_chr_kan-hair-40_hair",
+            "size": 5535958,
+            "crc": 1387975891,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "82c4e6fd3fd063d77e4071b655356aaf",
+            "objectName": "j3Hr4o",
+            "generation": "1768810487850387",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 49487,
+            "name": "env_photo_studio-06-000-noon",
+            "size": 28777159,
+            "crc": 2933552721,
+            "dependencies": [
+                360,
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "7eed24d4d71fc546343db66c07c9a504",
+            "objectName": "4hOaIl",
+            "generation": "1776684851710715",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51108,
+            "name": "img_story_still_event-2605-01-01-02",
+            "size": 5628378,
+            "crc": 1706640182,
+            "state": "UPDATE",
+            "md5": "b89e8d3c1183d688bb344e13baa07126",
+            "objectName": "VyDT4Z",
+            "generation": "1773823046081210",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51109,
+            "name": "img_story_still_event-2605-01-03-02",
+            "size": 6724167,
+            "crc": 2056570425,
+            "state": "UPDATE",
+            "md5": "0878186b0f57255862847d0aa5c0af84",
+            "objectName": "azqwuz",
+            "generation": "1775046980336870",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53504,
+            "name": "img_banner_l_campaign-26-0427-a",
+            "size": 104016,
+            "crc": 2099880768,
+            "state": "UPDATE",
+            "md5": "3c92e2a3a6fa211756aaf7e5b5647e03",
+            "objectName": "2OUHxR",
+            "generation": "1776322514184758",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53628,
+            "name": "sud_bgm_photo_studio-06",
+            "size": 807350,
+            "crc": 1499465786,
+            "state": "UPDATE",
+            "md5": "e9febb23bd6335af7e85feea881287b4",
+            "objectName": "oVUTkP",
+            "generation": "1776838725918249",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 247775,
+            "state": "UPDATE",
+            "md5": "fd43a8c194b48953b9b84a473aeea957",
+            "objectName": "iVKnyF",
+            "generation": "1777023958687876",
+            "uploadVersionId": 202050
+        }
+    ],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
