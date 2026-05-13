@@ -1,6 +1,6 @@
 {
     "revision": [
-        938,
+        940,
         784
     ],
     "assetBundleList": [
@@ -427,6 +427,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 41706,
+            "name": "mdl_chr_yu-anni-01_hair",
+            "size": 5609941,
+            "crc": 2544753159,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "166b496b32c2f0b75756ccb25021b73b",
+            "objectName": "oCnucD",
+            "generation": "1778578053992130",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 42258,
             "name": "sud_vo_adv_bond_szk_01_08",
             "size": 1313882,
@@ -457,6 +471,20 @@
             "md5": "08f5f7640f71c6b02bdfebbae7cbf229",
             "objectName": "8tAgZE",
             "generation": "1744091636199035",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 43530,
+            "name": "mdl_chr_yu-miku-05_hair",
+            "size": 5467953,
+            "crc": 4190307826,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "33bb91e2637ac75e80aa162aac771a97",
+            "objectName": "GsAe94",
+            "generation": "1778578054068563",
             "uploadVersionId": 202050
         },
         {
@@ -658,6 +686,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 45625,
+            "name": "mdl_chr_yu-trbl-00_hair",
+            "size": 5600180,
+            "crc": 1722767184,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "255d323e56cea1fb6a3348a93c315c74",
+            "objectName": "3k4mxK",
+            "generation": "1778578054530274",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 45886,
             "name": "sud_vo_adv_main_04_08_03",
             "size": 3073777,
@@ -721,6 +763,20 @@
             "md5": "79e948d79057d6fb033fc22d60022b2f",
             "objectName": "nR0GZA",
             "generation": "1764247398553368",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 46419,
+            "name": "mdl_chr_yu-trbl-01_hair",
+            "size": 5367642,
+            "crc": 2718292165,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "f660461d7afe39a20fffa17db84f5f43",
+            "objectName": "bohBgY",
+            "generation": "1778578053961179",
             "uploadVersionId": 202050
         },
         {
@@ -1452,6 +1508,20 @@
             "md5": "3d8005543606e93b123c96300f545b2b",
             "objectName": "p7u3l6",
             "generation": "1761720301838727",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 47728,
+            "name": "mdl_chr_yu-fest-03_hair",
+            "size": 5649601,
+            "crc": 1234173313,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "8c5efa51153473dfd87b883300f862c8",
+            "objectName": "zhiaIp",
+            "generation": "1778578054409265",
             "uploadVersionId": 202050
         },
         {
@@ -4540,15 +4610,15 @@
         {
             "id": 49498,
             "name": "mdl_chr_yu-hair-40_hair",
-            "size": 5686054,
-            "crc": 2485734660,
+            "size": 5683866,
+            "crc": 1336959504,
             "dependencies": [
                 77
             ],
             "state": "UPDATE",
-            "md5": "389b0c019ccd5bea858ac31fb8e36469",
+            "md5": "fd3ff5e5e6890a2bc5725d2d7e20790c",
             "objectName": "ldRwYl",
-            "generation": "1766145305379373",
+            "generation": "1778578053815034",
             "uploadVersionId": 202050
         },
         {
@@ -32894,11 +32964,11 @@
         {
             "id": 1839,
             "name": "story-character-relations.json",
-            "size": 248488,
+            "size": 248762,
             "state": "UPDATE",
-            "md5": "0149fa4f7f85ecdb8cb5775000b96f50",
+            "md5": "7b2040e748f64ca78585878d2ef03cb9",
             "objectName": "iVKnyF",
-            "generation": "1778494354368966",
+            "generation": "1778611789914768",
             "uploadVersionId": 202050
         },
         {
