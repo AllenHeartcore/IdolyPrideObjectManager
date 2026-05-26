@@ -1,0 +1,88 @@
+{
+    "revision": [
+        950,
+        949
+    ],
+    "assetBundleList": [
+        {
+            "id": 53006,
+            "name": "mot_live_liz-005-360_in_layout",
+            "size": 7247,
+            "crc": 1667862310,
+            "state": "UPDATE",
+            "md5": "7a6bdfa73ffe8667bdafb6fd479ced4f",
+            "objectName": "0euxxQ",
+            "generation": "1775616630581317",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53009,
+            "name": "mot_live_chr_cmn_liz-005-360_03_in",
+            "size": 3956061,
+            "crc": 2496974246,
+            "state": "UPDATE",
+            "md5": "ea197d48d3a84310cec6df9df56252e8",
+            "objectName": "cUi29n",
+            "generation": "1774946305705590",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53019,
+            "name": "mot_live_chr_cmn_liz-005-360_01_in",
+            "size": 4051586,
+            "crc": 4098095314,
+            "state": "UPDATE",
+            "md5": "ae01e8c7003a2e301f2ff22b5beea5b5",
+            "objectName": "Tcpmcb",
+            "generation": "1775803828333664",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53020,
+            "name": "mot_live_chr_cmn_liz-005-360_02_in",
+            "size": 3957830,
+            "crc": 2053211066,
+            "state": "UPDATE",
+            "md5": "2b90dbfb91342d76ccde9bf6a34bffae",
+            "objectName": "vLxnvM",
+            "generation": "1774946305751685",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53021,
+            "name": "mot_live_chr_cmn_liz-005-360_00_in",
+            "size": 4060745,
+            "crc": 1287235890,
+            "state": "UPDATE",
+            "md5": "52e1daf92bb620438f24712c094e9e2a",
+            "objectName": "j46Vf3",
+            "generation": "1774946305765808",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53022,
+            "name": "tln_live_liz-005-360",
+            "size": 2399018,
+            "crc": 3295712734,
+            "dependencies": [
+                53019,
+                53020,
+                162,
+                53475,
+                53021,
+                53006,
+                9504,
+                161,
+                163,
+                53009
+            ],
+            "state": "UPDATE",
+            "md5": "bb63786f3438493ae8a649343903e888",
+            "objectName": "1I7S6k",
+            "generation": "1779723238066864",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}

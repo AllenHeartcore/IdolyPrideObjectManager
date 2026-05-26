@@ -1,0 +1,190 @@
+{
+    "revision": [
+        950,
+        948
+    ],
+    "assetBundleList": [
+        {
+            "id": 53006,
+            "name": "mot_live_liz-005-360_in_layout",
+            "size": 7247,
+            "crc": 1667862310,
+            "state": "UPDATE",
+            "md5": "7a6bdfa73ffe8667bdafb6fd479ced4f",
+            "objectName": "0euxxQ",
+            "generation": "1775616630581317",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53009,
+            "name": "mot_live_chr_cmn_liz-005-360_03_in",
+            "size": 3956061,
+            "crc": 2496974246,
+            "state": "UPDATE",
+            "md5": "ea197d48d3a84310cec6df9df56252e8",
+            "objectName": "cUi29n",
+            "generation": "1774946305705590",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53019,
+            "name": "mot_live_chr_cmn_liz-005-360_01_in",
+            "size": 4051586,
+            "crc": 4098095314,
+            "state": "UPDATE",
+            "md5": "ae01e8c7003a2e301f2ff22b5beea5b5",
+            "objectName": "Tcpmcb",
+            "generation": "1775803828333664",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53020,
+            "name": "mot_live_chr_cmn_liz-005-360_02_in",
+            "size": 3957830,
+            "crc": 2053211066,
+            "state": "UPDATE",
+            "md5": "2b90dbfb91342d76ccde9bf6a34bffae",
+            "objectName": "vLxnvM",
+            "generation": "1774946305751685",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53021,
+            "name": "mot_live_chr_cmn_liz-005-360_00_in",
+            "size": 4060745,
+            "crc": 1287235890,
+            "state": "UPDATE",
+            "md5": "52e1daf92bb620438f24712c094e9e2a",
+            "objectName": "j46Vf3",
+            "generation": "1774946305765808",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53022,
+            "name": "tln_live_liz-005-360",
+            "size": 2399018,
+            "crc": 3295712734,
+            "dependencies": [
+                53019,
+                53020,
+                162,
+                53475,
+                53021,
+                53006,
+                9504,
+                161,
+                163,
+                53009
+            ],
+            "state": "UPDATE",
+            "md5": "bb63786f3438493ae8a649343903e888",
+            "objectName": "1I7S6k",
+            "generation": "1779723238066864",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53159,
+            "name": "sud_vo_adv_card_ai_14_03",
+            "size": 2842249,
+            "crc": 2799112571,
+            "state": "UPDATE",
+            "md5": "a9b4192ca97d8a28eda797d90542c0b8",
+            "objectName": "Zn98v8",
+            "generation": "1778482603795922",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53160,
+            "name": "sud_vo_adv_card_ai_14_02",
+            "size": 2989929,
+            "crc": 174639034,
+            "state": "UPDATE",
+            "md5": "6b7a977ad35d5eb1fe35812ccda6ef7f",
+            "objectName": "GESNC7",
+            "generation": "1779682435117821",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53161,
+            "name": "sud_vo_adv_card_ai_14_01",
+            "size": 2178876,
+            "crc": 3565771362,
+            "state": "UPDATE",
+            "md5": "16a3b0049d05b2c70a70aeebeb000672",
+            "objectName": "68JEt3",
+            "generation": "1778731862444270",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53301,
+            "name": "mdl_prp_weddingbouquet-normal-r00_weddingbouquet",
+            "size": 1012350,
+            "crc": 3450318240,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "d3fb901edba4d9b9ed1fe92730c78e27",
+            "objectName": "1cf71A",
+            "generation": "1779166407466276",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 54086,
+            "name": "sud_vo_adv_card_hrk_15_03",
+            "size": 2575986,
+            "crc": 2992954386,
+            "state": "UPDATE",
+            "md5": "59053c38c82f0320f2fc3021229ee068",
+            "objectName": "JDMzxi",
+            "generation": "1778731862415834",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 54108,
+            "name": "mov_gacha_dokan_lm-set-bloom-26-0527",
+            "size": 2789600,
+            "crc": 2868351343,
+            "state": "UPDATE",
+            "md5": "434db7734022d779c836b20924ae0c81",
+            "objectName": "cbfNcO",
+            "generation": "1779250594113278",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 54114,
+            "name": "sud_vo_adv_card_hrk_15_02",
+            "size": 2804871,
+            "crc": 1193904047,
+            "state": "UPDATE",
+            "md5": "af0ef5463dce3c588b68f3f93cadc688",
+            "objectName": "2usGbI",
+            "generation": "1778578053671239",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 54131,
+            "name": "sud_vo_adv_card_hrk_15_01",
+            "size": 2544856,
+            "crc": 3968134800,
+            "state": "UPDATE",
+            "md5": "1958c15371f32b8597750b52641e2ca6",
+            "objectName": "MhYP6o",
+            "generation": "1778578054361474",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 54133,
+            "name": "sud_bgm_gacha_dokan_lm-set-bloom-26-0527",
+            "size": 550657,
+            "crc": 4110069376,
+            "state": "UPDATE",
+            "md5": "5f8a6d7f5a20c51415db9d1b54bc68df",
+            "objectName": "JEwl9Y",
+            "generation": "1779272384269496",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
