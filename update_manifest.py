@@ -39,6 +39,7 @@ def _sanitize_canon_repr(canon_repr: dict, rev: int) -> str:
         [
             f"{rev:04d}",
             canon_repr["objectName"],
+            canon_repr["generation"],
             canon_repr["md5"],
             str(canon_repr["size"]),
             ",".join(map(str, canon_repr.get("dependencies", []))),
