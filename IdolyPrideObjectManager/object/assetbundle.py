@@ -17,12 +17,12 @@ class PrideAssetBundle(PrideResource):
 
     Methods:
         download(
-            path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
+            path: str | Path = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
             **kwargs,
         ) -> None:
             Downloads and deobfuscates the assetbundle to the specified path.
-            Also extracts a single image from each bundle with type 'img'.
+            Also performs media conversion if applicable.
     """
 
     def __init__(self, info: dict, url_template: str):
@@ -55,5 +55,5 @@ class PrideAssetBundle(PrideResource):
     @property
     def canon_repr(self) -> dict:
         canon = super().canon_repr
-        canon["name"] = canon["name"].replace(".unity3d", "")
+        canon["name"] = canon["name"].removesuffix(".unity3d")
         return canon

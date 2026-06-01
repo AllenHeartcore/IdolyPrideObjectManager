@@ -8,16 +8,12 @@ Refactored from [gkmasToolkit](https://github.com/kishidanatsumi/gkmasToolkit) b
 which in turn was adapted from [SolisClient](https://github.com/MalitsPlus/SolisClient) by Vibbit. <br>
 Request API & decryption algorithms borrowed from [HatsuboshiToolkit](https://github.com/DreamGallery/HatsuboshiToolkit) by DreamGallery.
 
-
-
 ## Features
 
 - Fetch, decrypt, deserialize, and export manifest as ProtoDB, JSON, or CSV
 - Differentiate between / add (apply patch to) manifest revisions
 - Download and deobfuscate assetbundles and resources in parallel
 - Media conversion plugins for Texture2D, AudioClip audio, and VideoClip video
-
-
 
 ## Example Usage
 
@@ -45,25 +41,23 @@ m.download(
 m.download_preset("presets/wallpaper_kit.yml")
 ```
 
-
-
 ## Class Hierarchy
 
 - `manifest.decrypt.AESCBCDecryptor` - Manifest decryption
 - `manifest.octodb_pb2.Database` - ProtoDB deserialization
 - `manifest.manifest.PrideManifest` - **ENTRY POINT**
-  - `manifest.revision.PrideManifestRevision` - Manifest revision management
-  - `manifest.listing.PrideObjectList` - Object listing and indexing
-    - `object.resource.PrideResource` - Non-Unity object
-      - `media.dummy.PrideDummyMedia` - Base class for media conversion plugins
-      - `media.image.PrideImage` - PNG image handling
-      - `media.audio.PrideAudio` - MP3 audio handling
-      - `media.video.PrideVideo` - MP4 video handling
-      - `adv.adventure.PrideAdventure` - Story script handling
-        - `adv.parser.PradvCommandParser` - Story script parsing
-    - `object.deobfuscate.PrideAssetBundleDeobfuscator`
-    - `object.assetbundle.PrideAssetBundle` - Unity object
-      - `media.dummy.PrideDummyMedia`
-      - `media.image.PrideUnityImage` - Texture2D image conversion
-      - `media.audio.PrideUnityAudio` - AudioClip audio conversion
-      - `media.video.PrideUnityVideo` - VideoClip video conversion
+    - `manifest.revision.PrideManifestRevision` - Manifest revision management
+    - `manifest.listing.PrideObjectList` - Object listing and indexing
+        - `object.resource.PrideResource` - Non-Unity object
+            - `media.dummy.PrideDummyMedia` - Base class for media conversion plugins
+            - `media.image.PrideImage` - PNG image handling
+            - `media.audio.PrideAudio` - MP3 audio handling
+            - `media.video.PrideVideo` - MP4 video handling
+            - `adv.adventure.PrideAdventure` - Story script handling
+                - `adv.parser.PradvCommandParser` - Story script parsing
+        - `object.deobfuscate.PrideAssetBundleDeobfuscator`
+        - `object.assetbundle.PrideAssetBundle` - Unity object
+            - `media.dummy.PrideDummyMedia`
+            - `media.image.PrideUnityImage` - Texture2D image conversion
+            - `media.audio.PrideUnityAudio` - AudioClip audio conversion
+            - `media.video.PrideUnityVideo` - VideoClip video conversion

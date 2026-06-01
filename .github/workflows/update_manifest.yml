@@ -31,7 +31,7 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
 
-            - name: Run update_manifest.py
+            - name: Check for manifest updates
               id: run_script
               run: |
                   python update_manifest.py
@@ -43,7 +43,7 @@ jobs:
                   echo "Warning: Local manifest is up-to-date."
                   exit 0
 
-            - name: Commit changes
+            - name: Commit manifest changes
               if: steps.run_script.outputs.exit_code == 0
               run: |
                   git config user.name "GitHub Actions"
@@ -51,4 +51,19 @@ jobs:
                   git add manifests/
                   REV_NUMBER="$(cat manifests/LATEST_REVISION)"
                   git commit -m "Update mobile manifest to revision v$REV_NUMBER"
+                  git push origin manifest-update
+
+            - name: Record commit hash
+              if: steps.run_script.outputs.exit_code == 0
+              run: |
+                  REV_NUMBER="$(cat manifests/LATEST_REVISION)"
+                  COMMIT_HASH="$(git rev-parse --verify HEAD)"
+                  python update_manifest.py --record-commit-hash "$REV_NUMBER|$COMMIT_HASH"
+
+            - name: Commit wayback changes
+              if: steps.run_script.outputs.exit_code == 0
+              run: |
+                  git add wayback_commits.json wayback_index.json
+                  REV_NUMBER="$(cat manifests/LATEST_REVISION)"
+                  git commit -m "Rebuild wayback index for manifest revision v$REV_NUMBER"
                   git push origin manifest-update
