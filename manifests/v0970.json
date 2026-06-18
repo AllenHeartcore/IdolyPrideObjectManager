@@ -1,9 +1,21 @@
 {
     "revision": [
-        971,
+        973,
         970
     ],
-    "assetBundleList": [],
+    "assetBundleList": [
+        {
+            "id": 55440,
+            "name": "img_dokan_free_broadcast-26-0621-01",
+            "size": 126726,
+            "crc": 1273519397,
+            "state": "UPDATE",
+            "md5": "ff3c26ebbfeb5f19509dff92163d0c07",
+            "objectName": "GoaoPa",
+            "generation": "1781618403549897",
+            "uploadVersionId": 202050
+        }
+    ],
     "resourceList": [
         {
             "id": 1839,
@@ -13,6 +25,26 @@
             "md5": "c665d927778e09c5b4c500be720f5c72",
             "objectName": "iVKnyF",
             "generation": "1781635797152947",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5005,
+            "name": "adv_main_04_10_01.txt",
+            "size": 963054,
+            "state": "UPDATE",
+            "md5": "163a830b1040f6e14571b4334e3200f2",
+            "objectName": "Shun4N",
+            "generation": "1781748562527465",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5007,
+            "name": "adv_main_04_10_03.txt",
+            "size": 1030080,
+            "state": "UPDATE",
+            "md5": "cb848054ad6419c4ac9bdad1e46a08a2",
+            "objectName": "5olQIV",
+            "generation": "1781748562486290",
             "uploadVersionId": 202050
         }
     ],
