@@ -1,0 +1,54 @@
+{
+    "revision": [
+        989,
+        986
+    ],
+    "assetBundleList": [
+        {
+            "id": 55368,
+            "name": "img_item_thumb_showcase-buttonbadge-pack-004",
+            "size": 14718,
+            "crc": 854942034,
+            "state": "UPDATE",
+            "md5": "6a35f4e9d90c5959d5c9f4507266213b",
+            "objectName": "Y1QKw9",
+            "generation": "1782131424793405",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 55573,
+            "name": "tln_live_tri-010-360-noaudience",
+            "size": 2690231,
+            "crc": 2923105214,
+            "dependencies": [
+                52734,
+                161,
+                162,
+                163,
+                52733,
+                52730,
+                54105,
+                53878,
+                52735
+            ],
+            "state": "UPDATE",
+            "md5": "8d08fd67ce2740b286622c0fe3cc37f4",
+            "objectName": "Y4uqdE",
+            "generation": "1782124840930478",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [
+        {
+            "id": 1839,
+            "name": "story-character-relations.json",
+            "size": 254269,
+            "state": "UPDATE",
+            "md5": "abd59738b8ebbd34611b34d6d5f6ca90",
+            "objectName": "iVKnyF",
+            "generation": "1782154196201849",
+            "uploadVersionId": 202050
+        }
+    ],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
