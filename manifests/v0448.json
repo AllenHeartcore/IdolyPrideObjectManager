@@ -1,6 +1,6 @@
 {
     "revision": [
-        989,
+        995,
         448
     ],
     "assetBundleList": [
@@ -80793,6 +80793,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 50371,
+            "name": "sud_se_adv_pool-00",
+            "size": 6929244,
+            "crc": 2985911756,
+            "state": "UPDATE",
+            "md5": "d949029b893a5fdb27f3f3a26e298d87",
+            "objectName": "LKkKYe",
+            "generation": "1767609612607589",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 50372,
             "name": "sud_vo_cmn_ngs-05-vlnt-00_unit-in",
             "size": 13870,
@@ -88430,6 +88441,61 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51143,
+            "name": "sud_vo_adv_event_excursion_mhk_01_01",
+            "size": 35442,
+            "crc": 2514217179,
+            "state": "UPDATE",
+            "md5": "eae0740b349d6853b5e4f6dba0569316",
+            "objectName": "KGTLKk",
+            "generation": "1770722528579177",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51144,
+            "name": "sud_vo_adv_event_excursion_ai_01_04",
+            "size": 50830,
+            "crc": 2912077431,
+            "state": "UPDATE",
+            "md5": "95743761bc2dae935707800c667940cc",
+            "objectName": "2Dsguh",
+            "generation": "1770722528673966",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51145,
+            "name": "sud_vo_adv_event_excursion_kan_01_01",
+            "size": 57229,
+            "crc": 3947943720,
+            "state": "UPDATE",
+            "md5": "26c5a4539b76b89ba08033c4315fdef0",
+            "objectName": "lgTPtA",
+            "generation": "1770722528622670",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51146,
+            "name": "sud_vo_adv_event_excursion_rio_01_01",
+            "size": 43856,
+            "crc": 2374029824,
+            "state": "UPDATE",
+            "md5": "b93c40656413e91675a46119065424f6",
+            "objectName": "7Z7eao",
+            "generation": "1770722528612518",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51147,
+            "name": "sud_vo_adv_event_excursion_yu_01_01",
+            "size": 50709,
+            "crc": 3788080161,
+            "state": "UPDATE",
+            "md5": "069943a00925900d66f520c39b4fcef0",
+            "objectName": "MdXDHK",
+            "generation": "1770722528636479",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51148,
             "name": "img_message_picture_ladder-26-0214-04",
             "size": 447502,
@@ -88441,6 +88507,149 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51149,
+            "name": "sud_vo_adv_event_excursion_rui_01_02",
+            "size": 44581,
+            "crc": 3818170530,
+            "state": "UPDATE",
+            "md5": "5f019f93151d7153c5c1b3f48ebe16e6",
+            "objectName": "yvnkZ6",
+            "generation": "1770722528601515",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51150,
+            "name": "sud_vo_adv_event_excursion_aoi_01_02",
+            "size": 57855,
+            "crc": 2224603065,
+            "state": "UPDATE",
+            "md5": "6be9f171a77add7d863611cb95d3d653",
+            "objectName": "avatC4",
+            "generation": "1770722528608323",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51151,
+            "name": "sud_vo_adv_event_excursion_rui_01_01",
+            "size": 84962,
+            "crc": 158022492,
+            "state": "UPDATE",
+            "md5": "c3a01027d44ec9dbf0ec50f9a3f9b37f",
+            "objectName": "yTER3B",
+            "generation": "1770722528678281",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51152,
+            "name": "sud_vo_adv_event_excursion_kkr_01_05",
+            "size": 55550,
+            "crc": 820519477,
+            "state": "UPDATE",
+            "md5": "694e659343f4848d8db5de8e8210417e",
+            "objectName": "lheb9W",
+            "generation": "1770722528641439",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51153,
+            "name": "sud_vo_adv_event_excursion_yu_01_03",
+            "size": 47732,
+            "crc": 3926268280,
+            "state": "UPDATE",
+            "md5": "8dad2b1c3ecba5dc417d9b6f575efdbe",
+            "objectName": "BP8fpg",
+            "generation": "1770722528633646",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51154,
+            "name": "sud_vo_adv_event_excursion_aoi_01_03",
+            "size": 40130,
+            "crc": 387579012,
+            "state": "UPDATE",
+            "md5": "f4599e5cd00fa42915abd2bd64baa885",
+            "objectName": "ywc8wu",
+            "generation": "1770722528599398",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51155,
+            "name": "sud_vo_adv_event_excursion_rio_01_03",
+            "size": 40118,
+            "crc": 3086031684,
+            "state": "UPDATE",
+            "md5": "2d228e967ec2ed24b18085a025c2a6e3",
+            "objectName": "CL6U2j",
+            "generation": "1770722528598757",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51156,
+            "name": "sud_vo_adv_event_excursion_hrk_01_02",
+            "size": 68778,
+            "crc": 2917951286,
+            "state": "UPDATE",
+            "md5": "cb9dee0f04d4ff514b0cbac949188688",
+            "objectName": "91kOfC",
+            "generation": "1770722528654391",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51157,
+            "name": "sud_vo_adv_event_excursion_kor_01_04",
+            "size": 54000,
+            "crc": 1191540822,
+            "state": "UPDATE",
+            "md5": "7575d9937f83d6087df09c3f9e7f23ef",
+            "objectName": "ApMpNN",
+            "generation": "1770722528627288",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51158,
+            "name": "sud_vo_adv_event_excursion_rei_01_05",
+            "size": 40386,
+            "crc": 2593593482,
+            "state": "UPDATE",
+            "md5": "9bfaffdb70958ad6d3a431f7bb0d25dd",
+            "objectName": "KgBvRu",
+            "generation": "1770722528641297",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51159,
+            "name": "sud_vo_adv_event_excursion_smr_01_05",
+            "size": 57386,
+            "crc": 943816175,
+            "state": "UPDATE",
+            "md5": "4e8140913f71e661a96e1341ae3d3275",
+            "objectName": "nqdcu3",
+            "generation": "1770722528604211",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51160,
+            "name": "sud_vo_adv_event_excursion_szk_01_02",
+            "size": 49745,
+            "crc": 3248614538,
+            "state": "UPDATE",
+            "md5": "e16f5666807f65f9f490eb21fcd2cec1",
+            "objectName": "eP3Ouj",
+            "generation": "1770722528620042",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51161,
+            "name": "sud_vo_adv_event_excursion_rui_01_05",
+            "size": 69127,
+            "crc": 2533795691,
+            "state": "UPDATE",
+            "md5": "bc3ef62de96922b903b0b46e218a0539",
+            "objectName": "4Bfsw5",
+            "generation": "1770722528632520",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51162,
             "name": "img_message_picture_ladder-26-0214-01",
             "size": 419647,
@@ -88449,6 +88658,182 @@
             "md5": "a03ac7593a53fdbb05a316d6ba94cdc7",
             "objectName": "spdT0T",
             "generation": "1770865316641899",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51163,
+            "name": "sud_vo_adv_event_excursion_mhk_01_02",
+            "size": 42937,
+            "crc": 923968213,
+            "state": "UPDATE",
+            "md5": "294f53a4400a7fc52b32b7f9bf076ac5",
+            "objectName": "BAq7IR",
+            "generation": "1770722528611626",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51164,
+            "name": "sud_vo_adv_event_excursion_ski_01_04",
+            "size": 72959,
+            "crc": 3077710745,
+            "state": "UPDATE",
+            "md5": "c135b431a6e4e4075250e11ea544a1d8",
+            "objectName": "T6jvgk",
+            "generation": "1770722528639858",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51165,
+            "name": "sud_vo_adv_event_excursion_smr_01_03",
+            "size": 42212,
+            "crc": 740424661,
+            "state": "UPDATE",
+            "md5": "688455ea43c7afb6022c7fd879bee702",
+            "objectName": "Rgxm0N",
+            "generation": "1770722528627078",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51166,
+            "name": "sud_vo_adv_event_excursion_mei_01_01",
+            "size": 59249,
+            "crc": 2127881807,
+            "state": "UPDATE",
+            "md5": "40b998b5d2968898fe47a74ace03f667",
+            "objectName": "bTM3om",
+            "generation": "1770722528600355",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51167,
+            "name": "sud_vo_adv_event_excursion_kor_01_05",
+            "size": 49445,
+            "crc": 2326082469,
+            "state": "UPDATE",
+            "md5": "fbbee8d687bda9fba4f93898b5d2a57f",
+            "objectName": "1TiG5b",
+            "generation": "1770722528832607",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51168,
+            "name": "sud_vo_adv_event_excursion_mhk_01_05",
+            "size": 44777,
+            "crc": 56280691,
+            "state": "UPDATE",
+            "md5": "0df0b51e31e168c77b63b84642d1acfc",
+            "objectName": "fj4L9C",
+            "generation": "1770722528635394",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51169,
+            "name": "sud_vo_adv_event_excursion_yu_01_04",
+            "size": 45964,
+            "crc": 3905281254,
+            "state": "UPDATE",
+            "md5": "db418caf6aee0b2ab19edb25ad97cb44",
+            "objectName": "CUyInY",
+            "generation": "1770722528634969",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51170,
+            "name": "sud_vo_adv_event_excursion_smr_01_02",
+            "size": 58011,
+            "crc": 1967302621,
+            "state": "UPDATE",
+            "md5": "a1f80515203fc21daf5a0147a1b4c68d",
+            "objectName": "YsZGDy",
+            "generation": "1770722528623845",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51171,
+            "name": "sud_vo_adv_event_excursion_kan_01_03",
+            "size": 57196,
+            "crc": 2220804486,
+            "state": "UPDATE",
+            "md5": "483609b99f0637c34f9ccfcdf435adc7",
+            "objectName": "NMBgKI",
+            "generation": "1770722528662192",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51172,
+            "name": "sud_vo_adv_event_excursion_ngs_01_03",
+            "size": 53212,
+            "crc": 648053426,
+            "state": "UPDATE",
+            "md5": "d10332377130e86f65e26fc15f68d5c5",
+            "objectName": "WLBNZv",
+            "generation": "1770722528615582",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51173,
+            "name": "sud_vo_adv_event_excursion_rui_01_03",
+            "size": 71055,
+            "crc": 2328024217,
+            "state": "UPDATE",
+            "md5": "94ac5a64627e5e53633d453ccd268f2e",
+            "objectName": "Qvxomq",
+            "generation": "1770722528643292",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51174,
+            "name": "sud_vo_adv_event_excursion_ski_01_05",
+            "size": 71162,
+            "crc": 1813472130,
+            "state": "UPDATE",
+            "md5": "a2ad7048c436784ab64c4722f22eb1db",
+            "objectName": "vxjd2P",
+            "generation": "1770722528640569",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51175,
+            "name": "sud_vo_adv_event_excursion_rei_01_02",
+            "size": 69600,
+            "crc": 964086692,
+            "state": "UPDATE",
+            "md5": "40944ec0d2051e24e5a5e6c7be43a189",
+            "objectName": "nCHTos",
+            "generation": "1770722528610320",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51176,
+            "name": "sud_vo_adv_event_excursion_rio_01_02",
+            "size": 43127,
+            "crc": 2123723529,
+            "state": "UPDATE",
+            "md5": "0c0c2a67f5682eb1973233a3a7483db0",
+            "objectName": "b7Wem6",
+            "generation": "1770722528627406",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51177,
+            "name": "sud_vo_adv_event_excursion_ai_01_03",
+            "size": 47106,
+            "crc": 3167384330,
+            "state": "UPDATE",
+            "md5": "a26567db19a695ea905a6719e84a8abe",
+            "objectName": "Uvifvm",
+            "generation": "1770722528647821",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51178,
+            "name": "sud_vo_adv_event_excursion_ktn_01_02",
+            "size": 52367,
+            "crc": 1414808700,
+            "state": "UPDATE",
+            "md5": "797dc342735faa5cc29e3f4420ca3b76",
+            "objectName": "Eczoje",
+            "generation": "1770722528618065",
             "uploadVersionId": 202050
         },
         {
@@ -88485,6 +88870,50 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51182,
+            "name": "sud_vo_adv_event_excursion_mei_01_05",
+            "size": 57095,
+            "crc": 4139864006,
+            "state": "UPDATE",
+            "md5": "70be95495676af33e2044f04b17ffa23",
+            "objectName": "bPKNAW",
+            "generation": "1770722528662028",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51183,
+            "name": "sud_vo_adv_event_excursion_ngs_01_04",
+            "size": 35201,
+            "crc": 3783619684,
+            "state": "UPDATE",
+            "md5": "2157fddc1c9b3df4cb4ed16ce3ac06a9",
+            "objectName": "EPRlCr",
+            "generation": "1770722528611112",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51184,
+            "name": "sud_vo_adv_event_excursion_hrk_01_05",
+            "size": 62876,
+            "crc": 2946574242,
+            "state": "UPDATE",
+            "md5": "6406ae7b2ddb6bbfbb70bcb852776ecc",
+            "objectName": "K80ZmW",
+            "generation": "1770722528645204",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51185,
+            "name": "sud_vo_adv_event_excursion_szk_01_01",
+            "size": 61668,
+            "crc": 740969393,
+            "state": "UPDATE",
+            "md5": "5f256e41e5cdecbdd3e8773794f0cb67",
+            "objectName": "lAx2JX",
+            "generation": "1770722528686002",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51186,
             "name": "img_message_picture_ladder-26-0214-06",
             "size": 425712,
@@ -88493,6 +88922,182 @@
             "md5": "5e17443e65a23acd60ce413aea80931b",
             "objectName": "hu6yW5",
             "generation": "1770865316469054",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51187,
+            "name": "sud_vo_adv_event_excursion_ski_01_02",
+            "size": 53551,
+            "crc": 747521792,
+            "state": "UPDATE",
+            "md5": "5ef4090770588a33f5c6467da5fb34e0",
+            "objectName": "hqA2ID",
+            "generation": "1770722528600505",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51188,
+            "name": "sud_vo_adv_event_excursion_ai_01_01",
+            "size": 51004,
+            "crc": 1638991804,
+            "state": "UPDATE",
+            "md5": "ddb2434925d0c564f00546a85d76aa02",
+            "objectName": "FoQtW0",
+            "generation": "1770722528618416",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51189,
+            "name": "sud_vo_adv_event_excursion_ktn_01_04",
+            "size": 52570,
+            "crc": 1605409759,
+            "state": "UPDATE",
+            "md5": "458d09fbc1db0b377f90523b678f2f38",
+            "objectName": "Uw5gV1",
+            "generation": "1770722528605589",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51190,
+            "name": "sud_vo_adv_event_excursion_rio_01_05",
+            "size": 67647,
+            "crc": 1986458939,
+            "state": "UPDATE",
+            "md5": "85d147076deea8ef2c369b6c2f64bfec",
+            "objectName": "aSAVYj",
+            "generation": "1770722528622727",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51191,
+            "name": "sud_vo_adv_event_excursion_ktn_01_01",
+            "size": 58667,
+            "crc": 1023096749,
+            "state": "UPDATE",
+            "md5": "ad86527fa8ea69ae7bd44a3db387999a",
+            "objectName": "JLIQH9",
+            "generation": "1770722528631022",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51192,
+            "name": "sud_vo_adv_event_excursion_kor_01_02",
+            "size": 71027,
+            "crc": 802481157,
+            "state": "UPDATE",
+            "md5": "b01915a30e21e0b0055ab808246a32e8",
+            "objectName": "rpKcn8",
+            "generation": "1770722528616608",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51193,
+            "name": "sud_vo_adv_event_excursion_rio_01_04",
+            "size": 49593,
+            "crc": 4166151195,
+            "state": "UPDATE",
+            "md5": "5d615e0f10b6fdb6642deceb1bab2abe",
+            "objectName": "dWi5JT",
+            "generation": "1770722528620638",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51194,
+            "name": "sud_vo_adv_event_excursion_mei_01_03",
+            "size": 58947,
+            "crc": 2607971437,
+            "state": "UPDATE",
+            "md5": "4d429342cda65a436375eed014da0ce9",
+            "objectName": "HQTGc2",
+            "generation": "1770722528615836",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51195,
+            "name": "sud_vo_adv_event_excursion_kor_01_01",
+            "size": 55417,
+            "crc": 524480277,
+            "state": "UPDATE",
+            "md5": "1f541ffea91d2fc7875be5cf9cffe7e8",
+            "objectName": "5hOpip",
+            "generation": "1770722528592327",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51196,
+            "name": "sud_vo_adv_event_excursion_rei_01_01",
+            "size": 58932,
+            "crc": 168329665,
+            "state": "UPDATE",
+            "md5": "29df17c1d7b14f382337c7f5d59b51ee",
+            "objectName": "PLjjdb",
+            "generation": "1770722528647261",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51197,
+            "name": "sud_vo_adv_event_excursion_ai_01_05",
+            "size": 55428,
+            "crc": 2191724619,
+            "state": "UPDATE",
+            "md5": "b476aa301a1c961743b5246da6966818",
+            "objectName": "gUoMxo",
+            "generation": "1770722528639208",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51198,
+            "name": "sud_vo_adv_event_excursion_hrk_01_03",
+            "size": 43015,
+            "crc": 1050785182,
+            "state": "UPDATE",
+            "md5": "13ccc0f4190d397c6ac216e6c1e60fc8",
+            "objectName": "afkSvL",
+            "generation": "1770722528626333",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51199,
+            "name": "sud_vo_adv_event_excursion_kkr_01_03",
+            "size": 57698,
+            "crc": 2445427367,
+            "state": "UPDATE",
+            "md5": "76ce82d245e3630ef9c464b8c60046dd",
+            "objectName": "YMR3vL",
+            "generation": "1770722528605114",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51200,
+            "name": "sud_vo_adv_event_excursion_ktn_01_05",
+            "size": 65308,
+            "crc": 2995422540,
+            "state": "UPDATE",
+            "md5": "f2f52745f2dba4e093b50aaab3002031",
+            "objectName": "shYGag",
+            "generation": "1770722528669192",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51201,
+            "name": "sud_vo_adv_event_excursion_mhk_01_03",
+            "size": 32763,
+            "crc": 3757714609,
+            "state": "UPDATE",
+            "md5": "7e383caeffcfcdc53099567ce2ebddb8",
+            "objectName": "vBSOTE",
+            "generation": "1770722528612223",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51202,
+            "name": "sud_vo_adv_event_excursion_kan_01_04",
+            "size": 54903,
+            "crc": 3782174743,
+            "state": "UPDATE",
+            "md5": "bc1d073a926d209d6e4d05d6b3361ad1",
+            "objectName": "Cm07id",
+            "generation": "1770722528630967",
             "uploadVersionId": 202050
         },
         {
@@ -88507,6 +89112,171 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 51204,
+            "name": "sud_vo_adv_event_excursion_ngs_01_01",
+            "size": 40758,
+            "crc": 2824221572,
+            "state": "UPDATE",
+            "md5": "c3aa2f7af8650200dca3f97814e98b0d",
+            "objectName": "7a3OOd",
+            "generation": "1770722528619733",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51205,
+            "name": "sud_vo_adv_event_excursion_hrk_01_04",
+            "size": 46747,
+            "crc": 4041664858,
+            "state": "UPDATE",
+            "md5": "e3075fa0164f742fcdea7bb0baa45422",
+            "objectName": "VTkkku",
+            "generation": "1770722528635782",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51206,
+            "name": "sud_vo_adv_event_excursion_ski_01_01",
+            "size": 58801,
+            "crc": 1165398180,
+            "state": "UPDATE",
+            "md5": "7935ddf50e62100daabc2594d99e5d63",
+            "objectName": "17Cwyd",
+            "generation": "1770722528624276",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51207,
+            "name": "sud_vo_adv_event_excursion_aoi_01_01",
+            "size": 54098,
+            "crc": 186428122,
+            "state": "UPDATE",
+            "md5": "70bc8e5600552c9ba477eb32f86c1634",
+            "objectName": "Fm7ezS",
+            "generation": "1770722528640262",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51208,
+            "name": "sud_vo_adv_event_excursion_kan_01_05",
+            "size": 77615,
+            "crc": 3206733624,
+            "state": "UPDATE",
+            "md5": "a41c031853921b351fb9315a987c34dd",
+            "objectName": "VQN5Yl",
+            "generation": "1770722528627123",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51209,
+            "name": "sud_vo_adv_event_excursion_hrk_01_01",
+            "size": 65428,
+            "crc": 3946939506,
+            "state": "UPDATE",
+            "md5": "600ba352664c6776f6c1c71aba8dc3b0",
+            "objectName": "9jNYzJ",
+            "generation": "1770722528630927",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51210,
+            "name": "sud_vo_adv_event_excursion_rei_01_04",
+            "size": 60370,
+            "crc": 424783786,
+            "state": "UPDATE",
+            "md5": "a7bc54fb276d9be15954e29ffed0fd5f",
+            "objectName": "b2cH6N",
+            "generation": "1770722529181190",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51211,
+            "name": "sud_vo_adv_event_excursion_ktn_01_03",
+            "size": 77208,
+            "crc": 3216389164,
+            "state": "UPDATE",
+            "md5": "c49b819425aeab9c77edcf2bbecffc60",
+            "objectName": "UEFmK1",
+            "generation": "1770722528620535",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51212,
+            "name": "sud_vo_adv_event_excursion_mhk_01_04",
+            "size": 31902,
+            "crc": 3272732901,
+            "state": "UPDATE",
+            "md5": "525bff082fe4c78f9109cccaf03a52f3",
+            "objectName": "nZkhuN",
+            "generation": "1770722528579308",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51213,
+            "name": "sud_vo_adv_event_excursion_kkr_01_01",
+            "size": 63585,
+            "crc": 2164008446,
+            "state": "UPDATE",
+            "md5": "a63dcd742ca72dad6fa327096a423352",
+            "objectName": "lUWbx1",
+            "generation": "1770722528622569",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51214,
+            "name": "sud_vo_adv_event_excursion_aoi_01_04",
+            "size": 55984,
+            "crc": 3741548445,
+            "state": "UPDATE",
+            "md5": "d615a1ad8e76cd084a1fd2bbb0a552f8",
+            "objectName": "inG45b",
+            "generation": "1770722528603939",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51215,
+            "name": "sud_vo_adv_event_excursion_mei_01_04",
+            "size": 51457,
+            "crc": 472984938,
+            "state": "UPDATE",
+            "md5": "54417c52d10d79e56a1f856dcaa9b7a4",
+            "objectName": "qiDQgk",
+            "generation": "1770722529189193",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51216,
+            "name": "sud_vo_adv_event_excursion_kan_01_02",
+            "size": 56051,
+            "crc": 712430577,
+            "state": "UPDATE",
+            "md5": "d4aff14192a2a3a2a9067f1e7023ee95",
+            "objectName": "LsZYqr",
+            "generation": "1770722528607349",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51217,
+            "name": "sud_vo_adv_event_excursion_smr_01_04",
+            "size": 59339,
+            "crc": 1989735202,
+            "state": "UPDATE",
+            "md5": "80c41e08275729437ac071181f5cb0ee",
+            "objectName": "pPjM45",
+            "generation": "1770722528667043",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51218,
+            "name": "sud_vo_adv_event_excursion_kkr_01_02",
+            "size": 64371,
+            "crc": 3649206608,
+            "state": "UPDATE",
+            "md5": "47011bfffb4a2b43e0caacd674a4f7a8",
+            "objectName": "6PIScz",
+            "generation": "1770722528652227",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 51219,
             "name": "img_message_picture_ladder-26-0214-05",
             "size": 450564,
@@ -88515,6 +89285,182 @@
             "md5": "10ea1daf12a58ae8b0ee331b05d8688e",
             "objectName": "8VnXom",
             "generation": "1770865316603525",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51220,
+            "name": "sud_vo_adv_event_excursion_rui_01_04",
+            "size": 39511,
+            "crc": 1247063909,
+            "state": "UPDATE",
+            "md5": "dea967d5f99e2b8bbf88c1c10d935d12",
+            "objectName": "bBgBW8",
+            "generation": "1770722528623124",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51221,
+            "name": "sud_vo_adv_event_excursion_yu_01_05",
+            "size": 75360,
+            "crc": 3260975259,
+            "state": "UPDATE",
+            "md5": "55c4670b4ed22377c604bfdae6ebf673",
+            "objectName": "YfBLgg",
+            "generation": "1770722528629164",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51222,
+            "name": "sud_vo_adv_event_excursion_ngs_01_05",
+            "size": 54133,
+            "crc": 2667165696,
+            "state": "UPDATE",
+            "md5": "4d2182440fce38d1000e413601f488a1",
+            "objectName": "j3aJuR",
+            "generation": "1770722528599614",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51223,
+            "name": "sud_vo_adv_event_excursion_ai_01_02",
+            "size": 57717,
+            "crc": 4277639766,
+            "state": "UPDATE",
+            "md5": "7cd145be61b9e8a5881169d92ee67062",
+            "objectName": "21MmR0",
+            "generation": "1770722528582712",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51224,
+            "name": "sud_vo_adv_event_excursion_szk_01_04",
+            "size": 59168,
+            "crc": 2284892634,
+            "state": "UPDATE",
+            "md5": "acd02f0f6ff4cd3771fb72a316a2f496",
+            "objectName": "6H5bDa",
+            "generation": "1770722528628269",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51225,
+            "name": "sud_vo_adv_event_excursion_ski_01_03",
+            "size": 62968,
+            "crc": 3995005803,
+            "state": "UPDATE",
+            "md5": "3d2981e8a3e6e695a0f97323999dfaf7",
+            "objectName": "8JHvhu",
+            "generation": "1770722528651095",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51226,
+            "name": "sud_vo_adv_event_excursion_rei_01_03",
+            "size": 53931,
+            "crc": 1489934322,
+            "state": "UPDATE",
+            "md5": "ab25fe8cb31b67fd807917fb61ea1d92",
+            "objectName": "vHmG2b",
+            "generation": "1770722528605787",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51227,
+            "name": "sud_vo_adv_event_excursion_kkr_01_04",
+            "size": 64489,
+            "crc": 479047175,
+            "state": "UPDATE",
+            "md5": "c0475f8ddf8f8012d038c60f536d4ace",
+            "objectName": "rjpRKk",
+            "generation": "1770722528648712",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51228,
+            "name": "sud_vo_adv_event_excursion_kor_01_03",
+            "size": 58272,
+            "crc": 3745857562,
+            "state": "UPDATE",
+            "md5": "014ce49e6ebcae819d7704a217795d09",
+            "objectName": "x2Kzo1",
+            "generation": "1770722528640382",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51229,
+            "name": "sud_vo_adv_event_excursion_yu_01_02",
+            "size": 40750,
+            "crc": 1040641550,
+            "state": "UPDATE",
+            "md5": "e9618db5cfdc30aefe78ffc979a783de",
+            "objectName": "jFFUdK",
+            "generation": "1770722528604273",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51230,
+            "name": "sud_vo_adv_event_excursion_szk_01_05",
+            "size": 52433,
+            "crc": 2358485934,
+            "state": "UPDATE",
+            "md5": "3f23955372c9b81a723c3226811ba13f",
+            "objectName": "ZXucoY",
+            "generation": "1770722528612948",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51231,
+            "name": "sud_vo_adv_event_excursion_mei_01_02",
+            "size": 63007,
+            "crc": 2071594915,
+            "state": "UPDATE",
+            "md5": "100aad3f8d8f707fc143aa8193eb875b",
+            "objectName": "FgrzET",
+            "generation": "1770722528630934",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51232,
+            "name": "sud_vo_adv_event_excursion_szk_01_03",
+            "size": 47160,
+            "crc": 2172306192,
+            "state": "UPDATE",
+            "md5": "3638db9aa50fac266266990ee7541f96",
+            "objectName": "r7dno7",
+            "generation": "1770722528635306",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51233,
+            "name": "sud_vo_adv_event_excursion_smr_01_01",
+            "size": 66234,
+            "crc": 1054036434,
+            "state": "UPDATE",
+            "md5": "5deb5131ab2fff3d0de08468fe10b301",
+            "objectName": "PZaBVO",
+            "generation": "1770722528632149",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51234,
+            "name": "sud_vo_adv_event_excursion_aoi_01_05",
+            "size": 57179,
+            "crc": 2687177782,
+            "state": "UPDATE",
+            "md5": "d12179252798c9b1b2ffee4ac8918600",
+            "objectName": "qXVpx2",
+            "generation": "1770722528649040",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 51235,
+            "name": "sud_vo_adv_event_excursion_ngs_01_02",
+            "size": 60781,
+            "crc": 176793713,
+            "state": "UPDATE",
+            "md5": "84a679895b94aa451be42aef63bc9f57",
+            "objectName": "q8Hrzc",
+            "generation": "1770722528608774",
             "uploadVersionId": 202050
         },
         {
@@ -97544,6 +98490,17 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 52238,
+            "name": "sud_vo_adv_event_excursion_chs_01_03",
+            "size": 69251,
+            "crc": 2950975075,
+            "state": "UPDATE",
+            "md5": "8cd3e1f3ab4c451e3fbc372c3e54e17d",
+            "objectName": "z6BDW9",
+            "generation": "1773117482791164",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 52239,
             "name": "img_banner_l_gacha-dream-26-0327",
             "size": 86044,
@@ -97552,6 +98509,17 @@
             "md5": "4f9fe2a1966f9179873e0db295bbd028",
             "objectName": "aSKzYz",
             "generation": "1773124214650330",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52240,
+            "name": "sud_vo_adv_event_excursion_suz_01_03",
+            "size": 57201,
+            "crc": 284299727,
+            "state": "UPDATE",
+            "md5": "52d191bbeda2d4a891a8ba006816c392",
+            "objectName": "RyZuj5",
+            "generation": "1773117482775788",
             "uploadVersionId": 202050
         },
         {
@@ -97577,6 +98545,138 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 52243,
+            "name": "sud_vo_adv_event_excursion_skr_01_04",
+            "size": 48293,
+            "crc": 1372424746,
+            "state": "UPDATE",
+            "md5": "61b36374bc36d83e208ef1e13548b80f",
+            "objectName": "xdze1V",
+            "generation": "1773117482797146",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52244,
+            "name": "sud_vo_adv_event_excursion_chs_01_01",
+            "size": 59484,
+            "crc": 3101320249,
+            "state": "UPDATE",
+            "md5": "4b57f257fe65244ba52fc8874ba4876b",
+            "objectName": "C6QAp0",
+            "generation": "1773117482765209",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52245,
+            "name": "sud_vo_adv_event_excursion_suz_01_01",
+            "size": 47605,
+            "crc": 647496346,
+            "state": "UPDATE",
+            "md5": "928b01680963aa075fdbafea766b43d8",
+            "objectName": "YCgtSs",
+            "generation": "1773117482759227",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52246,
+            "name": "sud_vo_adv_event_excursion_suz_01_02",
+            "size": 58268,
+            "crc": 2604384187,
+            "state": "UPDATE",
+            "md5": "411001ba4c6c4d5b09dc58b29bf833a3",
+            "objectName": "Ptxsyx",
+            "generation": "1775046979313220",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52247,
+            "name": "sud_vo_adv_event_excursion_suz_01_05",
+            "size": 63407,
+            "crc": 1664980689,
+            "state": "UPDATE",
+            "md5": "adc31cad499ae5d37aa10e09d3d56432",
+            "objectName": "HrAsBw",
+            "generation": "1773117482810264",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52248,
+            "name": "sud_vo_adv_event_excursion_suz_01_04",
+            "size": 76566,
+            "crc": 1038143059,
+            "state": "UPDATE",
+            "md5": "74f15e40ec5eefed7d39219d7ba4e4c2",
+            "objectName": "Xrmjeo",
+            "generation": "1773117482797481",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52249,
+            "name": "sud_vo_adv_event_excursion_chs_01_04",
+            "size": 60843,
+            "crc": 1006292541,
+            "state": "UPDATE",
+            "md5": "601659c54379222b96dffafa0f98fc65",
+            "objectName": "nKJDAS",
+            "generation": "1773117482783967",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52250,
+            "name": "sud_vo_adv_event_excursion_chs_01_02",
+            "size": 54027,
+            "crc": 376502534,
+            "state": "UPDATE",
+            "md5": "94049557a6b74730db686b4f0a955d35",
+            "objectName": "OZU1lM",
+            "generation": "1773117482767201",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52251,
+            "name": "sud_vo_adv_event_excursion_chs_01_05",
+            "size": 79003,
+            "crc": 398372270,
+            "state": "UPDATE",
+            "md5": "42eca9ec6b4ad435e5ecdda0533a0943",
+            "objectName": "DblkMv",
+            "generation": "1773117482810884",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52252,
+            "name": "sud_vo_adv_event_excursion_skr_01_03",
+            "size": 43267,
+            "crc": 3698182206,
+            "state": "UPDATE",
+            "md5": "d9f5e3fb61266c804a424e05bd79ebdb",
+            "objectName": "EyjWdv",
+            "generation": "1773117482760682",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52253,
+            "name": "sud_vo_adv_event_excursion_skr_01_01",
+            "size": 53268,
+            "crc": 500150277,
+            "state": "UPDATE",
+            "md5": "4ed60a07ea650da5f999e46b14d6b4c7",
+            "objectName": "c4XUNP",
+            "generation": "1773117482774173",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52254,
+            "name": "sud_vo_adv_event_excursion_skr_01_02",
+            "size": 63662,
+            "crc": 2185316204,
+            "state": "UPDATE",
+            "md5": "d82e61ad50da52ba50ae3645c929696d",
+            "objectName": "UnS0LJ",
+            "generation": "1773117482777509",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 52255,
             "name": "img_gacha_screen_gacha-dream-26-0327",
             "size": 737845,
@@ -97585,6 +98685,17 @@
             "md5": "1df96653ae8b84f401a340fbaa2ef70b",
             "objectName": "YEF8AB",
             "generation": "1773124214874203",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 52257,
+            "name": "sud_vo_adv_event_excursion_skr_01_05",
+            "size": 43306,
+            "crc": 4253841403,
+            "state": "UPDATE",
+            "md5": "a860f5a6b7134f6a4c46a1edee12e161",
+            "objectName": "KeceIw",
+            "generation": "1773117482718505",
             "uploadVersionId": 202050
         },
         {
@@ -110042,12 +111153,12 @@
         {
             "id": 53561,
             "name": "mot_photo_chr_suz_odekake02-react-00-a_lp",
-            "size": 490956,
-            "crc": 4157837860,
+            "size": 490932,
+            "crc": 2252437545,
             "state": "UPDATE",
-            "md5": "b5cb5e5c76c688bb2699a31a1fcdd41f",
+            "md5": "7d4722dedd98f80e9ab6819af396b4b1",
             "objectName": "1vHm0J",
-            "generation": "1782087944941890",
+            "generation": "1782117535451519",
             "uploadVersionId": 202050
         },
         {
@@ -110444,6 +111555,17 @@
             "md5": "7a81e82d73107269064f2bc50a7227f6",
             "objectName": "yBMnpx",
             "generation": "1776741689946430",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 53605,
+            "name": "eff_ps_adv_themepark-00-000-night-fireworks-01",
+            "size": 366514,
+            "crc": 2019313170,
+            "state": "UPDATE",
+            "md5": "01031c800fd7ff1322844e239db9eb9b",
+            "objectName": "YBBgzl",
+            "generation": "1776679989522822",
             "uploadVersionId": 202050
         },
         {
@@ -112683,12 +113805,12 @@
         {
             "id": 53837,
             "name": "mot_photo_chr_suz_odekake04-react-03-a_lp",
-            "size": 398053,
-            "crc": 4288966700,
+            "size": 397190,
+            "crc": 1771901849,
             "state": "UPDATE",
-            "md5": "0793347ab75fcc3344e9aeccd1b2c4dc",
+            "md5": "4d474e8e936c190cb9b466aa9c2f7aad",
             "objectName": "Hyb0MZ",
-            "generation": "1782087944941981",
+            "generation": "1782117535416645",
             "uploadVersionId": 202050
         },
         {
@@ -114989,12 +116111,12 @@
         {
             "id": 54071,
             "name": "mot_photo_chr_skr_odekake02-react-00-bc_lp",
-            "size": 361649,
-            "crc": 3754539406,
+            "size": 361952,
+            "crc": 1694582390,
             "state": "UPDATE",
-            "md5": "7d614eec065bf320da1e2a013fc9e932",
+            "md5": "0b2980c6abeef5884d0cafa06b9d30fd",
             "objectName": "PCmqZ5",
-            "generation": "1781602334384271",
+            "generation": "1782117535432825",
             "uploadVersionId": 202050
         },
         {
@@ -122207,12 +123329,12 @@
         {
             "id": 54965,
             "name": "mot_photo_chr_chs_odekake04-react-01-bc_lp",
-            "size": 283253,
-            "crc": 3984449965,
+            "size": 283116,
+            "crc": 799754164,
             "state": "UPDATE",
-            "md5": "dad2224b15e281349485bfffac9cad8f",
+            "md5": "ee9443729d559d72b4b2b69d8c427f30",
             "objectName": "isaCZg",
-            "generation": "1782087944908015",
+            "generation": "1782117535392859",
             "uploadVersionId": 202050
         },
         {
@@ -135633,6 +136755,126 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4750,
+            "name": "adv_event_excursion_aoi_01_02.txt",
+            "size": 18528,
+            "state": "UPDATE",
+            "md5": "ec49cbc75c612ec21ed98cf4651624c9",
+            "objectName": "a6rzhY",
+            "generation": "1779685352028309",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4751,
+            "name": "adv_event_excursion_rei_01_05.txt",
+            "size": 8967,
+            "state": "UPDATE",
+            "md5": "b6b5c0380363ad7370ced81468904ab5",
+            "objectName": "yT9OdU",
+            "generation": "1776673818451023",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4752,
+            "name": "adv_event_excursion_rei_01_01.txt",
+            "size": 17483,
+            "state": "UPDATE",
+            "md5": "13df51d3ed3f80b3e2f44b3cad933c48",
+            "objectName": "CQBwAy",
+            "generation": "1776680518791952",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4753,
+            "name": "adv_event_excursion_aoi_01_01.txt",
+            "size": 16932,
+            "state": "UPDATE",
+            "md5": "78cdc02e37f519cf872fac3b10e1689b",
+            "objectName": "qF7ZGh",
+            "generation": "1776970208698753",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4754,
+            "name": "adv_event_excursion_kkr_01_02.txt",
+            "size": 16769,
+            "state": "UPDATE",
+            "md5": "dadea4a384beb9d83d300b4b5b45fedd",
+            "objectName": "4LrQCR",
+            "generation": "1779685352036039",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4755,
+            "name": "adv_event_excursion_rei_01_03.txt",
+            "size": 18616,
+            "state": "UPDATE",
+            "md5": "7138640d881d1c65a3a83001cd7fe05e",
+            "objectName": "g4Z9nW",
+            "generation": "1779685352042852",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4756,
+            "name": "adv_event_excursion_kkr_01_04.txt",
+            "size": 16651,
+            "state": "UPDATE",
+            "md5": "38eea31b2520f00d02a94cdf5dc8b58b",
+            "objectName": "Mk774w",
+            "generation": "1771267789143805",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4757,
+            "name": "adv_event_excursion_rei_01_02.txt",
+            "size": 17144,
+            "state": "UPDATE",
+            "md5": "1f439ab10d2a74b95c25691f53c04955",
+            "objectName": "y5WaMW",
+            "generation": "1779685352032721",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4758,
+            "name": "adv_event_excursion_kkr_01_05.txt",
+            "size": 9563,
+            "state": "UPDATE",
+            "md5": "409b384ccfef0b7ae0ec8b4d6e4c6bb9",
+            "objectName": "LyJYU7",
+            "generation": "1776970208518061",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4759,
+            "name": "adv_event_excursion_rei_01_04.txt",
+            "size": 17243,
+            "state": "UPDATE",
+            "md5": "7d9969374a9cc22093646dc435a2888d",
+            "objectName": "tbZg0G",
+            "generation": "1775785830979480",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4760,
+            "name": "adv_event_excursion_kkr_01_01.txt",
+            "size": 18023,
+            "state": "UPDATE",
+            "md5": "27c4743ca2e4f735a1ad0c6840a54c95",
+            "objectName": "on482S",
+            "generation": "1776970208516285",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4761,
+            "name": "adv_event_excursion_kkr_01_03.txt",
+            "size": 18655,
+            "state": "UPDATE",
+            "md5": "3f7e9f4b6415bbd5cdf7df2cb064d660",
+            "objectName": "lEiD8h",
+            "generation": "1779685352029763",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4762,
             "name": "adv_gacha_2026_0226.txt",
             "size": 1448,
@@ -135663,6 +136905,36 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4765,
+            "name": "adv_event_excursion_aoi_01_05.txt",
+            "size": 10614,
+            "state": "UPDATE",
+            "md5": "4365a363e0c970af13fe34d3d209c526",
+            "objectName": "x7IjAb",
+            "generation": "1776970208684734",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4766,
+            "name": "adv_event_excursion_ngs_01_05.txt",
+            "size": 11114,
+            "state": "UPDATE",
+            "md5": "3cd7d4d65883357dd20fb577e3922d7b",
+            "objectName": "CHo3wl",
+            "generation": "1776970208717986",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4767,
+            "name": "adv_event_excursion_ngs_01_03.txt",
+            "size": 17574,
+            "state": "UPDATE",
+            "md5": "2337bb2c9e885ea4e0d5766d324c13f3",
+            "objectName": "BcswLY",
+            "generation": "1779685352047349",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4768,
             "name": "adv_main_04_09_03.txt",
             "size": 603665,
@@ -135670,6 +136942,36 @@
             "md5": "d0229f168f838347b043f2b04e44b704",
             "objectName": "kS6lVu",
             "generation": "1771489805993110",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4769,
+            "name": "adv_event_excursion_aoi_01_03.txt",
+            "size": 17567,
+            "state": "UPDATE",
+            "md5": "7ec80a98b0b6e2d0d55abd03d0125dad",
+            "objectName": "cr3Jn3",
+            "generation": "1779685352058303",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4770,
+            "name": "adv_event_excursion_ngs_01_02.txt",
+            "size": 19459,
+            "state": "UPDATE",
+            "md5": "a413b42f93fd7c04eecdbb9e58f5e510",
+            "objectName": "G422YS",
+            "generation": "1779685352032271",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4771,
+            "name": "adv_event_excursion_hrk_01_03.txt",
+            "size": 16543,
+            "state": "UPDATE",
+            "md5": "71e74976ee899fead712fe7b158d19d0",
+            "objectName": "oEU3QS",
+            "generation": "1779685352029444",
             "uploadVersionId": 202050
         },
         {
@@ -135683,6 +136985,16 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4773,
+            "name": "adv_event_excursion_hrk_01_02.txt",
+            "size": 17977,
+            "state": "UPDATE",
+            "md5": "42edcc416f31fced49212915530e0237",
+            "objectName": "KFLsO2",
+            "generation": "1779685352030592",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4774,
             "name": "adv_main_04_09_01.txt",
             "size": 600535,
@@ -135690,6 +137002,36 @@
             "md5": "f67022482022dbd81dd5c7a5a65c8a23",
             "objectName": "t7VtGb",
             "generation": "1771489805922169",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4775,
+            "name": "adv_event_excursion_hrk_01_05.txt",
+            "size": 10531,
+            "state": "UPDATE",
+            "md5": "b1895b8adeb18a1fd6ae48d110cef6f8",
+            "objectName": "5c1Mjf",
+            "generation": "1776970208509499",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4776,
+            "name": "adv_event_excursion_hrk_01_01.txt",
+            "size": 16487,
+            "state": "UPDATE",
+            "md5": "6c24b2c57ad1eaac5ca331db019d8840",
+            "objectName": "LrcfSC",
+            "generation": "1776970208521400",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4777,
+            "name": "adv_event_excursion_ngs_01_01.txt",
+            "size": 14401,
+            "state": "UPDATE",
+            "md5": "4de350ed652037a150cdcf56bc10d1e8",
+            "objectName": "mexsiY",
+            "generation": "1776970208502252",
             "uploadVersionId": 202050
         },
         {
@@ -135703,6 +137045,16 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4779,
+            "name": "adv_event_excursion_hrk_01_04.txt",
+            "size": 16065,
+            "state": "UPDATE",
+            "md5": "2de2d8467436adad3fe2cd14ba052c81",
+            "objectName": "ppMtP2",
+            "generation": "1775789109484854",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4780,
             "name": "adv_main_04_09_04.txt",
             "size": 679301,
@@ -135710,6 +137062,26 @@
             "md5": "44db5f78c0c37d33e2b064410ca1df4a",
             "objectName": "73vpWs",
             "generation": "1772587442850341",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4781,
+            "name": "adv_event_excursion_aoi_01_04.txt",
+            "size": 17158,
+            "state": "UPDATE",
+            "md5": "e4362e16aea1307526e47a4c02da2e15",
+            "objectName": "us87AK",
+            "generation": "1775785830949713",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4782,
+            "name": "adv_event_excursion_ngs_01_04.txt",
+            "size": 15559,
+            "state": "UPDATE",
+            "md5": "0cf75a53f13273a52457e898ca3accb3",
+            "objectName": "NK7hWr",
+            "generation": "1775785830959452",
             "uploadVersionId": 202050
         },
         {
@@ -136623,6 +137995,106 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4875,
+            "name": "adv_event_excursion_szk_01_03.txt",
+            "size": 19109,
+            "state": "UPDATE",
+            "md5": "01ad9a0af9629b766e0e451b5403a8cb",
+            "objectName": "NNGcFL",
+            "generation": "1779685352028494",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4876,
+            "name": "adv_event_excursion_kor_01_05.txt",
+            "size": 9936,
+            "state": "UPDATE",
+            "md5": "5fce9581f26e49069681fbf5eed6e565",
+            "objectName": "u6du1U",
+            "generation": "1781055358871942",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4877,
+            "name": "adv_event_excursion_kor_01_04.txt",
+            "size": 16627,
+            "state": "UPDATE",
+            "md5": "6047022fea0d33908d6f4a1b1466e1ab",
+            "objectName": "5haCI3",
+            "generation": "1775785830966504",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4878,
+            "name": "adv_event_excursion_szk_01_05.txt",
+            "size": 11035,
+            "state": "UPDATE",
+            "md5": "4445485b73378e4800b994672cb82ec9",
+            "objectName": "nPRKCn",
+            "generation": "1781055358861815",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4879,
+            "name": "adv_event_excursion_szk_01_04.txt",
+            "size": 17114,
+            "state": "UPDATE",
+            "md5": "1237d589397548573da758f48f2b07ac",
+            "objectName": "qKFNyC",
+            "generation": "1775785830923769",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4880,
+            "name": "adv_event_excursion_kor_01_02.txt",
+            "size": 18505,
+            "state": "UPDATE",
+            "md5": "be7ce49ccaa6e0815a6fc3db0045a526",
+            "objectName": "sbUM3h",
+            "generation": "1779685352040614",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4881,
+            "name": "adv_event_excursion_kor_01_01.txt",
+            "size": 16938,
+            "state": "UPDATE",
+            "md5": "97bee4d2d63a59b0e36a791887f2542a",
+            "objectName": "h2wisR",
+            "generation": "1776970208510934",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4882,
+            "name": "adv_event_excursion_szk_01_02.txt",
+            "size": 18953,
+            "state": "UPDATE",
+            "md5": "97452f8744d07c57ad54d61244401d43",
+            "objectName": "uMNsIZ",
+            "generation": "1779685352035461",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4883,
+            "name": "adv_event_excursion_szk_01_01.txt",
+            "size": 16951,
+            "state": "UPDATE",
+            "md5": "ea69baa6812441f290083ac6ce53af54",
+            "objectName": "5eGmX0",
+            "generation": "1776970208524638",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4884,
+            "name": "adv_event_excursion_kor_01_03.txt",
+            "size": 17612,
+            "state": "UPDATE",
+            "md5": "d6eb6ef0667a8c1469e16811c78463f7",
+            "objectName": "jZ567b",
+            "generation": "1779685352035516",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4885,
             "name": "adv_bond_mei_01_08.txt",
             "size": 205206,
@@ -137073,6 +138545,166 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4930,
+            "name": "adv_event_excursion_rui_01_04.txt",
+            "size": 15099,
+            "state": "UPDATE",
+            "md5": "5a8c1714f65ada872a1fde0e0bf741e4",
+            "objectName": "jF7bGv",
+            "generation": "1776279011531312",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4931,
+            "name": "adv_event_excursion_rio_01_05.txt",
+            "size": 11067,
+            "state": "UPDATE",
+            "md5": "4d52413301abf96d0137b059affe38c7",
+            "objectName": "VxPXK5",
+            "generation": "1781055358871971",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4932,
+            "name": "adv_event_excursion_rio_01_04.txt",
+            "size": 17675,
+            "state": "UPDATE",
+            "md5": "e12201f2d03465019eb8f434f28569e0",
+            "objectName": "5OHE9p",
+            "generation": "1776152468994363",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4933,
+            "name": "adv_event_excursion_rui_01_03.txt",
+            "size": 18119,
+            "state": "UPDATE",
+            "md5": "98590b647fef55581c0dd4a51970a3d8",
+            "objectName": "2tDNqV",
+            "generation": "1779685352036094",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4934,
+            "name": "adv_event_excursion_ktn_01_03.txt",
+            "size": 19112,
+            "state": "UPDATE",
+            "md5": "b224ba72b5259c2bb29f8dcf64169750",
+            "objectName": "yTUhaN",
+            "generation": "1779685352035360",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4935,
+            "name": "adv_event_excursion_rui_01_01.txt",
+            "size": 17481,
+            "state": "UPDATE",
+            "md5": "a94e4023aec4925d9ec4340308b1124b",
+            "objectName": "nBsGye",
+            "generation": "1776826519207836",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4936,
+            "name": "adv_event_excursion_rio_01_02.txt",
+            "size": 16038,
+            "state": "UPDATE",
+            "md5": "51f3856ca38a1f76cb44e40bfdb5fa66",
+            "objectName": "dyZlPP",
+            "generation": "1779685352035671",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4937,
+            "name": "adv_event_excursion_ktn_01_04.txt",
+            "size": 17154,
+            "state": "UPDATE",
+            "md5": "04568dca8612f6d9efdfc0a8b1251b40",
+            "objectName": "1tTrCJ",
+            "generation": "1781765236592676",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4938,
+            "name": "adv_event_excursion_rio_01_01.txt",
+            "size": 14931,
+            "state": "UPDATE",
+            "md5": "0cb0e4b423699fcc25c629d014f11331",
+            "objectName": "LqJpHp",
+            "generation": "1776826519197444",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4939,
+            "name": "adv_event_excursion_ktn_01_05.txt",
+            "size": 11088,
+            "state": "UPDATE",
+            "md5": "fdd6edd74c6a55b94accec32959f47b6",
+            "objectName": "e8jL8R",
+            "generation": "1781055358876090",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4940,
+            "name": "adv_event_excursion_rio_01_03.txt",
+            "size": 17108,
+            "state": "UPDATE",
+            "md5": "aa73f98f278b6e64d4ab7dee68463d0e",
+            "objectName": "NquiTS",
+            "generation": "1779685352048389",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4941,
+            "name": "adv_event_excursion_ktn_01_02.txt",
+            "size": 17165,
+            "state": "UPDATE",
+            "md5": "64e5e0ee90777b94113baf0645396f5a",
+            "objectName": "HGIW7u",
+            "generation": "1779685352027594",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4942,
+            "name": "adv_event_excursion_ktn_01_01.txt",
+            "size": 15963,
+            "state": "UPDATE",
+            "md5": "da0778ce888d78622b82bfd68de6c2a2",
+            "objectName": "pLcPKP",
+            "generation": "1776826519217344",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4943,
+            "name": "adv_event_excursion_rui_01_05.txt",
+            "size": 10599,
+            "state": "UPDATE",
+            "md5": "f53debb555efc6ad4c2d80bfbd679468",
+            "objectName": "K927ys",
+            "generation": "1781055358861530",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4944,
+            "name": "adv_event_excursion_rui_01_02.txt",
+            "size": 17454,
+            "state": "UPDATE",
+            "md5": "0f5d59b2fbe58d9921328cec4dc9a579",
+            "objectName": "i8OKV4",
+            "generation": "1779685352049505",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4945,
+            "name": "adv_event_excursion_suz_01_02.txt",
+            "size": 16199,
+            "state": "UPDATE",
+            "md5": "4c6d25a415f501337d836a6a86d82f0b",
+            "objectName": "VU8BEA",
+            "generation": "1779685352045825",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4946,
             "name": "adv_bond_ngs_01_08.txt",
             "size": 184967,
@@ -137080,6 +138712,46 @@
             "md5": "11ff262b7369e64aadd81d6f8ab5bbe9",
             "objectName": "HNfCbO",
             "generation": "1776451803612720",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4947,
+            "name": "adv_event_excursion_suz_01_04.txt",
+            "size": 17201,
+            "state": "UPDATE",
+            "md5": "0672fd93967227582a025d3d2d9e190a",
+            "objectName": "YSjdKc",
+            "generation": "1776152469004908",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4948,
+            "name": "adv_event_excursion_suz_01_01.txt",
+            "size": 16982,
+            "state": "UPDATE",
+            "md5": "917002a2f5117a9aafbbebe6d98fe6b3",
+            "objectName": "oc7tJo",
+            "generation": "1779685352035231",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4949,
+            "name": "adv_event_excursion_suz_01_05.txt",
+            "size": 11097,
+            "state": "UPDATE",
+            "md5": "ea1ef02e834eba3ca39112099603f331",
+            "objectName": "fkncXe",
+            "generation": "1776680518797666",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4950,
+            "name": "adv_event_excursion_suz_01_03.txt",
+            "size": 17095,
+            "state": "UPDATE",
+            "md5": "a7f8d9a9696db22e790e83e0a198b93e",
+            "objectName": "OIieCw",
+            "generation": "1779685352035250",
             "uploadVersionId": 202050
         },
         {
@@ -137123,6 +138795,106 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 4955,
+            "name": "adv_event_excursion_yu_01_02.txt",
+            "size": 18033,
+            "state": "UPDATE",
+            "md5": "c5125316f2a18bd43a9ddeacbc01e918",
+            "objectName": "IwOahx",
+            "generation": "1779685352035608",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4956,
+            "name": "adv_event_excursion_yu_01_03.txt",
+            "size": 17001,
+            "state": "UPDATE",
+            "md5": "670cf3461a55f449b5721690ae4865fb",
+            "objectName": "2B2rzT",
+            "generation": "1779685352029804",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4957,
+            "name": "adv_event_excursion_ski_01_03.txt",
+            "size": 18170,
+            "state": "UPDATE",
+            "md5": "7bc2831d3e681efe12906711485d12ae",
+            "objectName": "r5orL1",
+            "generation": "1779685352030238",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4958,
+            "name": "adv_event_excursion_ski_01_02.txt",
+            "size": 16125,
+            "state": "UPDATE",
+            "md5": "b305a5f043f536da981b460a19c98a56",
+            "objectName": "Vo61Hx",
+            "generation": "1779685352035320",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4959,
+            "name": "adv_event_excursion_ski_01_01.txt",
+            "size": 15942,
+            "state": "UPDATE",
+            "md5": "a6f92475c45f99a55a0a6e6831d10b6c",
+            "objectName": "Iv9Q6w",
+            "generation": "1776970208537894",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4960,
+            "name": "adv_event_excursion_ski_01_04.txt",
+            "size": 17603,
+            "state": "UPDATE",
+            "md5": "611d0a81c942fdfc8ac60d85c3b97e04",
+            "objectName": "6W45Xg",
+            "generation": "1776279011242111",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4961,
+            "name": "adv_event_excursion_yu_01_04.txt",
+            "size": 17033,
+            "state": "UPDATE",
+            "md5": "161e9f5bf5881b6d4eaf83392fdb5a02",
+            "objectName": "UMW2Ok",
+            "generation": "1775785830949545",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4962,
+            "name": "adv_event_excursion_yu_01_01.txt",
+            "size": 15434,
+            "state": "UPDATE",
+            "md5": "f0eb3f55b8383d9e8750f147f8371778",
+            "objectName": "mQ6cLU",
+            "generation": "1776970208516813",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4963,
+            "name": "adv_event_excursion_ski_01_05.txt",
+            "size": 10562,
+            "state": "UPDATE",
+            "md5": "5585d853bce0eb2629c1833d55dcc5fd",
+            "objectName": "xTLP2Z",
+            "generation": "1781055359018357",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4964,
+            "name": "adv_event_excursion_yu_01_05.txt",
+            "size": 10997,
+            "state": "UPDATE",
+            "md5": "ceba757d554458d5aa5fff60f2122a64",
+            "objectName": "WBjrw4",
+            "generation": "1776673818452799",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 4965,
             "name": "adv_card_mna_10_01.txt",
             "size": 223582,
@@ -137150,6 +138922,156 @@
             "md5": "c7ffee07367decf26b905524477354f4",
             "objectName": "I48jYl",
             "generation": "1779084817671952",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4968,
+            "name": "adv_event_excursion_mei_01_04.txt",
+            "size": 16637,
+            "state": "UPDATE",
+            "md5": "33997b5a26efe0258dd3242a21820f20",
+            "objectName": "mZdeW7",
+            "generation": "1775242201949292",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4969,
+            "name": "adv_event_excursion_smr_01_02.txt",
+            "size": 18438,
+            "state": "UPDATE",
+            "md5": "68df6473c5d28d64ce58e5cb7cb6dde9",
+            "objectName": "nCQs7L",
+            "generation": "1779685352035621",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4970,
+            "name": "adv_event_excursion_mhk_01_04.txt",
+            "size": 16639,
+            "state": "UPDATE",
+            "md5": "f4342266869cfe89ae8cc6b54536d43c",
+            "objectName": "n1TgOr",
+            "generation": "1775785830949829",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4971,
+            "name": "adv_event_excursion_mhk_01_05.txt",
+            "size": 10579,
+            "state": "UPDATE",
+            "md5": "29822f7874bb54b8074c967d2fb87f29",
+            "objectName": "5NnVL0",
+            "generation": "1781055358872091",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4972,
+            "name": "adv_event_excursion_smr_01_04.txt",
+            "size": 16119,
+            "state": "UPDATE",
+            "md5": "d6fa23da1c7dc66946ea4e4d16ff8a35",
+            "objectName": "GT88N8",
+            "generation": "1775476066140594",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4973,
+            "name": "adv_event_excursion_mei_01_02.txt",
+            "size": 19183,
+            "state": "UPDATE",
+            "md5": "afd82c30a572cdb25863cff347c70949",
+            "objectName": "FPnzQf",
+            "generation": "1779685352028040",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4974,
+            "name": "adv_event_excursion_mei_01_05.txt",
+            "size": 10478,
+            "state": "UPDATE",
+            "md5": "23cfd775ea5a32de33314d1e9d138c9f",
+            "objectName": "qhaFsc",
+            "generation": "1781055358863368",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4975,
+            "name": "adv_event_excursion_smr_01_01.txt",
+            "size": 17549,
+            "state": "UPDATE",
+            "md5": "6fb3a10f06094ac23f0c1dbb8dac47f8",
+            "objectName": "CoL4UV",
+            "generation": "1776970208517405",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4976,
+            "name": "adv_event_excursion_smr_01_05.txt",
+            "size": 10592,
+            "state": "UPDATE",
+            "md5": "2e2df4892579d1c85dbe772bc1310bd4",
+            "objectName": "a78Kjl",
+            "generation": "1776970208516796",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4977,
+            "name": "adv_event_excursion_mei_01_01.txt",
+            "size": 18469,
+            "state": "UPDATE",
+            "md5": "02bcd9c074041e685fbd9b05fd3fa9b9",
+            "objectName": "OMNgye",
+            "generation": "1776970208698559",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4978,
+            "name": "adv_event_excursion_mhk_01_02.txt",
+            "size": 16778,
+            "state": "UPDATE",
+            "md5": "b4d9fdbde0361d406582f0c40efbc8a2",
+            "objectName": "eMlUb1",
+            "generation": "1779685352029758",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4979,
+            "name": "adv_event_excursion_mhk_01_01.txt",
+            "size": 16549,
+            "state": "UPDATE",
+            "md5": "7b55480a338d19cf568ec9c97e89f102",
+            "objectName": "IDC3KA",
+            "generation": "1776970208537899",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4980,
+            "name": "adv_event_excursion_smr_01_03.txt",
+            "size": 17552,
+            "state": "UPDATE",
+            "md5": "b8828b0b79dd99fdf26aeacff5b2bc33",
+            "objectName": "6BbaA0",
+            "generation": "1779685352035457",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4981,
+            "name": "adv_event_excursion_mhk_01_03.txt",
+            "size": 17581,
+            "state": "UPDATE",
+            "md5": "e65f5ef5f2cd4f9546a30bcdfa9fa9e4",
+            "objectName": "LhPetA",
+            "generation": "1779685352035846",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 4982,
+            "name": "adv_event_excursion_mei_01_03.txt",
+            "size": 17534,
+            "state": "UPDATE",
+            "md5": "0b62d2ff43961375f0e6257efe1f11f1",
+            "objectName": "mCFtpv",
+            "generation": "1779685352046096",
             "uploadVersionId": 202050
         },
         {
@@ -137693,6 +139615,56 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 5039,
+            "name": "adv_event_excursion_skr_01_03.txt",
+            "size": 17080,
+            "state": "UPDATE",
+            "md5": "4a7ee4e03bc42b579e2d29fcd5d99945",
+            "objectName": "FoMQ6b",
+            "generation": "1779685352047618",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5040,
+            "name": "adv_event_excursion_skr_01_04.txt",
+            "size": 18944,
+            "state": "UPDATE",
+            "md5": "664f995d5a9fc1f150da604a5d0f4660",
+            "objectName": "ECZw8b",
+            "generation": "1776970208517397",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5041,
+            "name": "adv_event_excursion_skr_01_01.txt",
+            "size": 15901,
+            "state": "UPDATE",
+            "md5": "8deb1529d99103924c710c20b043a144",
+            "objectName": "Q2UODZ",
+            "generation": "1776970208513139",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5042,
+            "name": "adv_event_excursion_skr_01_05.txt",
+            "size": 10085,
+            "state": "UPDATE",
+            "md5": "4b68415e97ffae33d1facaaf35430bac",
+            "objectName": "yHORyc",
+            "generation": "1777013801845469",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5043,
+            "name": "adv_event_excursion_skr_01_02.txt",
+            "size": 16553,
+            "state": "UPDATE",
+            "md5": "24089786c1218bcc9d3f9936a124f23e",
+            "objectName": "PNC9t5",
+            "generation": "1779685352035314",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 5045,
             "name": "mov_gacha_gacha_birt-26-0505_1080p.mp4",
             "size": 4470778,
@@ -137710,6 +139682,156 @@
             "md5": "cd753acca34f1f76b8bcc65e10baf761",
             "objectName": "DRUZIa",
             "generation": "1776970246807374",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5047,
+            "name": "adv_event_excursion_ai_01_03.txt",
+            "size": 17048,
+            "state": "UPDATE",
+            "md5": "bbea074a9a0e4f9a523dca8dad742ae7",
+            "objectName": "9Qw6qt",
+            "generation": "1779685352054552",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5048,
+            "name": "adv_event_excursion_chs_01_01.txt",
+            "size": 15981,
+            "state": "UPDATE",
+            "md5": "2412a1b41ff5f6c38f6e5bcbb9e98a1b",
+            "objectName": "1Oriso",
+            "generation": "1777278512144280",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5049,
+            "name": "adv_event_excursion_ai_01_01.txt",
+            "size": 15941,
+            "state": "UPDATE",
+            "md5": "4610a273cb2efce22c4a2fbc1bfbcbb8",
+            "objectName": "akx5F8",
+            "generation": "1777278512144253",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5050,
+            "name": "adv_event_excursion_ai_01_04.txt",
+            "size": 17793,
+            "state": "UPDATE",
+            "md5": "07da3c31a3de93cea875fcc539ef7729",
+            "objectName": "K32ATP",
+            "generation": "1777013801871763",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5051,
+            "name": "adv_event_excursion_ai_01_05.txt",
+            "size": 11095,
+            "state": "UPDATE",
+            "md5": "4ba032a3b0f174f0b8316bed75057844",
+            "objectName": "0Fl5Z9",
+            "generation": "1777013801861556",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5052,
+            "name": "adv_event_excursion_chs_01_02.txt",
+            "size": 18086,
+            "state": "UPDATE",
+            "md5": "356b92126068e43cd356447653a29f5f",
+            "objectName": "MbIMen",
+            "generation": "1779685352035426",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5053,
+            "name": "adv_event_excursion_chs_01_04.txt",
+            "size": 17636,
+            "state": "UPDATE",
+            "md5": "50b47be5462ee849f708dced75b892b3",
+            "objectName": "KuoyUl",
+            "generation": "1777013801861989",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5054,
+            "name": "adv_event_excursion_chs_01_05.txt",
+            "size": 13129,
+            "state": "UPDATE",
+            "md5": "93e5a89aa241226b40f1a90993fc1b4c",
+            "objectName": "SHN2rm",
+            "generation": "1781055358872171",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5055,
+            "name": "adv_event_excursion_ai_01_02.txt",
+            "size": 19455,
+            "state": "UPDATE",
+            "md5": "e993a86c7201cfbc9a723e6b755cacd6",
+            "objectName": "K7FaYa",
+            "generation": "1779685352037411",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5056,
+            "name": "adv_event_excursion_chs_01_03.txt",
+            "size": 17551,
+            "state": "UPDATE",
+            "md5": "1937ff83ede82a9ad795a2f88050a76f",
+            "objectName": "BdQIbo",
+            "generation": "1779685352036728",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5057,
+            "name": "adv_event_excursion_kan_01_05.txt",
+            "size": 12592,
+            "state": "UPDATE",
+            "md5": "13c4b888280cdd4c05cab6a39b48a150",
+            "objectName": "IF1rRU",
+            "generation": "1781055358871862",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5058,
+            "name": "adv_event_excursion_kan_01_01.txt",
+            "size": 18629,
+            "state": "UPDATE",
+            "md5": "641814a2cd09cc889af4879d4cb1a52f",
+            "objectName": "SppKYo",
+            "generation": "1777275263050177",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5059,
+            "name": "adv_event_excursion_kan_01_03.txt",
+            "size": 17065,
+            "state": "UPDATE",
+            "md5": "db485835cb4230e7b874f52b14be0e21",
+            "objectName": "SLMx4Y",
+            "generation": "1779685352035858",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5060,
+            "name": "adv_event_excursion_kan_01_02.txt",
+            "size": 17657,
+            "state": "UPDATE",
+            "md5": "7d99de8984270ab9c33df9baa70e255d",
+            "objectName": "pRwIQX",
+            "generation": "1779685352035644",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 5061,
+            "name": "adv_event_excursion_kan_01_04.txt",
+            "size": 16577,
+            "state": "UPDATE",
+            "md5": "afb796188733f47dd4c546f3eb0f5bc6",
+            "objectName": "Y0bxSp",
+            "generation": "1777275263039967",
             "uploadVersionId": 202050
         },
         {
