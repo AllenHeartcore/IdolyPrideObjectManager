@@ -17,7 +17,8 @@ from ..const import (
     PRIDE_OCTOCACHE_KEY,
     PRIDE_ONLINEPDB_IV,
     PRIDE_ONLINEPDB_KEY,
-    WAYBACK_COMMITS_DATABASE_REMOTE,
+    WAYBACK_COMMITS_LOG_LOCAL,
+    WAYBACK_COMMITS_LOG_REMOTE,
     WAYBACK_MANIFEST_URL_TEMPLATE,
     PathArgtype,
 )
@@ -27,7 +28,11 @@ from .manifest import PrideManifest
 from .octodb_pb2 import pdbytes2dict
 
 
-def fetch(this_revision: int = -1, base_revision: int = 0) -> PrideManifest:
+def fetch(
+    this_revision: int = -1,
+    base_revision: int = 0,
+    _use_local_commits_log: bool = False,
+) -> PrideManifest:
     """
     Requests an online manifest by the specified revision.
     Algorithm courtesy of github.com/DreamGallery/HatsuboshiToolkit
@@ -42,10 +47,19 @@ def fetch(this_revision: int = -1, base_revision: int = 0) -> PrideManifest:
             This API return the *difference* between the specified base
             revision and the latest.
     """
+    #   _use_local_commits_log (bool): Whether to use the local "commits log".
+    #       Defaults to False.
+    #       Falls back to the remote "commits log" if the local one is not found.
+    #       Exclusively used in rebuilding "objects log" before remote "commits log" is updated.
+    #       NOT FOR GENERAL USE.
 
     if this_revision != -1:
 
-        commits = _json_load(WAYBACK_COMMITS_DATABASE_REMOTE)
+        if _use_local_commits_log and Path(WAYBACK_COMMITS_LOG_LOCAL).is_file():
+            commits = _json_load(WAYBACK_COMMITS_LOG_LOCAL)
+        else:
+            commits = _json_load(WAYBACK_COMMITS_LOG_REMOTE)
+
         if str(this_revision) not in commits:
             raise ValueError(f"Manifest revision {this_revision} not found in history.")
         url = WAYBACK_MANIFEST_URL_TEMPLATE.format(
@@ -64,7 +78,7 @@ def fetch(this_revision: int = -1, base_revision: int = 0) -> PrideManifest:
 
     enc = req.content
     dec = AESCBCDecryptor(PRIDE_ONLINEPDB_KEY, PRIDE_ONLINEPDB_IV).process(enc)
-    return PrideManifest(pdbytes2dict(dec[16:]), base_revision=base_revision)
+    return PrideManifest(pdbytes2dict(dec[16:]), base_revision)
 
 
 def load(src: PathArgtype, base_revision: int = 0) -> PrideManifest:
