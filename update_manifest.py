@@ -50,7 +50,6 @@ def _sanitize_canon_repr(canon_repr: dict, rev: int) -> str:
     return "|".join(
         [
             f"{rev:04d}",
-            canon_repr["objectName"],
             canon_repr["generation"],
             canon_repr["md5"],
             str(canon_repr["size"]),
@@ -80,11 +79,21 @@ def rebuild_log(latest_manifest: PrideManifest):
     log = {
         "latest_revision": latest_manifest.revision.canon_repr,
         "assetBundleList": [
-            {"id": obj.id, "name": obj.name, "history": []}
+            {
+                "id": obj.id,
+                "name": obj.name,
+                "objectName": obj.objectName,
+                "history": [],
+            }
             for obj in latest_manifest.assetbundles
         ],
         "resourceList": [
-            {"id": obj.id, "name": obj.name, "history": []}
+            {
+                "id": obj.id,
+                "name": obj.name,
+                "objectName": obj.objectName,
+                "history": [],
+            }
             for obj in latest_manifest.resources
         ],
         "ab_id_lookup": {
@@ -111,11 +120,13 @@ def rebuild_log(latest_manifest: PrideManifest):
             entry_idx = log["ab_id_lookup"][old_entry["id"]]
             entry = log["assetBundleList"][entry_idx]  # is a pointer
             assert entry["name"] == old_entry["name"]
+            assert entry["objectName"] == old_entry["objectName"]
             entry["history"] = old_entry["history"]
         for old_entry in old_log["resourceList"]:
             entry_idx = log["res_id_lookup"][old_entry["id"]]
             entry = log["resourceList"][entry_idx]
             assert entry["name"] == old_entry["name"]
+            assert entry["objectName"] == old_entry["objectName"]
             entry["history"] = old_entry["history"]
 
     commits = _json_load(WAYBACK_COMMITS_LOG_LOCAL)
@@ -158,17 +169,17 @@ def do_update(path: Path) -> bool:
     rev_remote = m_remote.revision.canon_repr
     rev_local = int((path / "LATEST_REVISION").read_text())
 
-    if rev_remote == rev_local:
-        print("No update available.")
-        return False
+    # if rev_remote == rev_local:
+    #     print("No update available.")
+    #     return False
 
     # Only write to file after sanity check;
     # this number is used to construct commit message in workflow.
     print(f"Found new manifest revision: {rev_remote} (local: {rev_local})")
     (path / "LATEST_REVISION").write_text(str(rev_remote))
 
-    m_remote.export(path / "v0000.json", force_overwrite=True)
-    asyncio.run(_export_diff_manifests(path, list(range(1, rev_remote))))
+    # m_remote.export(path / "v0000.json", force_overwrite=True)
+    # asyncio.run(_export_diff_manifests(path, list(range(1, rev_remote))))
 
     rebuild_log(m_remote)
 
