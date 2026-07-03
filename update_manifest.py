@@ -169,17 +169,17 @@ def do_update(path: Path) -> bool:
     rev_remote = m_remote.revision.canon_repr
     rev_local = int((path / "LATEST_REVISION").read_text())
 
-    # if rev_remote == rev_local:
-    #     print("No update available.")
-    #     return False
+    if rev_remote == rev_local:
+        print("No update available.")
+        return False
 
     # Only write to file after sanity check;
     # this number is used to construct commit message in workflow.
     print(f"Found new manifest revision: {rev_remote} (local: {rev_local})")
     (path / "LATEST_REVISION").write_text(str(rev_remote))
 
-    # m_remote.export(path / "v0000.json", force_overwrite=True)
-    # asyncio.run(_export_diff_manifests(path, list(range(1, rev_remote))))
+    m_remote.export(path / "v0000.json", force_overwrite=True)
+    asyncio.run(_export_diff_manifests(path, list(range(1, rev_remote))))
 
     rebuild_log(m_remote)
 
