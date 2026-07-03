@@ -7,7 +7,7 @@ import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from queue import Queue
-from typing import Optional, Union
+from typing import Optional
 
 from flask import Flask, Response, jsonify, render_template, request
 
@@ -29,9 +29,7 @@ def _get_manifest() -> PrideManifest:
     return m
 
 
-def _get_object(
-    type: str, id: Union[int, str]
-) -> Union[PrideAssetBundle, PrideResource]:
+def _get_object(type: str, id: int | str) -> PrideAssetBundle | PrideResource:
     m = _get_manifest()
 
     try:

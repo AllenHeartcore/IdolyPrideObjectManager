@@ -48,14 +48,7 @@ WAYBACK_MANIFEST_URL_TEMPLATE = REPO_OBJECT_URL_TEMPLATE.format(
 )
 
 # manifest export
-CSV_COLUMNS = [
-    "objectName",
-    "generation",
-    "md5",
-    "name",
-    "size",
-    "state",
-]
+CSV_COLUMNS = ["objectName", "generation", "md5", "name", "size", "state"]
 
 # manifest download dispatcher
 DEFAULT_DOWNLOAD_PATH = "objects/"

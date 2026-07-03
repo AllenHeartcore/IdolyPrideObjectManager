@@ -1,12 +1,12 @@
 const MEDIA_ALIAS = {
-    "img": "Image",
-    "sud": "Audio",
-    "mov": "Video",
-    "adv": "Story",
-    "mdl": "Model",
-    "mot": "Motion",
-    "env": "Environment",
-    "eff": "Effect",
+    "^img": "Image",
+    "^sud": "Audio",
+    "^mov": "Video",
+    "^adv": "Story",
+    "^mdl": "Model",
+    "^mot": "Motion",
+    "^env": "Environment",
+    "^eff": "Effect",
 };
 
 const SUBTYPE_ALIAS = {

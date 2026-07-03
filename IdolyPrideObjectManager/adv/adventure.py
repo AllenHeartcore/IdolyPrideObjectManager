@@ -37,10 +37,6 @@ class PrideAdventure(PrideDummyMedia):
     def _convert(self, raw: bytes) -> bytes:
         # only for compatibility with PrideResource
         return bytes(
-            json.dumps(
-                self.commands,
-                indent=4,
-                ensure_ascii=False,
-            ),
+            json.dumps(self.commands, indent=4, ensure_ascii=False),
             "utf-8",
         )

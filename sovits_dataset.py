@@ -3,21 +3,20 @@ sovits_dataset.py
 A script to create a dataset for training a voice cloning model.
 """
 
-import json
 import shutil
 import subprocess
 import tempfile
 from argparse import ArgumentParser
 from datetime import datetime
 from pathlib import Path
-from zipfile import ZipFile, ZipInfo
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 from tqdm import tqdm
 
 import IdolyPrideObjectManager as ipom
 from IdolyPrideObjectManager.object import PrideResource
 from IdolyPrideObjectManager.rich import Logger
-from IdolyPrideObjectManager.utils import make_caption_map
+from IdolyPrideObjectManager.utils import _json_load, make_caption_map
 
 logger = Logger()
 logger.info("Fetching manifest...")
@@ -130,8 +129,7 @@ class AdvCacheHandler(CacheHandler):
             return
         for f in tqdm(list(self.cwd.iterdir()), desc="Building caption map"):
             assert f.suffix == ".json", f"Non-JSON file cached in {self.cwd}"
-            commands = json.loads(f.read_text(encoding="utf-8"))
-            self._caption_map.update(make_caption_map(commands))
+            self._caption_map.update(make_caption_map(_json_load(f)))
         self._caption_map_ready = True
 
     def cache(self, target: list[PrideResource]):
@@ -186,9 +184,6 @@ if __name__ == "__main__":
 
     # caching options
     parser.add_argument(
-        "-g", "--greedy", action="store_true", help="Search through all adventures"
-    )
-    parser.add_argument(
         "-d", "--cache-dir", type=str, default=".sovits-cache/", help="Cache directory"
     )
     parser.add_argument(
@@ -205,7 +200,6 @@ if __name__ == "__main__":
             [
                 f"sovits_dataset_v{m.revision.canon_repr}",
                 f"_{args.character}",
-                "_greedy" if args.greedy else "",
                 "_captioned" if args.caption else "",
                 f".{args.format}" if args.merge else ".zip",
             ]
@@ -229,8 +223,8 @@ if __name__ == "__main__":
 
     # ------------------------------ DOWNLOAD
 
-    target_adv = m.search(f"adv.*{'' if args.greedy else args.character}.*")
-    target_sud = m.search(f"sud_vo_adv.*{'' if args.greedy else args.character}.*")
+    target_adv = m.search(f"adv.*")
+    target_sud = m.search(f"sud_vo_adv.*")
     if not args.caption:
         target_sud += m.search(f"sud_vo.*{args.character}.*")
         # 'general' and 'system' voice samples don't have captions
@@ -283,13 +277,12 @@ if __name__ == "__main__":
                 content += "".join([f"{f.name},{c}" for f, c in zip(samples, captions)])
                 zipf.writestr(ZipInfo("captions.csv"), content)
             for f in tqdm(samples, desc="Writing ZIP"):
-                zipf.writestr(
-                    ZipInfo(
-                        f.with_suffix(f".{args.format}").name,
-                        datetime.fromtimestamp(f.stat().st_mtime).timetuple(),
-                    ),
-                    sud_ch.read(f),
+                info = ZipInfo(
+                    f.with_suffix(f".{args.format}").name,
+                    datetime.fromtimestamp(f.stat().st_mtime).timetuple(),
                 )
+                info.compress_type = ZIP_DEFLATED
+                zipf.writestr(info, sud_ch.read(f))
 
     # ------------------------------ CLEANUP
 

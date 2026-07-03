@@ -7,7 +7,7 @@ as well as a fallback for unknown media types.
 
 import os
 from pathlib import Path
-from typing import Callable, Optional, Tuple, Union
+from typing import Callable, Optional, Tuple
 from zipfile import ZipFile
 
 from ..rich import ProgressReporter
@@ -63,7 +63,7 @@ class PrideDummyMedia:
     # On the other hand, we can't record the sanitized "new size" tuple here,
     #   since it's about checking cache against user input *before* conversion,
     #   and we don't want to move _determine_new_size() to this class.
-    image_resize: Optional[Union[str, Tuple[int, int]]] = None
+    image_resize: Optional[str | Tuple[int, int]] = None
 
     def __init__(
         self,
@@ -91,7 +91,7 @@ class PrideDummyMedia:
 
         Args:
             {mimetype}_format (str): Desired format for the media type.
-            image_resize (Union[str, Tuple[int, int]], optional) = None: Image resizing argument.
+            image_resize (str | Tuple[int, int], optional) = None: Image resizing argument.
                 If None, image is downloaded as is.
                 If str (must contain exactly one ':'), image is resized to the specified ratio.
                 If Tuple[int, int], image is resized to the specified exact dimensions.

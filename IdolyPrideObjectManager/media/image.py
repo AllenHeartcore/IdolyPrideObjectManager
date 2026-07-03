@@ -5,7 +5,7 @@ and PNG image handler for PrideResource.
 """
 
 from io import BytesIO
-from typing import Tuple, Union
+from typing import Literal, Tuple
 
 import UnityPy
 from PIL import Image
@@ -52,7 +52,7 @@ class PrideImage(PrideDummyMedia):
     def _determine_new_size(
         size: Tuple[int, int],
         ratio: str,
-        mode: Union["maximize", "ensure_fit", "preserve_npixel"] = "maximize",
+        mode: Literal["maximize", "ensure_fit", "preserve_npixel"] = "maximize",
     ) -> Tuple[int, int]:
         """
         [INTERNAL] Determines the new size of an image based on a given ratio.

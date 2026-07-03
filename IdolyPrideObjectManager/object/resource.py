@@ -8,15 +8,13 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Optional
 
-import requests
-
 from ..adv import PrideAdventure
 from ..const import CHARACTER_ABBREVS, DEFAULT_DOWNLOAD_PATH, PathArgtype
 from ..media import PrideDummyMedia
 from ..media.text import PrideUnityText
 from ..media.video import PrideVideo
 from ..rich import ProgressReporter
-from ..utils import md5sum
+from ..utils import _rget, md5sum
 
 
 class PrideResource:
@@ -50,10 +48,11 @@ class PrideResource:
     _fields: list[str]
     _idname: str
     _url: str
+    _deobf_key: str
     _media: Optional[PrideDummyMedia] = None
     _reporter: ProgressReporter
 
-    def __init__(self, info: dict, url_template: str):
+    def __init__(self, info: dict, url_template: str, _deobf_key: str = ""):
         """
         Initializes a resource with the given information.
         Usually called from PrideManifest.
@@ -66,6 +65,7 @@ class PrideResource:
                 {v} with self.uploadVersionId,
                 and {type} with 'resources'.
         """
+        #   _deobf_key (str): ignored; for class compatibility only
 
         self._fields = list(info.keys())
         for field in self._fields:
@@ -141,7 +141,7 @@ class PrideResource:
         Downloads the resource to the specified path.
 
         Args:
-            path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory or a file path.
+            path (str | Path) = DEFAULT_DOWNLOAD_PATH: A directory or a file path.
                 If a directory, subdirectories are auto-determined based on the resource name.
             categorize (bool) = True: Whether to put the downloaded object into subdirectories.
                 If False, the object is directly downloaded to the specified 'path'.
@@ -206,7 +206,7 @@ class PrideResource:
         on HTTP status code, size, and MD5 hash. Returns the resource as raw bytes.
         """
 
-        with requests.get(self._url, timeout=10, stream=True) as response:
+        with _rget(self._url, stream=True) as response:
             response.raise_for_status()
 
             chunks = []
@@ -229,7 +229,7 @@ class PrideResource:
             self._reporter.error(f"Invalid size: expected {self.size}, got {_size}")
 
         _md5 = md5sum(content).hex()
-        if _md5 != self.md5:
+        if self.md5 and _md5 != self.md5:
             self._reporter.error(f"Invalid MD5 hash: expected {self.md5}, got {_md5}")
 
         return {

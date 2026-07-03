@@ -7,7 +7,7 @@ import asyncio
 import re
 import subprocess
 from pathlib import Path
-from typing import Tuple, Union
+from typing import Tuple
 
 import pandas as pd
 import yaml
@@ -41,7 +41,7 @@ class PrideManifest:
 
     Methods:
         export(path: str | Path) -> None:
-            Exports the manifest as ProtoDB and/or JSON to the specified path.
+            Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
         search(criterion: str) -> list:
             Searches the manifest for objects with names *fully* matching the specified criterion.
         download(
@@ -312,7 +312,7 @@ class PrideManifest:
 
         Args:
             *criteria (str): Regex patterns of assetbundle/resource names.
-            path (Union[str, Path]) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
+            path (str | Path) = DEFAULT_DOWNLOAD_PATH: A directory to which the objects are downloaded.
                 *WARNING: Behavior is undefined if the path points to an definite file (with extension).*
             categorize (bool) = True: Whether to categorize downloaded objects into subdirectories.
                 If False, all objects are downloaded to the specified 'path' in a flat structure.
@@ -424,7 +424,7 @@ class PrideManifest:
 
     async def _dispatch(
         self,
-        obj_kw: list[Union[ObjectClass, Tuple[ObjectClass, dict]]],
+        obj_kw: list[ObjectClass | Tuple[ObjectClass, dict]],
         **kwargs,
     ):
         """
