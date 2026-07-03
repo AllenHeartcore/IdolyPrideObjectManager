@@ -33,6 +33,7 @@ PRIDE_OCTOCACHE_KEY = md5sum("zkfuuwgc4eoxlaew".encode("utf-8"))
 PRIDE_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
 
 # manifest history
+PRIDE_UVID = 202050  # artificial "uploadVersionId" field in history entries
 REPO_OBJECT_URL_TEMPLATE = "https://raw.githubusercontent.com/AllenHeartcore/IdolyPrideObjectManager/{branch}/{path}"
 MANIFEST_UPDATE_BRANCH = "manifest-update"
 WAYBACK_COMMITS_LOG_LOCAL = "wayback_commits.json"

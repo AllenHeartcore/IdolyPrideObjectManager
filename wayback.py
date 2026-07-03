@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 from typing import Optional
 
-from IdolyPrideObjectManager.const import WAYBACK_OBJECTS_LOG_REMOTE
+from IdolyPrideObjectManager.const import PRIDE_UVID, WAYBACK_OBJECTS_LOG_REMOTE
 from IdolyPrideObjectManager.object import PrideAssetBundle, PrideResource
 from IdolyPrideObjectManager.utils import _json_load
 
@@ -23,9 +23,10 @@ class WaybackEntry:
     def __init__(self, info: dict, base_class: ObjectClass, url_template: str):
         self.id = info["id"]
         self.name = info["name"]
+        objectName = info["objectName"]
         self.history = []
         for entry in info["history"]:
-            rev, objectName, md5, size, dependencies = entry.split("|")
+            rev, generation, md5, size, dependencies = entry.split("|")
             stem, ext = Path(self.name).stem, Path(self.name).suffix
             ext = ext.removesuffix(".unity3d")
             self.history.append(
@@ -34,6 +35,7 @@ class WaybackEntry:
                         "id": self.id,
                         "name": f"{stem}__v{int(rev):04d}{ext}",
                         "objectName": objectName,
+                        "generation": generation,
                         "md5": md5,
                         "size": int(size),
                         "dependencies": (
@@ -41,6 +43,7 @@ class WaybackEntry:
                             if dependencies
                             else []
                         ),
+                        "uploadVersionId": PRIDE_UVID,
                     },
                     url_template,
                     _deobf_key=self.name,
