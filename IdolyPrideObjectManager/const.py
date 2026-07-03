@@ -4,13 +4,12 @@ Module-wide constants (macro equivalents).
 """
 
 from pathlib import Path
-from typing import Union
 from urllib.parse import urljoin
 
 from .utils import md5sum
 
 # argument type hints
-PathArgtype = Union[str, Path]
+PathArgtype = str | Path
 
 # manifest request
 PRIDE_APPID = 212
@@ -32,6 +31,21 @@ PRIDE_ONLINEPDB_KEY = bytes.fromhex(
 PRIDE_ONLINEPDB_IV = bytes.fromhex("9ce1286f5481bb3d92eb8529bc35962c")
 PRIDE_OCTOCACHE_KEY = md5sum("zkfuuwgc4eoxlaew".encode("utf-8"))
 PRIDE_OCTOCACHE_IV = md5sum("LvAUtf+tnz".encode("utf-8"))
+
+# manifest history
+REPO_OBJECT_URL_TEMPLATE = "https://raw.githubusercontent.com/AllenHeartcore/IdolyPrideObjectManager/{branch}/{path}"
+MANIFEST_UPDATE_BRANCH = "manifest-update"
+WAYBACK_COMMITS_LOG_LOCAL = "wayback_commits.json"
+WAYBACK_COMMITS_LOG_REMOTE = REPO_OBJECT_URL_TEMPLATE.format(
+    branch=MANIFEST_UPDATE_BRANCH, path=WAYBACK_COMMITS_LOG_LOCAL
+)
+WAYBACK_OBJECTS_LOG_LOCAL = "wayback_objects.json"
+WAYBACK_OBJECTS_LOG_REMOTE = REPO_OBJECT_URL_TEMPLATE.format(
+    branch=MANIFEST_UPDATE_BRANCH, path=WAYBACK_OBJECTS_LOG_LOCAL
+)
+WAYBACK_MANIFEST_URL_TEMPLATE = REPO_OBJECT_URL_TEMPLATE.format(
+    branch="{hash}", path="manifests/v{revision:04d}.json"
+)
 
 # manifest export
 CSV_COLUMNS = [

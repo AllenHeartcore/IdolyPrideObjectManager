@@ -4,7 +4,6 @@ Manifest decryption, exporting, and object downloading.
 """
 
 import asyncio
-import json
 import re
 import subprocess
 from pathlib import Path
@@ -18,12 +17,12 @@ from rich.progress import BarColumn, Progress, TextColumn
 from ..const import CHARACTER_ABBREVS, CSV_COLUMNS, DEFAULT_DOWNLOAD_PATH, PathArgtype
 from ..object import PrideAssetBundle, PrideResource
 from ..rich import Logger
-from ..utils import nocache
+from ..utils import _json_dump, nocache
 from .listing import PrideObjectList
 from .octodb_pb2 import dict2pdbytes
 from .revision import PrideManifestRevision
 
-ObjectClass = Union[PrideAssetBundle, PrideResource]
+ObjectClass = PrideAssetBundle | PrideResource
 
 # The logger would better be a global variable in the
 # modular __init__.py, but Python won't allow me to
@@ -41,13 +40,13 @@ class PrideManifest:
         urlformat (str): URL format for downloading assetbundles/resources.
 
     Methods:
-        export(path: Union[str, Path]) -> None:
-            Exports the manifest as ProtoDB, JSON, and/or CSV to the specified path.
+        export(path: str | Path) -> None:
+            Exports the manifest as ProtoDB and/or JSON to the specified path.
         search(criterion: str) -> list:
             Searches the manifest for objects with names *fully* matching the specified criterion.
         download(
             *criteria: str,
-            path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
+            path: str | Path = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
             **kwargs,
         ) -> None:
@@ -180,7 +179,7 @@ class PrideManifest:
         This is a dispatcher method.
 
         Args:
-            path (Union[str, Path]): A file path.
+            path (str | Path): A file path.
                 The format is determined by the extension if 'format' is 'infer'.
                 (All extensions other than .json and .csv are inferred
                 as raw binary and therefore exported as ProtoDB, but
@@ -247,7 +246,7 @@ class PrideManifest:
             logger.warning("Attempting to write JSON into a non-.json file")
 
         try:
-            path.write_text(json.dumps(self.canon_repr, indent=4))
+            _json_dump(self.canon_repr, path)
             logger.success(f"JSON has been written into {path}")
         except TypeError:  # non-JSON-serializable object in dict
             logger.error(f"Failed to write JSON into {path}")

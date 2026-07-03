@@ -34,7 +34,7 @@ class PrideResource:
 
     Methods:
         download(
-            path: Union[str, Path] = DEFAULT_DOWNLOAD_PATH,
+            path: str | Path = DEFAULT_DOWNLOAD_PATH,
             categorize: bool = True,
             **kwargs,
         ) -> None:
