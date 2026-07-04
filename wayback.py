@@ -10,7 +10,7 @@ from typing import Optional
 
 from rich.progress import BarColumn, Progress, TextColumn
 
-from IdolyPrideObjectManager.const import WAYBACK_OBJECTS_LOG_REMOTE
+from IdolyPrideObjectManager.const import PRIDE_UVID, WAYBACK_OBJECTS_LOG_REMOTE
 from IdolyPrideObjectManager.object import PrideAssetBundle, PrideResource
 from IdolyPrideObjectManager.utils import _json_load, nocache
 
