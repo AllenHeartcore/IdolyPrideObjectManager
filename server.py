@@ -46,7 +46,7 @@ def _get_object(type: str, id: int | str) -> PrideAssetBundle | PrideResource:
 
 
 def _sanitize_mtime(mtime: float) -> str:
-    mtime = datetime.fromtimestamp(mtime / 1e6, tz=timezone.utc)
+    mtime = datetime.fromtimestamp(mtime, tz=timezone.utc)
     mtime = mtime.astimezone(timezone(timedelta(hours=9)))  # Japan Standard Time
     return mtime.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -192,7 +192,7 @@ def view(type: str, id: str) -> str:
 
     info = obj.canon_repr
     info["raw_url"] = obj._url
-    info["mtime"] = _sanitize_mtime(int(obj.generation))
+    info["mtime"] = _sanitize_mtime(int(obj.generation) / 1e6)
 
     if "dependencies" in info:
         info["dependencies"] = [
