@@ -3,13 +3,16 @@ wayback.py
 Interface with the "wayback machine", i.e. the object history log.
 """
 
+import asyncio
 import re
 from pathlib import Path
 from typing import Optional
 
-from IdolyPrideObjectManager.const import PRIDE_UVID, WAYBACK_OBJECTS_LOG_REMOTE
+from rich.progress import BarColumn, Progress, TextColumn
+
+from IdolyPrideObjectManager.const import WAYBACK_OBJECTS_LOG_REMOTE
 from IdolyPrideObjectManager.object import PrideAssetBundle, PrideResource
-from IdolyPrideObjectManager.utils import _json_load
+from IdolyPrideObjectManager.utils import _json_load, nocache
 
 ObjectClass = PrideAssetBundle | PrideResource
 
@@ -169,7 +172,32 @@ class WaybackMachine:
             reverse=not ascending,
         )
 
-    def download_old_revisions(self, criterion: str, output_dir: str, **kwargs):
-        for entry in self.search(criterion):
-            for obj in entry.history[:-1]:
-                obj.download(output_dir, **kwargs)
+    @nocache
+    def download_old_revisions(self, *criteria: str, **kwargs):
+        entries = self.search("|".join(criteria))
+        asyncio.run(self._dispatch(entries, **kwargs))
+
+    async def _dispatch(self, entries: list[WaybackEntry], **kwargs):
+
+        progress = Progress(
+            TextColumn("{task.description}"),
+            BarColumn(),
+            TextColumn("{task.completed}/{task.total}"),
+        )
+
+        tasks = [
+            asyncio.create_task(
+                asyncio.to_thread(
+                    obj.download,
+                    progress=progress,
+                    task_id=progress.add_task(obj._idname, visible=False),
+                    **kwargs,  # if not empty, broadcast to all tasks
+                )
+            )
+            for entry in entries
+            for obj in entry.history[:-1]
+        ]
+
+        progress.start()
+        await asyncio.gather(*tasks)
+        progress.stop()
