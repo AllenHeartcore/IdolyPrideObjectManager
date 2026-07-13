@@ -1,6 +1,6 @@
 {
     "revision": [
-        1010,
+        1011,
         5
     ],
     "assetBundleList": [
@@ -77256,15 +77256,15 @@
         {
             "id": 9479,
             "name": "mdl_chr_kor-mizg-01_body",
-            "size": 8104149,
-            "crc": 2039965092,
+            "size": 8104329,
+            "crc": 1170827965,
             "dependencies": [
                 77
             ],
             "state": "UPDATE",
-            "md5": "853ebebbbd7bef8e4af73a4117b1add4",
+            "md5": "9db18f4d6e06deea282a51951b5ceb65",
             "objectName": "wRhBa8",
-            "generation": "1711343181852235",
+            "generation": "1753149671800932",
             "uploadVersionId": 202050
         },
         {
@@ -200037,16 +200037,16 @@
         {
             "id": 24172,
             "name": "mdl_chr_mhk-mizg-01_body",
-            "size": 8116562,
-            "crc": 3030540657,
+            "size": 8116535,
+            "crc": 1416078071,
             "dependencies": [
-                9479,
-                77
+                77,
+                9479
             ],
             "state": "UPDATE",
-            "md5": "13c9c64e06be4655a0fb8d649840ae57",
+            "md5": "a68b03e78575da2c805f8822288b74c9",
             "objectName": "YPSosj",
-            "generation": "1711343292110579",
+            "generation": "1783498990777229",
             "uploadVersionId": 202050
         },
         {

@@ -1,6 +1,6 @@
 {
     "revision": [
-        1010,
+        1011,
         959
     ],
     "assetBundleList": [
@@ -19,6 +19,20 @@
             "uploadVersionId": 202050
         },
         {
+            "id": 9479,
+            "name": "mdl_chr_kor-mizg-01_body",
+            "size": 8104329,
+            "crc": 1170827965,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "9db18f4d6e06deea282a51951b5ceb65",
+            "objectName": "wRhBa8",
+            "generation": "1753149671800932",
+            "uploadVersionId": 202050
+        },
+        {
             "id": 14761,
             "name": "mot_live_chr_cmn_spskill-sun-003-high_in",
             "size": 256160,
@@ -27,6 +41,21 @@
             "md5": "01bc1e8f595bdb537149a25170806f1b",
             "objectName": "lDIU95",
             "generation": "1753149690664456",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 24172,
+            "name": "mdl_chr_mhk-mizg-01_body",
+            "size": 8116535,
+            "crc": 1416078071,
+            "dependencies": [
+                77,
+                9479
+            ],
+            "state": "UPDATE",
+            "md5": "a68b03e78575da2c805f8822288b74c9",
+            "objectName": "YPSosj",
+            "generation": "1783498990777229",
             "uploadVersionId": 202050
         },
         {

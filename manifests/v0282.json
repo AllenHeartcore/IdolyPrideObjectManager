@@ -1,6 +1,6 @@
 {
     "revision": [
-        1010,
+        1011,
         282
     ],
     "assetBundleList": [
@@ -609,6 +609,20 @@
             "md5": "dc2263bd5089f57c2188daca22f5517e",
             "objectName": "sVYA8J",
             "generation": "1752634025519221",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 9479,
+            "name": "mdl_chr_kor-mizg-01_body",
+            "size": 8104329,
+            "crc": 1170827965,
+            "dependencies": [
+                77
+            ],
+            "state": "UPDATE",
+            "md5": "9db18f4d6e06deea282a51951b5ceb65",
+            "objectName": "wRhBa8",
+            "generation": "1753149671800932",
             "uploadVersionId": 202050
         },
         {
@@ -1598,6 +1612,21 @@
             "md5": "756312b9c465a258b492ae7295049a03",
             "objectName": "jb5hDg",
             "generation": "1711343409614225",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 24172,
+            "name": "mdl_chr_mhk-mizg-01_body",
+            "size": 8116535,
+            "crc": 1416078071,
+            "dependencies": [
+                77,
+                9479
+            ],
+            "state": "UPDATE",
+            "md5": "a68b03e78575da2c805f8822288b74c9",
+            "objectName": "YPSosj",
+            "generation": "1783498990777229",
             "uploadVersionId": 202050
         },
         {
