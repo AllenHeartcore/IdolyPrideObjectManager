@@ -1,0 +1,51 @@
+{
+    "revision": [
+        1034,
+        1032
+    ],
+    "assetBundleList": [
+        {
+            "id": 54073,
+            "name": "mot_photo_chr_mhk_odekake02-react-00-cos-01-bc_lp",
+            "size": 361629,
+            "crc": 1905433810,
+            "state": "UPDATE",
+            "md5": "68bb2b81b8690479faf2052bea8a5d9a",
+            "objectName": "Kzvg8F",
+            "generation": "1785322601644986",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 55765,
+            "name": "env_adv_2d_carinside-01-noon",
+            "size": 900861,
+            "crc": 2730138932,
+            "dependencies": [
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "a1c50b07686c69596ec8efe4166b04e7",
+            "objectName": "3Pm9q6",
+            "generation": "1783566530539798",
+            "uploadVersionId": 202050
+        },
+        {
+            "id": 56534,
+            "name": "env_adv_2d_aquarium-00-noon",
+            "size": 954417,
+            "crc": 2362000546,
+            "dependencies": [
+                351,
+                352
+            ],
+            "state": "UPDATE",
+            "md5": "5d24d937d7824f6f4276580757aa649f",
+            "objectName": "6Nf6fD",
+            "generation": "1785984277898119",
+            "uploadVersionId": 202050
+        }
+    ],
+    "resourceList": [],
+    "urlFormat": "https://d2ilil7yh5oi1v.cloudfront.net/solis-{v}-{type}/{o}?generation={g}&alt=media"
+}
